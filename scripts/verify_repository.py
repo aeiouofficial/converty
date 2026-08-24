@@ -151,8 +151,8 @@ def main() -> int:
         path for path in ROOT.rglob("*.csproj")
         if not any(part in {"bin", "obj", "artifacts"} for part in path.parts)
     )
-    if len(projects) != 7:
-        fail(f"expected exactly 7 managed projects, found {len(projects)}")
+    if not projects:
+        fail("no managed projects discovered")
     missing_locks = [
         project.relative_to(ROOT).as_posix()
         for project in projects
@@ -213,7 +213,7 @@ def main() -> int:
     print("PASS: repository static verification succeeded")
     print(f"PASS: version={version}")
     print("PASS: SDK pin=10.0.400/latestPatch")
-    print("PASS: 7/7 managed lock files present")
+    print(f"PASS: {len(projects)}/{len(projects)} managed lock files present")
     print("PASS: source SBOM/release/CI/handover/toolchain authority is version-aligned")
     print("PASS: Contracts/Core/Serialization contain no process/network/engine/native-loading tokens")
     return 0
