@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyName>Converty.FakeProviders</AssemblyName>
+    <RootNamespace>Converty.FakeProviders</RootNamespace>
+    <Description>Data-only fake providers used to verify the generic capability architecture.</Description>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../Converty.Contracts/Converty.Contracts.csproj" />
+  </ItemGroup>
+</Project>

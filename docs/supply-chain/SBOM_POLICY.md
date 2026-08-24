@@ -1,7 +1,7 @@
-# FileConvert SBOM Policy
+# Converty SBOM Policy
 
 ## Purpose
-FileConvert publishes deterministic software-bill-of-materials evidence without inventing dependency state. Source-only SBOM generation is allowed before managed restore. Release SBOM generation is fail-closed until every managed project has a reviewed `packages.lock.json`.
+Converty publishes deterministic software-bill-of-materials evidence without inventing dependency state. Source-only SBOM generation is allowed before managed restore. Release SBOM generation is fail-closed until every managed project has a reviewed `packages.lock.json`.
 
 ## Formats and scope
 - SPDX JSON 2.3 is the canonical generated format.

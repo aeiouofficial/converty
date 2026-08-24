@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyName>Converty.Serialization</AssemblyName>
+    <RootNamespace>Converty.Serialization</RootNamespace>
+    <Description>Strict versioned JSON adapters for engine-independent Converty contracts.</Description>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../Converty.Contracts/Converty.Contracts.csproj" />
+  </ItemGroup>
+</Project>

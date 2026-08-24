@@ -1,7 +1,7 @@
-# FileConvert Foundation Design — v0.1.0-dev.1
+# Converty Foundation Design — v0.1.0-dev.1
 
 ## Authority
-This implementation tranche is approved by the user's request to begin implementing the existing architecture/handover pack. The normative architecture remains `docs/FileConvert_Master_Build_Plan.md`, `docs/SECURITY_THREAT_MODEL.md`, and the ADRs.
+This implementation tranche is approved by the user's request to begin implementing the existing architecture/handover pack. The normative architecture remains `docs/Converty_Master_Build_Plan.md`, `docs/SECURITY_THREAT_MODEL.md`, and the ADRs.
 
 ## Scope
 Implement B0 repository/bootstrap authority plus the deterministic, engine-independent portion of B1. No Explorer registration, IPC server, sandbox launcher, FFmpeg invocation, WIC conversion, or plugin loading is claimed in this tranche.

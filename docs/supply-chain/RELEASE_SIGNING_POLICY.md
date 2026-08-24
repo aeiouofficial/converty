@@ -1,7 +1,7 @@
-# FileConvert Release Signing Policy
+# Converty Release Signing Policy
 
 ## Trust model
-Signing keys are external release infrastructure. Private keys, PFX/P12 bundles, PEM private material, secrets, tokens, and `.env` files must never be stored in or packaged from the FileConvert workspace.
+Signing keys are external release infrastructure. Private keys, PFX/P12 bundles, PEM private material, secrets, tokens, and `.env` files must never be stored in or packaged from the Converty workspace.
 
 ## Required release behavior
 - Hash manifests use SHA-256 or stronger; SHA-1 and MD5 are forbidden for release integrity.

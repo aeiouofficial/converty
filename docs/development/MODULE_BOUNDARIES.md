@@ -1,16 +1,16 @@
 # Module boundaries
 
 ## Implemented foundation
-### FileConvert.Contracts
+### Converty.Contracts
 Owns versioned immutable identifiers and declarative data contracts. It must stay free of process launch, networking, native loading, codec APIs, filesystem mutation, media parsers, and JSON transport policy.
 
-### FileConvert.Core
+### Converty.Core
 Owns deterministic format lookup, capability matching, planning, and output-name selection. It consumes trusted `ProbedFileDescriptor` data from a future isolated probe boundary; it never derives that data by parsing media.
 
-### FileConvert.Serialization
+### Converty.Serialization
 Owns strict versioned JSON ↔ Contracts mapping only. It references Contracts but Core/Contracts do not reference it. It performs no IPC transport, filesystem operations, process creation, native loading, media parsing, provider execution, or networking. Unknown versions/members and duplicate JSON property names are rejected.
 
-### FileConvert.FakeProviders
+### Converty.FakeProviders
 Owns deterministic capability fixtures only. No process launch or filesystem/media interaction.
 
 ## Deferred process modules

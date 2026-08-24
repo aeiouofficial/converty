@@ -1,6 +1,6 @@
-# FileConvert Continuation Prompt
+# Converty Continuation Prompt
 
-Continue the FileConvert project from the full workspace ZIP I am uploading: `FileConvert_0.1.0-dev.4_full_workspace.zip`.
+Continue the Converty project from the full workspace ZIP I am uploading: `Converty_0.1.0-dev.4_full_workspace.zip`.
 
 Treat the ZIP contents as the current source of truth. Read these first, in order:
 
@@ -9,7 +9,7 @@ Treat the ZIP contents as the current source of truth. Read these first, in orde
 3. `machine-readable/build_evidence.json`
 4. `docs/development/IMPLEMENTATION_STATUS.md`
 5. `docs/TASK_BACKLOG.md`
-6. `docs/FileConvert_Master_Build_Plan.md`
+6. `docs/Converty_Master_Build_Plan.md`
 7. `docs/SECURITY_THREAT_MODEL.md`
 8. `docs/TEST_AND_RELEASE_GATES.md`
 9. `docs/supply-chain/SBOM_POLICY.md`
@@ -28,4 +28,4 @@ Only if B0/B1 managed gates are genuinely green enough to proceed, write the foc
 
 Preserve non-negotiable boundaries: Explorer trigger only; Host never parses untrusted media or loads codec/plugin code; probing/conversion belongs to disposable restricted workers; ordinary local conversion has no network; strict isolation never silently downgrades; presets/IPC never contain executable commands/pass-through argument vectors; provider options are whitelisted/typed; workers write only private staging; Host validates then atomically commits; arbitrary writable DLL/plugin auto-loading is forbidden; numbered-copy remains safe default; unknown JSON versions/members/duplicates fail closed; release dependency versions are never fabricated; signing private keys never enter the repository/workspace; external CI Actions remain full-SHA pinned; checkout credentials remain non-persistent; CI jobs retain finite timeouts.
 
-Report only gates actually executed. At tranche end update `VERSION`/README/CHANGELOG/backlog/status/handover/machine-readable evidence consistently, generate source/release SBOM as evidence permits, `package_manifest.json` and `SHA256SUMS.txt`, verify the ZIP by reopening it and checking CRC/embedded hashes, and give me a direct download link for `FileConvert_0.1.0-dev.5_full_workspace.zip` plus the next handover prompt to paste back.
+Report only gates actually executed. At tranche end update `VERSION`/README/CHANGELOG/backlog/status/handover/machine-readable evidence consistently, generate source/release SBOM as evidence permits, `package_manifest.json` and `SHA256SUMS.txt`, verify the ZIP by reopening it and checking CRC/embedded hashes, and give me a direct download link for `Converty_0.1.0-dev.5_full_workspace.zip` plus the next handover prompt to paste back.

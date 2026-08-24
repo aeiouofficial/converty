@@ -1,27 +1,130 @@
 {
   "SPDXID": "SPDXRef-DOCUMENT",
   "comment": "Source mode is development inventory only. Release mode requires committed NuGet lock files and still requires human license/vulnerability review.",
-  "creationInfo": {"created":"2026-08-24T00:00:00Z","creators":["Tool: FileConvert deterministic SBOM generator"]},
+  "creationInfo": {
+    "created": "2026-08-24T00:00:00Z",
+    "creators": [
+      "Tool: Converty deterministic SBOM generator"
+    ]
+  },
   "dataLicense": "CC0-1.0",
-  "documentNamespace": "https://fileconvert.invalid/spdx/source/0.1.0-dev.4/02abaaec5caf48c836937a7db5638e5de35e0dea2d88dea209a2f2fd6e36eedf",
-  "name": "FileConvert-source-0.1.0-dev.4",
+  "documentNamespace": "https://converty.invalid/spdx/source/0.1.0-dev.4/f293e27c54e5036b5c7b57c608da836b7bc3c262096626267dea751f9ee8ba5e",
+  "name": "Converty-source-0.1.0-dev.4",
   "packages": [
-    {"SPDXID":"SPDXRef-Project-FileConvert.Contracts","comment":"First-party managed project: src/FileConvert.Contracts/FileConvert.Contracts.csproj","copyrightText":"NOASSERTION","downloadLocation":"NOASSERTION","filesAnalyzed":false,"licenseConcluded":"NOASSERTION","licenseDeclared":"NOASSERTION","name":"FileConvert.Contracts","versionInfo":"0.1.0-dev.4"},
-    {"SPDXID":"SPDXRef-Project-FileConvert.Core","comment":"First-party managed project: src/FileConvert.Core/FileConvert.Core.csproj","copyrightText":"NOASSERTION","downloadLocation":"NOASSERTION","filesAnalyzed":false,"licenseConcluded":"NOASSERTION","licenseDeclared":"NOASSERTION","name":"FileConvert.Core","versionInfo":"0.1.0-dev.4"},
-    {"SPDXID":"SPDXRef-Project-FileConvert.FakeProviders","comment":"First-party managed project: src/FileConvert.FakeProviders/FileConvert.FakeProviders.csproj","copyrightText":"NOASSERTION","downloadLocation":"NOASSERTION","filesAnalyzed":false,"licenseConcluded":"NOASSERTION","licenseDeclared":"NOASSERTION","name":"FileConvert.FakeProviders","versionInfo":"0.1.0-dev.4"},
-    {"SPDXID":"SPDXRef-Project-FileConvert.Serialization","comment":"First-party managed project: src/FileConvert.Serialization/FileConvert.Serialization.csproj","copyrightText":"NOASSERTION","downloadLocation":"NOASSERTION","filesAnalyzed":false,"licenseConcluded":"NOASSERTION","licenseDeclared":"NOASSERTION","name":"FileConvert.Serialization","versionInfo":"0.1.0-dev.4"},
-    {"SPDXID":"SPDXRef-Project-FileConvert.Contracts.Tests","comment":"First-party managed project: tests/FileConvert.Contracts.Tests/FileConvert.Contracts.Tests.csproj","copyrightText":"NOASSERTION","downloadLocation":"NOASSERTION","filesAnalyzed":false,"licenseConcluded":"NOASSERTION","licenseDeclared":"NOASSERTION","name":"FileConvert.Contracts.Tests","versionInfo":"0.1.0-dev.4"},
-    {"SPDXID":"SPDXRef-Project-FileConvert.Core.Tests","comment":"First-party managed project: tests/FileConvert.Core.Tests/FileConvert.Core.Tests.csproj","copyrightText":"NOASSERTION","downloadLocation":"NOASSERTION","filesAnalyzed":false,"licenseConcluded":"NOASSERTION","licenseDeclared":"NOASSERTION","name":"FileConvert.Core.Tests","versionInfo":"0.1.0-dev.4"},
-    {"SPDXID":"SPDXRef-Project-FileConvert.Serialization.Tests","comment":"First-party managed project: tests/FileConvert.Serialization.Tests/FileConvert.Serialization.Tests.csproj","copyrightText":"NOASSERTION","downloadLocation":"NOASSERTION","filesAnalyzed":false,"licenseConcluded":"NOASSERTION","licenseDeclared":"NOASSERTION","name":"FileConvert.Serialization.Tests","versionInfo":"0.1.0-dev.4"}
+    {
+      "SPDXID": "SPDXRef-Project-Converty.Contracts",
+      "comment": "First-party managed project: src/Converty.Contracts/Converty.Contracts.csproj",
+      "copyrightText": "NOASSERTION",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "name": "Converty.Contracts",
+      "versionInfo": "0.1.0-dev.4"
+    },
+    {
+      "SPDXID": "SPDXRef-Project-Converty.Core",
+      "comment": "First-party managed project: src/Converty.Core/Converty.Core.csproj",
+      "copyrightText": "NOASSERTION",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "name": "Converty.Core",
+      "versionInfo": "0.1.0-dev.4"
+    },
+    {
+      "SPDXID": "SPDXRef-Project-Converty.FakeProviders",
+      "comment": "First-party managed project: src/Converty.FakeProviders/Converty.FakeProviders.csproj",
+      "copyrightText": "NOASSERTION",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "name": "Converty.FakeProviders",
+      "versionInfo": "0.1.0-dev.4"
+    },
+    {
+      "SPDXID": "SPDXRef-Project-Converty.Serialization",
+      "comment": "First-party managed project: src/Converty.Serialization/Converty.Serialization.csproj",
+      "copyrightText": "NOASSERTION",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "name": "Converty.Serialization",
+      "versionInfo": "0.1.0-dev.4"
+    },
+    {
+      "SPDXID": "SPDXRef-Project-Converty.Contracts.Tests",
+      "comment": "First-party managed project: tests/Converty.Contracts.Tests/Converty.Contracts.Tests.csproj",
+      "copyrightText": "NOASSERTION",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "name": "Converty.Contracts.Tests",
+      "versionInfo": "0.1.0-dev.4"
+    },
+    {
+      "SPDXID": "SPDXRef-Project-Converty.Core.Tests",
+      "comment": "First-party managed project: tests/Converty.Core.Tests/Converty.Core.Tests.csproj",
+      "copyrightText": "NOASSERTION",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "name": "Converty.Core.Tests",
+      "versionInfo": "0.1.0-dev.4"
+    },
+    {
+      "SPDXID": "SPDXRef-Project-Converty.Serialization.Tests",
+      "comment": "First-party managed project: tests/Converty.Serialization.Tests/Converty.Serialization.Tests.csproj",
+      "copyrightText": "NOASSERTION",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "name": "Converty.Serialization.Tests",
+      "versionInfo": "0.1.0-dev.4"
+    }
   ],
   "relationships": [
-    {"relatedSpdxElement":"SPDXRef-Project-FileConvert.Contracts","relationshipType":"DESCRIBES","spdxElementId":"SPDXRef-DOCUMENT"},
-    {"relatedSpdxElement":"SPDXRef-Project-FileConvert.Core","relationshipType":"DESCRIBES","spdxElementId":"SPDXRef-DOCUMENT"},
-    {"relatedSpdxElement":"SPDXRef-Project-FileConvert.FakeProviders","relationshipType":"DESCRIBES","spdxElementId":"SPDXRef-DOCUMENT"},
-    {"relatedSpdxElement":"SPDXRef-Project-FileConvert.Serialization","relationshipType":"DESCRIBES","spdxElementId":"SPDXRef-DOCUMENT"},
-    {"relatedSpdxElement":"SPDXRef-Project-FileConvert.Contracts.Tests","relationshipType":"DESCRIBES","spdxElementId":"SPDXRef-DOCUMENT"},
-    {"relatedSpdxElement":"SPDXRef-Project-FileConvert.Core.Tests","relationshipType":"DESCRIBES","spdxElementId":"SPDXRef-DOCUMENT"},
-    {"relatedSpdxElement":"SPDXRef-Project-FileConvert.Serialization.Tests","relationshipType":"DESCRIBES","spdxElementId":"SPDXRef-DOCUMENT"}
+    {
+      "relatedSpdxElement": "SPDXRef-Project-Converty.Contracts",
+      "relationshipType": "DESCRIBES",
+      "spdxElementId": "SPDXRef-DOCUMENT"
+    },
+    {
+      "relatedSpdxElement": "SPDXRef-Project-Converty.Core",
+      "relationshipType": "DESCRIBES",
+      "spdxElementId": "SPDXRef-DOCUMENT"
+    },
+    {
+      "relatedSpdxElement": "SPDXRef-Project-Converty.FakeProviders",
+      "relationshipType": "DESCRIBES",
+      "spdxElementId": "SPDXRef-DOCUMENT"
+    },
+    {
+      "relatedSpdxElement": "SPDXRef-Project-Converty.Serialization",
+      "relationshipType": "DESCRIBES",
+      "spdxElementId": "SPDXRef-DOCUMENT"
+    },
+    {
+      "relatedSpdxElement": "SPDXRef-Project-Converty.Contracts.Tests",
+      "relationshipType": "DESCRIBES",
+      "spdxElementId": "SPDXRef-DOCUMENT"
+    },
+    {
+      "relatedSpdxElement": "SPDXRef-Project-Converty.Core.Tests",
+      "relationshipType": "DESCRIBES",
+      "spdxElementId": "SPDXRef-DOCUMENT"
+    },
+    {
+      "relatedSpdxElement": "SPDXRef-Project-Converty.Serialization.Tests",
+      "relationshipType": "DESCRIBES",
+      "spdxElementId": "SPDXRef-DOCUMENT"
+    }
   ],
   "spdxVersion": "SPDX-2.3"
 }

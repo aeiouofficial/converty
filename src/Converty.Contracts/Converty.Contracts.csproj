@@ -1,0 +1,7 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyName>Converty.Contracts</AssemblyName>
+    <RootNamespace>Converty.Contracts</RootNamespace>
+    <Description>Versioned engine-independent contracts for Converty.</Description>
+  </PropertyGroup>
+</Project>
