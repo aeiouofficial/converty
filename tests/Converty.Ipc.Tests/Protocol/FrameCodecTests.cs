@@ -8,12 +8,13 @@ public sealed class FrameCodecTests
     [Fact]
     public async Task RoundTripPreservesVersionAndPayload()
     {
+        CancellationToken token = TestContext.Current.CancellationToken;
         byte[] payload = [0x01, 0x02, 0x7F, 0xFF];
         await using var stream = new MemoryStream();
 
-        await ProtocolFrameCodec.WriteAsync(stream, payload);
+        await ProtocolFrameCodec.WriteAsync(stream, payload, token);
         stream.Position = 0;
-        ProtocolFrame frame = await ProtocolFrameCodec.ReadAsync(stream);
+        ProtocolFrame frame = await ProtocolFrameCodec.ReadAsync(stream, token);
 
         Assert.Equal(ProtocolLimits.CurrentVersion, frame.Version);
         Assert.Equal(payload, frame.Payload.ToArray());
@@ -22,22 +23,24 @@ public sealed class FrameCodecTests
     [Fact]
     public async Task WriteRejectsPayloadOverConfiguredLimit()
     {
+        CancellationToken token = TestContext.Current.CancellationToken;
         byte[] payload = new byte[ProtocolLimits.MaxPayloadBytes + 1];
         await using var stream = new MemoryStream();
 
         await Assert.ThrowsAsync<ProtocolException>(async () =>
-            await ProtocolFrameCodec.WriteAsync(stream, payload));
+            await ProtocolFrameCodec.WriteAsync(stream, payload, token));
         Assert.Equal(0, stream.Length);
     }
 
     [Fact]
     public async Task ReadRejectsBadMagicBeforePayloadAllocation()
     {
+        CancellationToken token = TestContext.Current.CancellationToken;
         byte[] header = BuildHeader(0x01020304u, ProtocolLimits.CurrentVersion, 16);
         await using var stream = new MemoryStream(header);
 
         ProtocolException error = await Assert.ThrowsAsync<ProtocolException>(async () =>
-            await ProtocolFrameCodec.ReadAsync(stream));
+            await ProtocolFrameCodec.ReadAsync(stream, token));
 
         Assert.Equal(ProtocolErrorCode.BadMagic, error.ErrorCode);
     }
@@ -45,11 +48,12 @@ public sealed class FrameCodecTests
     [Fact]
     public async Task ReadRejectsUnsupportedVersion()
     {
+        CancellationToken token = TestContext.Current.CancellationToken;
         byte[] header = BuildHeader(ProtocolLimits.Magic, checked((ushort)(ProtocolLimits.CurrentVersion + 1)), 0);
         await using var stream = new MemoryStream(header);
 
         ProtocolException error = await Assert.ThrowsAsync<ProtocolException>(async () =>
-            await ProtocolFrameCodec.ReadAsync(stream));
+            await ProtocolFrameCodec.ReadAsync(stream, token));
 
         Assert.Equal(ProtocolErrorCode.UnsupportedVersion, error.ErrorCode);
     }
@@ -59,11 +63,12 @@ public sealed class FrameCodecTests
     [InlineData(int.MinValue)]
     public async Task ReadRejectsNegativePayloadLength(int payloadLength)
     {
+        CancellationToken token = TestContext.Current.CancellationToken;
         byte[] header = BuildHeader(ProtocolLimits.Magic, ProtocolLimits.CurrentVersion, payloadLength);
         await using var stream = new MemoryStream(header);
 
         ProtocolException error = await Assert.ThrowsAsync<ProtocolException>(async () =>
-            await ProtocolFrameCodec.ReadAsync(stream));
+            await ProtocolFrameCodec.ReadAsync(stream, token));
 
         Assert.Equal(ProtocolErrorCode.InvalidLength, error.ErrorCode);
     }
@@ -71,11 +76,12 @@ public sealed class FrameCodecTests
     [Fact]
     public async Task ReadRejectsOversizedPayloadLengthBeforeReadingPayload()
     {
+        CancellationToken token = TestContext.Current.CancellationToken;
         byte[] header = BuildHeader(ProtocolLimits.Magic, ProtocolLimits.CurrentVersion, ProtocolLimits.MaxPayloadBytes + 1);
         await using var stream = new MemoryStream(header);
 
         ProtocolException error = await Assert.ThrowsAsync<ProtocolException>(async () =>
-            await ProtocolFrameCodec.ReadAsync(stream));
+            await ProtocolFrameCodec.ReadAsync(stream, token));
 
         Assert.Equal(ProtocolErrorCode.FrameTooLarge, error.ErrorCode);
         Assert.Equal(ProtocolLimits.HeaderSize, stream.Position);
@@ -87,11 +93,12 @@ public sealed class FrameCodecTests
     [InlineData(11)]
     public async Task ReadRejectsTruncatedHeader(int availableBytes)
     {
+        CancellationToken token = TestContext.Current.CancellationToken;
         byte[] bytes = new byte[availableBytes];
         await using var stream = new MemoryStream(bytes);
 
         ProtocolException error = await Assert.ThrowsAsync<ProtocolException>(async () =>
-            await ProtocolFrameCodec.ReadAsync(stream));
+            await ProtocolFrameCodec.ReadAsync(stream, token));
 
         Assert.Equal(ProtocolErrorCode.TruncatedFrame, error.ErrorCode);
     }
@@ -99,12 +106,13 @@ public sealed class FrameCodecTests
     [Fact]
     public async Task ReadRejectsTruncatedPayload()
     {
+        CancellationToken token = TestContext.Current.CancellationToken;
         byte[] header = BuildHeader(ProtocolLimits.Magic, ProtocolLimits.CurrentVersion, 4);
         byte[] bytes = [.. header, 0x10, 0x20];
         await using var stream = new MemoryStream(bytes);
 
         ProtocolException error = await Assert.ThrowsAsync<ProtocolException>(async () =>
-            await ProtocolFrameCodec.ReadAsync(stream));
+            await ProtocolFrameCodec.ReadAsync(stream, token));
 
         Assert.Equal(ProtocolErrorCode.TruncatedFrame, error.ErrorCode);
     }
@@ -112,7 +120,7 @@ public sealed class FrameCodecTests
     [Fact]
     public async Task CancelledWriteDoesNotEmitFrame()
     {
-        using var cancellation = new CancellationTokenSource();
+        using var cancellation = CancellationTokenSource.CreateLinkedTokenSource(TestContext.Current.CancellationToken);
         cancellation.Cancel();
         await using var stream = new MemoryStream();
 
