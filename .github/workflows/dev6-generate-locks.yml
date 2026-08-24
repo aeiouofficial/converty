@@ -1,0 +1,39 @@
+name: dev6-generate-locks
+
+on:
+  push:
+    branches:
+      - dev/v0.1.0-dev.6
+
+permissions:
+  contents: write
+
+env:
+  DOTNET_CLI_TELEMETRY_OPTOUT: '1'
+  DOTNET_NOLOGO: '1'
+  TESTINGPLATFORM_TELEMETRY_OPTOUT: '1'
+
+jobs:
+  generate-locks:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: windows-2025
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: true
+      - uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v6.0.0
+        with:
+          dotnet-version: 10.0.400
+      - name: Generate and verify lock files
+        shell: pwsh
+        run: ./build/bootstrap.ps1 -GenerateLockFiles
+      - name: Commit generated lock files
+        shell: pwsh
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- 'src/Converty.Ipc/packages.lock.json' 'tests/Converty.Ipc.Tests/packages.lock.json'
+          if (git diff --cached --quiet) { throw 'Expected dev.6 lock-file changes were not generated.' }
+          git commit -m "chore: generate dev6 IPC lock files"
+          git push origin HEAD:dev/v0.1.0-dev.6
