@@ -5,7 +5,7 @@ namespace FileConvert.Contracts.Tests.Identifiers;
 public sealed class IdentifierPropertyTests
 {
     [Fact]
-    public void FormatId_parse_matches_canonical_ascii_grammar_for_seeded_inputs()
+    public void FormatIdParseMatchesCanonicalAsciiGrammarForSeededInputs()
     {
         var random = new Random(0x5A17C0DE);
         const string alphabet = "abcdefghijklmnopqrstuvwxyz0123456789._-ABCDEFGHIJKLMNOPQRSTUVWXYZ /\\:@";
