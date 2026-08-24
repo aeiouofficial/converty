@@ -7,10 +7,7 @@ public sealed class OutputPathResolver
 
     public OutputPathResolver(Func<string, bool>? exists = null, int maxCollisionAttempts = 9999)
     {
-        if (maxCollisionAttempts < 1)
-        {
-            throw new ArgumentOutOfRangeException(nameof(maxCollisionAttempts));
-        }
+        ArgumentOutOfRangeException.ThrowIfLessThan(maxCollisionAttempts, 1);
 
         _exists = exists ?? File.Exists;
         _maxCollisionAttempts = maxCollisionAttempts;
@@ -62,7 +59,7 @@ public sealed class OutputPathResolver
             throw new ArgumentException("Target extension must not contain path separators.", nameof(targetExtension));
         }
 
-        if (!normalized.StartsWith('.', StringComparison.Ordinal))
+        if (normalized[0] != '.')
         {
             normalized = "." + normalized;
         }
