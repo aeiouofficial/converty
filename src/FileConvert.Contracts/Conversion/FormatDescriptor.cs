@@ -73,7 +73,7 @@ public sealed class FormatDescriptor
         }
 
         var normalized = extension.Trim().ToLowerInvariant();
-        if (!normalized.StartsWith(".", StringComparison.Ordinal) || normalized.Length < 2 || normalized.Length > 17)
+        if (normalized.Length < 2 || normalized.Length > 17 || normalized[0] != '.')
         {
             throw new ArgumentException("Extensions must start with '.' and contain 1-16 extension characters.", nameof(extension));
         }
