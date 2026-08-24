@@ -1,3 +1,4 @@
+using System.Collections.ObjectModel;
 using FileConvert.Contracts.Conversion;
 using FileConvert.Contracts.Identifiers;
 
@@ -6,8 +7,8 @@ namespace FileConvert.Core.Registry;
 public sealed class FormatRegistry
 {
     private readonly IReadOnlyList<FormatDescriptor> _formats;
-    private readonly IReadOnlyDictionary<FormatId, FormatDescriptor> _byId;
-    private readonly IReadOnlyDictionary<string, FormatDescriptor> _byExtension;
+    private readonly ReadOnlyDictionary<FormatId, FormatDescriptor> _byId;
+    private readonly ReadOnlyDictionary<string, FormatDescriptor> _byExtension;
 
     public FormatRegistry(IEnumerable<FormatDescriptor> formats)
     {
@@ -37,8 +38,8 @@ public sealed class FormatRegistry
         }
 
         _formats = Array.AsReadOnly(snapshot);
-        _byId = new System.Collections.ObjectModel.ReadOnlyDictionary<FormatId, FormatDescriptor>(byId);
-        _byExtension = new System.Collections.ObjectModel.ReadOnlyDictionary<string, FormatDescriptor>(byExtension);
+        _byId = new ReadOnlyDictionary<FormatId, FormatDescriptor>(byId);
+        _byExtension = new ReadOnlyDictionary<string, FormatDescriptor>(byExtension);
     }
 
     public IReadOnlyList<FormatDescriptor> Formats => _formats;
@@ -57,7 +58,7 @@ public sealed class FormatRegistry
         }
 
         var normalized = extension.Trim();
-        if (!normalized.StartsWith('.', StringComparison.Ordinal))
+        if (normalized[0] != '.')
         {
             normalized = "." + normalized;
         }
