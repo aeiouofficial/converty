@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import json
+import subprocess
+import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -31,6 +33,23 @@ def test_every_managed_project_has_a_committed_lock_file() -> None:
     assert len(projects) == 7
     locks = [project.parent / "packages.lock.json" for project in projects]
     assert all(path.is_file() for path in locks)
+
+
+def test_release_sbom_generator_skips_project_references() -> None:
+    result = subprocess.run(
+        [sys.executable, "scripts/generate_sbom.py", "--mode", "release"],
+        cwd=ROOT,
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+    assert result.returncode == 0, result.stderr or result.stdout
+    sbom = _json("machine-readable/release_sbom.spdx.json")
+    names = {package["name"].lower() for package in sbom["packages"]}
+    assert "converty.contracts" not in names
+    assert "converty.core" not in names
+    assert "converty.fakeproviders" not in names
+    assert "xunit.v3.mtp-v2" in names
 
 
 def test_dev5_managed_qualification_evidence_is_recorded() -> None:
