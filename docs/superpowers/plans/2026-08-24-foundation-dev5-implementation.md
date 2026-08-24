@@ -28,9 +28,9 @@
 
 ### Task 2 — Review and commit generated locks
 - Download the artifact and inspect all seven lock files.
-- Confirm every project has lock format version 1 and expected direct dependency shape.
+- Confirm every project has lock format version 2 and expected direct dependency shape.
 - Reject unexpected package sources or dependency families.
-- Commit the exact generated lock files and remove the temporary generation workflow.
+- Commit the reviewed generated lock files and remove the temporary generation workflow after normal CI reproduces them.
 
 ### Task 3 — Execute normal managed gates
 - Trigger ordinary CI on the branch.
