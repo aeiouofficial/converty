@@ -12,7 +12,7 @@ public sealed class ConversionPlannerTests
     private static readonly FormatId Mp3 = FormatId.Parse("audio.mp3");
 
     [Fact]
-    public void Plan_selects_unique_highest_priority_provider()
+    public void PlanSelectsUniqueHighestPriorityProvider()
     {
         var preferred = new CapabilityDescriptor(ProviderId.Parse("provider.preferred"), Wav, Mp3, ConversionMode.Transcode, 100);
         var fallback = new CapabilityDescriptor(ProviderId.Parse("provider.fallback"), Wav, Mp3, ConversionMode.Transcode, 50);
@@ -25,7 +25,7 @@ public sealed class ConversionPlannerTests
     }
 
     [Fact]
-    public void Plan_rejects_unsupported_route()
+    public void PlanRejectsUnsupportedRoute()
     {
         var planner = new ConversionPlanner(new CapabilityGraph([]));
         var source = new ProbedFileDescriptor("chapter.wav", Audio, Wav, 1234);
@@ -33,7 +33,7 @@ public sealed class ConversionPlannerTests
     }
 
     [Fact]
-    public void Plan_rejects_identity_conversion_by_default()
+    public void PlanRejectsIdentityConversionByDefault()
     {
         var capability = new CapabilityDescriptor(ProviderId.Parse("provider.one"), Wav, Wav, ConversionMode.Copy, 100);
         var planner = new ConversionPlanner(new CapabilityGraph([capability]));
@@ -42,7 +42,7 @@ public sealed class ConversionPlannerTests
     }
 
     [Fact]
-    public void Plan_rejects_top_priority_ambiguity()
+    public void PlanRejectsTopPriorityAmbiguity()
     {
         var first = new CapabilityDescriptor(ProviderId.Parse("provider.first"), Wav, Mp3, ConversionMode.Transcode, 100);
         var second = new CapabilityDescriptor(ProviderId.Parse("provider.second"), Wav, Mp3, ConversionMode.Transcode, 100);
