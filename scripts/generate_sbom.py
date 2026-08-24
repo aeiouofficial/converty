@@ -65,6 +65,8 @@ def nuget_packages(locks: list[Path]) -> list[tuple[str, str]]:
             for package_name, package_info in framework.items():
                 if not isinstance(package_info, dict):
                     fail(f"invalid package entry {package_name!r} in {lock.relative_to(ROOT)}")
+                if package_info.get("type") == "Project":
+                    continue
                 version = package_info.get("resolved")
                 if not isinstance(version, str) or not version:
                     fail(f"package {package_name!r} has no resolved version in {lock.relative_to(ROOT)}")
