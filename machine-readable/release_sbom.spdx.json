@@ -1,0 +1,482 @@
+{
+  "SPDXID": "SPDXRef-DOCUMENT",
+  "comment": "Source mode is development inventory only. Release mode requires committed NuGet lock files and still requires human license/vulnerability review.",
+  "creationInfo": {
+    "created": "2026-08-24T00:00:00Z",
+    "creators": [
+      "Tool: Converty deterministic SBOM generator"
+    ]
+  },
+  "dataLicense": "CC0-1.0",
+  "documentNamespace": "https://converty.invalid/spdx/release/0.1.0-dev.5/c32568d9087f33c6b6e914ec1962225f8906a4797d3a2f9ab07de85bacdae468",
+  "name": "Converty-release-0.1.0-dev.5",
+  "packages": [
+    {
+      "SPDXID": "SPDXRef-Project-Converty.Contracts",
+      "comment": "First-party managed project: src/Converty.Contracts/Converty.Contracts.csproj",
+      "copyrightText": "NOASSERTION",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "name": "Converty.Contracts",
+      "versionInfo": "0.1.0-dev.5"
+    },
+    {
+      "SPDXID": "SPDXRef-Project-Converty.Core",
+      "comment": "First-party managed project: src/Converty.Core/Converty.Core.csproj",
+      "copyrightText": "NOASSERTION",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "name": "Converty.Core",
+      "versionInfo": "0.1.0-dev.5"
+    },
+    {
+      "SPDXID": "SPDXRef-Project-Converty.FakeProviders",
+      "comment": "First-party managed project: src/Converty.FakeProviders/Converty.FakeProviders.csproj",
+      "copyrightText": "NOASSERTION",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "name": "Converty.FakeProviders",
+      "versionInfo": "0.1.0-dev.5"
+    },
+    {
+      "SPDXID": "SPDXRef-Project-Converty.Serialization",
+      "comment": "First-party managed project: src/Converty.Serialization/Converty.Serialization.csproj",
+      "copyrightText": "NOASSERTION",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "name": "Converty.Serialization",
+      "versionInfo": "0.1.0-dev.5"
+    },
+    {
+      "SPDXID": "SPDXRef-Project-Converty.Contracts.Tests",
+      "comment": "First-party managed project: tests/Converty.Contracts.Tests/Converty.Contracts.Tests.csproj",
+      "copyrightText": "NOASSERTION",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "name": "Converty.Contracts.Tests",
+      "versionInfo": "0.1.0-dev.5"
+    },
+    {
+      "SPDXID": "SPDXRef-Project-Converty.Core.Tests",
+      "comment": "First-party managed project: tests/Converty.Core.Tests/Converty.Core.Tests.csproj",
+      "copyrightText": "NOASSERTION",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "name": "Converty.Core.Tests",
+      "versionInfo": "0.1.0-dev.5"
+    },
+    {
+      "SPDXID": "SPDXRef-Project-Converty.Serialization.Tests",
+      "comment": "First-party managed project: tests/Converty.Serialization.Tests/Converty.Serialization.Tests.csproj",
+      "copyrightText": "NOASSERTION",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "name": "Converty.Serialization.Tests",
+      "versionInfo": "0.1.0-dev.5"
+    },
+    {
+      "SPDXID": "SPDXRef-NuGet-Microsoft.ApplicationInsights-2.23.0",
+      "copyrightText": "NOASSERTION",
+      "downloadLocation": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:nuget/Microsoft.ApplicationInsights@2.23.0",
+          "referenceType": "purl"
+        }
+      ],
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "name": "Microsoft.ApplicationInsights",
+      "versionInfo": "2.23.0"
+    },
+    {
+      "SPDXID": "SPDXRef-NuGet-Microsoft.Bcl.AsyncInterfaces-6.0.0",
+      "copyrightText": "NOASSERTION",
+      "downloadLocation": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:nuget/Microsoft.Bcl.AsyncInterfaces@6.0.0",
+          "referenceType": "purl"
+        }
+      ],
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "name": "Microsoft.Bcl.AsyncInterfaces",
+      "versionInfo": "6.0.0"
+    },
+    {
+      "SPDXID": "SPDXRef-NuGet-Microsoft.Testing.Extensions.Telemetry-2.3.3",
+      "copyrightText": "NOASSERTION",
+      "downloadLocation": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:nuget/Microsoft.Testing.Extensions.Telemetry@2.3.3",
+          "referenceType": "purl"
+        }
+      ],
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "name": "Microsoft.Testing.Extensions.Telemetry",
+      "versionInfo": "2.3.3"
+    },
+    {
+      "SPDXID": "SPDXRef-NuGet-Microsoft.Testing.Extensions.TrxReport.Abstractions-2.3.3",
+      "copyrightText": "NOASSERTION",
+      "downloadLocation": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:nuget/Microsoft.Testing.Extensions.TrxReport.Abstractions@2.3.3",
+          "referenceType": "purl"
+        }
+      ],
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "name": "Microsoft.Testing.Extensions.TrxReport.Abstractions",
+      "versionInfo": "2.3.3"
+    },
+    {
+      "SPDXID": "SPDXRef-NuGet-Microsoft.Testing.Platform-2.3.3",
+      "copyrightText": "NOASSERTION",
+      "downloadLocation": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:nuget/Microsoft.Testing.Platform@2.3.3",
+          "referenceType": "purl"
+        }
+      ],
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "name": "Microsoft.Testing.Platform",
+      "versionInfo": "2.3.3"
+    },
+    {
+      "SPDXID": "SPDXRef-NuGet-Microsoft.Testing.Platform.MSBuild-2.3.3",
+      "copyrightText": "NOASSERTION",
+      "downloadLocation": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:nuget/Microsoft.Testing.Platform.MSBuild@2.3.3",
+          "referenceType": "purl"
+        }
+      ],
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "name": "Microsoft.Testing.Platform.MSBuild",
+      "versionInfo": "2.3.3"
+    },
+    {
+      "SPDXID": "SPDXRef-NuGet-Microsoft.Win32.Registry-5.0.0",
+      "copyrightText": "NOASSERTION",
+      "downloadLocation": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:nuget/Microsoft.Win32.Registry@5.0.0",
+          "referenceType": "purl"
+        }
+      ],
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "name": "Microsoft.Win32.Registry",
+      "versionInfo": "5.0.0"
+    },
+    {
+      "SPDXID": "SPDXRef-NuGet-System.Security.AccessControl-6.0.1",
+      "copyrightText": "NOASSERTION",
+      "downloadLocation": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:nuget/System.Security.AccessControl@6.0.1",
+          "referenceType": "purl"
+        }
+      ],
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "name": "System.Security.AccessControl",
+      "versionInfo": "6.0.1"
+    },
+    {
+      "SPDXID": "SPDXRef-NuGet-xunit.analyzers-2.0.0",
+      "copyrightText": "NOASSERTION",
+      "downloadLocation": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:nuget/xunit.analyzers@2.0.0",
+          "referenceType": "purl"
+        }
+      ],
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "name": "xunit.analyzers",
+      "versionInfo": "2.0.0"
+    },
+    {
+      "SPDXID": "SPDXRef-NuGet-xunit.v3.assert-4.0.0",
+      "copyrightText": "NOASSERTION",
+      "downloadLocation": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:nuget/xunit.v3.assert@4.0.0",
+          "referenceType": "purl"
+        }
+      ],
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "name": "xunit.v3.assert",
+      "versionInfo": "4.0.0"
+    },
+    {
+      "SPDXID": "SPDXRef-NuGet-xunit.v3.common-4.0.0",
+      "copyrightText": "NOASSERTION",
+      "downloadLocation": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:nuget/xunit.v3.common@4.0.0",
+          "referenceType": "purl"
+        }
+      ],
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "name": "xunit.v3.common",
+      "versionInfo": "4.0.0"
+    },
+    {
+      "SPDXID": "SPDXRef-NuGet-xunit.v3.core.mtp-v2-4.0.0",
+      "copyrightText": "NOASSERTION",
+      "downloadLocation": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:nuget/xunit.v3.core.mtp-v2@4.0.0",
+          "referenceType": "purl"
+        }
+      ],
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "name": "xunit.v3.core.mtp-v2",
+      "versionInfo": "4.0.0"
+    },
+    {
+      "SPDXID": "SPDXRef-NuGet-xunit.v3.extensibility.core-4.0.0",
+      "copyrightText": "NOASSERTION",
+      "downloadLocation": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:nuget/xunit.v3.extensibility.core@4.0.0",
+          "referenceType": "purl"
+        }
+      ],
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "name": "xunit.v3.extensibility.core",
+      "versionInfo": "4.0.0"
+    },
+    {
+      "SPDXID": "SPDXRef-NuGet-xunit.v3.mtp-v2-4.0.0",
+      "copyrightText": "NOASSERTION",
+      "downloadLocation": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:nuget/xunit.v3.mtp-v2@4.0.0",
+          "referenceType": "purl"
+        }
+      ],
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "name": "xunit.v3.mtp-v2",
+      "versionInfo": "4.0.0"
+    },
+    {
+      "SPDXID": "SPDXRef-NuGet-xunit.v3.runner.common-4.0.0",
+      "copyrightText": "NOASSERTION",
+      "downloadLocation": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:nuget/xunit.v3.runner.common@4.0.0",
+          "referenceType": "purl"
+        }
+      ],
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "name": "xunit.v3.runner.common",
+      "versionInfo": "4.0.0"
+    },
+    {
+      "SPDXID": "SPDXRef-NuGet-xunit.v3.runner.inproc.console-4.0.0",
+      "copyrightText": "NOASSERTION",
+      "downloadLocation": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:nuget/xunit.v3.runner.inproc.console@4.0.0",
+          "referenceType": "purl"
+        }
+      ],
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "name": "xunit.v3.runner.inproc.console",
+      "versionInfo": "4.0.0"
+    }
+  ],
+  "relationships": [
+    {
+      "relatedSpdxElement": "SPDXRef-Project-Converty.Contracts",
+      "relationshipType": "DESCRIBES",
+      "spdxElementId": "SPDXRef-DOCUMENT"
+    },
+    {
+      "relatedSpdxElement": "SPDXRef-Project-Converty.Core",
+      "relationshipType": "DESCRIBES",
+      "spdxElementId": "SPDXRef-DOCUMENT"
+    },
+    {
+      "relatedSpdxElement": "SPDXRef-Project-Converty.FakeProviders",
+      "relationshipType": "DESCRIBES",
+      "spdxElementId": "SPDXRef-DOCUMENT"
+    },
+    {
+      "relatedSpdxElement": "SPDXRef-Project-Converty.Serialization",
+      "relationshipType": "DESCRIBES",
+      "spdxElementId": "SPDXRef-DOCUMENT"
+    },
+    {
+      "relatedSpdxElement": "SPDXRef-Project-Converty.Contracts.Tests",
+      "relationshipType": "DESCRIBES",
+      "spdxElementId": "SPDXRef-DOCUMENT"
+    },
+    {
+      "relatedSpdxElement": "SPDXRef-Project-Converty.Core.Tests",
+      "relationshipType": "DESCRIBES",
+      "spdxElementId": "SPDXRef-DOCUMENT"
+    },
+    {
+      "relatedSpdxElement": "SPDXRef-Project-Converty.Serialization.Tests",
+      "relationshipType": "DESCRIBES",
+      "spdxElementId": "SPDXRef-DOCUMENT"
+    },
+    {
+      "relatedSpdxElement": "SPDXRef-NuGet-Microsoft.ApplicationInsights-2.23.0",
+      "relationshipType": "DESCRIBES",
+      "spdxElementId": "SPDXRef-DOCUMENT"
+    },
+    {
+      "relatedSpdxElement": "SPDXRef-NuGet-Microsoft.Bcl.AsyncInterfaces-6.0.0",
+      "relationshipType": "DESCRIBES",
+      "spdxElementId": "SPDXRef-DOCUMENT"
+    },
+    {
+      "relatedSpdxElement": "SPDXRef-NuGet-Microsoft.Testing.Extensions.Telemetry-2.3.3",
+      "relationshipType": "DESCRIBES",
+      "spdxElementId": "SPDXRef-DOCUMENT"
+    },
+    {
+      "relatedSpdxElement": "SPDXRef-NuGet-Microsoft.Testing.Extensions.TrxReport.Abstractions-2.3.3",
+      "relationshipType": "DESCRIBES",
+      "spdxElementId": "SPDXRef-DOCUMENT"
+    },
+    {
+      "relatedSpdxElement": "SPDXRef-NuGet-Microsoft.Testing.Platform-2.3.3",
+      "relationshipType": "DESCRIBES",
+      "spdxElementId": "SPDXRef-DOCUMENT"
+    },
+    {
+      "relatedSpdxElement": "SPDXRef-NuGet-Microsoft.Testing.Platform.MSBuild-2.3.3",
+      "relationshipType": "DESCRIBES",
+      "spdxElementId": "SPDXRef-DOCUMENT"
+    },
+    {
+      "relatedSpdxElement": "SPDXRef-NuGet-Microsoft.Win32.Registry-5.0.0",
+      "relationshipType": "DESCRIBES",
+      "spdxElementId": "SPDXRef-DOCUMENT"
+    },
+    {
+      "relatedSpdxElement": "SPDXRef-NuGet-System.Security.AccessControl-6.0.1",
+      "relationshipType": "DESCRIBES",
+      "spdxElementId": "SPDXRef-DOCUMENT"
+    },
+    {
+      "relatedSpdxElement": "SPDXRef-NuGet-xunit.analyzers-2.0.0",
+      "relationshipType": "DESCRIBES",
+      "spdxElementId": "SPDXRef-DOCUMENT"
+    },
+    {
+      "relatedSpdxElement": "SPDXRef-NuGet-xunit.v3.assert-4.0.0",
+      "relationshipType": "DESCRIBES",
+      "spdxElementId": "SPDXRef-DOCUMENT"
+    },
+    {
+      "relatedSpdxElement": "SPDXRef-NuGet-xunit.v3.common-4.0.0",
+      "relationshipType": "DESCRIBES",
+      "spdxElementId": "SPDXRef-DOCUMENT"
+    },
+    {
+      "relatedSpdxElement": "SPDXRef-NuGet-xunit.v3.core.mtp-v2-4.0.0",
+      "relationshipType": "DESCRIBES",
+      "spdxElementId": "SPDXRef-DOCUMENT"
+    },
+    {
+      "relatedSpdxElement": "SPDXRef-NuGet-xunit.v3.extensibility.core-4.0.0",
+      "relationshipType": "DESCRIBES",
+      "spdxElementId": "SPDXRef-DOCUMENT"
+    },
+    {
+      "relatedSpdxElement": "SPDXRef-NuGet-xunit.v3.mtp-v2-4.0.0",
+      "relationshipType": "DESCRIBES",
+      "spdxElementId": "SPDXRef-DOCUMENT"
+    },
+    {
+      "relatedSpdxElement": "SPDXRef-NuGet-xunit.v3.runner.common-4.0.0",
+      "relationshipType": "DESCRIBES",
+      "spdxElementId": "SPDXRef-DOCUMENT"
+    },
+    {
+      "relatedSpdxElement": "SPDXRef-NuGet-xunit.v3.runner.inproc.console-4.0.0",
+      "relationshipType": "DESCRIBES",
+      "spdxElementId": "SPDXRef-DOCUMENT"
+    }
+  ],
+  "spdxVersion": "SPDX-2.3"
+}
