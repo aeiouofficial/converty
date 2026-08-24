@@ -26,9 +26,9 @@ public sealed class OutputPathResolverPropertyTests
             var resolver = new OutputPathResolver(existing.Contains, maxCollisionAttempts: 16);
             var result = resolver.Resolve(Path.Combine(directory, basename + ".wav"), ".mp3");
 
-            Assert.False(existing.Contains(result));
+            Assert.DoesNotContain(result, existing);
             Assert.Equal(directory, Path.GetDirectoryName(result));
-            Assert.True(Path.GetFileNameWithoutExtension(result).StartsWith(basename, StringComparison.Ordinal));
+            Assert.StartsWith(basename, Path.GetFileNameWithoutExtension(result));
             Assert.Equal(".mp3", Path.GetExtension(result));
         }
     }
