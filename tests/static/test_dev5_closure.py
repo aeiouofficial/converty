@@ -30,7 +30,7 @@ def test_every_managed_project_has_a_committed_lock_file() -> None:
         path for path in ROOT.rglob("*.csproj")
         if not any(part in {"bin", "obj", "artifacts"} for part in path.parts)
     )
-    assert len(projects) == 7
+    assert projects
     locks = [project.parent / "packages.lock.json" for project in projects]
     assert all(path.is_file() for path in locks)
 

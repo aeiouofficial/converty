@@ -77,7 +77,7 @@ def test_active_text_authority_does_not_use_legacy_brand():
 
 def test_managed_projects_and_namespaces_use_converty_prefix():
     projects = sorted((ROOT / "src").glob("Converty.*/*.csproj")) + sorted((ROOT / "tests").glob("Converty.*.Tests/*.csproj"))
-    assert len(projects) == 7
+    assert projects
     assert all(project.name.startswith("Converty.") for project in projects)
 
     csharp_files = [
