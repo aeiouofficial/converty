@@ -1,4 +1,4 @@
-function(fileconvert_apply_msvc_hardening target)
+function(converty_apply_msvc_hardening target)
     if(NOT MSVC)
         return()
     endif()

@@ -11,7 +11,7 @@ $env:TESTINGPLATFORM_TELEMETRY_OPTOUT = '1'
 $root = Split-Path -Parent $PSScriptRoot
 Push-Location $root
 try {
-    dotnet test --solution FileConvert.slnx --configuration $Configuration --no-build --no-restore
+    dotnet test --solution Converty.slnx --configuration $Configuration --no-build --no-restore
     if ($LASTEXITCODE -ne 0) { throw 'dotnet test failed.' }
 
     python scripts/generate_sbom.py --mode source

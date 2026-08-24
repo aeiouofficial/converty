@@ -41,9 +41,9 @@
 ### Task 2: Rename the managed solution and active projects
 
 **Files:**
-- Replace: `FileConvert.slnx` -> `Converty.slnx`
-- Replace active `src/FileConvert.*` project/module directories with `src/Converty.*`.
-- Replace active `tests/FileConvert.*.Tests` directories with `tests/Converty.*.Tests`.
+- Replace: `Converty.slnx` -> `Converty.slnx`
+- Replace active `src/Converty.*` project/module directories with `src/Converty.*`.
+- Replace active `tests/Converty.*.Tests` directories with `tests/Converty.*.Tests`.
 - Modify all active `.csproj`, `.cs`, `.slnx`, and build-script project references.
 
 **Interfaces:**
@@ -57,11 +57,11 @@
 ### Task 3: Rename native/deferred/provider/package identities
 
 **Files:**
-- Rename: `native/FileConvert.ShellExtension` -> `native/Converty.ShellExtension`
-- Rename: `packaging/FileConvert.Package` -> `packaging/Converty.Package`
-- Rename: `providers/FileConvert.Provider.FFmpeg` -> `providers/Converty.Provider.FFmpeg`
-- Rename: `providers/FileConvert.Provider.Wic` -> `providers/Converty.Provider.Wic`
-- Rename deferred `src/FileConvert.{Bridge,Host,Ipc,ProbeWorker,EngineWorker,Security,Settings}` module paths to `src/Converty.*`.
+- Rename: `native/Converty.ShellExtension` -> `native/Converty.ShellExtension`
+- Rename: `packaging/Converty.Package` -> `packaging/Converty.Package`
+- Rename: `providers/Converty.Provider.FFmpeg` -> `providers/Converty.Provider.FFmpeg`
+- Rename: `providers/Converty.Provider.Wic` -> `providers/Converty.Provider.Wic`
+- Rename deferred `src/Converty.{Bridge,Host,Ipc,ProbeWorker,EngineWorker,Security,Settings}` module paths to `src/Converty.*`.
 - Modify: `native/CMakeLists.txt`, module docs, repository verifier.
 
 - [ ] **Step 1: Rename module paths and current module documentation.**
@@ -71,7 +71,7 @@
 ### Task 4: Rebrand current docs, package tooling, and machine-readable authority
 
 **Files:**
-- Rename: `docs/FileConvert_Master_Build_Plan.md` -> `docs/Converty_Master_Build_Plan.md`
+- Rename: `docs/Converty_Master_Build_Plan.md` -> `docs/Converty_Master_Build_Plan.md`
 - Modify current README/security/architecture/development/supply-chain/ADR/spec/handover docs.
 - Modify package/SBOM/manifest scripts and current machine-readable authority.
 - Regenerate: source/release SBOM and hash/package evidence as applicable.

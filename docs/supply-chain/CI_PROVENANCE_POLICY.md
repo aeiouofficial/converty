@@ -1,7 +1,7 @@
-# FileConvert CI Provenance Policy
+# Converty CI Provenance Policy
 
 ## Purpose
-CI is executable supply-chain input. A mutable GitHub Action tag or branch may change what code executes without a FileConvert source change, so all external Actions are treated as reviewed dependencies.
+CI is executable supply-chain input. A mutable GitHub Action tag or branch may change what code executes without a Converty source change, so all external Actions are treated as reviewed dependencies.
 
 ## Required workflow policy
 - Every external `uses:` reference under `.github/workflows/` is pinned to a full 40-character Git commit SHA.

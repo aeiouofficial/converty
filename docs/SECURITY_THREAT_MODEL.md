@@ -1,4 +1,4 @@
-# FileConvert Security Threat Model and Hardening Checklist
+# Converty Security Threat Model and Hardening Checklist
 
 **Status:** planning authority; implementation not started.
 **Security objective:** treat file contents and conversion engines as potentially hostile, minimize authority, contain compromise, fail closed, and preserve original data.

@@ -1,4 +1,4 @@
-# FileConvert
+# Converty
 
 Windows 11 modern-context-menu file conversion platform. The long-term product is a generic, modular right-click converter for Audio, Images, Video, and future file families while keeping Explorer and the coordinator outside the untrusted media-parser boundary.
 
@@ -7,10 +7,10 @@ Windows 11 modern-context-menu file conversion platform. The long-term product i
 
 ## Current evidence-backed state
 Implemented source scaffolding exists for the deterministic engine-independent foundation:
-- `FileConvert.Contracts` — versioned IDs/contracts with schema-aligned bounds; no parser/process/network logic.
-- `FileConvert.Core` — format registry, capability graph, deterministic planner, safe output-name resolution.
-- `FileConvert.Serialization` — strict `System.Text.Json` v1 adapters with explicit enum text, version dispatch, unknown-member rejection, recursive duplicate-key rejection, and no transport/execution dependencies.
-- `FileConvert.FakeProviders` — non-executing Audio/Image/Video capability fixtures.
+- `Converty.Contracts` — versioned IDs/contracts with schema-aligned bounds; no parser/process/network logic.
+- `Converty.Core` — format registry, capability graph, deterministic planner, safe output-name resolution.
+- `Converty.Serialization` — strict `System.Text.Json` v1 adapters with explicit enum text, version dispatch, unknown-member rejection, recursive duplicate-key rejection, and no transport/execution dependencies.
+- `Converty.FakeProviders` — non-executing Audio/Image/Video capability fixtures.
 - `schemas/v1` — six strict JSON Schemas with `additionalProperties: false` and NUL-rejecting path constraints.
 - `tests` — xUnit v3/Microsoft Testing Platform source including seeded property/adversarial suites plus executable Python schema/security/toolchain/static verification.
 - `scripts/generate_sbom.py` — deterministic SPDX 2.3 source inventory; release mode fails closed until every managed lock file exists.
@@ -28,7 +28,7 @@ Not implemented yet: real Explorer integration, Bridge/Host IPC, probe/engine wo
 3. `machine-readable/build_evidence.json`
 4. `docs/development/IMPLEMENTATION_STATUS.md`
 5. `docs/TASK_BACKLOG.md`
-6. `docs/FileConvert_Master_Build_Plan.md`
+6. `docs/Converty_Master_Build_Plan.md`
 7. `docs/SECURITY_THREAT_MODEL.md`
 8. `docs/TEST_AND_RELEASE_GATES.md`
 9. `docs/supply-chain/CI_PROVENANCE_POLICY.md`
@@ -67,4 +67,4 @@ cmake --build --preset native-smoke
 The source-controlled architecture authority is under `docs/`, `source/`, and `reference-images/*.dot`. The complete versioned workspace ZIP additionally carries presentation/render artifacts such as the Word build-plan rendering and PNG/SVG diagram renders; those generated/binary presentation copies are intentionally not required for building or continuing the Git repository.
 
 ## Versioned workspace delivery
-See `docs/development/VERSIONING.md`. Assistant tranches ship complete `FileConvert_<VERSION>_full_workspace.zip` snapshots; build caches, `.git`, package caches, Python bytecode, `.env`, and common private-key file forms are excluded.
+See `docs/development/VERSIONING.md`. Assistant tranches ship complete `Converty_<VERSION>_full_workspace.zip` snapshots; build caches, `.git`, package caches, Python bytecode, `.env`, and common private-key file forms are excluded.

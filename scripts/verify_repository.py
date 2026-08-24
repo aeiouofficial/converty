@@ -15,15 +15,15 @@ REQUIRED_FILES = [
     "Directory.Build.props",
     "Directory.Packages.props",
     "NuGet.Config",
-    "FileConvert.slnx",
-    "src/FileConvert.Contracts/FileConvert.Contracts.csproj",
-    "src/FileConvert.Core/FileConvert.Core.csproj",
-    "src/FileConvert.FakeProviders/FileConvert.FakeProviders.csproj",
-    "src/FileConvert.Serialization/FileConvert.Serialization.csproj",
-    "src/FileConvert.Serialization/ContractJson.cs",
-    "tests/FileConvert.Contracts.Tests/FileConvert.Contracts.Tests.csproj",
-    "tests/FileConvert.Core.Tests/FileConvert.Core.Tests.csproj",
-    "tests/FileConvert.Serialization.Tests/FileConvert.Serialization.Tests.csproj",
+    "Converty.slnx",
+    "src/Converty.Contracts/Converty.Contracts.csproj",
+    "src/Converty.Core/Converty.Core.csproj",
+    "src/Converty.FakeProviders/Converty.FakeProviders.csproj",
+    "src/Converty.Serialization/Converty.Serialization.csproj",
+    "src/Converty.Serialization/ContractJson.cs",
+    "tests/Converty.Contracts.Tests/Converty.Contracts.Tests.csproj",
+    "tests/Converty.Core.Tests/Converty.Core.Tests.csproj",
+    "tests/Converty.Serialization.Tests/Converty.Serialization.Tests.csproj",
     "docs/superpowers/specs/2026-08-24-foundation-design.md",
     "docs/superpowers/plans/2026-08-24-foundation-implementation.md",
     "docs/superpowers/plans/2026-08-24-foundation-dev2-implementation.md",
@@ -45,12 +45,12 @@ REQUIRED_FILES = [
 ]
 
 REQUIRED_SOURCE_TOKENS = {
-    "src/FileConvert.Contracts/SchemaVersions.cs": ["Current = 1"],
-    "src/FileConvert.Contracts/Identifiers/IdentifierRules.cs": ["IsValid"],
-    "src/FileConvert.Core/Capabilities/CapabilityGraph.cs": ["sealed class CapabilityGraph"],
-    "src/FileConvert.Core/Planning/ConversionPlanner.cs": ["sealed class ConversionPlanner"],
-    "src/FileConvert.Core/Output/OutputPathResolver.cs": ["sealed class OutputPathResolver"],
-    "src/FileConvert.Serialization/ContractJson.cs": [
+    "src/Converty.Contracts/SchemaVersions.cs": ["Current = 1"],
+    "src/Converty.Contracts/Identifiers/IdentifierRules.cs": ["IsValid"],
+    "src/Converty.Core/Capabilities/CapabilityGraph.cs": ["sealed class CapabilityGraph"],
+    "src/Converty.Core/Planning/ConversionPlanner.cs": ["sealed class ConversionPlanner"],
+    "src/Converty.Core/Output/OutputPathResolver.cs": ["sealed class OutputPathResolver"],
+    "src/Converty.Serialization/ContractJson.cs": [
         "JsonUnmappedMemberHandling.Disallow",
         "Unsupported schema version",
         "PropertyNameCaseInsensitive = false",
@@ -95,7 +95,7 @@ def main() -> int:
     if global_json.get("test", {}).get("runner") != "Microsoft.Testing.Platform":
         fail("global.json must select Microsoft.Testing.Platform for .NET 10 dotnet test")
 
-    for xml_path in ["Directory.Build.props", "Directory.Packages.props", "FileConvert.slnx"]:
+    for xml_path in ["Directory.Build.props", "Directory.Packages.props", "Converty.slnx"]:
         try:
             ET.parse(ROOT / xml_path)
         except ET.ParseError as exc:
@@ -154,29 +154,29 @@ def main() -> int:
     source_sbom = json.loads((ROOT / "machine-readable/source_sbom.spdx.json").read_text(encoding="utf-8"))
     if source_sbom.get("spdxVersion") != "SPDX-2.3":
         fail("source SBOM must be SPDX-2.3")
-    if source_sbom.get("name") != f"FileConvert-source-{version}":
+    if source_sbom.get("name") != f"Converty-source-{version}":
         fail("source SBOM version/name must match VERSION")
 
-    solution = (ROOT / "FileConvert.slnx").read_text(encoding="utf-8")
+    solution = (ROOT / "Converty.slnx").read_text(encoding="utf-8")
     for project in [
-        "src/FileConvert.Serialization/FileConvert.Serialization.csproj",
-        "tests/FileConvert.Serialization.Tests/FileConvert.Serialization.Tests.csproj",
+        "src/Converty.Serialization/Converty.Serialization.csproj",
+        "tests/Converty.Serialization.Tests/Converty.Serialization.Tests.csproj",
     ]:
         if project not in solution:
             fail(f"solution missing {project}")
 
-    serialization_project = (ROOT / "src/FileConvert.Serialization/FileConvert.Serialization.csproj").read_text(encoding="utf-8")
-    if "FileConvert.Contracts" not in serialization_project or "PackageReference" in serialization_project:
+    serialization_project = (ROOT / "src/Converty.Serialization/Converty.Serialization.csproj").read_text(encoding="utf-8")
+    if "Converty.Contracts" not in serialization_project or "PackageReference" in serialization_project:
         fail("Serialization must reference Contracts only and introduce no package dependency")
-    if "FileConvert.Core" in serialization_project:
+    if "Converty.Core" in serialization_project:
         fail("Serialization must not reference Core")
 
     for project in [
-        ROOT / "src/FileConvert.Contracts/FileConvert.Contracts.csproj",
-        ROOT / "src/FileConvert.Core/FileConvert.Core.csproj",
+        ROOT / "src/Converty.Contracts/Converty.Contracts.csproj",
+        ROOT / "src/Converty.Core/Converty.Core.csproj",
     ]:
         text = project.read_text(encoding="utf-8")
-        if "FileConvert.Serialization" in text:
+        if "Converty.Serialization" in text:
             fail(f"{project.relative_to(ROOT)} must not reference Serialization")
 
     for rel, tokens in REQUIRED_SOURCE_TOKENS.items():
@@ -189,9 +189,9 @@ def main() -> int:
                 fail(f"{rel} missing expected token {token!r}")
 
     for project_dir in [
-        ROOT / "src/FileConvert.Contracts",
-        ROOT / "src/FileConvert.Core",
-        ROOT / "src/FileConvert.Serialization",
+        ROOT / "src/Converty.Contracts",
+        ROOT / "src/Converty.Core",
+        ROOT / "src/Converty.Serialization",
     ]:
         for path in project_dir.rglob("*.cs"):
             text = path.read_text(encoding="utf-8", errors="replace")

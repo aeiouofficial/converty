@@ -1,4 +1,4 @@
-# FileConvert 0.1.0-dev.4 — Next-Agent Handover
+# Converty 0.1.0-dev.4 — Next-Agent Handover
 
 ## First action
 Read, in order:
@@ -6,7 +6,7 @@ Read, in order:
 2. `machine-readable/build_evidence.json`
 3. `docs/development/IMPLEMENTATION_STATUS.md`
 4. `docs/TASK_BACKLOG.md`
-5. `docs/FileConvert_Master_Build_Plan.md`
+5. `docs/Converty_Master_Build_Plan.md`
 6. `docs/SECURITY_THREAT_MODEL.md`
 7. `docs/TEST_AND_RELEASE_GATES.md`
 8. `docs/supply-chain/CI_PROVENANCE_POLICY.md`
@@ -69,7 +69,7 @@ Executable dev.4 evidence does include:
 5. IPC uses explicit same-user ACL + peer validation + bounded/versioned framing; default pipe ACL is forbidden.
 6. Presets/IPC never carry raw executable command strings or raw engine argument vectors.
 7. Provider options are typed/whitelisted before argument token construction.
-8. Workers write only FileConvert-owned private staging. Host validates then atomically commits final output.
+8. Workers write only Converty-owned private staging. Host validates then atomically commits final output.
 9. Strict isolation never silently falls back to compatibility mode.
 10. Arbitrary writable DLL/plugin auto-loading remains forbidden.
 11. Safe collision default remains numbered-copy.

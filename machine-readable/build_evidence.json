@@ -18,7 +18,7 @@
     {"command":"git diff --check","status":"PASS"}
   ],
   "authoredNotExecuted": [
-    {"suite":"FileConvert.Contracts.Tests + FileConvert.Core.Tests + FileConvert.Serialization.Tests","framework":"xunit.v3.mtp-v2 4.0.0 / Microsoft Testing Platform","factsAuthored":55,"theoriesAuthored":2,"reason":"No dotnet SDK is available; SDK 10.0.400 could not be provisioned through the sandbox download path."},
+    {"suite":"Converty.Contracts.Tests + Converty.Core.Tests + Converty.Serialization.Tests","framework":"xunit.v3.mtp-v2 4.0.0 / Microsoft Testing Platform","factsAuthored":55,"theoriesAuthored":2,"reason":"No dotnet SDK is available; SDK 10.0.400 could not be provisioned through the sandbox download path."},
     {"suite":"NuGet lock-file generation/review","status":"NOT_RUN","managedProjects":7,"lockFilesPresent":0,"reason":"Requires pinned .NET SDK 10.0.400."},
     {"suite":"Real restored-graph NuGet vulnerability audit","status":"NOT_RUN","reason":"build/dependency-audit.ps1 is authored and fixture-tested, but requires locked .NET restore output."},
     {"suite":"Release SPDX dependency SBOM","status":"BLOCKED_MISSING_LOCKS","reason":"Release mode deliberately refuses to invent dependency versions."},

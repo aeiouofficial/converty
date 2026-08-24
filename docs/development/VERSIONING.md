@@ -15,6 +15,6 @@ Every implementation tranche increments the development version and ships a comp
 7. Provide a copy-paste continuation prompt naming the next required version.
 
 ## Naming
-Workspace root: `FileConvert_<VERSION>`
+Workspace root: `Converty_<VERSION>`
 
-Archive: `FileConvert_<VERSION>_full_workspace.zip`
+Archive: `Converty_<VERSION>_full_workspace.zip`

@@ -10,7 +10,7 @@ $env:DOTNET_NOLOGO = '1'
 $root = Split-Path -Parent $PSScriptRoot
 Push-Location $root
 try {
-    dotnet build FileConvert.slnx --configuration $Configuration --no-restore -warnaserror
+    dotnet build Converty.slnx --configuration $Configuration --no-restore -warnaserror
     if ($LASTEXITCODE -ne 0) { throw 'dotnet build failed.' }
 }
 finally {

@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://fileconvert.invalid/schemas/v1/format-descriptor.schema.json",
-  "title": "FileConvert Format Descriptor v1",
+  "$id": "https://converty.invalid/schemas/v1/format-descriptor.schema.json",
+  "title": "Converty Format Descriptor v1",
   "type": "object",
   "additionalProperties": false,
   "required": ["schemaVersion", "id", "familyId", "displayName", "canonicalExtension", "extensions"],

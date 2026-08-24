@@ -121,9 +121,9 @@ def build_document(mode: str) -> dict:
         "spdxVersion": "SPDX-2.3",
         "dataLicense": "CC0-1.0",
         "SPDXID": document_id,
-        "name": f"FileConvert-{mode}-{version}",
-        "documentNamespace": f"https://fileconvert.invalid/spdx/{mode}/{version}/{namespace_hash}",
-        "creationInfo": {"created": CREATED, "creators": ["Tool: FileConvert deterministic SBOM generator"]},
+        "name": f"Converty-{mode}-{version}",
+        "documentNamespace": f"https://converty.invalid/spdx/{mode}/{version}/{namespace_hash}",
+        "creationInfo": {"created": CREATED, "creators": ["Tool: Converty deterministic SBOM generator"]},
         "packages": packages,
         "relationships": relationships,
         "comment": "Source mode is development inventory only. Release mode requires committed NuGet lock files and still requires human license/vulnerability review.",
@@ -131,7 +131,7 @@ def build_document(mode: str) -> dict:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Generate deterministic SPDX 2.3 JSON for FileConvert.")
+    parser = argparse.ArgumentParser(description="Generate deterministic SPDX 2.3 JSON for Converty.")
     parser.add_argument("--mode", choices=("source", "release"), required=True)
     args = parser.parse_args()
     document = build_document(args.mode)

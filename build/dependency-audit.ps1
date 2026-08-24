@@ -10,14 +10,14 @@ try {
     $expected = '10.0.400'
     $actual = (& dotnet --version).Trim()
     if ($actual -ne $expected) {
-        throw "FileConvert dependency audit requires .NET SDK $expected; active SDK is $actual."
+        throw "Converty dependency audit requires .NET SDK $expected; active SDK is $actual."
     }
 
     $artifactDir = Join-Path $root 'artifacts/dependency-audit'
     New-Item -ItemType Directory -Force -Path $artifactDir | Out-Null
     $report = Join-Path $artifactDir 'nuget-vulnerabilities.json'
 
-    $auditOutput = & dotnet package list --project FileConvert.slnx --include-transitive --vulnerable --format json --output-version 1 --no-restore
+    $auditOutput = & dotnet package list --project Converty.slnx --include-transitive --vulnerable --format json --output-version 1 --no-restore
     if ($LASTEXITCODE -ne 0) {
         throw "dotnet package list vulnerability audit failed with exit code $LASTEXITCODE."
     }
