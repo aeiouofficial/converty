@@ -51,7 +51,7 @@ jobs:
       - name: Run static gates
         run: python -m pytest -q tests/static
       - name: Verify tracked generated authority is current
-        run: git diff --exit-code -- machine-readable/source_sbom.spdx.json SHA256SUMS.txt
+        run: git diff --exit-code -- machine-readable/source_sbom.spdx.json machine-readable/release_sbom.spdx.json SHA256SUMS.txt
 
   managed:
     runs-on: windows-2025

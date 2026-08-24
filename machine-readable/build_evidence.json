@@ -46,13 +46,39 @@
     "sha256": "e0a329b870bb3c92b8789837bf09691d0e49d5985a7204e52a757656f968ee93",
     "mode": "development inventory"
   },
+  "releaseSbom": {
+    "path": "machine-readable/release_sbom.spdx.json",
+    "spdxVersion": "SPDX-2.3",
+    "packages": 23,
+    "firstPartyProjects": 7,
+    "nugetPackages": 16,
+    "sha256": "e4b8e611f69abec2c972af6ae101ed81507793cfe14a993d5f9c2bdd4af181bc",
+    "note": "Generated from all seven committed lock files. NuGet type=Project references are represented only as first-party SPDX project packages, not duplicated as external NuGet packages. Final human license/notices review remains open."
+  },
   "closure": {
-    "status": "IN_PROGRESS",
+    "status": "EVIDENCE_GENERATED_AWAITING_FINAL_HASH_SYNC",
     "branch": "dev/v0.1.0-dev.5-closure",
-    "releasePreflight": "PENDING_EXACT_CLOSURE_RUN",
-    "releaseDependencySbom": "PENDING_EXACT_CLOSURE_RUN",
-    "hashManifest": "PENDING_REGENERATION",
-    "note": "The pre-existing qualified managed run is immutable evidence. Closure CI must regenerate release evidence and the workspace hash manifest after authority synchronization."
+    "evidenceHeadSha": "8d410c6a114c679e87d8e31b790646198b2d2011",
+    "workflowRunId": 32787675918,
+    "managedJobId": 97622794328,
+    "supplyChainJobId": 97622793956,
+    "managed": "PASS",
+    "releasePreflight": "PASS",
+    "releaseDependencySbom": "PASS",
+    "contractVectors": "PASS",
+    "staticGate": "PASS",
+    "generatedHashManifest": {
+      "status": "PASS_GENERATED_SUPERSEDED_BY_EVIDENCE_COMMIT",
+      "entries": 174,
+      "sha256": "1d17b2962d979a7b9db770f8bc97d69407cdd515a373cb6ae7b234df7ad404aa"
+    },
+    "artifact": {
+      "id": 9542019202,
+      "name": "converty-dev5-supply-chain-evidence",
+      "digest": "sha256:273f4a541449a2e67b3221e0363704cda5dee4b5d564ed8758f8f5f7649b0502"
+    },
+    "trackedGeneratedAuthorityCheck": "FAIL_EXPECTED_STALE_HASH_MANIFEST",
+    "note": "On run 32787675918 every substantive supply-chain check passed and the Windows managed job completed successfully through native topology smoke. The supply-chain job failed only at its final tracked-generated-authority diff because SHA256SUMS.txt was intentionally stale. Exact generated SBOM bytes were subsequently synchronized on the closure branch. This evidence update and removal of the temporary sync workflow require one final manifest regeneration before exact-head CI can be green."
   },
   "unverifiedClaimsExplicitlyForbidden": [
     "Windows artifacts are signed",
