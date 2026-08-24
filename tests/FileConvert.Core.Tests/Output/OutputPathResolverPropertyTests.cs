@@ -5,7 +5,7 @@ namespace FileConvert.Core.Tests.Output;
 public sealed class OutputPathResolverPropertyTests
 {
     [Fact]
-    public void Resolve_preserves_seeded_unicode_basenames_and_never_returns_known_collision()
+    public void ResolvePreservesSeededUnicodeBasenamesAndNeverReturnsKnownCollision()
     {
         var random = new Random(0x0F17E0);
         string[] fragments = ["chapter", "Hörbuch", "日本語", "résumé", "данные", "mix_01", "δοκιμή"];
