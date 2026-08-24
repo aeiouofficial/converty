@@ -7,7 +7,7 @@ namespace FileConvert.Core.Tests.Capabilities;
 public sealed class CapabilityGraphTests
 {
     [Fact]
-    public void Find_returns_capabilities_in_deterministic_priority_order()
+    public void FindReturnsCapabilitiesInDeterministicPriorityOrder()
     {
         var source = FormatId.Parse("audio.wav");
         var target = FormatId.Parse("audio.mp3");
@@ -21,7 +21,7 @@ public sealed class CapabilityGraphTests
     }
 
     [Fact]
-    public void Constructor_rejects_duplicate_capability_identity()
+    public void ConstructorRejectsDuplicateCapabilityIdentity()
     {
         var source = FormatId.Parse("audio.wav");
         var target = FormatId.Parse("audio.mp3");
@@ -31,7 +31,7 @@ public sealed class CapabilityGraphTests
     }
 
     [Fact]
-    public void Find_returns_empty_for_unsupported_route()
+    public void FindReturnsEmptyForUnsupportedRoute()
     {
         var graph = new CapabilityGraph([]);
 
