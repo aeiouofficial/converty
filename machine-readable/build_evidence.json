@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "workspaceVersion": "0.1.0-dev.4",
+  "evidenceDate": "2026-08-24",
+  "environment": {"host":"ChatGPT Linux container","dotnetAvailable":false,"dotnetProbe":"command not found (exit 127)","cmakeVersion":"3.31.6","pythonVersion":"3.13.5","nativeCompilerObserved":"GNU C++ 14.2.0 for topology smoke only","productionNativeTarget":"Windows 11 x64 / MSVC C++20"},
+  "sdkProvisioningAttempt": {"requestedSdk":"10.0.400","officialLinuxX64Url":"https://builds.dotnet.microsoft.com/dotnet/Sdk/10.0.400/dotnet-sdk-10.0.400-linux-x64.tar.gz","officialAvailabilityVerified":true,"containerDownload":"FAILED","result":"SDK_NOT_INSTALLED_DEV4_SANDBOX_DOWNLOAD_BLOCKED"},
+  "executed": [
+    {"command":"python3 scripts/verify_ci_actions.py","status":"PASS","externalUsesVerified":5,"approvedActions":3,"assertions":["all external uses refs are reviewed 40-character commit SHAs","release comments agree with machine-readable pin authority"]},
+    {"command":"python3 scripts/verify_repository.py","status":"PASS","assertions":["workspace version and .NET SDK pin","XML build policy parses","Microsoft Testing Platform/xUnit MTP policy","strict dependency direction","no process/network/FFmpeg/native-loading tokens in Contracts/Core/Serialization","release/SBOM/CI provenance authority alignment","NuGet audit all/low and vulnerability-only source","machine-readable CI credential/permission/timeout policy"]},
+    {"command":"python3 -m pytest -q tests/static","status":"PASS","testsPassed":62,"testsFailed":0},
+    {"command":"python3 scripts/verify_contract_vectors.py","status":"PASS","cases":5,"note":"Raw v1 duplicate/unknown/executable-command mutation vectors checked against strict parser/schema expectations."},
+    {"command":"python3 scripts/generate_sbom.py --mode source (twice)","status":"PASS","packages":7,"byteIdentical":true,"sha256":"3ee2f81bfaf6550ab0449fe16852b0695fb5e772827b1234cd2224c720ebb87e","note":"SPDX 2.3 source inventory only; not release dependency evidence."},
+    {"command":"python3 scripts/verify_release_inputs.py","status":"EXPECTED_FAIL_BLOCKED","exitCode":2,"blockingFindings":7,"reason":"Each of the seven managed projects lacks packages.lock.json because the pinned .NET SDK cannot execute in this environment."},
+    {"command":"python3 scripts/generate_sbom.py --mode release","status":"EXPECTED_FAIL_BLOCKED","exitCode":2,"reason":"Release dependency SBOM refuses generation until all seven managed projects have real packages.lock.json inputs."},
+    {"command":"cmake --preset native-smoke","status":"PASS","note":"Topology/configuration proof only; production MSVC Explorer target does not exist yet."},
+    {"command":"cmake --build --preset native-smoke","status":"PASS","note":"Target-free native topology smoke only."},
+    {"command":"Python JSON/XML/Python syntax sweep","status":"PASS","jsonFilesParsed":31,"xmlFilesParsed":3,"pythonFilesCompiled":17},
+    {"command":"git diff --check","status":"PASS"}
+  ],
+  "authoredNotExecuted": [
+    {"suite":"FileConvert.Contracts.Tests + FileConvert.Core.Tests + FileConvert.Serialization.Tests","framework":"xunit.v3.mtp-v2 4.0.0 / Microsoft Testing Platform","factsAuthored":55,"theoriesAuthored":2,"reason":"No dotnet SDK is available; SDK 10.0.400 could not be provisioned through the sandbox download path."},
+    {"suite":"NuGet lock-file generation/review","status":"NOT_RUN","managedProjects":7,"lockFilesPresent":0,"reason":"Requires pinned .NET SDK 10.0.400."},
+    {"suite":"Real restored-graph NuGet vulnerability audit","status":"NOT_RUN","reason":"build/dependency-audit.ps1 is authored and fixture-tested, but requires locked .NET restore output."},
+    {"suite":"Release SPDX dependency SBOM","status":"BLOCKED_MISSING_LOCKS","reason":"Release mode deliberately refuses to invent dependency versions."},
+    {"suite":"Windows release signing","status":"POLICY_ONLY_NO_SIGNING_EVIDENCE","reason":"Private keys are external by policy and no production artifact exists."}
+  ],
+  "unverifiedClaimsExplicitlyForbidden": ["managed project compiles","xUnit tests pass","NuGet lock graph is reviewed","real dependency vulnerability audit is clean","release dependency SBOM is complete or reviewed","Windows artifacts are signed","Windows/MSVC native hardening flags compile","Explorer integration works","runtime conversion works","worker sandbox works","typed JSON adapters are managed-runtime verified"],
+  "sourceSbom": {"path":"machine-readable/source_sbom.spdx.json","spdxVersion":"SPDX-2.3","packages":7,"sha256":"3ee2f81bfaf6550ab0449fe16852b0695fb5e772827b1234cd2224c720ebb87e","deterministicDoubleGeneration":"PASS"},
+  "ciProvenance": {"externalUsesVerified":5,"approvedActions":3,"checkoutPersistCredentials":false,"workflowPermissions":{"contents":"read"},"jobTimeoutMinutes":{"supply-chain-static":15,"managed":30}}
+}

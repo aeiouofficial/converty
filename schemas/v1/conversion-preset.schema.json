@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://fileconvert.invalid/schemas/v1/conversion-preset.schema.json",
+  "title": "FileConvert Conversion Preset v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "id", "displayName", "familyId", "outputFormat", "options"],
+  "properties": {
+    "schemaVersion": { "type": "integer", "const": 1 },
+    "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9._-]{0,63}$" },
+    "displayName": { "type": "string", "minLength": 1, "maxLength": 128 },
+    "familyId": { "type": "string", "pattern": "^[a-z0-9][a-z0-9._-]{0,63}$" },
+    "outputFormat": { "type": "string", "pattern": "^[a-z0-9][a-z0-9._-]{0,63}$" },
+    "preferredProvider": { "type": ["string", "null"], "pattern": "^[a-z0-9][a-z0-9._-]{0,63}$" },
+    "options": {
+      "type": "object",
+      "maxProperties": 128,
+      "propertyNames": { "pattern": "^[a-z0-9][a-z0-9._-]{0,63}$" },
+      "additionalProperties": { "type": "string", "minLength": 1, "maxLength": 256 }
+    }
+  }
+}

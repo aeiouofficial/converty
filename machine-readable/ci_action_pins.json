@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "workspaceVersion": "0.1.0-dev.4",
+  "reviewedAt": "2026-08-24",
+  "policy": "Every external GitHub Action used by repository workflows must be pinned to the exact 40-character commit listed here; the release version remains as a trailing human-readable comment.",
+  "actions": {
+    "actions/checkout": {
+      "version": "v7.0.1",
+      "sha": "3d3c42e5aac5ba805825da76410c181273ba90b1",
+      "releaseUrl": "https://github.com/actions/checkout/releases/tag/v7.0.1"
+    },
+    "actions/setup-python": {
+      "version": "v7.0.0",
+      "sha": "5fda3b95a4ea91299a34e894583c3862153e4b97",
+      "releaseUrl": "https://github.com/actions/setup-python/releases/tag/v7.0.0"
+    },
+    "actions/setup-dotnet": {
+      "version": "v6.0.0",
+      "sha": "a98b56852c35b8e3190ac28c8c2271da59106c68",
+      "releaseUrl": "https://github.com/actions/setup-dotnet/releases/tag/v6.0.0"
+    }
+  }
+}

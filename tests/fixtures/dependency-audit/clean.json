@@ -1,0 +1,5 @@
+{
+  "version": 1,
+  "parameters": "--include-transitive --vulnerable",
+  "projects": [{"path":"tests/Clean.csproj","frameworks":[{"framework":"net10.0","topLevelPackages":[],"transitivePackages":[]}]}]
+}

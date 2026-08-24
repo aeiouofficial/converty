@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyName>FileConvert.Serialization</AssemblyName>
+    <RootNamespace>FileConvert.Serialization</RootNamespace>
+    <Description>Strict versioned JSON adapters for engine-independent FileConvert contracts.</Description>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../FileConvert.Contracts/FileConvert.Contracts.csproj" />
+  </ItemGroup>
+</Project>

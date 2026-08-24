@@ -1,0 +1,7 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyName>FileConvert.Contracts</AssemblyName>
+    <RootNamespace>FileConvert.Contracts</RootNamespace>
+    <Description>Versioned engine-independent contracts for FileConvert.</Description>
+  </PropertyGroup>
+</Project>

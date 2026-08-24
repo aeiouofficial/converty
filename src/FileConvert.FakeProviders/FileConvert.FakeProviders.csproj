@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyName>FileConvert.FakeProviders</AssemblyName>
+    <RootNamespace>FileConvert.FakeProviders</RootNamespace>
+    <Description>Data-only fake providers used to verify the generic capability architecture.</Description>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../FileConvert.Contracts/FileConvert.Contracts.csproj" />
+  </ItemGroup>
+</Project>

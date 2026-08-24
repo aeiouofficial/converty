@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "requestId": "11111111-1111-1111-1111-111111111111",
+  "source": {
+    "path": "C:\\Media\\chapter.wav",
+    "familyId": "audio",
+    "formatId": "audio.wav",
+    "length": 123456
+  },
+  "targetFormat": "audio.mp3",
+  "providerId": "fake.audio",
+  "mode": "transcode",
+  "presetId": null
+}

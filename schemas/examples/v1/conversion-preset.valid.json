@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "id": "audio.mp3.high",
+  "displayName": "MP3 — High Quality",
+  "familyId": "audio",
+  "outputFormat": "audio.mp3",
+  "preferredProvider": "ffmpeg.audio",
+  "options": {
+    "quality": "high",
+    "bitrate": "320000"
+  }
+}

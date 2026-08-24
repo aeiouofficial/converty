@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://fileconvert.invalid/schemas/v1/job-status.schema.json",
+  "title": "FileConvert Job Status Snapshot v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "jobId", "requestId", "state"],
+  "properties": {
+    "schemaVersion": { "type": "integer", "const": 1 },
+    "jobId": { "type": "string", "format": "uuid" },
+    "requestId": { "type": "string", "format": "uuid" },
+    "state": { "type": "string", "enum": ["queued", "probing", "planning", "staging", "converting", "validating", "committing", "completed", "failed", "cancelled", "rejected"] },
+    "progress": { "type": "number", "minimum": 0.0, "maximum": 1.0 },
+    "message": { "type": "string", "minLength": 1, "maxLength": 1024 }
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "schemaVersion": 1,
+  "requestId": "11111111-1111-1111-1111-111111111111",
+  "action": "convertToFormat",
+  "files": ["C:\\Media\\chapter.wav"],
+  "targetFormat": "audio.mp3"
+}

@@ -1,0 +1,20 @@
+.worktrees/
+**/bin/
+**/obj/
+.packages/
+artifacts/
+TestResults/
+*.user
+*.suo
+.vs/
+.idea/
+.DS_Store
+
+__pycache__/
+*.py[cod]
+# Never commit release signing secrets/private keys.
+.env
+*.pfx
+*.p12
+*.key
+*.pem

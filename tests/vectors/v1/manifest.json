@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "workspaceVersion": "0.1.0-dev.4",
+  "cases": [
+    {"id":"valid-minimal","file":"request-valid-minimal.json","expect":"valid"},
+    {"id":"duplicate-schema-version","file":"request-duplicate-schema-version.json","expect":"duplicateReject"},
+    {"id":"unknown-member","file":"request-unknown-member.json","expect":"schemaReject"},
+    {"id":"unknown-version","file":"request-unknown-version.json","expect":"schemaReject"},
+    {"id":"command-injection-member","file":"request-command-injection-member.json","expect":"schemaReject"}
+  ]
+}

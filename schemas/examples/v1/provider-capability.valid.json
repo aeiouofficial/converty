@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "providerId": "fake.audio",
+  "sourceFormat": "audio.wav",
+  "targetFormat": "audio.mp3",
+  "mode": "transcode",
+  "priority": 100
+}

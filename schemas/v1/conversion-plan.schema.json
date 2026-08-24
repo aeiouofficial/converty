@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://fileconvert.invalid/schemas/v1/conversion-plan.schema.json",
+  "title": "FileConvert Conversion Plan v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "requestId", "source", "targetFormat", "providerId", "mode"],
+  "properties": {
+    "schemaVersion": { "type": "integer", "const": 1 },
+    "requestId": { "type": "string", "format": "uuid" },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "familyId", "formatId", "length"],
+      "properties": {
+        "path": { "type": "string", "minLength": 1, "maxLength": 32767, "pattern": "^[^\\u0000]+$" },
+        "familyId": { "type": "string", "pattern": "^[a-z0-9][a-z0-9._-]{0,63}$" },
+        "formatId": { "type": "string", "pattern": "^[a-z0-9][a-z0-9._-]{0,63}$" },
+        "length": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "targetFormat": { "type": "string", "pattern": "^[a-z0-9][a-z0-9._-]{0,63}$" },
+    "providerId": { "type": "string", "pattern": "^[a-z0-9][a-z0-9._-]{0,63}$" },
+    "mode": { "type": "string", "enum": ["copy", "remux", "transcode", "transform"] },
+    "presetId": { "type": ["string", "null"], "pattern": "^[a-z0-9][a-z0-9._-]{0,63}$" }
+  }
+}

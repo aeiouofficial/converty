@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "id": "audio.wav",
+  "familyId": "audio",
+  "displayName": "WAV",
+  "canonicalExtension": ".wav",
+  "extensions": [".wav", ".wave"]
+}

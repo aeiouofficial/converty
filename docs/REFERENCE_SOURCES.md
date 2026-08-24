@@ -1,0 +1,23 @@
+# Reference sources — verified 2026-08-24
+
+- Microsoft Learn — Add a File Explorer context menu command to a packaged desktop app (updated 2026-07-16): https://learn.microsoft.com/en-us/windows/apps/desktop/modernize/integrate-packaged-app-with-file-explorer
+- Microsoft Learn — Named Pipe Security and Access Rights: https://learn.microsoft.com/en-us/windows/win32/ipc/named-pipe-security-and-access-rights
+- Microsoft Learn — Job Objects: https://learn.microsoft.com/en-us/windows/win32/procthread/job-objects
+- Microsoft Learn — AppContainer isolation: https://learn.microsoft.com/en-us/windows/win32/secauthz/appcontainer-isolation
+- Microsoft Learn — Implementing an AppContainer: https://learn.microsoft.com/en-us/windows/win32/secauthz/implementing-an-appcontainer
+- Microsoft Learn — Create Process In Sandbox APIs: https://learn.microsoft.com/en-us/windows/win32/secauthz/createprocessinsandbox
+- Microsoft Learn — UpdateProcThreadAttribute / mitigation policies: https://learn.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-updateprocthreadattribute
+- FFmpeg documentation — Protocols and `protocol_whitelist`: https://ffmpeg.org/ffmpeg-protocols.html
+- .NET Support Policy — .NET 10 is LTS through 2028-11-14: https://dotnet.microsoft.com/en-us/platform/support/policy
+- Microsoft .NET download authority — SDK 10.0.400: https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/sdk-10.0.400-windows-x64-installer
+- Microsoft Learn — Testing with `dotnet test`, .NET 10 Microsoft Testing Platform runner selection: https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-test
+- xUnit.net v3 getting started with Microsoft Testing Platform / `.NET 10`: https://xunit.net/docs/getting-started/v3/microsoft-testing-platform
+- NuGet — `xunit.v3.mtp-v2` 4.0.0: https://www.nuget.org/packages/xunit.v3.mtp-v2/4.0.0
+- Microsoft Testing Platform — telemetry extension / opt-out variable: https://learn.microsoft.com/en-us/dotnet/core/testing/microsoft-testing-platform-extensions-telemetry
+- SPDX specification 2.3 — package/file checksum and SBOM document model authority: https://spdx.github.io/spdx-spec/v2.3/
+- NuGet — Package Source Mapping / dependency source controls: https://learn.microsoft.com/en-us/nuget/consume-packages/package-source-mapping
+- NuGet — auditing package dependencies for security vulnerabilities: https://learn.microsoft.com/en-us/nuget/concepts/auditing-packages
+- GitHub Docs — security hardening for GitHub Actions (pin third-party actions to full-length commit SHAs): https://docs.github.com/en/actions/how-tos/security-for-github-actions/security-guides/security-hardening-for-github-actions
+- GitHub actions/checkout v7.0.1 release: https://github.com/actions/checkout/releases/tag/v7.0.1
+- GitHub actions/setup-dotnet v6.0.0 release: https://github.com/actions/setup-dotnet/releases/tag/v6.0.0
+- GitHub actions/setup-python v7.0.0 release: https://github.com/actions/setup-python/releases/tag/v7.0.0

@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "jobId": "7f3b9c2e-a1d4-4d77-9d2f-6f2f18cb9b93",
+  "requestId": "2c9dccb3-6d1b-4db3-9c6b-f1406453fdc1",
+  "state": "converting",
+  "progress": 0.5,
+  "message": "Conversion worker is running."
+}

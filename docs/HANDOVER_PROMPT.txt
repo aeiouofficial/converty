@@ -1,0 +1,31 @@
+# FileConvert Continuation Prompt
+
+Continue the FileConvert project from the full workspace ZIP I am uploading: `FileConvert_0.1.0-dev.4_full_workspace.zip`.
+
+Treat the ZIP contents as the current source of truth. Read these first, in order:
+
+1. `docs/HANDOVER_NEXT_AGENT.md`
+2. `machine-readable/handover_state.json`
+3. `machine-readable/build_evidence.json`
+4. `docs/development/IMPLEMENTATION_STATUS.md`
+5. `docs/TASK_BACKLOG.md`
+6. `docs/FileConvert_Master_Build_Plan.md`
+7. `docs/SECURITY_THREAT_MODEL.md`
+8. `docs/TEST_AND_RELEASE_GATES.md`
+9. `docs/supply-chain/SBOM_POLICY.md`
+10. `docs/supply-chain/RELEASE_SIGNING_POLICY.md`
+11. `docs/supply-chain/CI_PROVENANCE_POLICY.md`
+12. `docs/superpowers/specs/2026-08-24-foundation-design.md`
+13. `docs/superpowers/plans/2026-08-24-foundation-dev4-implementation.md`
+
+Continue immediately from the evidence-backed state; do not restart the architecture or ask me to re-specify locked decisions. The next delivered workspace must be `0.1.0-dev.5` and again be a complete full-workspace ZIP with updated handover/evidence/checksums and a new copy-paste continuation prompt.
+
+First priority remains the real .NET-capable B0/B1 gate. Use .NET SDK exactly `10.0.400`. Run `./build/bootstrap.ps1 -GenerateLockFiles`, review every generated `packages.lock.json`, verify immediate locked restore, then run `./build/dependency-audit.ps1`, managed Release build, and all xUnit/Microsoft Testing Platform tests. Fix defects without weakening tests, schemas, strict JSON behavior, dependency audit policy, or security boundaries.
+
+After real lock files exist, run `python scripts/verify_release_inputs.py` and `python scripts/generate_sbom.py --mode release`. Review the actual dependency graph/license/vulnerability state and record exact evidence. Source-only SPDX is development inventory and must not be mislabeled as release dependency proof.
+
+Only if B0/B1 managed gates are genuinely green enough to proceed, write the focused B2 design/plan and begin Host/Bridge authenticated named-pipe IPC test-first. Preserve explicit same-user DACL + peer validation + bounded/versioned framing. Do not implement FFmpeg/WIC execution before B2/B4 containment foundations exist. If .NET is still unavailable, do not start B2; advance only useful evidence-safe B0/B1 work and preserve the blocker honestly.
+
+Preserve non-negotiable boundaries: Explorer trigger only; Host never parses untrusted media or loads codec/plugin code; probing/conversion belongs to disposable restricted workers; ordinary local conversion has no network; strict isolation never silently downgrades; presets/IPC never contain executable commands/pass-through argument vectors; provider options are whitelisted/typed; workers write only private staging; Host validates then atomically commits; arbitrary writable DLL/plugin auto-loading is forbidden; numbered-copy remains safe default; unknown JSON versions/members/duplicates fail closed; release dependency versions are never fabricated; signing private keys never enter the repository/workspace; external CI Actions remain full-SHA pinned; checkout credentials remain non-persistent; CI jobs retain finite timeouts.
+
+Report only gates actually executed. At tranche end update `VERSION`/README/CHANGELOG/backlog/status/handover/machine-readable evidence consistently, generate source/release SBOM as evidence permits, `package_manifest.json` and `SHA256SUMS.txt`, verify the ZIP by reopening it and checking CRC/embedded hashes, and give me a direct download link for `FileConvert_0.1.0-dev.5_full_workspace.zip` plus the next handover prompt to paste back.
