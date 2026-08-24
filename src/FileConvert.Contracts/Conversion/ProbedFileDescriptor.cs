@@ -18,10 +18,7 @@ public sealed class ProbedFileDescriptor
 
         ArgumentNullException.ThrowIfNull(familyId);
         ArgumentNullException.ThrowIfNull(formatId);
-        if (length < 0)
-        {
-            throw new ArgumentOutOfRangeException(nameof(length));
-        }
+        ArgumentOutOfRangeException.ThrowIfNegative(length);
 
         Path = path;
         FamilyId = familyId;
