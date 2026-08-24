@@ -255,12 +255,12 @@ public static class ContractJson
     {
         var wire = DeserializeWire<FormatDescriptorWire>(json, "format descriptor");
         return MapDomain("format descriptor", () => new FormatDescriptor(
-            wire.SchemaVersion,
             FormatId.Parse(RequireText(wire.Id, "id")),
             FileFamilyId.Parse(RequireText(wire.FamilyId, "familyId")),
             RequireText(wire.DisplayName, "displayName"),
             RequireText(wire.CanonicalExtension, "canonicalExtension"),
-            RequireArray(wire.Extensions, "extensions")));
+            RequireArray(wire.Extensions, "extensions"),
+            wire.SchemaVersion));
     }
 
     private static ConversionPlan DeserializeConversionPlanV1(string json)
@@ -331,7 +331,7 @@ public static class ContractJson
     private static string[] RequireArray(string[]? value, string propertyName) =>
         value ?? throw new JsonException($"Property {propertyName} is required.");
 
-    private static IReadOnlyDictionary<string, string> RequireOptions(SortedDictionary<string, string>? value) =>
+    private static SortedDictionary<string, string> RequireOptions(SortedDictionary<string, string>? value) =>
         value ?? throw new JsonException("Property options is required.");
 
     private static Guid ParseGuid(string? value, string propertyName)
