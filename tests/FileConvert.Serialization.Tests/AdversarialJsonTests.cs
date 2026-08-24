@@ -82,9 +82,7 @@ public sealed class AdversarialJsonTests
     public void OverlongPresetDisplayNameIsRejectedAfterWireParse()
     {
         var displayName = new string('x', 129);
-        var json = $$"""
-        {"schemaVersion":1,"id":"audio.mp3.high","displayName":"{{displayName}}","familyId":"audio","outputFormat":"audio.mp3","options":{}}
-        """;
+        var json = "{\"schemaVersion\":1,\"id\":\"audio.mp3.high\",\"displayName\":\"" + displayName + "\",\"familyId\":\"audio\",\"outputFormat\":\"audio.mp3\",\"options\":{}}";
         Assert.Throws<JsonException>(() => ContractJson.DeserializeConversionPreset(json));
     }
 
