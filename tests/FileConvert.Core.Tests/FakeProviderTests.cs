@@ -7,7 +7,7 @@ namespace FileConvert.Core.Tests;
 public sealed class FakeProviderTests
 {
     [Fact]
-    public void Default_catalog_exposes_independent_audio_image_and_video_routes()
+    public void DefaultCatalogExposesIndependentAudioImageAndVideoRoutes()
     {
         var providers = FakeProviderCatalog.CreateDefault();
         var graph = new CapabilityGraph(providers.SelectMany(p => p.Capabilities));
