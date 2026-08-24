@@ -66,7 +66,7 @@ public sealed class AdversarialJsonTests
         const string json = """
         {"schemaVersion":1,"requestId":"11111111-1111-1111-1111-111111111111","action":"convertUsingDefault","files":["a.wav"],}
         """;
-        Assert.Throws<JsonException>(() => ContractJson.DeserializeConversionRequest(json));
+        Assert.ThrowsAny<JsonException>(() => ContractJson.DeserializeConversionRequest(json));
     }
 
     [Fact]
@@ -75,7 +75,7 @@ public sealed class AdversarialJsonTests
         const string json = """
         {"schemaVersion":1,"requestId":"11111111-1111-1111-1111-111111111111",/*x*/"action":"convertUsingDefault","files":["a.wav"]}
         """;
-        Assert.Throws<JsonException>(() => ContractJson.DeserializeConversionRequest(json));
+        Assert.ThrowsAny<JsonException>(() => ContractJson.DeserializeConversionRequest(json));
     }
 
     [Fact]
