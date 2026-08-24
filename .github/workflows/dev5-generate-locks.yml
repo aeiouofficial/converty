@@ -117,7 +117,7 @@ jobs:
             Write-Host 'Qualified tree already matches the branch; nothing to publish.'
             exit 0
           }
-          git commit -m 'refactor: rebrand FileConvert to Converty'
+          git commit -m 'refactor: apply Converty product rebrand'
           if ($LASTEXITCODE -ne 0) { throw 'git commit failed.' }
           git push origin 'HEAD:dev/v0.1.0-dev.5'
           if ($LASTEXITCODE -ne 0) { throw 'git push failed.' }
