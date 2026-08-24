@@ -1,0 +1,44 @@
+name: dev5-generate-locks
+
+on:
+  push:
+    branches:
+      - dev/v0.1.0-dev.5
+
+permissions:
+  contents: read
+
+env:
+  DOTNET_CLI_TELEMETRY_OPTOUT: '1'
+  DOTNET_NOLOGO: '1'
+  TESTINGPLATFORM_TELEMETRY_OPTOUT: '1'
+
+jobs:
+  generate-locks:
+    runs-on: windows-2025
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v6.0.0
+        with:
+          dotnet-version: 10.0.400
+      - name: Generate and verify lock files
+        shell: pwsh
+        run: ./build/bootstrap.ps1 -GenerateLockFiles
+      - name: Assert exactly seven lock files
+        shell: pwsh
+        run: |
+          $locks = @(Get-ChildItem -Path . -Filter packages.lock.json -Recurse -File)
+          if ($locks.Count -ne 7) {
+            throw "Expected exactly 7 packages.lock.json files, found $($locks.Count)."
+          }
+          $locks | ForEach-Object { Write-Host $_.FullName }
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: fileconvert-dev5-nuget-locks
+          path: '**/packages.lock.json'
+          if-no-files-found: error
+          retention-days: 1
+          compression-level: 9
