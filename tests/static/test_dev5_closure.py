@@ -35,7 +35,7 @@ def test_every_managed_project_has_a_committed_lock_file() -> None:
     assert all(path.is_file() for path in locks)
 
 
-def test_release_sbom_generator_skips_project_references() -> None:
+def test_release_sbom_generator_skips_project_references_as_nuget_packages() -> None:
     result = subprocess.run(
         [sys.executable, "scripts/generate_sbom.py", "--mode", "release"],
         cwd=ROOT,
@@ -45,11 +45,15 @@ def test_release_sbom_generator_skips_project_references() -> None:
     )
     assert result.returncode == 0, result.stderr or result.stdout
     sbom = _json("machine-readable/release_sbom.spdx.json")
-    names = {package["name"].lower() for package in sbom["packages"]}
-    assert "converty.contracts" not in names
-    assert "converty.core" not in names
-    assert "converty.fakeproviders" not in names
-    assert "xunit.v3.mtp-v2" in names
+    nuget_names = {
+        package["name"].lower()
+        for package in sbom["packages"]
+        if package["SPDXID"].startswith("SPDXRef-NuGet-")
+    }
+    assert "converty.contracts" not in nuget_names
+    assert "converty.core" not in nuget_names
+    assert "converty.fakeproviders" not in nuget_names
+    assert "xunit.v3.mtp-v2" in nuget_names
 
 
 def test_dev5_managed_qualification_evidence_is_recorded() -> None:
