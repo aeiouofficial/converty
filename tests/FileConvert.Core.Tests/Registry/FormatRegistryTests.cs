@@ -25,7 +25,7 @@ public sealed class FormatRegistryTests
     public void RegistryRejectsExtensionCollisionBetweenFormats()
     {
         var first = new FormatDescriptor(FormatId.Parse("image.jpg"), FileFamilyId.Parse("image"), "JPEG", ".jpg", [".jpg", ".jpeg"]);
-        var second = new FormatDescriptor(FormatId.Parse("image.other"), FileFamilyId.Parse("image"), "Other", ".other", [".jpeg"]);
+        var second = new FormatDescriptor(FormatId.Parse("image.other"), FileFamilyId.Parse("image"), "Other", ".other", [".other", ".jpeg"]);
         Assert.Throws<ArgumentException>(() => new FormatRegistry([first, second]));
     }
 }
