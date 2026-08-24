@@ -7,7 +7,7 @@ namespace FileConvert.Core.Tests.Capabilities;
 public sealed class CapabilityGraphPropertyTests
 {
     [Fact]
-    public void Find_order_is_stable_across_seeded_input_permutations()
+    public void FindOrderIsStableAcrossSeededInputPermutations()
     {
         var random = new Random(0x4C1A551);
         var source = FormatId.Parse("audio.wav");
