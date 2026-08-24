@@ -4,7 +4,4 @@
     <RootNamespace>Converty.Security</RootNamespace>
     <Description>Windows trust-boundary policy and IPC authorization primitives for Converty.</Description>
   </PropertyGroup>
-  <ItemGroup>
-    <PackageReference Include="System.IO.Pipes.AccessControl" />
-  </ItemGroup>
 </Project>
