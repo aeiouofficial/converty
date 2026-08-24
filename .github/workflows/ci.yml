@@ -29,10 +29,29 @@ jobs:
         run: python scripts/verify_ci_actions.py
       - name: Generate deterministic source SBOM
         run: python scripts/generate_sbom.py --mode source
+      - name: Verify release inputs
+        run: python scripts/verify_release_inputs.py
+      - name: Generate release dependency SBOM
+        run: python scripts/generate_sbom.py --mode release
+      - name: Regenerate SHA-256 workspace manifest
+        run: python scripts/generate_hash_manifest.py
+      - name: Upload supply-chain evidence
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: converty-dev5-supply-chain-evidence
+          path: |
+            machine-readable/source_sbom.spdx.json
+            machine-readable/release_sbom.spdx.json
+            SHA256SUMS.txt
+          if-no-files-found: error
+          retention-days: 7
+          compression-level: 0
       - name: Verify raw contract vectors
         run: python scripts/verify_contract_vectors.py
       - name: Run static gates
         run: python -m pytest -q tests/static
+      - name: Verify tracked generated authority is current
+        run: git diff --exit-code -- machine-readable/source_sbom.spdx.json SHA256SUMS.txt
 
   managed:
     runs-on: windows-2025

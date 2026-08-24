@@ -1,45 +1,47 @@
 # Converty Implementation Backlog
 
-Use this as the execution checklist. A box is checked only when the stated deliverable has matching evidence. Items marked **source authored; managed verification pending** remain unchecked intentionally.
+Check a box only when the stated deliverable has matching evidence.
 
 ## B0 Repository/bootstrap
 - [x] Create solution/repository topology.
-- [x] Pin .NET 10 SDK (`global.json` → `10.0.400`, `latestPatch`).
-- [x] Pin native CMake/C++20 topology and hardening-policy function; Linux CMake smoke passes.
-- [ ] Establish qualified Windows x64 Debug/Release build evidence.
-- [x] Enable nullable, warnings-as-errors/analyzers policy and native MSVC hardening flags in source configuration.
-- [ ] Dependency locking — generation is force-evaluated and immediately rechecked in locked mode, but actual `packages.lock.json` generation/review requires a .NET-capable environment.
-- [x] CI Action provenance — every external workflow Action is full-SHA pinned with a machine-readable reviewed pin authority and executable verifier.
-- [x] CI execution containment — checkout credentials are not persisted, workflow permissions are read-only, and static/managed jobs have finite 15/30 minute ceilings.
-- [ ] Dependency vulnerability audit — explicit NuGet `all`/`low` audit policy, vulnerability-only audit source, CI command and fail-closed report verifier are implemented; real restored-graph evidence requires .NET 10.0.400.
-- [ ] SBOM generation and review — deterministic SPDX 2.3 source mode is implemented and tested; release mode intentionally refuses missing managed lock files, so release dependency/license/vulnerability review is pending.
+- [x] Pin .NET 10 SDK (`10.0.400`, `latestPatch`).
+- [x] Native CMake/C++20 topology and hardening-policy scaffold.
+- [ ] Full qualified Windows x64 Debug/Release production matrix — Release managed foundation is green; Debug and production native targets remain pending.
+- [x] Nullable, warnings-as-errors/analyzers policy.
+- [x] Dependency locking — seven `packages.lock.json` files committed and locked restore passes.
+- [x] CI Action provenance — all external workflow Actions full-SHA pinned with machine-readable authority.
+- [x] CI execution containment — non-persistent checkout credentials, read-only workflow permissions, finite job timeouts.
+- [x] Dependency vulnerability audit — real restored graph passes at `all`/`low`, zero vulnerable-result packages.
+- [ ] Final release dependency/license/notices review — deterministic source/release SPDX tooling exists; final human/license release approval remains open.
 - [x] Workspace/package SHA-256 manifest tooling.
-- [ ] Release-signing policy/plumbing and signing evidence — machine-readable policy, external key-custody rule, timestamp requirement, and workspace secret exclusions are implemented; actual signing infrastructure/signature evidence is pending.
-- [x] Copy architecture/security/handover authority docs and reference images into repository.
-- [ ] Clean-clone Windows managed build verified.
+- [ ] Release signing infrastructure and signed-artifact evidence.
+- [x] Architecture/security/handover authority in repository.
+- [x] Clean-checkout Windows managed restore/build/test verified in GitHub Actions.
 
 ## B1 Core contracts
-- [x] Strict versioned request/preset/provider/job/plan/format JSON schemas; executable schema tests pass.
-- [x] Schema/domain limit alignment for path/display-name/extension/option bounds and embedded-NUL rejection; executable static/schema gates pass.
-- [ ] Format/family/provider/preset IDs and validation — **source + xUnit/property tests authored; managed verification pending**.
-- [ ] Capability graph — **source + xUnit + seeded ordering property test authored; managed verification pending**.
-- [ ] Conversion planner — **source + xUnit authored; managed verification pending**.
-- [ ] Fake providers for Audio/Image/Video — **source + xUnit authored; managed verification pending**.
-- [ ] Output naming/collision resolver — **source + xUnit + seeded Unicode/collision property test authored; managed verification pending**.
-- [ ] Property/fuzz tests for paths/names/collisions — **bounded seeded source authored; managed execution pending**.
-- [ ] Typed JSON serialization/migration adapters — **v1 source + strict static gates + xUnit/adversarial tests authored; managed execution pending**.
+- [x] Strict versioned request/preset/provider/job/plan/format JSON schemas.
+- [x] Schema/domain limit alignment and embedded-NUL rejection.
+- [x] Format/family/provider/preset IDs and validation — managed tests pass.
+- [x] Capability graph — managed and seeded ordering tests pass.
+- [x] Conversion planner — managed tests pass.
+- [x] Fake Audio/Image/Video providers — managed tests pass.
+- [x] Output naming/collision resolver — managed and seeded Unicode/collision tests pass.
+- [x] Bounded property/adversarial path/name/collision suites — managed execution passes.
+- [x] Typed JSON v1 serialization/migration adapters — managed/adversarial execution passes.
 
-## B2 Host/IPC
+**B1 qualification:** 63/63 managed tests PASS on the qualified dev.5 head.
+
+## B2 Host/IPC — next
 - [ ] Single-instance Host.
 - [ ] Explicit pipe DACL.
 - [ ] Peer validation.
-- [ ] Framing + size/count limits.
+- [ ] Framing + size/count/time limits.
 - [ ] Bridge.
-- [ ] Queue/journal.
+- [ ] Bounded queue/journal.
 - [ ] Cancellation/status.
 - [ ] IPC fuzz harness.
 
-**B2 start gate:** do not begin until the current dev.4 managed projects restore/build/test successfully with SDK 10.0.400 and reviewed lock files.
+**B2 start gate: PASS.** Begin in `0.1.0-dev.6`. No media parsing or engine execution belongs in B2.
 
 ## B3 Explorer
 - [ ] `IExplorerCommand` DLL.
@@ -80,8 +82,8 @@ Use this as the execution checklist. A box is checked only when the stated deliv
 
 ## B11–B12 Release
 - [ ] Fuzz + chaos matrix passes.
-- [ ] Dependency/static-analysis/security gates pass.
+- [ ] Dependency/static-analysis/security release gates pass.
 - [ ] Clean VM install/update/uninstall.
 - [ ] Signed package.
-- [ ] SBOM + notices + release hash manifest.
+- [ ] Final SBOM + notices + release hash manifest.
 - [ ] Final handover with exact evidence.

@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.1.0-dev.5 — 2026-08-25
+- Completed the product-name migration across active solution/project/module paths while preserving historical records.
+- Committed and locked all seven managed NuGet graphs; clean Windows locked restore passes with .NET SDK 10.0.400.
+- Qualified the restored dependency graph: zero vulnerable-result packages at the configured `all`/`low` threshold.
+- Qualified the Release build with zero warnings and zero errors.
+- Qualified Microsoft Testing Platform/xUnit: 63/63 managed tests pass.
+- Qualified static/provenance/contract-vector gates and native topology smoke.
+- Promoted permanent CI to run release preflight, generate source/release SPDX evidence, regenerate the workspace SHA-256 manifest, and publish supply-chain evidence.
+- B2 Host/Bridge authenticated IPC is now unblocked for `0.1.0-dev.6`.
+
 ## 0.1.0-dev.4 — 2026-08-24
 - Kept B2 blocked because .NET SDK 10.0.400 still cannot execute in this sandbox.
 - Pinned all external GitHub Actions to reviewed full commit SHAs with machine-readable provenance and static drift checks.

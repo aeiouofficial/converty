@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "workspaceVersion": "0.1.0-dev.4",
+  "workspaceVersion": "0.1.0-dev.5",
   "targetOs": "Windows 11",
   "dotnetSdk": "10.0.400",
   "targetFramework": "net10.0",
@@ -9,10 +9,10 @@
   "nativeBuild": "CMake + MSVC",
   "architecture": "x64-first",
   "notes": [
-    "The current ChatGPT execution container does not provide dotnet; C# compile/test evidence is intentionally absent until an actual managed run succeeds.",
-    "Official SDK 10.0.400 availability was re-verified on 2026-08-24; sandbox download of the official Linux x64 archive failed again in dev.4.",
-    "NuGet package lock files must be generated, immediately rechecked in locked mode, reviewed, and committed on the first .NET-capable execution before B0 can close.",
-    "Dev.4 pins all GitHub Actions to reviewed immutable commits and adds explicit NuGet vulnerability-audit configuration/report verification; the real managed dependency audit remains unexecuted until SDK 10.0.400 runs."
+    "The dev.5 qualification ran on a clean GitHub Actions Windows Server 2025 runner with .NET SDK 10.0.400.",
+    "All seven managed projects restored from committed lock files in locked mode; the restored-graph NuGet vulnerability audit reported zero vulnerable-result packages.",
+    "The qualified Release build completed with zero warnings and zero errors; Microsoft Testing Platform executed 63 tests with 63 successes.",
+    "Native topology smoke remains topology-only; the production Explorer target begins in B3."
   ],
   "testRunner": "Microsoft.Testing.Platform",
   "xunitMtpV2": "4.0.0"
