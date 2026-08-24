@@ -7,18 +7,28 @@ import xml.etree.ElementTree as ET
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
+CURRENT = "0.1.0-dev.5"
+NEXT = "0.1.0-dev.6"
 
 
 def run(*args: str) -> subprocess.CompletedProcess[str]:
     return subprocess.run([sys.executable, *args], cwd=ROOT, text=True, capture_output=True, check=False)
 
 
-def test_dev4_version_is_current() -> None:
-    assert (ROOT / "VERSION").read_text(encoding="utf-8").strip() == "0.1.0-dev.4"
+def test_current_version_is_dev5() -> None:
+    assert (ROOT / "VERSION").read_text(encoding="utf-8").strip() == CURRENT
 
 
-def test_dev4_provenance_authority_files_exist() -> None:
-    required = [ROOT / "docs/supply-chain/CI_PROVENANCE_POLICY.md", ROOT / "machine-readable/ci_action_pins.json", ROOT / "scripts/verify_ci_actions.py", ROOT / "scripts/verify_dependency_audit.py", ROOT / "build/dependency-audit.ps1", ROOT / "tests/fixtures/dependency-audit/clean.json", ROOT / "tests/fixtures/dependency-audit/vulnerable.json"]
+def test_provenance_authority_files_exist() -> None:
+    required = [
+        ROOT / "docs/supply-chain/CI_PROVENANCE_POLICY.md",
+        ROOT / "machine-readable/ci_action_pins.json",
+        ROOT / "scripts/verify_ci_actions.py",
+        ROOT / "scripts/verify_dependency_audit.py",
+        ROOT / "build/dependency-audit.ps1",
+        ROOT / "tests/fixtures/dependency-audit/clean.json",
+        ROOT / "tests/fixtures/dependency-audit/vulnerable.json",
+    ]
     assert all(path.is_file() for path in required)
 
 
@@ -80,16 +90,16 @@ def test_build_verify_includes_dependency_audit() -> None:
     assert "dependency-audit.ps1" in verify
 
 
-def test_handover_and_release_policy_are_dev4_synchronized() -> None:
+def test_handover_and_release_authority_are_current() -> None:
     handover = json.loads((ROOT / "machine-readable/handover_state.json").read_text(encoding="utf-8"))
     evidence = json.loads((ROOT / "machine-readable/build_evidence.json").read_text(encoding="utf-8"))
     release = json.loads((ROOT / "machine-readable/release_policy.json").read_text(encoding="utf-8"))
     pins = json.loads((ROOT / "machine-readable/ci_action_pins.json").read_text(encoding="utf-8"))
-    assert handover["workspaceVersion"] == "0.1.0-dev.4"
-    assert handover["nextWorkspaceVersion"] == "0.1.0-dev.5"
-    assert evidence["workspaceVersion"] == "0.1.0-dev.4"
-    assert release["workspaceVersion"] == "0.1.0-dev.4"
-    assert pins["workspaceVersion"] == "0.1.0-dev.4"
+    assert handover["workspaceVersion"] == CURRENT
+    assert handover["nextWorkspaceVersion"] == NEXT
+    assert evidence["workspaceVersion"] == CURRENT
+    assert release["workspaceVersion"] == CURRENT
+    assert pins["workspaceVersion"] == CURRENT
 
 
 def test_ci_checkout_does_not_persist_credentials_and_jobs_have_timeouts() -> None:

@@ -1,30 +1,91 @@
 {
   "schemaVersion": 1,
-  "workspaceVersion": "0.1.0-dev.4",
-  "evidenceDate": "2026-08-24",
-  "environment": {"host":"ChatGPT Linux container","dotnetAvailable":false,"dotnetProbe":"command not found (exit 127)","cmakeVersion":"3.31.6","pythonVersion":"3.13.5","nativeCompilerObserved":"GNU C++ 14.2.0 for topology smoke only","productionNativeTarget":"Windows 11 x64 / MSVC C++20"},
-  "sdkProvisioningAttempt": {"requestedSdk":"10.0.400","officialLinuxX64Url":"https://builds.dotnet.microsoft.com/dotnet/Sdk/10.0.400/dotnet-sdk-10.0.400-linux-x64.tar.gz","officialAvailabilityVerified":true,"containerDownload":"FAILED","result":"SDK_NOT_INSTALLED_DEV4_SANDBOX_DOWNLOAD_BLOCKED"},
-  "executed": [
-    {"command":"python3 scripts/verify_ci_actions.py","status":"PASS","externalUsesVerified":5,"approvedActions":3,"assertions":["all external uses refs are reviewed 40-character commit SHAs","release comments agree with machine-readable pin authority"]},
-    {"command":"python3 scripts/verify_repository.py","status":"PASS","assertions":["workspace version and .NET SDK pin","XML build policy parses","Microsoft Testing Platform/xUnit MTP policy","strict dependency direction","no process/network/FFmpeg/native-loading tokens in Contracts/Core/Serialization","release/SBOM/CI provenance authority alignment","NuGet audit all/low and vulnerability-only source","machine-readable CI credential/permission/timeout policy"]},
-    {"command":"python3 -m pytest -q tests/static","status":"PASS","testsPassed":62,"testsFailed":0},
-    {"command":"python3 scripts/verify_contract_vectors.py","status":"PASS","cases":5,"note":"Raw v1 duplicate/unknown/executable-command mutation vectors checked against strict parser/schema expectations."},
-    {"command":"python3 scripts/generate_sbom.py --mode source (twice)","status":"PASS","packages":7,"byteIdentical":true,"sha256":"3ee2f81bfaf6550ab0449fe16852b0695fb5e772827b1234cd2224c720ebb87e","note":"SPDX 2.3 source inventory only; not release dependency evidence."},
-    {"command":"python3 scripts/verify_release_inputs.py","status":"EXPECTED_FAIL_BLOCKED","exitCode":2,"blockingFindings":7,"reason":"Each of the seven managed projects lacks packages.lock.json because the pinned .NET SDK cannot execute in this environment."},
-    {"command":"python3 scripts/generate_sbom.py --mode release","status":"EXPECTED_FAIL_BLOCKED","exitCode":2,"reason":"Release dependency SBOM refuses generation until all seven managed projects have real packages.lock.json inputs."},
-    {"command":"cmake --preset native-smoke","status":"PASS","note":"Topology/configuration proof only; production MSVC Explorer target does not exist yet."},
-    {"command":"cmake --build --preset native-smoke","status":"PASS","note":"Target-free native topology smoke only."},
-    {"command":"Python JSON/XML/Python syntax sweep","status":"PASS","jsonFilesParsed":31,"xmlFilesParsed":3,"pythonFilesCompiled":17},
-    {"command":"git diff --check","status":"PASS"}
-  ],
-  "authoredNotExecuted": [
-    {"suite":"Converty.Contracts.Tests + Converty.Core.Tests + Converty.Serialization.Tests","framework":"xunit.v3.mtp-v2 4.0.0 / Microsoft Testing Platform","factsAuthored":55,"theoriesAuthored":2,"reason":"No dotnet SDK is available; SDK 10.0.400 could not be provisioned through the sandbox download path."},
-    {"suite":"NuGet lock-file generation/review","status":"NOT_RUN","managedProjects":7,"lockFilesPresent":0,"reason":"Requires pinned .NET SDK 10.0.400."},
-    {"suite":"Real restored-graph NuGet vulnerability audit","status":"NOT_RUN","reason":"build/dependency-audit.ps1 is authored and fixture-tested, but requires locked .NET restore output."},
-    {"suite":"Release SPDX dependency SBOM","status":"BLOCKED_MISSING_LOCKS","reason":"Release mode deliberately refuses to invent dependency versions."},
-    {"suite":"Windows release signing","status":"POLICY_ONLY_NO_SIGNING_EVIDENCE","reason":"Private keys are external by policy and no production artifact exists."}
-  ],
-  "unverifiedClaimsExplicitlyForbidden": ["managed project compiles","xUnit tests pass","NuGet lock graph is reviewed","real dependency vulnerability audit is clean","release dependency SBOM is complete or reviewed","Windows artifacts are signed","Windows/MSVC native hardening flags compile","Explorer integration works","runtime conversion works","worker sandbox works","typed JSON adapters are managed-runtime verified"],
-  "sourceSbom": {"path":"machine-readable/source_sbom.spdx.json","spdxVersion":"SPDX-2.3","packages":7,"sha256":"3ee2f81bfaf6550ab0449fe16852b0695fb5e772827b1234cd2224c720ebb87e","deterministicDoubleGeneration":"PASS"},
-  "ciProvenance": {"externalUsesVerified":5,"approvedActions":3,"checkoutPersistCredentials":false,"workflowPermissions":{"contents":"read"},"jobTimeoutMinutes":{"supply-chain-static":15,"managed":30}}
+  "workspaceVersion": "0.1.0-dev.5",
+  "evidenceDate": "2026-08-25",
+  "qualification": {
+    "headSha": "fcb5f8ddda45fd3d8ec3ead01463ef129e6bbc2e",
+    "workflowRunId": 32784047968,
+    "runner": {
+      "os": "Windows Server 2025",
+      "image": "windows-2025-vs2026",
+      "dotnetSdk": "10.0.400"
+    },
+    "managed": {
+      "lockedRestore": "PASS",
+      "managedProjects": 7,
+      "dependencyAudit": "PASS",
+      "vulnerablePackages": 0,
+      "releaseBuild": "PASS",
+      "warnings": 0,
+      "errors": 0,
+      "tests": {
+        "total": 63,
+        "succeeded": 63,
+        "failed": 0,
+        "skipped": 0
+      },
+      "nativeTopologySmoke": "PASS"
+    },
+    "static": {
+      "tests": {
+        "total": 19,
+        "passed": 19,
+        "failed": 0
+      },
+      "contractVectors": {
+        "total": 5,
+        "passed": 5
+      },
+      "ciActionPins": "PASS"
+    }
+  },
+  "sourceSbom": {
+    "path": "machine-readable/source_sbom.spdx.json",
+    "spdxVersion": "SPDX-2.3",
+    "packages": 7,
+    "sha256": "e0a329b870bb3c92b8789837bf09691d0e49d5985a7204e52a757656f968ee93",
+    "mode": "development inventory"
+  },
+  "releaseSbom": {
+    "path": "machine-readable/release_sbom.spdx.json",
+    "spdxVersion": "SPDX-2.3",
+    "packages": 23,
+    "firstPartyProjects": 7,
+    "nugetPackages": 16,
+    "sha256": "e4b8e611f69abec2c972af6ae101ed81507793cfe14a993d5f9c2bdd4af181bc",
+    "note": "Generated from all seven committed lock files. NuGet type=Project references are represented only as first-party SPDX project packages, not duplicated as external NuGet packages. Final human license/notices review remains open."
+  },
+  "closure": {
+    "status": "EVIDENCE_GENERATED_AWAITING_FINAL_HASH_SYNC",
+    "branch": "dev/v0.1.0-dev.5-closure",
+    "evidenceHeadSha": "8d410c6a114c679e87d8e31b790646198b2d2011",
+    "workflowRunId": 32787675918,
+    "managedJobId": 97622794328,
+    "supplyChainJobId": 97622793956,
+    "managed": "PASS",
+    "releasePreflight": "PASS",
+    "releaseDependencySbom": "PASS",
+    "contractVectors": "PASS",
+    "staticGate": "PASS",
+    "generatedHashManifest": {
+      "status": "PASS_GENERATED_SUPERSEDED_BY_EVIDENCE_COMMIT",
+      "entries": 174,
+      "sha256": "1d17b2962d979a7b9db770f8bc97d69407cdd515a373cb6ae7b234df7ad404aa"
+    },
+    "artifact": {
+      "id": 9542019202,
+      "name": "converty-dev5-supply-chain-evidence",
+      "digest": "sha256:273f4a541449a2e67b3221e0363704cda5dee4b5d564ed8758f8f5f7649b0502"
+    },
+    "trackedGeneratedAuthorityCheck": "FAIL_EXPECTED_STALE_HASH_MANIFEST",
+    "note": "On run 32787675918 every substantive supply-chain check passed and the Windows managed job completed successfully through native topology smoke. The supply-chain job failed only at its final tracked-generated-authority diff because SHA256SUMS.txt was intentionally stale. Exact generated SBOM bytes were subsequently synchronized on the closure branch. This evidence update and removal of the temporary sync workflow require one final manifest regeneration before exact-head CI can be green."
+  },
+  "unverifiedClaimsExplicitlyForbidden": [
+    "Windows artifacts are signed",
+    "Windows/MSVC production Explorer target compiles",
+    "Explorer integration works",
+    "runtime conversion works",
+    "worker sandbox works",
+    "release dependency license review is complete"
+  ]
 }

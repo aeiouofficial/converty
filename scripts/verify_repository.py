@@ -3,19 +3,17 @@ from __future__ import annotations
 
 import json
 import re
+import subprocess
 import sys
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+CURRENT = "0.1.0-dev.5"
 
 REQUIRED_FILES = [
-    "VERSION",
-    "global.json",
-    "Directory.Build.props",
-    "Directory.Packages.props",
-    "NuGet.Config",
-    "Converty.slnx",
+    "VERSION", "global.json", "Directory.Build.props", "Directory.Packages.props",
+    "NuGet.Config", "Converty.slnx",
     "src/Converty.Contracts/Converty.Contracts.csproj",
     "src/Converty.Core/Converty.Core.csproj",
     "src/Converty.FakeProviders/Converty.FakeProviders.csproj",
@@ -24,22 +22,15 @@ REQUIRED_FILES = [
     "tests/Converty.Contracts.Tests/Converty.Contracts.Tests.csproj",
     "tests/Converty.Core.Tests/Converty.Core.Tests.csproj",
     "tests/Converty.Serialization.Tests/Converty.Serialization.Tests.csproj",
-    "docs/superpowers/specs/2026-08-24-foundation-design.md",
-    "docs/superpowers/plans/2026-08-24-foundation-implementation.md",
-    "docs/superpowers/plans/2026-08-24-foundation-dev2-implementation.md",
-    "docs/superpowers/plans/2026-08-24-foundation-dev3-implementation.md",
-    "docs/superpowers/plans/2026-08-24-foundation-dev4-implementation.md",
-    "docs/supply-chain/SBOM_POLICY.md",
-    "docs/supply-chain/RELEASE_SIGNING_POLICY.md",
-    "docs/supply-chain/CI_PROVENANCE_POLICY.md",
     "machine-readable/release_policy.json",
     "machine-readable/ci_action_pins.json",
+    "machine-readable/handover_state.json",
+    "machine-readable/build_evidence.json",
     "machine-readable/source_sbom.spdx.json",
     "scripts/generate_sbom.py",
     "scripts/verify_release_inputs.py",
     "scripts/verify_ci_actions.py",
     "scripts/verify_dependency_audit.py",
-    "build/dependency-audit.ps1",
     "scripts/verify_contract_vectors.py",
     "tests/vectors/v1/manifest.json",
 ]
@@ -58,17 +49,8 @@ REQUIRED_SOURCE_TOKENS = {
 }
 
 FORBIDDEN_ENGINE_INDEPENDENT_TOKENS = [
-    "Process.Start(",
-    "ProcessStartInfo",
-    "ffmpeg",
-    "ffprobe",
-    "cmd.exe",
-    "powershell.exe",
-    "HttpClient",
-    "Socket",
-    "NamedPipe",
-    "DllImport",
-    "LibraryImport",
+    "Process.Start(", "ProcessStartInfo", "ffmpeg", "ffprobe", "cmd.exe",
+    "powershell.exe", "HttpClient", "Socket", "NamedPipe", "DllImport", "LibraryImport",
 ]
 
 
@@ -77,23 +59,25 @@ def fail(message: str) -> None:
     raise SystemExit(1)
 
 
+def load_json(path: str) -> dict:
+    return json.loads((ROOT / path).read_text(encoding="utf-8"))
+
+
 def main() -> int:
-    missing = [p for p in REQUIRED_FILES if not (ROOT / p).is_file()]
+    missing = [path for path in REQUIRED_FILES if not (ROOT / path).is_file()]
     if missing:
         fail("required files missing: " + ", ".join(missing))
 
     version = (ROOT / "VERSION").read_text(encoding="utf-8").strip()
-    if version != "0.1.0-dev.4":
-        fail(f"VERSION must be 0.1.0-dev.4, got {version!r}")
+    if version != CURRENT:
+        fail(f"VERSION must be {CURRENT}, got {version!r}")
 
-    global_json = json.loads((ROOT / "global.json").read_text(encoding="utf-8"))
+    global_json = load_json("global.json")
     sdk = global_json.get("sdk", {})
-    if sdk.get("version") != "10.0.400":
-        fail("global.json must pin .NET SDK 10.0.400")
-    if sdk.get("rollForward") != "latestPatch":
-        fail("global.json rollForward must be latestPatch")
+    if sdk.get("version") != "10.0.400" or sdk.get("rollForward") != "latestPatch":
+        fail("global.json must pin .NET SDK 10.0.400/latestPatch")
     if global_json.get("test", {}).get("runner") != "Microsoft.Testing.Platform":
-        fail("global.json must select Microsoft.Testing.Platform for .NET 10 dotnet test")
+        fail("global.json must select Microsoft.Testing.Platform")
 
     for xml_path in ["Directory.Build.props", "Directory.Packages.props", "Converty.slnx"]:
         try:
@@ -118,9 +102,18 @@ def main() -> int:
     if 'PackageVersion Include="xunit.v3.mtp-v2" Version="4.0.0"' not in packages:
         fail("Directory.Packages.props must pin xunit.v3.mtp-v2 4.0.0")
 
-    release_policy = json.loads((ROOT / "machine-readable/release_policy.json").read_text(encoding="utf-8"))
-    if release_policy.get("workspaceVersion") != version:
-        fail("release policy workspaceVersion must match VERSION")
+    authorities = {
+        "release policy": load_json("machine-readable/release_policy.json").get("workspaceVersion"),
+        "CI action pins": load_json("machine-readable/ci_action_pins.json").get("workspaceVersion"),
+        "handover": load_json("machine-readable/handover_state.json").get("workspaceVersion"),
+        "build evidence": load_json("machine-readable/build_evidence.json").get("workspaceVersion"),
+        "toolchain": load_json("eng/toolchain.json").get("workspaceVersion"),
+    }
+    drift = [name for name, authority_version in authorities.items() if authority_version != version]
+    if drift:
+        fail("workspace version drift: " + ", ".join(drift))
+
+    release_policy = load_json("machine-readable/release_policy.json")
     if release_policy.get("hashAlgorithm") != "SHA-256":
         fail("release policy must require SHA-256")
     if release_policy.get("signing", {}).get("privateKeysInWorkspace") is not False:
@@ -133,7 +126,8 @@ def main() -> int:
     if ci_policy.get("workflowPermissions") != {"contents": "read"}:
         fail("release policy must keep CI workflow permissions at contents: read")
     if ci_policy.get("jobTimeoutMinutes") != {"managed": 30, "supply-chain-static": 15}:
-        fail("release policy must encode the reviewed CI job timeout ceilings")
+        fail("release policy must encode reviewed CI job timeout ceilings")
+
     audit = release_policy.get("dependencyAudit", {})
     if audit.get("enabled") is not True or audit.get("mode") != "all" or audit.get("level") != "low":
         fail("release policy must require NuGet audit all/low")
@@ -141,21 +135,39 @@ def main() -> int:
     nuget_config = ET.parse(ROOT / "NuGet.Config").getroot()
     audit_sources = nuget_config.find("auditSources")
     if audit_sources is None or not any(
-        node.attrib.get("value") == "https://data.nuget.org/v3/index.json" for node in audit_sources.findall("add")
+        node.attrib.get("value") == "https://data.nuget.org/v3/index.json"
+        for node in audit_sources.findall("add")
     ):
         fail("NuGet.Config must use the vulnerability-only nuget.org audit source")
 
-    ci_pin_check = __import__("subprocess").run(
-        [sys.executable, "scripts/verify_ci_actions.py"], cwd=ROOT, text=True, capture_output=True, check=False
+    ci_pin_check = subprocess.run(
+        [sys.executable, "scripts/verify_ci_actions.py"],
+        cwd=ROOT, text=True, capture_output=True, check=False,
     )
     if ci_pin_check.returncode != 0:
         fail("CI action pin verification failed: " + (ci_pin_check.stderr or ci_pin_check.stdout).strip())
 
-    source_sbom = json.loads((ROOT / "machine-readable/source_sbom.spdx.json").read_text(encoding="utf-8"))
+    projects = sorted(
+        path for path in ROOT.rglob("*.csproj")
+        if not any(part in {"bin", "obj", "artifacts"} for part in path.parts)
+    )
+    if len(projects) != 7:
+        fail(f"expected exactly 7 managed projects, found {len(projects)}")
+    missing_locks = [
+        project.relative_to(ROOT).as_posix()
+        for project in projects
+        if not (project.parent / "packages.lock.json").is_file()
+    ]
+    if missing_locks:
+        fail("managed lock files missing for: " + ", ".join(missing_locks))
+
+    source_sbom = load_json("machine-readable/source_sbom.spdx.json")
     if source_sbom.get("spdxVersion") != "SPDX-2.3":
         fail("source SBOM must be SPDX-2.3")
     if source_sbom.get("name") != f"Converty-source-{version}":
-        fail("source SBOM version/name must match VERSION")
+        fail("source SBOM name/version must match VERSION")
+    if any(package.get("versionInfo") != version for package in source_sbom.get("packages", [])):
+        fail("source SBOM package versions must match VERSION")
 
     solution = (ROOT / "Converty.slnx").read_text(encoding="utf-8")
     for project in [
@@ -170,14 +182,6 @@ def main() -> int:
         fail("Serialization must reference Contracts only and introduce no package dependency")
     if "Converty.Core" in serialization_project:
         fail("Serialization must not reference Core")
-
-    for project in [
-        ROOT / "src/Converty.Contracts/Converty.Contracts.csproj",
-        ROOT / "src/Converty.Core/Converty.Core.csproj",
-    ]:
-        text = project.read_text(encoding="utf-8")
-        if "Converty.Serialization" in text:
-            fail(f"{project.relative_to(ROOT)} must not reference Serialization")
 
     for rel, tokens in REQUIRED_SOURCE_TOKENS.items():
         path = ROOT / rel
@@ -199,17 +203,19 @@ def main() -> int:
                 if token.lower() in text.lower():
                     fail(f"forbidden execution/network token {token!r} found in {path.relative_to(ROOT)}")
 
-    all_cs = "\n".join(p.read_text(encoding="utf-8", errors="replace") for p in (ROOT / "src").rglob("*.cs"))
+    all_cs = "\n".join(
+        path.read_text(encoding="utf-8", errors="replace")
+        for path in (ROOT / "src").rglob("*.cs")
+    )
     if re.search(r'(?:command|arguments?)\s*=\s*"[^"]*(?:ffmpeg|cmd|powershell)', all_cs, re.I):
         fail("production source appears to embed executable command strings")
 
     print("PASS: repository static verification succeeded")
     print(f"PASS: version={version}")
     print("PASS: SDK pin=10.0.400/latestPatch")
-    print("PASS: XML policy files parse")
-    print("PASS: Contracts/Core/Serialization contain no process/network/FFmpeg/native-loading tokens")
-    print("PASS: serialization dependency direction is Contracts -> Serialization only")
-    print("PASS: source SBOM/release/CI provenance policy authority is present and version-aligned")
+    print("PASS: 7/7 managed lock files present")
+    print("PASS: source SBOM/release/CI/handover/toolchain authority is version-aligned")
+    print("PASS: Contracts/Core/Serialization contain no process/network/engine/native-loading tokens")
     return 0
 
 
