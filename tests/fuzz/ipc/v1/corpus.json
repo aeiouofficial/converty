@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "id": "bad-magic",
+      "kind": "frameHex",
+      "data": "000000000100000000000000",
+      "expectProtocolError": "BadMagic"
+    },
+    {
+      "id": "future-version",
+      "kind": "frameHex",
+      "data": "435654590200000000000000",
+      "expectProtocolError": "UnsupportedVersion"
+    },
+    {
+      "id": "negative-length",
+      "kind": "frameHex",
+      "data": "4356545901000000FFFFFFFF",
+      "expectProtocolError": "InvalidLength"
+    },
+    {
+      "id": "oversized-length",
+      "kind": "frameHex",
+      "data": "435654590100000001001000",
+      "expectProtocolError": "FrameTooLarge"
+    },
+    {
+      "id": "truncated-payload",
+      "kind": "frameHex",
+      "data": "4356545901000000040000007B7D",
+      "expectProtocolError": "TruncatedFrame"
+    },
+    {
+      "id": "malformed-request-json",
+      "kind": "requestText",
+      "data": "not-json",
+      "expectReason": "invalidRequest"
+    },
+    {
+      "id": "unknown-request-member",
+      "kind": "requestText",
+      "data": "{\"schemaVersion\":1,\"requestId\":\"11111111-1111-1111-1111-111111111111\",\"action\":\"convertUsingDefault\",\"files\":[\"C:\\\\input\\\\sample.wav\"],\"command\":\"forbidden\"}",
+      "expectReason": "invalidRequest"
+    }
+  ]
+}
