@@ -1,3 +1,4 @@
+# retry: 2
 name: dev6-authority-close
 
 on:
