@@ -129,7 +129,7 @@ public sealed class HostJobJournal : IHostJobJournal
         }
     }
 
-    private IReadOnlyList<JobStatusSnapshot> ParseRoot(JsonElement root)
+    private static List<JobStatusSnapshot> ParseRoot(JsonElement root)
     {
         if (root.ValueKind != JsonValueKind.Object)
         {
