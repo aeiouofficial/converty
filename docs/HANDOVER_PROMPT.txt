@@ -1,8 +1,12 @@
 # Converty Continuation Prompt
 
-Continue the Converty project from the full workspace ZIP I am uploading: `Converty_0.1.0-dev.6_full_workspace.zip`.
+Continue development directly in the GitHub repository:
 
-Treat the ZIP/repository contents as the current source of truth. Read these first, in order:
+`https://github.com/aeiouofficial/converty`
+
+The current delivered authority is `Converty 0.1.0-dev.7`. If I also provide `Converty_0.1.0-dev.7_full_workspace.zip`, treat the repository plus that verified package as the same tranche authority.
+
+Read these first, in order:
 1. `docs/HANDOVER_NEXT_AGENT.md`
 2. `machine-readable/handover_state.json`
 3. `machine-readable/build_evidence.json`
@@ -14,21 +18,21 @@ Treat the ZIP/repository contents as the current source of truth. Read these fir
 9. `docs/supply-chain/SBOM_POLICY.md`
 10. `docs/supply-chain/RELEASE_SIGNING_POLICY.md`
 11. `docs/superpowers/plans/2026-08-25-b2-host-bridge-ipc.md`
+12. `docs/superpowers/plans/2026-08-25-b2-dev7-journal-runtime.md`
 
-Continue immediately from the evidence-backed state; do not restart the architecture or ask me to re-specify locked decisions. The next delivered workspace must be `0.1.0-dev.7` and again be a complete full-workspace ZIP with updated handover/evidence/checksums and a new copy-paste continuation prompt.
+Continue immediately from the evidence-backed state; do not restart the architecture or ask me to re-specify locked decisions. The next delivered workspace must be `0.1.0-dev.8` and again be a complete full-workspace ZIP with synchronized handover/evidence/checksums and a new copy-paste continuation prompt.
 
-Dev.6 has the first qualified B2 IPC tranche: 15 locked managed projects, zero vulnerable-result packages, zero-warning/zero-error Release build, 108/108 managed tests, explicit current-user named-pipe DACL, connected-client SID validation before application-frame parsing, bounded/versioned framing with a 1 MiB payload ceiling, bounded Host admission/status/cancellation, ACL-backed Host pipe sessions, a bounded Bridge client with a maximum 30-second connect timeout, a tested per-user single-instance lease primitive, and a seven-case executable IPC adversarial corpus.
+Dev.7 extends the qualified B2 implementation with a persistent strict bounded Host job journal and a real Host WinExe lifetime/server loop. The journal is schema-v1, capped at 4096 entries / 8 MiB, rejects unknown/duplicate members and duplicate IDs, publishes through a same-directory temporary file with write-through and disk flush before atomic replacement, removes orphan temp files, converts interrupted in-flight states to `Failed` on recovery, and is integrated so queue mutations persist before in-memory publication. The Host runtime acquires the per-user single-instance lease, restores journal state before IPC admission, then runs bounded ACL-backed pipe sessions. The dev.7 Windows behavior gate uses .NET SDK 10.0.400 and records 15/15 locked projects, 0 vulnerable-result packages, a zero-warning/zero-error Release build, 120/120 managed tests, and native topology smoke PASS.
 
-B2 is NOT fully closed. Keep B3 blocked and finish B2 test-first. Priority order:
-1. persistent crash-safe atomic Host job journal and recovery semantics;
-2. complete Host executable lifetime/server loop wired to the existing `HostSingleInstanceLease`;
-3. Bridge Host startup/retry/fast-failure behavior using trusted installed executable identity/path policy and finite deadlines;
-4. status/cancellation wire commands if required by the finalized runtime surface;
-5. anti-squatting/signed-peer/session validation appropriate to the selected packaging model;
-6. adversarial restart/replay/disconnect/timeout/journal-recovery coverage sufficient to close the B2 gate.
+B2 is NOT fully closed. Keep B3 blocked and continue B2 test-first. Priority order for dev.8:
+1. Bridge trusted Host startup/retry/fast-failure behavior with finite deadlines and a trusted installed executable identity/path abstraction; never accept arbitrary executable command text or pass-through arguments from IPC/presets.
+2. Server-auth / pipe-squatting resistance appropriate to the selected packaging/signing model, beyond the existing same-user client SID validation.
+3. Decide and test whether status/cancel need dedicated final wire operations.
+4. Extend adversarial integration coverage for restart, replay, disconnect, timeout stages, endpoint squatting/session confusion, and recovery.
+5. Close B2 only when the remaining acceptance matrix is backed by executable evidence. Do not begin B3 before that closure.
 
 Preserve non-negotiable boundaries: Explorer trigger only; Host never parses untrusted media or loads codec/plugin code; probing/conversion belongs to disposable restricted workers; ordinary local conversion has no network requirement; presets/IPC never carry executable commands/pass-through argument vectors; provider options are whitelisted/typed; strict isolation never silently downgrades; workers later write only private staging; Host later validates then atomically commits; numbered-copy remains safe default; unknown JSON versions/members/duplicates fail closed; release dependency versions are never fabricated; signing private keys never enter the repository/workspace.
 
-Do not implement FFmpeg/WIC/media-provider execution before B4 containment is qualified. Do not weaken the existing B2 tests, ACL, peer validation, frame bounds, queue limits, or strict JSON behavior to make runtime wiring easier.
+Do not implement FFmpeg/WIC/media-provider execution before B4 containment is qualified. Do not weaken the existing B2 tests, DACL, peer validation, frame bounds, journal limits, queue limits, or strict JSON behavior to make runtime wiring easier.
 
-Report only gates actually executed. At tranche end update VERSION/README/CHANGELOG/backlog/status/handover/machine-readable evidence consistently, regenerate source/release SBOM, package_manifest.json and SHA256SUMS.txt, verify the ZIP by reopening it and checking CRC/embedded hashes, and give me a direct download link for `Converty_0.1.0-dev.7_full_workspace.zip` plus the next handover prompt to paste back.
+Report only gates actually executed. At tranche end update VERSION/README/CHANGELOG/backlog/status/handover/machine-readable evidence consistently, regenerate source/release SBOM, package_manifest.json and SHA256SUMS.txt, verify the ZIP by reopening it and checking CRC/embedded hashes, update the GitHub repo, and give me a direct download link for `Converty_0.1.0-dev.8_full_workspace.zip` plus the next handover prompt to paste back.
