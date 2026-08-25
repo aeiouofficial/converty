@@ -5,6 +5,7 @@ public enum JobAdmissionRejection
     None = 0,
     DuplicateRequest = 1,
     QueueFull = 2,
+    PersistenceFailure = 3,
 }
 
 public readonly record struct JobAdmissionResult(Guid JobId, JobAdmissionRejection Rejection)
