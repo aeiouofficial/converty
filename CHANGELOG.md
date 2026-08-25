@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.1.0-dev.7 — 2026-08-25
+- Added a strict persistent Host job journal with schema v1, 4096-entry and 8 MiB hard bounds, duplicate/unknown-member rejection, canonical ID validation, and deterministic ordering.
+- Added crash-safe journal publication through a same-directory temporary generation using write-through plus disk flush before atomic replacement; orphan temporary files cannot override the committed generation.
+- Added restart recovery: queued/terminal state is preserved while interrupted `Probing` through `Committing` states become `Failed` with an explicit Host-restart reason.
+- Integrated journal recovery into `HostJobQueue` before new work is accepted and made enqueue/cancel mutations persist before in-memory publication; persistence failure leaves queue state unchanged.
+- Wired the existing per-user single-instance lease into a bounded Host runtime/server loop and added a real no-console `Converty.Host` WinExe entrypoint using LocalAppData state.
+- Added Host journal/runtime tests and a dev.7 static B2 boundary gate.
+- Qualified the dev.7 behavior head on Windows Server 2025 / .NET SDK 10.0.400: 15/15 locked projects, dependency audit with zero vulnerable-result packages, Release build with zero warnings/errors, 120/120 managed tests, and native topology smoke PASS.
+- Kept B2 explicitly open for Bridge trusted Host startup/retry/fast-failure, server-auth/anti-squatting under the selected packaging/signing model, final status/cancel wire-surface decision, and remaining restart/replay/disconnect/timeout/session acceptance coverage.
+
 ## 0.1.0-dev.6 — 2026-08-25
 - Began B2 without crossing the media-parser boundary: no FFmpeg/WIC/provider/process execution was added to Host or Bridge.
 - Added `Converty.Ipc` with fixed 12-byte versioned framing, checked exact reads, a 1 MiB payload ceiling, cancellation, and fail-closed bad-magic/future-version/negative-length/oversized/truncated handling.
