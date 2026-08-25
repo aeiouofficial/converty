@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.IO.Pipes;
 using System.Runtime.Versioning;
 using System.Security.Principal;
@@ -140,7 +141,8 @@ public sealed class BridgeClient
 
             if (schemaVersion != SchemaVersions.Current)
             {
-                throw new InvalidDataException($"Unsupported Bridge response schema version {schemaVersion?.ToString() ?? "<missing>"}.");
+                string versionText = schemaVersion?.ToString(CultureInfo.InvariantCulture) ?? "<missing>";
+                throw new InvalidDataException($"Unsupported Bridge response schema version {versionText}.");
             }
 
             if (accepted is null)
