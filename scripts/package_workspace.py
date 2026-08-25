@@ -39,7 +39,7 @@ def main() -> None:
         for path in files:
             arcname = f"{root_name}/{path.relative_to(ROOT).as_posix()}"
             info = zipfile.ZipInfo(arcname)
-            info.date_time = (2026, 8, 24, 0, 0, 0)
+            info.date_time = (2026, 8, 25, 0, 0, 0)
             info.compress_type = zipfile.ZIP_DEFLATED
             info.external_attr = 0o100644 << 16
             zf.writestr(info, path.read_bytes(), compress_type=zipfile.ZIP_DEFLATED, compresslevel=9)
