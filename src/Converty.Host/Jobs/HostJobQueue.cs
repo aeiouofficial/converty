@@ -1,9 +1,14 @@
+using System.Diagnostics.CodeAnalysis;
 using Converty.Contracts;
 using Converty.Contracts.Conversion;
 using Converty.Contracts.Jobs;
 
 namespace Converty.Host.Jobs;
 
+[SuppressMessage(
+    "Naming",
+    "CA1711:Identifiers should not have incorrect suffix",
+    Justification = "The B2 contract intentionally exposes this bounded Host job queue as HostJobQueue.")]
 public sealed class HostJobQueue
 {
     private readonly object _gate = new();
