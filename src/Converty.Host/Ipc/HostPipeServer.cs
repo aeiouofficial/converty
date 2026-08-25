@@ -15,7 +15,7 @@ public enum HostPipeSessionResult
 }
 
 [SupportedOSPlatform("windows")]
-public sealed class HostPipeServer
+public sealed class HostPipeServer : IHostPipeSessionRunner
 {
     private const int PipeBufferBytes = 64 * 1024;
 

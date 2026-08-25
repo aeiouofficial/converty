@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "workspaceVersion": "0.1.0-dev.6",
+  "workspaceVersion": "0.1.0-dev.7",
   "targetOs": "Windows 11",
   "dotnetSdk": "10.0.400",
   "targetFramework": "net10.0",
@@ -9,11 +9,11 @@
   "nativeBuild": "CMake + MSVC",
   "architecture": "x64-first",
   "notes": [
-    "The dev.6 B2 behavior qualification ran on GitHub Actions Windows Server 2025 with .NET SDK 10.0.400.",
+    "The dev.7 B2 journal/runtime qualification ran on GitHub Actions Windows Server 2025 with .NET SDK 10.0.400.",
     "All 15 managed projects restore from committed lock files; restored-graph NuGet vulnerability audit reports zero vulnerable-result packages.",
-    "The qualified Release build completed with zero warnings and zero errors; Microsoft Testing Platform executed 108 tests with 108 successes.",
-    "B2 now includes bounded framing, explicit current-user pipe ACLs, peer validation, bounded Host admission, Bridge request submission, a single-instance lease primitive, and an executed adversarial IPC corpus.",
-    "Persistent journal and complete Host/Bridge startup lifetime wiring remain open; native topology smoke is topology-only and the production Explorer target begins in B3."
+    "The qualified Release build completed with zero warnings and zero errors; Microsoft Testing Platform executed 120 tests with 120 successes.",
+    "B2 now includes persistent bounded atomic Host journal/recovery, journal-backed queue mutation ordering, a per-user Host runtime loop, and a no-console Converty.Host WinExe entrypoint in addition to dev.6 hardened IPC.",
+    "Bridge Host startup/retry and trusted Host server-auth/anti-squatting acceptance remain open; native topology smoke is topology-only and the production Explorer target begins in B3."
   ],
   "testRunner": "Microsoft.Testing.Platform",
   "xunitMtpV2": "4.0.0"

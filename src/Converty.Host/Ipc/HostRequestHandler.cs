@@ -58,6 +58,7 @@ public sealed class HostRequestHandler
         {
             JobAdmissionRejection.DuplicateRequest => "duplicateRequest",
             JobAdmissionRejection.QueueFull => "queueFull",
+            JobAdmissionRejection.PersistenceFailure => "persistenceFailure",
             _ => "rejected",
         };
         return Task.FromResult(SerializeResponse(accepted: false, Guid.Empty, reason));

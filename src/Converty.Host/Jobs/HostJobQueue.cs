@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Security;
 using Converty.Contracts;
 using Converty.Contracts.Conversion;
 using Converty.Contracts.Jobs;
@@ -13,10 +14,11 @@ public sealed class HostJobQueue
 {
     private readonly object _gate = new();
     private readonly int _capacity;
+    private readonly IHostJobJournal? _journal;
     private readonly Dictionary<Guid, JobStatusSnapshot> _jobs = new();
     private readonly Dictionary<Guid, Guid> _requestToJob = new();
 
-    public HostJobQueue(int capacity)
+    public HostJobQueue(int capacity, IHostJobJournal? journal = null)
     {
         if (capacity < 1)
         {
@@ -24,6 +26,25 @@ public sealed class HostJobQueue
         }
 
         _capacity = capacity;
+        _journal = journal;
+        if (_journal is null)
+        {
+            return;
+        }
+
+        IReadOnlyList<JobStatusSnapshot> restored = _journal.LoadForRecovery();
+        if (restored.Count > _capacity)
+        {
+            throw new InvalidDataException("Recovered Host job state exceeds configured queue capacity.");
+        }
+
+        foreach (JobStatusSnapshot status in restored)
+        {
+            if (!_jobs.TryAdd(status.JobId, status) || !_requestToJob.TryAdd(status.RequestId, status.JobId))
+            {
+                throw new InvalidDataException("Recovered Host job state contains duplicate job or request IDs.");
+            }
+        }
     }
 
     public int Count
@@ -62,6 +83,11 @@ public sealed class HostJobQueue
                 progress: null,
                 message: null);
 
+            if (!TryPersistWith(status, replacementJobId: null))
+            {
+                return JobAdmissionResult.Reject(JobAdmissionRejection.PersistenceFailure);
+            }
+
             _jobs.Add(jobId, status);
             _requestToJob.Add(request.RequestId, jobId);
             return JobAdmissionResult.Accept(jobId);
@@ -98,15 +124,59 @@ public sealed class HostJobQueue
                 return false;
             }
 
-            status = new JobStatusSnapshot(
+            var cancelled = new JobStatusSnapshot(
                 SchemaVersions.Current,
                 current.JobId,
                 current.RequestId,
                 ConversionJobState.Cancelled,
                 progress: current.Progress,
                 message: "Cancelled before execution.");
-            _jobs[jobId] = status;
+
+            if (!TryPersistWith(cancelled, current.JobId))
+            {
+                status = current;
+                return false;
+            }
+
+            _jobs[jobId] = cancelled;
+            status = cancelled;
             return true;
+        }
+    }
+
+    private bool TryPersistWith(JobStatusSnapshot candidate, Guid? replacementJobId)
+    {
+        if (_journal is null)
+        {
+            return true;
+        }
+
+        var snapshots = new List<JobStatusSnapshot>(_jobs.Count + (replacementJobId is null ? 1 : 0));
+        foreach (JobStatusSnapshot existing in _jobs.Values)
+        {
+            if (replacementJobId == existing.JobId)
+            {
+                snapshots.Add(candidate);
+            }
+            else
+            {
+                snapshots.Add(existing);
+            }
+        }
+
+        if (replacementJobId is null)
+        {
+            snapshots.Add(candidate);
+        }
+
+        try
+        {
+            _journal.Commit(snapshots);
+            return true;
+        }
+        catch (Exception error) when (error is IOException or UnauthorizedAccessException or SecurityException)
+        {
+            return false;
         }
     }
 }

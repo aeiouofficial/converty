@@ -1,15 +1,11 @@
 {
   "schemaVersion": 1,
   "project": "Converty",
-  "workspaceVersion": "0.1.0-dev.6",
+  "workspaceVersion": "0.1.0-dev.7",
   "baselineDate": "2026-08-25",
-  "implementationStatus": "B0_B1_QUALIFIED_B2_PARTIAL_QUALIFIED",
-  "batchesTouched": [
-    "B0",
-    "B1",
-    "B2"
-  ],
-  "nextWorkspaceVersion": "0.1.0-dev.7",
+  "implementationStatus": "B0_B1_QUALIFIED_B2_ADVANCED_PARTIAL",
+  "batchesTouched": ["B0", "B1", "B2"],
+  "nextWorkspaceVersion": "0.1.0-dev.8",
   "nextBatch": "B2",
   "targetOs": "Windows 11 x64",
   "toolchain": {
@@ -21,57 +17,48 @@
     "native": "C++20 / CMake 3.28+ / MSVC for production shell"
   },
   "qualifiedEvidence": {
-    "workflowRunId": 32799556506,
-    "managedJobId": 97657597350,
-    "headSha": "26e402d68b8729cd567a462fc8a4eb8cea500607",
-    "managedTests": "108/108 PASS",
+    "workflowRunId": 32885833243,
+    "managedJobId": 97925935937,
+    "headSha": "221a6bcd7e9a2238ded79a65d9cbabbca0b7079c",
+    "managedTests": "120/120 PASS",
     "releaseBuild": "PASS; 0 warnings; 0 errors",
     "dependencyAudit": "PASS; 0 vulnerable-result packages",
     "lockedProjects": "15/15",
-    "ipcFuzzCorpus": "7/7 expected rejection behaviors PASS inside managed suite",
     "nativeTopologySmoke": "PASS"
   },
   "implementedSource": [
     "Qualified B0/B1 contracts/core/serialization/fake-provider foundation",
     "Converty.Ipc v1 fixed bounded framing with checked exact reads",
     "Converty.Security protected current-user pipe DACL, SID-qualified endpoint, and connected-client SID validation",
-    "Converty.Host bounded in-memory queue, strict request admission, queued status/cancellation, and ACL-backed single-session pipe server",
+    "Converty.Host bounded queue/admission/status/cancellation and ACL-backed pipe server",
+    "Persistent strict bounded Host journal with disk-flushed same-directory atomic publication and crash recovery",
+    "Journal-backed queue restores before IPC and persists enqueue/cancel before publishing memory mutations",
+    "Per-user Host single-instance lease wired into bounded Host runtime server loop",
+    "Converty.Host WinExe entrypoint using LocalAppData Converty state journal",
     "Converty.Bridge bounded same-user request client with strict acknowledgement parsing",
-    "Per-user Host single-instance lease primitive",
-    "Seven-case checked-in IPC adversarial corpus executed by managed tests",
-    "Fifteen committed NuGet lock files with locked restore and restored-graph vulnerability auditing",
-    "Deterministic SPDX 2.3 source/release SBOM and SHA-256 authority tooling"
-  ],
-  "architecturalInvariants": [
-    "Explorer trigger only; no media parsing/conversion/network/heavy work",
-    "Coordinator does not load codec/plugin code or parse untrusted media",
-    "Probe/conversion occurs in disposable restricted workers",
-    "Strict profile denies network and limits filesystem/resource authority",
-    "Final output is transactional: private temp -> validate -> atomic commit",
-    "IPC requires explicit ACL + peer validation + version/size/count/time bounds",
-    "Presets and IPC never carry executable commands or pass-through argument vectors",
-    "Provider code is API/hash/signature gated and worker-only",
-    "No silent strict-isolation downgrade",
-    "Numbered copy is the default collision policy"
+    "Seven-case checked-in IPC adversarial corpus plus dev.7 journal/runtime tests and static boundary gate",
+    "Fifteen committed NuGet lock files with locked restore and restored-graph vulnerability auditing"
   ],
   "b2Completed": [
     "Explicit named-pipe DACL",
-    "Connected-peer current-user SID validation",
+    "Connected-peer current-user SID validation before application frames",
     "Bounded/versioned frame codec",
-    "Bounded Host in-memory queue admission",
-    "Queued status/cancellation",
+    "Bounded Host queue admission",
+    "Persistent crash-safe bounded atomic journal and recovery",
+    "Queued status/cancellation in Host queue",
+    "Per-user Host single-instance runtime loop and no-console executable entrypoint",
     "Managed IPC adversarial corpus"
   ],
   "b2Partial": [
-    "Single-instance Host: tested lease primitive exists; executable lifetime wiring remains",
-    "Bridge: bounded client exists; Host startup/retry process behavior remains",
-    "Queue/journal: bounded queue exists; persistent crash-safe atomic journal remains"
+    "Bridge bounded client exists; trusted Host startup/retry process behavior remains",
+    "Server-auth/pipe-squatting and selected-packaging signature/session policy still require acceptance evidence",
+    "Status/cancel exist in Host queue but dedicated wire operations are not yet exposed"
   ],
   "nextActions": [
-    "Finish B2 persistent crash-safe atomic journal and recovery tests",
-    "Wire a complete Host executable lifetime/server loop to HostSingleInstanceLease without adding media parsing",
-    "Implement Bridge Host-start/retry/fast-failure process behavior with bounded timeouts and signed/install-path policy",
-    "Close remaining B2 anti-squatting/session/runtime acceptance gaps before starting B3",
+    "Implement Bridge trusted Host startup/retry/fast-failure behavior with finite timeout and installed-path/signature policy",
+    "Close B2 pipe-squatting/server-auth/session acceptance under the selected packaging model",
+    "Decide and test whether status/cancel require dedicated IPC operations before declaring B2 closed",
+    "Do not start B3 until remaining B2 acceptance gaps are explicitly closed or scoped by authority",
     "Do not begin FFmpeg/WIC execution before B4 containment is qualified"
   ],
   "openInvestigations": [
@@ -89,6 +76,7 @@
     "docs/TASK_BACKLOG.md",
     "docs/development/IMPLEMENTATION_STATUS.md",
     "docs/superpowers/plans/2026-08-25-b2-host-bridge-ipc.md",
+    "docs/superpowers/plans/2026-08-25-b2-dev7-journal-runtime.md",
     "machine-readable/build_evidence.json",
     "machine-readable/release_policy.json"
   ]

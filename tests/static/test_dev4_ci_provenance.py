@@ -1,14 +1,22 @@
 from __future__ import annotations
 
 import json
+import re
 import subprocess
 import sys
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-CURRENT = "0.1.0-dev.6"
-NEXT = "0.1.0-dev.7"
+CURRENT = (ROOT / "VERSION").read_text(encoding="utf-8").strip()
+
+
+def next_version(version: str) -> str:
+    prefix, dev = version.rsplit("-dev.", 1)
+    return f"{prefix}-dev.{int(dev) + 1}"
+
+
+NEXT = next_version(CURRENT)
 
 
 def run(*args: str) -> subprocess.CompletedProcess[str]:
@@ -16,7 +24,7 @@ def run(*args: str) -> subprocess.CompletedProcess[str]:
 
 
 def test_current_workspace_version() -> None:
-    assert (ROOT / "VERSION").read_text(encoding="utf-8").strip() == CURRENT
+    assert re.fullmatch(r"0\.1\.0-dev\.\d+", CURRENT)
 
 
 def test_provenance_authority_files_exist() -> None:

@@ -9,7 +9,7 @@ import xml.etree.ElementTree as ET
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-CURRENT = "0.1.0-dev.6"
+CURRENT = "0.1.0-dev.7"
 
 REQUIRED_FILES = [
     "VERSION", "global.json", "Directory.Build.props", "Directory.Packages.props",
@@ -23,6 +23,9 @@ REQUIRED_FILES = [
     "src/Converty.Host/Converty.Host.csproj",
     "src/Converty.Bridge/Converty.Bridge.csproj",
     "src/Converty.Serialization/ContractJson.cs",
+    "src/Converty.Host/Jobs/HostJobJournal.cs",
+    "src/Converty.Host/Runtime/HostRuntime.cs",
+    "src/Converty.Host/Program.cs",
     "machine-readable/release_policy.json",
     "machine-readable/ci_action_pins.json",
     "machine-readable/handover_state.json",
@@ -51,6 +54,9 @@ REQUIRED_SOURCE_TOKENS = {
     "src/Converty.Host/Ipc/HostPipeServer.cs": ["NamedPipeServerStreamAcl.Create", "_peerValidator.IsExpectedUser"],
     "src/Converty.Bridge/Ipc/BridgeClient.cs": ["MaximumConnectTimeout", "ProtocolFrameCodec.WriteAsync", "ProtocolFrameCodec.ReadAsync"],
     "src/Converty.Host/Runtime/HostSingleInstanceLease.cs": ["Local\\Converty.Host.", "new Mutex(initiallyOwned: true"],
+    "src/Converty.Host/Jobs/HostJobJournal.cs": ["MaximumJournalBytes", "FileOptions.WriteThrough", "Flush(flushToDisk: true)"],
+    "src/Converty.Host/Runtime/HostRuntime.cs": ["HostSingleInstanceLease.TryAcquire", "HostJobQueue queue = _queueFactory()"],
+    "src/Converty.Host/Program.cs": ["Environment.SpecialFolder.LocalApplicationData", "HostRuntime.CreateForCurrentUser"],
 }
 
 FORBIDDEN_ENGINE_INDEPENDENT_TOKENS = [

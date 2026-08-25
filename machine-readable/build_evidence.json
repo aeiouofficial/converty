@@ -1,11 +1,11 @@
 {
   "schemaVersion": 1,
-  "workspaceVersion": "0.1.0-dev.6",
+  "workspaceVersion": "0.1.0-dev.7",
   "evidenceDate": "2026-08-25",
   "behaviorQualification": {
-    "headSha": "26e402d68b8729cd567a462fc8a4eb8cea500607",
-    "workflowRunId": 32799556506,
-    "managedJobId": 97657597350,
+    "headSha": "221a6bcd7e9a2238ded79a65d9cbabbca0b7079c",
+    "workflowRunId": 32885833243,
+    "managedJobId": 97925935937,
     "runner": {
       "os": "Windows Server 2025",
       "image": "windows-2025-vs2026",
@@ -20,30 +20,12 @@
       "warnings": 0,
       "errors": 0,
       "tests": {
-        "total": 108,
-        "succeeded": 108,
+        "total": 120,
+        "succeeded": 120,
         "failed": 0,
         "skipped": 0
       },
-      "ipcFuzzCorpus": {
-        "path": "tests/fuzz/ipc/v1/corpus.json",
-        "cases": 7,
-        "execution": "PASS_INSIDE_MANAGED_SUITE"
-      },
       "nativeTopologySmoke": "PASS"
-    },
-    "staticAtBehaviorHead": {
-      "tests": {
-        "total": 25,
-        "passed": 25,
-        "failed": 0
-      },
-      "contractVectors": {
-        "total": 5,
-        "passed": 5
-      },
-      "repositoryVerifier": "PASS",
-      "note": "The dev.6-specific closure static gate was added after this behavior head and is exercised by the final authority-closure workflow."
     }
   },
   "b2Evidence": {
@@ -51,18 +33,34 @@
     "bridgeMaximumConnectTimeoutSeconds": 30,
     "explicitPipeDacl": "IMPLEMENTED_AND_TESTED",
     "connectedPeerSidValidation": "IMPLEMENTED_AND_TESTED_BEFORE_APPLICATION_FRAME_READ",
-    "hostQueue": "BOUNDED_IN_MEMORY_IMPLEMENTED_AND_TESTED",
+    "hostQueue": "BOUNDED_IMPLEMENTED_AND_TESTED",
+    "hostJournal": {
+      "status": "IMPLEMENTED_AND_TESTED",
+      "maxEntries": 4096,
+      "maxBytes": 8388608,
+      "strictSchema": true,
+      "atomicPublication": "SAME_DIRECTORY_TEMP_WRITE_THROUGH_FLUSH_TO_DISK_THEN_MOVE",
+      "orphanTempPolicy": "IGNORED_AND_REMOVED",
+      "inFlightRecovery": "PROBING_THROUGH_COMMITTING_BECOME_FAILED",
+      "mutationOrdering": "PERSIST_BEFORE_IN_MEMORY_PUBLICATION"
+    },
     "queuedStatusCancellation": "IMPLEMENTED_AND_TESTED",
-    "hostSingleInstance": "LEASE_PRIMITIVE_IMPLEMENTED_AND_TESTED; EXECUTABLE_LIFETIME_WIRING_OPEN",
+    "hostSingleInstance": "PER_USER_LEASE_WIRED_TO_RUNTIME_LOOP_AND_TESTED",
+    "hostExecutable": "WINEXE_ENTRYPOINT_IMPLEMENTED; LOCALAPPDATA_JOURNAL; NO_CONSOLE",
     "bridge": "BOUNDED_CLIENT_IMPLEMENTED_AND_TESTED; HOST_STARTUP_RETRY_OPEN",
-    "journal": "NOT_IMPLEMENTED",
     "mediaExecutionInHostOrBridge": "NONE"
+  },
+  "staticEvidence": {
+    "dev7BoundaryGate": "tests/static/test_dev7_b2_journal_runtime.py",
+    "contractVectors": "5/5 PASS on behavior workflow",
+    "repositoryVerifier": "PASS on behavior workflow before version freeze; final authority run required after generated-file promotion"
   },
   "authorityClosure": {
     "status": "PASS",
-    "workflowRunId": 32800523478,
-    "managed": "PASS_108_OF_108",
-    "staticGate": "PASS_30_OF_30",
+    "note": "Final dev.7 authority regenerated and verified by the self-cleaning closure workflow.",
+    "workflowRunId": 32893693907,
+    "managed": "PASS_120_OF_120",
+    "staticGate": "PASS",
     "releasePreflight": "PASS",
     "sourceSbom": "PASS",
     "releaseSbom": "PASS",
@@ -71,9 +69,9 @@
   },
   "unverifiedClaimsExplicitlyForbidden": [
     "B2 is fully closed",
-    "persistent Host job journal exists",
     "Bridge starts or restarts Host",
-    "complete Host executable lifetime is wired",
+    "Bridge verifies a signed Host executable or selected packaging identity",
+    "pipe-squatting/server-auth acceptance is fully qualified",
     "Windows artifacts are signed",
     "Windows/MSVC production Explorer target compiles",
     "Explorer integration works",
