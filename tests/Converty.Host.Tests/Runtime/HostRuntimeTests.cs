@@ -9,7 +9,7 @@ namespace Converty.Host.Tests.Runtime;
 [SupportedOSPlatform("windows")]
 public sealed class HostRuntimeTests
 {
-    private static readonly SecurityIdentifier UserOne = new("S-1-5-21-111111111-222222222-333333333-1001");
+    private static readonly SecurityIdentifier RuntimeUser = new("S-1-5-21-111111111-222222222-333333333-2001");
 
     [Fact]
     public async Task SecondRuntimeForSameUserIsRejectedWhileFirstOwnsLease()
@@ -17,12 +17,12 @@ public sealed class HostRuntimeTests
         var entered = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
         var release = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
         var firstRunner = new BlockingSessionRunner(entered, release);
-        var first = new HostRuntime(UserOne, CreateEmptyQueue, _ => firstRunner);
+        var first = new HostRuntime(RuntimeUser, CreateEmptyQueue, _ => firstRunner);
         using var firstCancellation = new CancellationTokenSource();
         Task<HostRuntimeResult> firstTask = first.RunAsync(firstCancellation.Token);
         await entered.Task.WaitAsync(TestContext.Current.CancellationToken);
 
-        var second = new HostRuntime(UserOne, CreateEmptyQueue, _ => new ImmediateSessionRunner());
+        var second = new HostRuntime(RuntimeUser, CreateEmptyQueue, _ => new ImmediateSessionRunner());
         HostRuntimeResult secondResult = await second.RunAsync(TestContext.Current.CancellationToken);
 
         Assert.Equal(HostRuntimeResult.AlreadyRunning, secondResult);
@@ -36,7 +36,7 @@ public sealed class HostRuntimeTests
     {
         bool sessionCreated = false;
         var runtime = new HostRuntime(
-            UserOne,
+            RuntimeUser,
             () => throw new InvalidDataException("corrupt journal"),
             _ =>
             {
@@ -55,13 +55,13 @@ public sealed class HostRuntimeTests
     {
         using var cancellation = new CancellationTokenSource();
         var runner = new CancellingSessionRunner(cancellation);
-        var runtime = new HostRuntime(UserOne, CreateEmptyQueue, _ => runner);
+        var runtime = new HostRuntime(RuntimeUser, CreateEmptyQueue, _ => runner);
 
         HostRuntimeResult result = await runtime.RunAsync(cancellation.Token);
 
         Assert.Equal(HostRuntimeResult.Stopped, result);
         Assert.Equal(1, runner.CallCount);
-        Assert.True(HostSingleInstanceLease.TryAcquire(UserOne, out HostSingleInstanceLease? reacquired));
+        Assert.True(HostSingleInstanceLease.TryAcquire(RuntimeUser, out HostSingleInstanceLease? reacquired));
         reacquired!.Dispose();
     }
 
