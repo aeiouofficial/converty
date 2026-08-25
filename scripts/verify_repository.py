@@ -64,9 +64,11 @@ FORBIDDEN_ENGINE_INDEPENDENT_TOKENS = [
     "powershell.exe", "HttpClient", "Socket", "NamedPipe", "DllImport", "LibraryImport",
 ]
 
-FORBIDDEN_B2_EXECUTION_TOKENS = [
-    "Process.Start(", "ProcessStartInfo", "ffmpeg", "ffprobe", "cmd.exe", "powershell.exe",
+FORBIDDEN_B2_MEDIA_TOKENS = [
+    "ffmpeg", "ffprobe", "cmd.exe", "powershell.exe", "HttpClient", "WebRequest",
 ]
+
+FORBIDDEN_B2_PROCESS_TOKENS = ["Process.Start(", "ProcessStartInfo", "System.Diagnostics.Process"]
 
 
 def fail(message: str) -> None:
@@ -198,12 +200,29 @@ def main() -> int:
                 if token.lower() in source.lower():
                     fail(f"forbidden execution/network token {token!r} found in {path.relative_to(ROOT)}")
 
-    for project_dir in [ROOT / "src/Converty.Host", ROOT / "src/Converty.Bridge"]:
+    b2_roots = [ROOT / "src/Converty.Host", ROOT / "src/Converty.Bridge"]
+    for project_dir in b2_roots:
         for path in project_dir.rglob("*.cs"):
             source = path.read_text(encoding="utf-8", errors="replace")
-            for token in FORBIDDEN_B2_EXECUTION_TOKENS:
+            for token in FORBIDDEN_B2_MEDIA_TOKENS:
                 if token.lower() in source.lower():
-                    fail(f"forbidden B2 execution token {token!r} found in {path.relative_to(ROOT)}")
+                    fail(f"forbidden B2 media/network execution token {token!r} found in {path.relative_to(ROOT)}")
+
+    for path in (ROOT / "src/Converty.Host").rglob("*.cs"):
+        source = path.read_text(encoding="utf-8", errors="replace")
+        for token in FORBIDDEN_B2_PROCESS_TOKENS:
+            if token.lower() in source.lower():
+                fail(f"forbidden Host process token {token!r} found in {path.relative_to(ROOT)}")
+
+    bridge_root = ROOT / "src/Converty.Bridge"
+    startup_root = bridge_root / "Startup"
+    for path in bridge_root.rglob("*.cs"):
+        if startup_root in path.parents:
+            continue
+        source = path.read_text(encoding="utf-8", errors="replace")
+        for token in FORBIDDEN_B2_PROCESS_TOKENS:
+            if token.lower() in source.lower():
+                fail(f"forbidden Bridge process token {token!r} found outside Startup in {path.relative_to(ROOT)}")
 
     all_cs = "\n".join(path.read_text(encoding="utf-8", errors="replace") for path in (ROOT / "src").rglob("*.cs"))
     if re.search(r'(?:command|arguments?)\s*=\s*"[^"]*(?:ffmpeg|cmd|powershell)', all_cs, re.I):
