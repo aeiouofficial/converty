@@ -28,7 +28,7 @@ def main() -> None:
     manifest = {
         "schemaVersion": 1,
         "workspaceVersion": (ROOT / "VERSION").read_text(encoding="utf-8").strip(),
-        "generatedDate": "2026-08-24",
+        "generatedDate": "2026-08-25",
         "excludedParts": sorted(EXCLUDED_PARTS),
         "excludedSuffixes": sorted(EXCLUDED_SUFFIXES),
         "excludedNames": sorted(EXCLUDED_NAMES),
