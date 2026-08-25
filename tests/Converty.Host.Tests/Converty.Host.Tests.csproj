@@ -13,6 +13,8 @@
   <ItemGroup>
     <ProjectReference Include="../../src/Converty.Host/Converty.Host.csproj" />
     <ProjectReference Include="../../src/Converty.Contracts/Converty.Contracts.csproj" />
+    <ProjectReference Include="../../src/Converty.Ipc/Converty.Ipc.csproj" />
+    <ProjectReference Include="../../src/Converty.Security/Converty.Security.csproj" />
     <ProjectReference Include="../../src/Converty.Serialization/Converty.Serialization.csproj" />
   </ItemGroup>
 </Project>
