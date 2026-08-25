@@ -56,8 +56,16 @@
     "repositoryVerifier": "PASS on behavior workflow before version freeze; final authority run required after generated-file promotion"
   },
   "authorityClosure": {
-    "status": "IN_PROGRESS",
-    "note": "Version/docs are synchronized to dev.7; deterministic source/release SBOM and SHA-256 authority must be regenerated and exact-head CI must pass before merge/package completion."
+    "status": "PASS",
+    "note": "Final dev.7 authority regenerated and verified by the self-cleaning closure workflow.",
+    "workflowRunId": 32893693907,
+    "managed": "PASS_120_OF_120",
+    "staticGate": "PASS",
+    "releasePreflight": "PASS",
+    "sourceSbom": "PASS",
+    "releaseSbom": "PASS",
+    "hashManifest": "PASS_GENERATED",
+    "packageManifest": "PASS_GENERATED"
   },
   "unverifiedClaimsExplicitlyForbidden": [
     "B2 is fully closed",
