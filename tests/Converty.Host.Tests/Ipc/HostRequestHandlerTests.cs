@@ -1,5 +1,6 @@
 using System.Text;
 using System.Text.Json;
+using Converty.Contracts;
 using Converty.Contracts.Conversion;
 using Converty.Host.Ipc;
 using Converty.Host.Jobs;
