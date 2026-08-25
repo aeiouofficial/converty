@@ -13,6 +13,12 @@ public interface IConnectedPeerIdentityReader
 }
 
 [SupportedOSPlatform("windows")]
+public interface IConnectedPeerValidator
+{
+    bool IsExpectedUser(NamedPipeServerStream pipe, SecurityIdentifier expectedUser);
+}
+
+[SupportedOSPlatform("windows")]
 public sealed class WindowsConnectedPeerIdentityReader : IConnectedPeerIdentityReader
 {
     public SecurityIdentifier? ReadClientSid(NamedPipeServerStream pipe)
@@ -30,7 +36,7 @@ public sealed class WindowsConnectedPeerIdentityReader : IConnectedPeerIdentityR
 }
 
 [SupportedOSPlatform("windows")]
-public sealed class ConnectedPeerValidator
+public sealed class ConnectedPeerValidator : IConnectedPeerValidator
 {
     private readonly IConnectedPeerIdentityReader _identityReader;
 
