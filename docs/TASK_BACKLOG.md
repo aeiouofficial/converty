@@ -10,7 +10,7 @@ Check a box only when the stated deliverable has matching evidence.
 - [x] Nullable, warnings-as-errors/analyzers policy.
 - [x] Dependency locking — all 15 current managed projects carry committed `packages.lock.json` files and locked restore passes.
 - [x] CI Action provenance — all external workflow Actions full-SHA pinned with machine-readable authority.
-- [x] CI execution containment — non-persistent checkout credentials, read-only permanent workflow permissions, finite job timeouts.
+- [x] CI execution containment — non-persistent checkout credentials in permanent CI, read-only permanent workflow permissions, finite job timeouts.
 - [x] Dependency vulnerability audit — real restored graph passes at `all`/`low`, zero vulnerable-result packages.
 - [ ] Final release dependency/license/notices review — deterministic source/release SPDX tooling exists; final human/license release approval remains open.
 - [x] Workspace/package SHA-256 manifest tooling.
@@ -29,19 +29,22 @@ Check a box only when the stated deliverable has matching evidence.
 - [x] Bounded property/adversarial path/name/collision suites — managed execution passes.
 - [x] Typed JSON v1 serialization/migration adapters — managed/adversarial execution passes.
 
-**B1 qualification:** preserved as regression authority inside the 108-test dev.6 managed suite.
+**B1 qualification:** preserved as regression authority inside the 120-test dev.7 managed suite.
 
 ## B2 Host/IPC — in progress
-- [ ] Single-instance Host — per-user named-mutex lease primitive is implemented and tested; complete Host executable lifetime wiring remains open.
+- [x] Single-instance Host — per-user lease is wired into the Host WinExe runtime/server loop and tested.
 - [x] Explicit pipe DACL — protected current-user DACL and ACL-backed server creation are tested.
 - [x] Peer validation — connected-client SID validation occurs before application-frame parsing and fails closed.
-- [x] Framing + size/count/time limits — v1 fixed framing, 1 MiB frame ceiling, strict request-domain limits, cancellation, and finite Bridge connect timeout are tested; further end-to-end session-deadline policy can be tightened with final Host lifetime wiring.
-- [ ] Bridge — bounded same-user client and strict acknowledgement validation are implemented/tested; Host startup/retry process behavior remains open.
-- [ ] Bounded queue/journal — bounded in-memory queue is implemented/tested; persistent crash-safe atomic journal remains open.
+- [x] Framing + size/count/time limits — v1 fixed framing, 1 MiB frame ceiling, strict request-domain limits, cancellation, and finite Bridge connect timeout are tested.
+- [ ] Bridge process lifetime — bounded same-user client and strict acknowledgement validation are implemented/tested; trusted installed Host startup/retry/fast-failure behavior remains open.
+- [x] Bounded persistent queue/journal — queue plus strict 4096-entry/8 MiB crash-recovery journal are implemented/tested; persistence occurs before memory publication.
 - [x] Cancellation/status — queued job lookup/cancellation semantics are implemented/tested in Host.
-- [x] IPC fuzz harness — seven checked-in adversarial cases execute against the real codec/request-admission path.
+- [x] IPC fuzz/adversarial harness — checked-in adversarial cases execute against the real codec/request-admission path.
+- [ ] Server authentication / anti-squatting — same-user client SID admission is qualified, but Bridge-to-Host server identity / named-pipe squatting acceptance under the selected packaging/signing model remains open.
+- [ ] Final status/cancel wire surface — decide whether dedicated wire operations are required and qualify them if adopted.
+- [ ] Final B2 restart/replay/disconnect/timeout/session acceptance matrix.
 
-**B2 tranche evidence:** 15-project locked restore PASS; vulnerability audit PASS with 0 vulnerable-result packages; Release build PASS with 0 warnings/errors; 108/108 managed tests PASS; native topology smoke PASS. B2 is **not fully closed** because the three partial items above remain.
+**B2 dev.7 evidence:** 15-project locked restore PASS; vulnerability audit PASS with 0 vulnerable-result packages; Release build PASS with 0 warnings/errors; 120/120 managed tests PASS; native topology smoke PASS. B2 is **not fully closed** because Bridge Host process startup, server-auth/anti-squatting, final wire-surface decision, and remaining adversarial acceptance are open.
 
 ## B3 Explorer
 - [ ] `IExplorerCommand` DLL.
@@ -49,6 +52,8 @@ Check a box only when the stated deliverable has matching evidence.
 - [ ] Pinned subcommands.
 - [ ] Modern-menu headed acceptance.
 - [ ] Explorer crash/hang/failure matrix.
+
+**B3 remains blocked until B2 is explicitly closed.**
 
 ## B4 Containment
 - [ ] Private staging.
