@@ -1,3 +1,4 @@
+# retry: 1
 name: dev7-authority-close
 
 on:
