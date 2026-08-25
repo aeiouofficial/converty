@@ -10,8 +10,18 @@ def text(path: str) -> str:
     return (ROOT / path).read_text(encoding="utf-8")
 
 
-def test_dev6_version_and_b2_projects_are_present() -> None:
-    assert text("VERSION").strip() == "0.1.0-dev.6"
+def current_version() -> str:
+    return text("VERSION").strip()
+
+
+def next_version(version: str) -> str:
+    prefix, dev = version.rsplit("-dev.", 1)
+    return f"{prefix}-dev.{int(dev) + 1}"
+
+
+def test_dev6_b2_projects_remain_present_in_later_tranches() -> None:
+    version = current_version()
+    assert int(version.rsplit(".", 1)[1]) >= 6
     for path in (
         "src/Converty.Ipc/Converty.Ipc.csproj",
         "src/Converty.Security/Converty.Security.csproj",
@@ -80,12 +90,16 @@ def test_b2_host_and_bridge_do_not_execute_media_or_processes() -> None:
                 assert token.lower() not in source, f"{token} found in {path.relative_to(ROOT)}"
 
 
-def test_all_managed_projects_are_locked_and_handover_targets_dev7() -> None:
+def test_all_managed_projects_are_locked_and_handover_advances_one_tranche() -> None:
     projects = sorted(ROOT.glob("src/**/*.csproj")) + sorted(ROOT.glob("tests/**/*.csproj"))
-    assert len(projects) == 15
+    assert len(projects) >= 15
     missing = [str(project.relative_to(ROOT)) for project in projects if not (project.parent / "packages.lock.json").is_file()]
     assert missing == []
 
-    handover = text("docs/HANDOVER_PROMPT.txt")
-    assert "0.1.0-dev.6" in handover
-    assert "0.1.0-dev.7" in handover
+    current = current_version()
+    next_target = next_version(current)
+    handover_state = json.loads(text("machine-readable/handover_state.json"))
+    handover_prompt = text("docs/HANDOVER_PROMPT.txt")
+    assert handover_state["workspaceVersion"] == current
+    assert handover_state["nextWorkspaceVersion"] == next_target
+    assert next_target in handover_prompt
