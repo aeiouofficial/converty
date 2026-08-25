@@ -1,8 +1,8 @@
 # Converty Continuation Prompt
 
-Continue the Converty project from workspace `0.1.0-dev.5`.
+Continue the Converty project from the full workspace ZIP I am uploading: `Converty_0.1.0-dev.6_full_workspace.zip`.
 
-Treat the repository contents as the source of truth. Read first:
+Treat the ZIP/repository contents as the current source of truth. Read these first, in order:
 1. `docs/HANDOVER_NEXT_AGENT.md`
 2. `machine-readable/handover_state.json`
 3. `machine-readable/build_evidence.json`
@@ -11,21 +11,24 @@ Treat the repository contents as the source of truth. Read first:
 6. `docs/Converty_Master_Build_Plan.md`
 7. `docs/SECURITY_THREAT_MODEL.md`
 8. `docs/TEST_AND_RELEASE_GATES.md`
+9. `docs/supply-chain/SBOM_POLICY.md`
+10. `docs/supply-chain/RELEASE_SIGNING_POLICY.md`
+11. `docs/superpowers/plans/2026-08-25-b2-host-bridge-ipc.md`
 
-The B0/B1 managed gate is qualified: seven locked projects restore, the real dependency audit reports zero vulnerable-result packages, Release build has zero warnings/errors, 63/63 managed tests pass, and native topology smoke passes. Do not redo or weaken those gates; preserve them as regression authority.
+Continue immediately from the evidence-backed state; do not restart the architecture or ask me to re-specify locked decisions. The next delivered workspace must be `0.1.0-dev.7` and again be a complete full-workspace ZIP with updated handover/evidence/checksums and a new copy-paste continuation prompt.
 
-The next delivered workspace is `0.1.0-dev.6` and the next batch is B2 Host/Bridge authenticated IPC. Use the existing approved architecture; do not restart the product design.
+Dev.6 has the first qualified B2 IPC tranche: 15 locked managed projects, zero vulnerable-result packages, zero-warning/zero-error Release build, 108/108 managed tests, explicit current-user named-pipe DACL, connected-client SID validation before application-frame parsing, bounded/versioned framing with a 1 MiB payload ceiling, bounded Host admission/status/cancellation, ACL-backed Host pipe sessions, a bounded Bridge client with a maximum 30-second connect timeout, a tested per-user single-instance lease primitive, and a seven-case executable IPC adversarial corpus.
 
-Implement B2 test-first:
-- single-instance Host;
-- explicit named-pipe DACL;
-- peer validation;
-- versioned bounded framing with size/count/time quotas;
-- Bridge;
-- bounded queue and atomic journal;
-- status/cancellation;
-- IPC fuzz/adversarial harness.
+B2 is NOT fully closed. Keep B3 blocked and finish B2 test-first. Priority order:
+1. persistent crash-safe atomic Host job journal and recovery semantics;
+2. complete Host executable lifetime/server loop wired to the existing `HostSingleInstanceLease`;
+3. Bridge Host startup/retry/fast-failure behavior using trusted installed executable identity/path policy and finite deadlines;
+4. status/cancellation wire commands if required by the finalized runtime surface;
+5. anti-squatting/signed-peer/session validation appropriate to the selected packaging model;
+6. adversarial restart/replay/disconnect/timeout/journal-recovery coverage sufficient to close the B2 gate.
 
-Preserve the hard boundaries: Explorer trigger only; Host never parses untrusted media or loads codec/plugin code; probing/conversion belongs to disposable restricted workers; no raw executable commands in presets/IPC; no silent strict-isolation downgrade; workers write private staging only; final output remains transactional; numbered-copy remains default; signing private keys never enter the workspace.
+Preserve non-negotiable boundaries: Explorer trigger only; Host never parses untrusted media or loads codec/plugin code; probing/conversion belongs to disposable restricted workers; ordinary local conversion has no network requirement; presets/IPC never carry executable commands/pass-through argument vectors; provider options are whitelisted/typed; strict isolation never silently downgrades; workers later write only private staging; Host later validates then atomically commits; numbered-copy remains safe default; unknown JSON versions/members/duplicates fail closed; release dependency versions are never fabricated; signing private keys never enter the repository/workspace.
 
-Do not implement FFmpeg/WIC execution before the B2/B4 containment foundation is qualified. At tranche end synchronize VERSION/README/CHANGELOG/backlog/status/handover/evidence, regenerate source/release SBOM and SHA-256 authority, run exact-head CI, and package the next complete workspace.
+Do not implement FFmpeg/WIC/media-provider execution before B4 containment is qualified. Do not weaken the existing B2 tests, ACL, peer validation, frame bounds, queue limits, or strict JSON behavior to make runtime wiring easier.
+
+Report only gates actually executed. At tranche end update VERSION/README/CHANGELOG/backlog/status/handover/machine-readable evidence consistently, regenerate source/release SBOM, package_manifest.json and SHA256SUMS.txt, verify the ZIP by reopening it and checking CRC/embedded hashes, and give me a direct download link for `Converty_0.1.0-dev.7_full_workspace.zip` plus the next handover prompt to paste back.

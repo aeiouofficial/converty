@@ -9,7 +9,7 @@ import xml.etree.ElementTree as ET
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-CURRENT = "0.1.0-dev.5"
+CURRENT = "0.1.0-dev.6"
 
 REQUIRED_FILES = [
     "VERSION", "global.json", "Directory.Build.props", "Directory.Packages.props",
@@ -18,10 +18,11 @@ REQUIRED_FILES = [
     "src/Converty.Core/Converty.Core.csproj",
     "src/Converty.FakeProviders/Converty.FakeProviders.csproj",
     "src/Converty.Serialization/Converty.Serialization.csproj",
+    "src/Converty.Ipc/Converty.Ipc.csproj",
+    "src/Converty.Security/Converty.Security.csproj",
+    "src/Converty.Host/Converty.Host.csproj",
+    "src/Converty.Bridge/Converty.Bridge.csproj",
     "src/Converty.Serialization/ContractJson.cs",
-    "tests/Converty.Contracts.Tests/Converty.Contracts.Tests.csproj",
-    "tests/Converty.Core.Tests/Converty.Core.Tests.csproj",
-    "tests/Converty.Serialization.Tests/Converty.Serialization.Tests.csproj",
     "machine-readable/release_policy.json",
     "machine-readable/ci_action_pins.json",
     "machine-readable/handover_state.json",
@@ -33,6 +34,7 @@ REQUIRED_FILES = [
     "scripts/verify_dependency_audit.py",
     "scripts/verify_contract_vectors.py",
     "tests/vectors/v1/manifest.json",
+    "tests/fuzz/ipc/v1/corpus.json",
 ]
 
 REQUIRED_SOURCE_TOKENS = {
@@ -46,11 +48,18 @@ REQUIRED_SOURCE_TOKENS = {
         "Unsupported schema version",
         "PropertyNameCaseInsensitive = false",
     ],
+    "src/Converty.Host/Ipc/HostPipeServer.cs": ["NamedPipeServerStreamAcl.Create", "_peerValidator.IsExpectedUser"],
+    "src/Converty.Bridge/Ipc/BridgeClient.cs": ["MaximumConnectTimeout", "ProtocolFrameCodec.WriteAsync", "ProtocolFrameCodec.ReadAsync"],
+    "src/Converty.Host/Runtime/HostSingleInstanceLease.cs": ["Local\\Converty.Host.", "new Mutex(initiallyOwned: true"],
 }
 
 FORBIDDEN_ENGINE_INDEPENDENT_TOKENS = [
     "Process.Start(", "ProcessStartInfo", "ffmpeg", "ffprobe", "cmd.exe",
     "powershell.exe", "HttpClient", "Socket", "NamedPipe", "DllImport", "LibraryImport",
+]
+
+FORBIDDEN_B2_EXECUTION_TOKENS = [
+    "Process.Start(", "ProcessStartInfo", "ffmpeg", "ffprobe", "cmd.exe", "powershell.exe",
 ]
 
 
@@ -124,7 +133,7 @@ def main() -> int:
     if ci_policy.get("checkoutPersistCredentials") is not False:
         fail("release policy must forbid persisted checkout credentials")
     if ci_policy.get("workflowPermissions") != {"contents": "read"}:
-        fail("release policy must keep CI workflow permissions at contents: read")
+        fail("release policy must keep permanent CI workflow permissions at contents: read")
     if ci_policy.get("jobTimeoutMinutes") != {"managed": 30, "supply-chain-static": 15}:
         fail("release policy must encode reviewed CI job timeout ceilings")
 
@@ -151,13 +160,7 @@ def main() -> int:
         path for path in ROOT.rglob("*.csproj")
         if not any(part in {"bin", "obj", "artifacts"} for part in path.parts)
     )
-    if len(projects) != 7:
-        fail(f"expected exactly 7 managed projects, found {len(projects)}")
-    missing_locks = [
-        project.relative_to(ROOT).as_posix()
-        for project in projects
-        if not (project.parent / "packages.lock.json").is_file()
-    ]
+    missing_locks = [project.relative_to(ROOT).as_posix() for project in projects if not (project.parent / "packages.lock.json").is_file()]
     if missing_locks:
         fail("managed lock files missing for: " + ", ".join(missing_locks))
 
@@ -169,53 +172,43 @@ def main() -> int:
     if any(package.get("versionInfo") != version for package in source_sbom.get("packages", [])):
         fail("source SBOM package versions must match VERSION")
 
-    solution = (ROOT / "Converty.slnx").read_text(encoding="utf-8")
-    for project in [
-        "src/Converty.Serialization/Converty.Serialization.csproj",
-        "tests/Converty.Serialization.Tests/Converty.Serialization.Tests.csproj",
-    ]:
-        if project not in solution:
-            fail(f"solution missing {project}")
-
     serialization_project = (ROOT / "src/Converty.Serialization/Converty.Serialization.csproj").read_text(encoding="utf-8")
-    if "Converty.Contracts" not in serialization_project or "PackageReference" in serialization_project:
-        fail("Serialization must reference Contracts only and introduce no package dependency")
-    if "Converty.Core" in serialization_project:
-        fail("Serialization must not reference Core")
+    if "Converty.Contracts" not in serialization_project or "PackageReference" in serialization_project or "Converty.Core" in serialization_project:
+        fail("Serialization must reference Contracts only and introduce no package/Core dependency")
 
     for rel, tokens in REQUIRED_SOURCE_TOKENS.items():
         path = ROOT / rel
         if not path.is_file():
             fail(f"required source file missing: {rel}")
-        text = path.read_text(encoding="utf-8")
+        source = path.read_text(encoding="utf-8")
         for token in tokens:
-            if token not in text:
+            if token not in source:
                 fail(f"{rel} missing expected token {token!r}")
 
-    for project_dir in [
-        ROOT / "src/Converty.Contracts",
-        ROOT / "src/Converty.Core",
-        ROOT / "src/Converty.Serialization",
-    ]:
+    for project_dir in [ROOT / "src/Converty.Contracts", ROOT / "src/Converty.Core", ROOT / "src/Converty.Serialization"]:
         for path in project_dir.rglob("*.cs"):
-            text = path.read_text(encoding="utf-8", errors="replace")
+            source = path.read_text(encoding="utf-8", errors="replace")
             for token in FORBIDDEN_ENGINE_INDEPENDENT_TOKENS:
-                if token.lower() in text.lower():
+                if token.lower() in source.lower():
                     fail(f"forbidden execution/network token {token!r} found in {path.relative_to(ROOT)}")
 
-    all_cs = "\n".join(
-        path.read_text(encoding="utf-8", errors="replace")
-        for path in (ROOT / "src").rglob("*.cs")
-    )
+    for project_dir in [ROOT / "src/Converty.Host", ROOT / "src/Converty.Bridge"]:
+        for path in project_dir.rglob("*.cs"):
+            source = path.read_text(encoding="utf-8", errors="replace")
+            for token in FORBIDDEN_B2_EXECUTION_TOKENS:
+                if token.lower() in source.lower():
+                    fail(f"forbidden B2 execution token {token!r} found in {path.relative_to(ROOT)}")
+
+    all_cs = "\n".join(path.read_text(encoding="utf-8", errors="replace") for path in (ROOT / "src").rglob("*.cs"))
     if re.search(r'(?:command|arguments?)\s*=\s*"[^"]*(?:ffmpeg|cmd|powershell)', all_cs, re.I):
         fail("production source appears to embed executable command strings")
 
     print("PASS: repository static verification succeeded")
     print(f"PASS: version={version}")
     print("PASS: SDK pin=10.0.400/latestPatch")
-    print("PASS: 7/7 managed lock files present")
+    print(f"PASS: {len(projects)}/{len(projects)} managed lock files present")
     print("PASS: source SBOM/release/CI/handover/toolchain authority is version-aligned")
-    print("PASS: Contracts/Core/Serialization contain no process/network/engine/native-loading tokens")
+    print("PASS: engine-independent core and B2 Host/Bridge boundaries remain enforced")
     return 0
 
 

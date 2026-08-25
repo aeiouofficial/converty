@@ -1,0 +1,7 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyName>Converty.Ipc</AssemblyName>
+    <RootNamespace>Converty.Ipc</RootNamespace>
+    <Description>Versioned bounded IPC protocol and framing primitives for trusted Converty components.</Description>
+  </PropertyGroup>
+</Project>

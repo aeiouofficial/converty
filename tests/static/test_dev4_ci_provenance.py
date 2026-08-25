@@ -7,15 +7,15 @@ import xml.etree.ElementTree as ET
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-CURRENT = "0.1.0-dev.5"
-NEXT = "0.1.0-dev.6"
+CURRENT = "0.1.0-dev.6"
+NEXT = "0.1.0-dev.7"
 
 
 def run(*args: str) -> subprocess.CompletedProcess[str]:
     return subprocess.run([sys.executable, *args], cwd=ROOT, text=True, capture_output=True, check=False)
 
 
-def test_current_version_is_dev5() -> None:
+def test_current_workspace_version() -> None:
     assert (ROOT / "VERSION").read_text(encoding="utf-8").strip() == CURRENT
 
 

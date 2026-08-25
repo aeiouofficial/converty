@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "workspaceVersion": "0.1.0-dev.5",
+  "workspaceVersion": "0.1.0-dev.6",
   "targetOs": "Windows 11",
   "dotnetSdk": "10.0.400",
   "targetFramework": "net10.0",
@@ -9,10 +9,11 @@
   "nativeBuild": "CMake + MSVC",
   "architecture": "x64-first",
   "notes": [
-    "The dev.5 qualification ran on a clean GitHub Actions Windows Server 2025 runner with .NET SDK 10.0.400.",
-    "All seven managed projects restored from committed lock files in locked mode; the restored-graph NuGet vulnerability audit reported zero vulnerable-result packages.",
-    "The qualified Release build completed with zero warnings and zero errors; Microsoft Testing Platform executed 63 tests with 63 successes.",
-    "Native topology smoke remains topology-only; the production Explorer target begins in B3."
+    "The dev.6 B2 behavior qualification ran on GitHub Actions Windows Server 2025 with .NET SDK 10.0.400.",
+    "All 15 managed projects restore from committed lock files; restored-graph NuGet vulnerability audit reports zero vulnerable-result packages.",
+    "The qualified Release build completed with zero warnings and zero errors; Microsoft Testing Platform executed 108 tests with 108 successes.",
+    "B2 now includes bounded framing, explicit current-user pipe ACLs, peer validation, bounded Host admission, Bridge request submission, a single-instance lease primitive, and an executed adversarial IPC corpus.",
+    "Persistent journal and complete Host/Bridge startup lifetime wiring remain open; native topology smoke is topology-only and the production Explorer target begins in B3."
   ],
   "testRunner": "Microsoft.Testing.Platform",
   "xunitMtpV2": "4.0.0"

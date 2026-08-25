@@ -1,17 +1,17 @@
 {
   "schemaVersion": 1,
   "project": "Converty",
-  "workspaceVersion": "0.1.0-dev.5",
+  "workspaceVersion": "0.1.0-dev.6",
   "baselineDate": "2026-08-25",
-  "implementationStatus": "B0_B1_QUALIFIED_B2_READY",
+  "implementationStatus": "B0_B1_QUALIFIED_B2_PARTIAL_QUALIFIED",
   "batchesTouched": [
     "B0",
-    "B1"
+    "B1",
+    "B2"
   ],
-  "nextWorkspaceVersion": "0.1.0-dev.6",
+  "nextWorkspaceVersion": "0.1.0-dev.7",
   "nextBatch": "B2",
   "targetOs": "Windows 11 x64",
-  "b2StartGate": "PASS",
   "toolchain": {
     "dotnetSdk": "10.0.400",
     "targetFramework": "net10.0",
@@ -21,25 +21,26 @@
     "native": "C++20 / CMake 3.28+ / MSVC for production shell"
   },
   "qualifiedEvidence": {
-    "workflowRunId": 32784047968,
-    "headSha": "fcb5f8ddda45fd3d8ec3ead01463ef129e6bbc2e",
-    "managedTests": "63/63 PASS",
+    "workflowRunId": 32799556506,
+    "managedJobId": 97657597350,
+    "headSha": "26e402d68b8729cd567a462fc8a4eb8cea500607",
+    "managedTests": "108/108 PASS",
     "releaseBuild": "PASS; 0 warnings; 0 errors",
     "dependencyAudit": "PASS; 0 vulnerable-result packages",
-    "lockedProjects": "7/7",
+    "lockedProjects": "15/15",
+    "ipcFuzzCorpus": "7/7 expected rejection behaviors PASS inside managed suite",
     "nativeTopologySmoke": "PASS"
   },
   "implementedSource": [
-    "Repository/solution/build/CI/versioning topology",
-    "Engine-independent Converty.Contracts with schema-aligned bounds",
-    "FormatRegistry, CapabilityGraph, ConversionPlanner, OutputPathResolver",
-    "Data-only fake Audio/Image/Video providers",
-    "Converty.Serialization strict v1 JSON adapters with duplicate/unmapped-member rejection",
-    "Six strict JSON Schema v1 contracts plus adversarial vectors",
-    "Seven committed NuGet lock files with locked restore verification",
-    "Deterministic SPDX 2.3 source/release SBOM tooling",
-    "Immutable full-SHA GitHub Actions pin authority",
-    "Fail-closed restored-graph NuGet vulnerability audit"
+    "Qualified B0/B1 contracts/core/serialization/fake-provider foundation",
+    "Converty.Ipc v1 fixed bounded framing with checked exact reads",
+    "Converty.Security protected current-user pipe DACL, SID-qualified endpoint, and connected-client SID validation",
+    "Converty.Host bounded in-memory queue, strict request admission, queued status/cancellation, and ACL-backed single-session pipe server",
+    "Converty.Bridge bounded same-user request client with strict acknowledgement parsing",
+    "Per-user Host single-instance lease primitive",
+    "Seven-case checked-in IPC adversarial corpus executed by managed tests",
+    "Fifteen committed NuGet lock files with locked restore and restored-graph vulnerability auditing",
+    "Deterministic SPDX 2.3 source/release SBOM and SHA-256 authority tooling"
   ],
   "architecturalInvariants": [
     "Explorer trigger only; no media parsing/conversion/network/heavy work",
@@ -53,19 +54,28 @@
     "No silent strict-isolation downgrade",
     "Numbered copy is the default collision policy"
   ],
-  "blockingBeforeB2": [],
-  "b2Scope": [
-    "Single-instance Host",
+  "b2Completed": [
     "Explicit named-pipe DACL",
-    "Peer validation",
-    "Bounded/versioned framing",
-    "Bridge",
-    "Bounded queue and atomic journal",
-    "Cancellation/status",
-    "IPC fuzz harness"
+    "Connected-peer current-user SID validation",
+    "Bounded/versioned frame codec",
+    "Bounded Host in-memory queue admission",
+    "Queued status/cancellation",
+    "Managed IPC adversarial corpus"
+  ],
+  "b2Partial": [
+    "Single-instance Host: tested lease primitive exists; executable lifetime wiring remains",
+    "Bridge: bounded client exists; Host startup/retry process behavior remains",
+    "Queue/journal: bounded queue exists; persistent crash-safe atomic journal remains"
+  ],
+  "nextActions": [
+    "Finish B2 persistent crash-safe atomic journal and recovery tests",
+    "Wire a complete Host executable lifetime/server loop to HostSingleInstanceLease without adding media parsing",
+    "Implement Bridge Host-start/retry/fast-failure process behavior with bounded timeouts and signed/install-path policy",
+    "Close remaining B2 anti-squatting/session/runtime acceptance gaps before starting B3",
+    "Do not begin FFmpeg/WIC execution before B4 containment is qualified"
   ],
   "openInvestigations": [
-    "Bridge-to-Host peer authentication under selected packaging model",
+    "Bridge-to-Host signed-peer/anti-squatting validation under selected packaging model",
     "production sandbox mechanism compatibility per engine",
     "safe path/reparse/commit mechanics across supported filesystem classes",
     "full MSIX vs sparse package",
@@ -78,6 +88,7 @@
     "docs/TEST_AND_RELEASE_GATES.md",
     "docs/TASK_BACKLOG.md",
     "docs/development/IMPLEMENTATION_STATUS.md",
+    "docs/superpowers/plans/2026-08-25-b2-host-bridge-ipc.md",
     "machine-readable/build_evidence.json",
     "machine-readable/release_policy.json"
   ]

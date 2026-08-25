@@ -1,13 +1,21 @@
 <Solution>
   <Folder Name="/src/">
+    <Project Path="src/Converty.Bridge/Converty.Bridge.csproj" />
     <Project Path="src/Converty.Contracts/Converty.Contracts.csproj" />
     <Project Path="src/Converty.Core/Converty.Core.csproj" />
     <Project Path="src/Converty.FakeProviders/Converty.FakeProviders.csproj" />
+    <Project Path="src/Converty.Host/Converty.Host.csproj" />
+    <Project Path="src/Converty.Ipc/Converty.Ipc.csproj" />
+    <Project Path="src/Converty.Security/Converty.Security.csproj" />
     <Project Path="src/Converty.Serialization/Converty.Serialization.csproj" />
   </Folder>
   <Folder Name="/tests/">
+    <Project Path="tests/Converty.Bridge.Tests/Converty.Bridge.Tests.csproj" />
     <Project Path="tests/Converty.Contracts.Tests/Converty.Contracts.Tests.csproj" />
     <Project Path="tests/Converty.Core.Tests/Converty.Core.Tests.csproj" />
+    <Project Path="tests/Converty.Host.Tests/Converty.Host.Tests.csproj" />
+    <Project Path="tests/Converty.Ipc.Tests/Converty.Ipc.Tests.csproj" />
+    <Project Path="tests/Converty.Security.Tests/Converty.Security.Tests.csproj" />
     <Project Path="tests/Converty.Serialization.Tests/Converty.Serialization.Tests.csproj" />
   </Folder>
 </Solution>

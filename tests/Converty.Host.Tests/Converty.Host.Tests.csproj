@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <IsPackable>false</IsPackable>
+    <OutputType>Exe</OutputType>
+    <IsTestProject>true</IsTestProject>
+  </PropertyGroup>
+  <ItemGroup>
+    <Using Include="Xunit" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="xunit.v3.mtp-v2" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="../../src/Converty.Host/Converty.Host.csproj" />
+    <ProjectReference Include="../../src/Converty.Contracts/Converty.Contracts.csproj" />
+    <ProjectReference Include="../../src/Converty.Ipc/Converty.Ipc.csproj" />
+    <ProjectReference Include="../../src/Converty.Security/Converty.Security.csproj" />
+    <ProjectReference Include="../../src/Converty.Serialization/Converty.Serialization.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="../fuzz/ipc/v1/corpus.json" Link="fuzz/ipc/v1/corpus.json" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+</Project>
