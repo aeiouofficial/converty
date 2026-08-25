@@ -4,6 +4,8 @@
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="../Converty.Contracts/Converty.Contracts.csproj" />
+    <ProjectReference Include="../Converty.Ipc/Converty.Ipc.csproj" />
+    <ProjectReference Include="../Converty.Security/Converty.Security.csproj" />
     <ProjectReference Include="../Converty.Serialization/Converty.Serialization.csproj" />
   </ItemGroup>
 </Project>
