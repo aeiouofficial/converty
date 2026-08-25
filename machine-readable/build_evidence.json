@@ -1,11 +1,11 @@
 {
   "schemaVersion": 1,
-  "workspaceVersion": "0.1.0-dev.7",
+  "workspaceVersion": "0.1.0-dev.8",
   "evidenceDate": "2026-08-25",
   "behaviorQualification": {
-    "headSha": "221a6bcd7e9a2238ded79a65d9cbabbca0b7079c",
-    "workflowRunId": 32885833243,
-    "managedJobId": 97925935937,
+    "headSha": "4819ad944b04175a3af6acd2ea26e59c6fce2609",
+    "workflowRunId": 32905137143,
+    "managedJobId": 97987440961,
     "runner": {
       "os": "Windows Server 2025",
       "image": "windows-2025-vs2026",
@@ -20,57 +20,44 @@
       "warnings": 0,
       "errors": 0,
       "tests": {
-        "total": 120,
-        "succeeded": 120,
+        "total": 129,
+        "succeeded": 129,
         "failed": 0,
         "skipped": 0
       },
       "nativeTopologySmoke": "PASS"
+    },
+    "staticAtBehaviorHead": {
+      "tests": "38 PASS inside managed test script",
+      "contractVectors": "5/5 PASS",
+      "repositoryVerifier": "PASS",
+      "note": "The final dev.8 coordinator-invariant static test was added after this behavior head and is rerun by final closure."
     }
   },
   "b2Evidence": {
     "protocolFrameMaxPayloadBytes": 1048576,
     "bridgeMaximumConnectTimeoutSeconds": 30,
+    "bridgeMaximumStartupTimeoutSeconds": 30,
+    "bridgeMaximumRetryDelaySeconds": 1,
     "explicitPipeDacl": "IMPLEMENTED_AND_TESTED",
     "connectedPeerSidValidation": "IMPLEMENTED_AND_TESTED_BEFORE_APPLICATION_FRAME_READ",
     "hostQueue": "BOUNDED_IMPLEMENTED_AND_TESTED",
-    "hostJournal": {
-      "status": "IMPLEMENTED_AND_TESTED",
-      "maxEntries": 4096,
-      "maxBytes": 8388608,
-      "strictSchema": true,
-      "atomicPublication": "SAME_DIRECTORY_TEMP_WRITE_THROUGH_FLUSH_TO_DISK_THEN_MOVE",
-      "orphanTempPolicy": "IGNORED_AND_REMOVED",
-      "inFlightRecovery": "PROBING_THROUGH_COMMITTING_BECOME_FAILED",
-      "mutationOrdering": "PERSIST_BEFORE_IN_MEMORY_PUBLICATION"
-    },
-    "queuedStatusCancellation": "IMPLEMENTED_AND_TESTED",
+    "hostJournal": "IMPLEMENTED_AND_TESTED_PERSIST_BEFORE_PUBLISH",
     "hostSingleInstance": "PER_USER_LEASE_WIRED_TO_RUNTIME_LOOP_AND_TESTED",
     "hostExecutable": "WINEXE_ENTRYPOINT_IMPLEMENTED; LOCALAPPDATA_JOURNAL; NO_CONSOLE",
-    "bridge": "BOUNDED_CLIENT_IMPLEMENTED_AND_TESTED; HOST_STARTUP_RETRY_OPEN",
+    "bridgeTrustedHostPath": "FIXED_CONVERTY_HOST_EXE_FROM_ABSOLUTE_EXISTING_NON_REPARSE_INSTALL_DIRECTORY",
+    "bridgeHostLauncher": "NO_SHELL; EMPTY_ARGUMENTS; CREATE_NO_WINDOW; SINGLE_APPROVED_PROCESS_START_SITE",
+    "bridgeStartupRetry": "ONLY_CONNECT_STAGE_UNAVAILABLE_TRIGGERS_ONE_LAUNCH; BOUNDED_DEADLINE; CANCELLABLE",
+    "bridgeServerAuthentication": "NOT_YET_QUALIFIED",
     "mediaExecutionInHostOrBridge": "NONE"
   },
-  "staticEvidence": {
-    "dev7BoundaryGate": "tests/static/test_dev7_b2_journal_runtime.py",
-    "contractVectors": "5/5 PASS on behavior workflow",
-    "repositoryVerifier": "PASS on behavior workflow before version freeze; final authority run required after generated-file promotion"
-  },
   "authorityClosure": {
-    "status": "PASS",
-    "note": "Final dev.7 authority regenerated and verified by the self-cleaning closure workflow.",
-    "workflowRunId": 32893693907,
-    "managed": "PASS_120_OF_120",
-    "staticGate": "PASS",
-    "releasePreflight": "PASS",
-    "sourceSbom": "PASS",
-    "releaseSbom": "PASS",
-    "hashManifest": "PASS_GENERATED",
-    "packageManifest": "PASS_GENERATED"
+    "status": "IN_PROGRESS",
+    "note": "Version/docs are synchronized to dev.8; final self-cleaning closure must regenerate source/release SBOM, manifests, rerun all gates and deterministic packaging before merge."
   },
   "unverifiedClaimsExplicitlyForbidden": [
     "B2 is fully closed",
-    "Bridge starts or restarts Host",
-    "Bridge verifies a signed Host executable or selected packaging identity",
+    "Bridge fully authenticates the connected Host server",
     "pipe-squatting/server-auth acceptance is fully qualified",
     "Windows artifacts are signed",
     "Windows/MSVC production Explorer target compiles",
