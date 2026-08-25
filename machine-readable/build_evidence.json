@@ -78,5 +78,18 @@
     "runtime media conversion works",
     "worker sandbox works",
     "release dependency license review is complete"
-  ]
+  ],
+  "eolAuthorityRepair": {
+    "status": "PASS",
+    "workflowRunId": 32894418261,
+    "reason": "Windows closure generated SHA256SUMS from CRLF working-tree bytes before Git normalized committed blobs to LF.",
+    "policy": ".gitattributes enforces text=auto eol=lf; repaired package/hash authority was generated from LF working-tree bytes.",
+    "managed": "PASS_120_OF_120",
+    "releasePreflight": "PASS",
+    "sourceSbom": "PASS",
+    "releaseSbom": "PASS",
+    "packageManifest": "PASS_GENERATED",
+    "hashManifest": "PASS_GENERATED",
+    "deterministicPackage": "PASS"
+  }
 }
