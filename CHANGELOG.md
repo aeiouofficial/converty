@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.1.0-dev.6 — 2026-08-25
+- Began B2 without crossing the media-parser boundary: no FFmpeg/WIC/provider/process execution was added to Host or Bridge.
+- Added `Converty.Ipc` with fixed 12-byte versioned framing, checked exact reads, a 1 MiB payload ceiling, cancellation, and fail-closed bad-magic/future-version/negative-length/oversized/truncated handling.
+- Added `Converty.Security` with protected current-user pipe DACL construction, SID-hashed endpoint naming, injectable peer-validation tests, and real Windows connected-client SID reading through pipe impersonation.
+- Added a bounded Host admission queue with duplicate/capacity rejection, status lookup, queued cancellation, strict request admission, and rejection paths that do not mutate queue state.
+- Added ACL-backed `HostPipeServer` and bounded `BridgeClient` one-request/one-acknowledgement sessions with authorization before application-frame parsing and a maximum 30-second Bridge connect timeout.
+- Added a tested per-user Host single-instance lease primitive keyed by the existing SID-derived identity.
+- Expanded the managed graph to 15 locked projects; locked restore and restored-graph vulnerability audit pass with zero vulnerable-result packages.
+- Qualified the B2 behavior head with a zero-warning/zero-error Release build, 108/108 managed tests, and native topology smoke.
+- Added and executed a seven-case checked-in IPC adversarial corpus covering bad magic, future version, negative/oversized/truncated lengths, malformed request JSON, and unknown executable-command-shaped request members.
+- Kept incomplete B2 work explicit: persistent crash-safe journal, complete Host executable lifetime wiring, and Bridge Host startup/retry remain open for the next tranche.
+
 ## 0.1.0-dev.5 — 2026-08-25
 - Completed the product-name migration across active solution/project/module paths while preserving historical records.
 - Committed and locked all seven managed NuGet graphs; clean Windows locked restore passes with .NET SDK 10.0.400.
@@ -17,7 +29,6 @@
 - Added machine-readable dependency vulnerability report verification, adversarial fixtures, and CI/build integration.
 - Disabled checkout credential persistence, added finite CI job timeouts, and kept workflow permissions read-only.
 - Preserved deterministic SBOM, release preflight, key-custody, secret-exclusion, and B1 strict-contract controls.
-
 
 ## 0.1.0-dev.3 — 2026-08-24
 
