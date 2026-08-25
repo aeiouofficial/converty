@@ -59,15 +59,15 @@
     "mediaExecutionInHostOrBridge": "NONE"
   },
   "authorityClosure": {
-    "status": "PENDING_FINAL_SYNC_WORKFLOW",
-    "workflowRunId": null,
-    "managed": null,
-    "staticGate": null,
-    "releasePreflight": null,
-    "sourceSbom": null,
-    "releaseSbom": null,
-    "hashManifest": null,
-    "packageManifest": null
+    "status": "PASS",
+    "workflowRunId": 32800523478,
+    "managed": "PASS_108_OF_108",
+    "staticGate": "PASS_30_OF_30",
+    "releasePreflight": "PASS",
+    "sourceSbom": "PASS",
+    "releaseSbom": "PASS",
+    "hashManifest": "PASS_GENERATED",
+    "packageManifest": "PASS_GENERATED"
   },
   "unverifiedClaimsExplicitlyForbidden": [
     "B2 is fully closed",
