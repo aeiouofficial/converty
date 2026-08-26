@@ -98,7 +98,7 @@ public sealed class ProductPresetRegistry
             ProductMediaKind.Audio,
             AudioExtensions,
             ".mp3",
-            ["-vn", "-c:a", "libmp3lame", "-b:a", "192k"]);
+            ["-vn", "-c:a", "libmp3lame", "-b:a", "320k"]);
 
         yield return new ProductPresetDefinition(
             PresetId.Parse("audio.flac"),
