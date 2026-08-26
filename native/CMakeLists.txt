@@ -9,7 +9,8 @@ include(cmake/Hardening.cmake)
 
 if(WIN32)
     add_library(Converty.ShellExtension SHARED
-        Converty.ShellExtension/ConvertyShellExtension.cpp)
+        Converty.ShellExtension/ConvertyShellExtension.cpp
+        Converty.ShellExtension/Converty.ShellExtension.def)
 
     target_compile_definitions(Converty.ShellExtension PRIVATE
         UNICODE
