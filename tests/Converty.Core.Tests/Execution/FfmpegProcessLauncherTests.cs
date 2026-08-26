@@ -92,6 +92,7 @@ public sealed class FfmpegProcessLauncherTests
             preset,
             @"C:\Media\in.wav",
             @"C:\Media\out.mp3",
-            TimeSpan.FromSeconds(seconds)));
+            TimeSpan.FromSeconds(seconds),
+            TestContext.Current.CancellationToken));
     }
 }
