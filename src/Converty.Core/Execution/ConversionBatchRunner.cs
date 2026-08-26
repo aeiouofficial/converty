@@ -8,7 +8,6 @@ namespace Converty.Core.Execution;
 public sealed class ConversionBatchRunner
 {
     private const int MaximumPublishRaceRetries = 64;
-    private const int MaximumTemporaryNameAttempts = 16;
 
     private readonly ProductPresetRegistry _presets;
     private readonly OutputPathResolver _outputPaths;
@@ -71,14 +70,14 @@ public sealed class ConversionBatchRunner
             ValidateInputPath(inputPath, preset);
 
             string plannedOutputPath = _outputPaths.Resolve(inputPath, preset.OutputExtension);
-            string temporaryOutputPath = CreateUniqueTemporaryOutputPath(inputPath, preset.OutputExtension);
+            ConversionStagingPaths staging = ConversionStagingDirectory.Create(inputPath, preset.OutputExtension);
             try
             {
                 FfmpegExecutionResult execution = await _launcher.ExecuteAsync(
                     _ffmpegPath,
                     preset,
-                    inputPath,
-                    temporaryOutputPath,
+                    staging.InputPath,
+                    staging.OutputPath,
                     _executionTimeout,
                     cancellationToken).ConfigureAwait(false);
 
@@ -90,7 +89,7 @@ public sealed class ConversionBatchRunner
                     throw new ConversionFailedException(inputPath, plannedOutputPath, execution.ExitCode, detail);
                 }
 
-                if (!File.Exists(temporaryOutputPath) || new FileInfo(temporaryOutputPath).Length == 0)
+                if (!File.Exists(staging.OutputPath) || new FileInfo(staging.OutputPath).Length == 0)
                 {
                     throw new ConversionFailedException(
                         inputPath,
@@ -102,12 +101,12 @@ public sealed class ConversionBatchRunner
                 string publishedOutputPath = PublishTemporaryOutput(
                     inputPath,
                     preset.OutputExtension,
-                    temporaryOutputPath);
+                    staging.OutputPath);
                 results.Add(new ConversionFileResult(inputPath, publishedOutputPath, execution.ExitCode));
             }
             finally
             {
-                DeleteTemporaryOutput(temporaryOutputPath);
+                ConversionStagingDirectory.DeleteOwned(staging.DirectoryPath);
             }
         }
 
@@ -138,27 +137,6 @@ public sealed class ConversionBatchRunner
             $"Unable to publish converted output after {MaximumPublishRaceRetries} destination races.");
     }
 
-    private static string CreateUniqueTemporaryOutputPath(string inputPath, string outputExtension)
-    {
-        string? directory = Path.GetDirectoryName(inputPath);
-        if (string.IsNullOrWhiteSpace(directory))
-        {
-            throw new ArgumentException("Input path must have a destination directory.", nameof(inputPath));
-        }
-
-        for (int attempt = 0; attempt < MaximumTemporaryNameAttempts; ++attempt)
-        {
-            string temporaryName = $".converty-{Guid.NewGuid():N}.partial{outputExtension}";
-            string temporaryPath = Path.Combine(directory, temporaryName);
-            if (!File.Exists(temporaryPath) && !Directory.Exists(temporaryPath))
-            {
-                return temporaryPath;
-            }
-        }
-
-        throw new IOException("Unable to allocate a unique temporary conversion output path.");
-    }
-
     private static void ValidateInputPath(string inputPath, ProductPresetDefinition preset)
     {
         if (string.IsNullOrWhiteSpace(inputPath) || inputPath.Length > ConversionRequest.MaximumPathLength)
@@ -180,23 +158,6 @@ public sealed class ConversionBatchRunner
         {
             throw new InvalidOperationException(
                 $"Preset '{preset.Id}' does not support input extension '{Path.GetExtension(inputPath)}'.");
-        }
-    }
-
-    private static void DeleteTemporaryOutput(string temporaryOutputPath)
-    {
-        try
-        {
-            if (File.Exists(temporaryOutputPath))
-            {
-                File.Delete(temporaryOutputPath);
-            }
-        }
-        catch (IOException)
-        {
-        }
-        catch (UnauthorizedAccessException)
-        {
         }
     }
 }
