@@ -475,8 +475,8 @@
     },
     {
       "path": "scripts/package_workspace.py",
-      "bytes": 1828,
-      "sha256": "f6eab8567ba352a77ab1187186abbc091bd4c9791e2ba267794831526096ed08"
+      "bytes": 4225,
+      "sha256": "027c7823b90d36210d6f4a55e5ddbc15f82e562c9dd96fb91a51ce02f94cdce8"
     },
     {
       "path": "scripts/verify_ci_actions.py",
@@ -1127,6 +1127,11 @@
       "path": "tests/static/test_dev7_b2_journal_runtime.py",
       "bytes": 2706,
       "sha256": "b93f01e480b9564f3015936a73e26a305a44ad3fbd32d11028ef5e63af253e6a"
+    },
+    {
+      "path": "tests/static/test_package_workspace.py",
+      "bytes": 1842,
+      "sha256": "4bff0f35329884e35447a1b7f920a97e3df4c752260d6524f0772a6cefe11434"
     },
     {
       "path": "tests/static/test_release_closure.py",
