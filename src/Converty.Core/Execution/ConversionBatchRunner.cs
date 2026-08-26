@@ -8,44 +8,29 @@ namespace Converty.Core.Execution;
 public sealed class ConversionBatchRunner
 {
     private const int MaximumPublishRaceRetries = 64;
+    public static readonly TimeSpan MaximumExecutionTimeout = TimeSpan.FromMinutes(30);
 
     private readonly ProductPresetRegistry _presets;
     private readonly OutputPathResolver _outputPaths;
-    private readonly IFfmpegProcessLauncher _launcher;
-    private readonly string _ffmpegPath;
+    private readonly IConversionWorkerClient _workerClient;
     private readonly TimeSpan _executionTimeout;
 
     public ConversionBatchRunner(
         ProductPresetRegistry presets,
         OutputPathResolver outputPaths,
-        IFfmpegProcessLauncher launcher,
-        string ffmpegPath,
+        IConversionWorkerClient workerClient,
         TimeSpan executionTimeout)
     {
         _presets = presets ?? throw new ArgumentNullException(nameof(presets));
         _outputPaths = outputPaths ?? throw new ArgumentNullException(nameof(outputPaths));
-        _launcher = launcher ?? throw new ArgumentNullException(nameof(launcher));
-        if (string.IsNullOrWhiteSpace(ffmpegPath) || !Path.IsPathFullyQualified(ffmpegPath))
-        {
-            throw new ArgumentException("Trusted FFmpeg path must be fully qualified.", nameof(ffmpegPath));
-        }
-
-        if (executionTimeout <= TimeSpan.Zero || executionTimeout > FfmpegProcessLauncher.MaximumExecutionTimeout)
+        _workerClient = workerClient ?? throw new ArgumentNullException(nameof(workerClient));
+        if (executionTimeout <= TimeSpan.Zero || executionTimeout > MaximumExecutionTimeout)
         {
             throw new ArgumentOutOfRangeException(nameof(executionTimeout));
         }
 
-        _ffmpegPath = ffmpegPath;
         _executionTimeout = executionTimeout;
     }
-
-    public static ConversionBatchRunner CreateForApplicationBaseDirectory() =>
-        new(
-            ProductPresetRegistry.Default,
-            new OutputPathResolver(),
-            new FfmpegProcessLauncher(),
-            TrustedFfmpegPath.ResolveFromApplicationBaseDirectory(),
-            FfmpegProcessLauncher.MaximumExecutionTimeout);
 
     public async Task<ConversionBatchResult> RunAsync(
         PresetId presetId,
@@ -73,9 +58,8 @@ public sealed class ConversionBatchRunner
             ConversionStagingPaths staging = ConversionStagingDirectory.Create(inputPath, preset.OutputExtension);
             try
             {
-                FfmpegExecutionResult execution = await _launcher.ExecuteAsync(
-                    _ffmpegPath,
-                    preset,
+                ConversionWorkerResult execution = await _workerClient.ExecuteAsync(
+                    preset.Id,
                     staging.InputPath,
                     staging.OutputPath,
                     _executionTimeout,
@@ -84,8 +68,8 @@ public sealed class ConversionBatchRunner
                 if (!execution.Succeeded)
                 {
                     string detail = string.IsNullOrWhiteSpace(execution.StandardError)
-                        ? "FFmpeg reported a conversion failure."
-                        : $"FFmpeg reported a conversion failure: {execution.StandardError}";
+                        ? "Conversion worker reported a failure."
+                        : $"Conversion worker reported a failure: {execution.StandardError}";
                     throw new ConversionFailedException(inputPath, plannedOutputPath, execution.ExitCode, detail);
                 }
 
@@ -95,7 +79,7 @@ public sealed class ConversionBatchRunner
                         inputPath,
                         plannedOutputPath,
                         execution.ExitCode,
-                        "FFmpeg exited successfully but did not produce a non-empty output file.");
+                        "Conversion worker exited successfully but did not produce a non-empty output file.");
                 }
 
                 string publishedOutputPath = PublishTemporaryOutput(

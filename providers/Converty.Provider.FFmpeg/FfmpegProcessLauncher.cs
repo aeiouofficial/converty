@@ -2,9 +2,9 @@ using System.Diagnostics;
 using System.Text;
 using Converty.Core.Presets;
 
-namespace Converty.Core.Execution;
+namespace Converty.Provider.FFmpeg;
 
-public sealed class FfmpegProcessLauncher : IFfmpegProcessLauncher
+public sealed class FfmpegProcessLauncher
 {
     public static readonly TimeSpan MaximumExecutionTimeout = TimeSpan.FromMinutes(30);
     public const int MaximumCapturedErrorCharacters = 64 * 1024;

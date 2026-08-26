@@ -1,8 +1,12 @@
 <Solution>
+  <Folder Name="/providers/">
+    <Project Path="providers/Converty.Provider.FFmpeg/Converty.Provider.FFmpeg.csproj" />
+  </Folder>
   <Folder Name="/src/">
     <Project Path="src/Converty.Bridge/Converty.Bridge.csproj" />
     <Project Path="src/Converty.Contracts/Converty.Contracts.csproj" />
     <Project Path="src/Converty.Core/Converty.Core.csproj" />
+    <Project Path="src/Converty.EngineWorker/Converty.EngineWorker.csproj" />
     <Project Path="src/Converty.FakeProviders/Converty.FakeProviders.csproj" />
     <Project Path="src/Converty.Host/Converty.Host.csproj" />
     <Project Path="src/Converty.Ipc/Converty.Ipc.csproj" />

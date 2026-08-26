@@ -1,0 +1,8 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Description>Worker-side FFmpeg provider for Converty.</Description>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../../src/Converty.Core/Converty.Core.csproj" />
+  </ItemGroup>
+</Project>

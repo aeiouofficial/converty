@@ -14,5 +14,6 @@
     <ProjectReference Include="../../src/Converty.Contracts/Converty.Contracts.csproj" />
     <ProjectReference Include="../../src/Converty.Core/Converty.Core.csproj" />
     <ProjectReference Include="../../src/Converty.FakeProviders/Converty.FakeProviders.csproj" />
+    <ProjectReference Include="../../providers/Converty.Provider.FFmpeg/Converty.Provider.FFmpeg.csproj" />
   </ItemGroup>
 </Project>

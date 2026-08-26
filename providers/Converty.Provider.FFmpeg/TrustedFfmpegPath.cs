@@ -1,4 +1,4 @@
-namespace Converty.Core.Execution;
+namespace Converty.Provider.FFmpeg;
 
 public static class TrustedFfmpegPath
 {

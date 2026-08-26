@@ -1,8 +1,8 @@
 using Converty.Contracts.Identifiers;
-using Converty.Core.Execution;
 using Converty.Core.Presets;
+using Converty.Provider.FFmpeg;
 
-namespace Converty.Core.Tests.Execution;
+namespace Converty.Provider.FFmpeg.Tests;
 
 public sealed class FfmpegProcessLauncherTests
 {
@@ -35,10 +35,7 @@ public sealed class FfmpegProcessLauncherTests
         const string output = @"C:\Media\a & whoami | calc.exe ; ' quoted [].flac";
 
         System.Diagnostics.ProcessStartInfo startInfo = FfmpegProcessLauncher.CreateStartInfo(
-            @"C:\Converty\tools\ffmpeg\ffmpeg.exe",
-            preset,
-            input,
-            output);
+            @"C:\Converty\tools\ffmpeg\ffmpeg.exe", preset, input, output);
 
         Assert.Contains(input, startInfo.ArgumentList);
         Assert.Contains(output, startInfo.ArgumentList);

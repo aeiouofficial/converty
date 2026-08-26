@@ -1,6 +1,9 @@
 using System.Runtime.Versioning;
 using Converty.Bridge.Shell;
+using Converty.Bridge.Workers;
 using Converty.Core.Execution;
+using Converty.Core.Output;
+using Converty.Core.Presets;
 
 namespace Converty.Bridge;
 
@@ -20,7 +23,11 @@ internal static class Program
         try
         {
             ShellConversionRequest request = ShellConversionRequestParser.Parse(args);
-            ConversionBatchRunner runner = ConversionBatchRunner.CreateForApplicationBaseDirectory();
+            var runner = new ConversionBatchRunner(
+                ProductPresetRegistry.Default,
+                new OutputPathResolver(),
+                EngineWorkerClient.CreateForApplicationBaseDirectory(),
+                ConversionBatchRunner.MaximumExecutionTimeout);
             _ = await runner.RunAsync(request.PresetId, request.InputPaths).ConfigureAwait(false);
             return Success;
         }

@@ -19,13 +19,8 @@ public sealed class ConversionBatchRunnerTests
             File.WriteAllBytes(second, [2]);
             File.WriteAllBytes(Path.Combine(root, "a.mp3"), [9]);
 
-            var launcher = new RecordingLauncher(exitCode: 0, writeOutput: true);
-            var runner = new ConversionBatchRunner(
-                ProductPresetRegistry.Default,
-                new OutputPathResolver(),
-                launcher,
-                @"C:\Converty\tools\ffmpeg\ffmpeg.exe",
-                TimeSpan.FromMinutes(5));
+            var worker = new RecordingWorkerClient(exitCode: 0, writeOutput: true);
+            var runner = CreateRunner(worker);
 
             ConversionBatchResult result = await runner.RunAsync(
                 PresetId.Parse("audio.mp3"),
@@ -35,24 +30,21 @@ public sealed class ConversionBatchRunnerTests
             Assert.Equal(2, result.Files.Count);
             Assert.Equal(Path.Combine(root, "a (1).mp3"), result.Files[0].OutputPath);
             Assert.Equal(Path.Combine(root, "b.mp3"), result.Files[1].OutputPath);
-
-            Assert.Equal(2, launcher.Inputs.Count);
-            Assert.Equal(2, launcher.Outputs.Count);
-            Assert.NotEqual(first, launcher.Inputs[0]);
-            Assert.NotEqual(second, launcher.Inputs[1]);
-            Assert.Equal([1], launcher.InputBytes[0]);
-            Assert.Equal([2], launcher.InputBytes[1]);
-            for (int index = 0; index < launcher.Inputs.Count; ++index)
+            Assert.Equal(2, worker.Inputs.Count);
+            Assert.Equal(2, worker.Outputs.Count);
+            Assert.NotEqual(first, worker.Inputs[0]);
+            Assert.NotEqual(second, worker.Inputs[1]);
+            Assert.Equal([1], worker.InputBytes[0]);
+            Assert.Equal([2], worker.InputBytes[1]);
+            for (int index = 0; index < worker.Inputs.Count; ++index)
             {
-                Assert.Equal(
-                    Path.GetDirectoryName(launcher.Inputs[index]),
-                    Path.GetDirectoryName(launcher.Outputs[index]));
-                Assert.NotEqual(root, Path.GetDirectoryName(launcher.Inputs[index]));
-                Assert.EndsWith(".partial.mp3", launcher.Outputs[index], StringComparison.OrdinalIgnoreCase);
+                Assert.Equal(Path.GetDirectoryName(worker.Inputs[index]), Path.GetDirectoryName(worker.Outputs[index]));
+                Assert.NotEqual(root, Path.GetDirectoryName(worker.Inputs[index]));
+                Assert.EndsWith(".partial.mp3", worker.Outputs[index], StringComparison.OrdinalIgnoreCase);
             }
 
-            Assert.All(launcher.Inputs, stagedPath => Assert.False(File.Exists(stagedPath)));
-            Assert.All(launcher.Outputs, stagedPath => Assert.False(File.Exists(stagedPath)));
+            Assert.All(worker.Inputs, stagedPath => Assert.False(File.Exists(stagedPath)));
+            Assert.All(worker.Outputs, stagedPath => Assert.False(File.Exists(stagedPath)));
             Assert.True(File.Exists(first));
             Assert.True(File.Exists(second));
             Assert.Equal([1], File.ReadAllBytes(first));
@@ -66,24 +58,21 @@ public sealed class ConversionBatchRunnerTests
     }
 
     [Fact]
-    public async Task RunAsyncRejectsUnsupportedInputBeforeLaunchingFfmpeg()
+    public async Task RunAsyncRejectsUnsupportedInputBeforeLaunchingWorker()
     {
         string root = CreateTempDirectory();
         try
         {
             string input = Path.Combine(root, "notes.txt");
             File.WriteAllText(input, "data");
-            var launcher = new RecordingLauncher(exitCode: 0, writeOutput: true);
-            var runner = CreateRunner(launcher);
+            var worker = new RecordingWorkerClient(exitCode: 0, writeOutput: true);
+            var runner = CreateRunner(worker);
 
             await Assert.ThrowsAsync<InvalidOperationException>(() =>
-                runner.RunAsync(
-                    PresetId.Parse("audio.mp3"),
-                    [input],
-                    TestContext.Current.CancellationToken));
+                runner.RunAsync(PresetId.Parse("audio.mp3"), [input], TestContext.Current.CancellationToken));
 
-            Assert.Empty(launcher.Inputs);
-            Assert.Empty(launcher.Outputs);
+            Assert.Empty(worker.Inputs);
+            Assert.Empty(worker.Outputs);
         }
         finally
         {
@@ -92,7 +81,7 @@ public sealed class ConversionBatchRunnerTests
     }
 
     [Fact]
-    public async Task RunAsyncDeletesOnlyOwnedTemporaryOutputWhenFfmpegFails()
+    public async Task RunAsyncDeletesOwnedStagingWhenWorkerFails()
     {
         string root = CreateTempDirectory();
         try
@@ -100,20 +89,17 @@ public sealed class ConversionBatchRunnerTests
             string input = Path.Combine(root, "voice.wav");
             string output = Path.Combine(root, "voice.mp3");
             File.WriteAllBytes(input, [1]);
-            var launcher = new RecordingLauncher(exitCode: 1, writeOutput: true);
-            var runner = CreateRunner(launcher);
+            var worker = new RecordingWorkerClient(exitCode: 1, writeOutput: true);
+            var runner = CreateRunner(worker);
 
             ConversionFailedException error = await Assert.ThrowsAsync<ConversionFailedException>(() =>
-                runner.RunAsync(
-                    PresetId.Parse("audio.mp3"),
-                    [input],
-                    TestContext.Current.CancellationToken));
+                runner.RunAsync(PresetId.Parse("audio.mp3"), [input], TestContext.Current.CancellationToken));
 
             Assert.Equal(input, error.InputPath);
             Assert.Equal(output, error.OutputPath);
             Assert.False(File.Exists(output));
             Assert.True(File.Exists(input));
-            string temporaryOutput = Assert.Single(launcher.Outputs);
+            string temporaryOutput = Assert.Single(worker.Outputs);
             Assert.NotEqual(output, temporaryOutput);
             Assert.False(File.Exists(temporaryOutput));
         }
@@ -134,21 +120,19 @@ public sealed class ConversionBatchRunnerTests
             string expectedOutput = Path.Combine(root, "voice (1).mp3");
             File.WriteAllBytes(input, [1]);
 
-            var launcher = new RecordingLauncher(
+            var worker = new RecordingWorkerClient(
                 exitCode: 0,
                 writeOutput: true,
                 afterWrite: (_, _) => File.WriteAllBytes(competingOutput, [42]));
-            var runner = CreateRunner(launcher);
+            var runner = CreateRunner(worker);
 
             ConversionBatchResult result = await runner.RunAsync(
-                PresetId.Parse("audio.mp3"),
-                [input],
-                TestContext.Current.CancellationToken);
+                PresetId.Parse("audio.mp3"), [input], TestContext.Current.CancellationToken);
 
             Assert.Equal(expectedOutput, Assert.Single(result.Files).OutputPath);
             Assert.Equal([42], File.ReadAllBytes(competingOutput));
             Assert.Equal([7], File.ReadAllBytes(expectedOutput));
-            Assert.False(File.Exists(Assert.Single(launcher.Outputs)));
+            Assert.False(File.Exists(Assert.Single(worker.Outputs)));
         }
         finally
         {
@@ -157,23 +141,20 @@ public sealed class ConversionBatchRunnerTests
     }
 
     [Fact]
-    public async Task RunAsyncFailsIfFfmpegReportsSuccessWithoutOutput()
+    public async Task RunAsyncFailsIfWorkerReportsSuccessWithoutOutput()
     {
         string root = CreateTempDirectory();
         try
         {
             string input = Path.Combine(root, "voice.wav");
             File.WriteAllBytes(input, [1]);
-            var launcher = new RecordingLauncher(exitCode: 0, writeOutput: false);
-            var runner = CreateRunner(launcher);
+            var worker = new RecordingWorkerClient(exitCode: 0, writeOutput: false);
+            var runner = CreateRunner(worker);
 
             await Assert.ThrowsAsync<ConversionFailedException>(() =>
-                runner.RunAsync(
-                    PresetId.Parse("audio.mp3"),
-                    [input],
-                    TestContext.Current.CancellationToken));
+                runner.RunAsync(PresetId.Parse("audio.mp3"), [input], TestContext.Current.CancellationToken));
 
-            Assert.False(File.Exists(Assert.Single(launcher.Outputs)));
+            Assert.False(File.Exists(Assert.Single(worker.Outputs)));
         }
         finally
         {
@@ -181,13 +162,8 @@ public sealed class ConversionBatchRunnerTests
         }
     }
 
-    private static ConversionBatchRunner CreateRunner(IFfmpegProcessLauncher launcher) =>
-        new(
-            ProductPresetRegistry.Default,
-            new OutputPathResolver(),
-            launcher,
-            @"C:\Converty\tools\ffmpeg\ffmpeg.exe",
-            TimeSpan.FromMinutes(5));
+    private static ConversionBatchRunner CreateRunner(IConversionWorkerClient worker) =>
+        new(ProductPresetRegistry.Default, new OutputPathResolver(), worker, TimeSpan.FromMinutes(5));
 
     private static string CreateTempDirectory()
     {
@@ -196,34 +172,33 @@ public sealed class ConversionBatchRunnerTests
         return path;
     }
 
-    private sealed class RecordingLauncher(
+    private sealed class RecordingWorkerClient(
         int exitCode,
         bool writeOutput,
-        Action<string, string>? afterWrite = null) : IFfmpegProcessLauncher
+        Action<string, string>? afterWrite = null) : IConversionWorkerClient
     {
         public List<string> Inputs { get; } = [];
         public List<byte[]> InputBytes { get; } = [];
         public List<string> Outputs { get; } = [];
 
-        public Task<FfmpegExecutionResult> ExecuteAsync(
-            string ffmpegPath,
-            ProductPresetDefinition preset,
-            string inputPath,
-            string outputPath,
+        public Task<ConversionWorkerResult> ExecuteAsync(
+            PresetId presetId,
+            string stagedInputPath,
+            string stagedOutputPath,
             TimeSpan timeout,
             CancellationToken cancellationToken = default)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            Inputs.Add(inputPath);
-            InputBytes.Add(File.ReadAllBytes(inputPath));
-            Outputs.Add(outputPath);
+            Inputs.Add(stagedInputPath);
+            InputBytes.Add(File.ReadAllBytes(stagedInputPath));
+            Outputs.Add(stagedOutputPath);
             if (writeOutput)
             {
-                File.WriteAllBytes(outputPath, [7]);
+                File.WriteAllBytes(stagedOutputPath, [7]);
             }
 
-            afterWrite?.Invoke(inputPath, outputPath);
-            return Task.FromResult(new FfmpegExecutionResult(exitCode, exitCode == 0 ? string.Empty : "test failure"));
+            afterWrite?.Invoke(stagedInputPath, stagedOutputPath);
+            return Task.FromResult(new ConversionWorkerResult(exitCode, exitCode == 0 ? string.Empty : "test failure"));
         }
     }
 }
