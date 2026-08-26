@@ -4,7 +4,7 @@ using Converty.Core.Presets;
 
 namespace Converty.Core.Execution;
 
-public sealed class FfmpegProcessLauncher
+public sealed class FfmpegProcessLauncher : IFfmpegProcessLauncher
 {
     public static readonly TimeSpan MaximumExecutionTimeout = TimeSpan.FromMinutes(30);
     public const int MaximumCapturedErrorCharacters = 64 * 1024;
