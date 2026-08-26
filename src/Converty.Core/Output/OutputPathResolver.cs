@@ -9,7 +9,7 @@ public sealed class OutputPathResolver
     {
         ArgumentOutOfRangeException.ThrowIfLessThan(maxCollisionAttempts, 1);
 
-        _exists = exists ?? File.Exists;
+        _exists = exists ?? ExistsAsFileOrDirectory;
         _maxCollisionAttempts = maxCollisionAttempts;
     }
 
@@ -45,6 +45,8 @@ public sealed class OutputPathResolver
 
         throw new IOException($"Unable to resolve a free output path after {_maxCollisionAttempts} numbered attempts.");
     }
+
+    private static bool ExistsAsFileOrDirectory(string path) => File.Exists(path) || Directory.Exists(path);
 
     private static string NormalizeExtension(string targetExtension)
     {
