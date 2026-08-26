@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "workspaceVersion": "0.1.0-dev.7",
+  "workspaceVersion": "0.1.0-dev.8",
   "generatedDate": "2026-08-25",
   "excludedParts": [
     ".git",
@@ -155,8 +155,8 @@
     },
     {
       "path": "docs/development/IMPLEMENTATION_STATUS.md",
-      "bytes": 3776,
-      "sha256": "e590b45f352da0d1b2553de33893a7c0fb37a2594ad4a82c2608c1fe2871d7f9"
+      "bytes": 4313,
+      "sha256": "ff4bfd5562a8bf080b125f81813f2f82000139e5e1c8ae0aa2000ef2a7ca641e"
     },
     {
       "path": "docs/development/MODULE_BOUNDARIES.md",
@@ -175,18 +175,23 @@
     },
     {
       "path": "docs/HANDOVER_NEXT_AGENT.md",
-      "bytes": 4824,
-      "sha256": "42686380291b1d739438e9408b5c6fbe81fb65861841e7c41e113352634339c7"
+      "bytes": 5818,
+      "sha256": "c3e0288e4107acc93fd9839f24d0e19ea37c77cf81e9396049eeab765c5594fb"
     },
     {
       "path": "docs/HANDOVER_PROMPT.txt",
-      "bytes": 4282,
-      "sha256": "50958aafb991e11a3cd5ef19d41cea204f237f0b01bef116f154be641c3c1650"
+      "bytes": 5134,
+      "sha256": "58937bfbf3ceb53c91d76b621042ba6e3d978dacb7277bc9c2f221e03ac2f42d"
     },
     {
       "path": "docs/REFERENCE_SOURCES.md",
       "bytes": 3011,
       "sha256": "a3cfa1c7a1f438e3c7a7e0f6a9b8ac3419690f0221c665efba7d23fc5f7e7562"
+    },
+    {
+      "path": "docs/security/B2_SERVER_AUTH_GATE.md",
+      "bytes": 832,
+      "sha256": "931427ccf91436b26153036929b54651bea824facb9274c7c8bd27492764a1e0"
     },
     {
       "path": "docs/SECURITY_THREAT_MODEL.md",
@@ -229,6 +234,11 @@
       "sha256": "be297c452cee3831745b6ad15fe8fea10018840750f43bf0154858011cf4f21e"
     },
     {
+      "path": "docs/superpowers/plans/2026-08-25-b2-dev8-bridge-startup.md",
+      "bytes": 2555,
+      "sha256": "e47452190a94aac7c76088e86007d131ae4a1339bd11e17c9272dfa029e07e7f"
+    },
+    {
       "path": "docs/superpowers/plans/2026-08-25-b2-host-bridge-ipc.md",
       "bytes": 8980,
       "sha256": "4ea06e7378c076d9b5efb8da0b2ff8506293e9391d58c3966aad70842625190c"
@@ -255,8 +265,8 @@
     },
     {
       "path": "docs/TASK_BACKLOG.md",
-      "bytes": 5602,
-      "sha256": "dcfe826f9ae65fff37a57b7b4bf8571d4b449c6d4f7a7fdf882bcbf5abf8f251"
+      "bytes": 5717,
+      "sha256": "4f699c9d4148b0a284a08d426b3aa6d73fa8aeb790975a0d06b7606605e1b15b"
     },
     {
       "path": "docs/TEST_AND_RELEASE_GATES.md",
@@ -270,8 +280,8 @@
     },
     {
       "path": "eng/toolchain.json",
-      "bytes": 1176,
-      "sha256": "0b4dd6e149a345dd4a7b40c0e8d815debb1c408d2f54f6beeed9e8ddf3445e2a"
+      "bytes": 1140,
+      "sha256": "5c9b34c7576ea8d58df841af47afe4f3336a005a5762304b9d6c8cf6b1140fb3"
     },
     {
       "path": "global.json",
@@ -280,33 +290,33 @@
     },
     {
       "path": "machine-readable/build_evidence.json",
-      "bytes": 4887,
-      "sha256": "174a577c2724657786ea14be467ba0d042c07595e72599fed60590f8d6891f03"
+      "bytes": 3371,
+      "sha256": "4d71140215f14ef600ec8b7e0e1b7e3b0a25af24accb964a9baa2a0ac2e29a6a"
     },
     {
       "path": "machine-readable/ci_action_pins.json",
       "bytes": 1131,
-      "sha256": "2a31bd1bc0576c1a55331e010557a5b6953f7baaa3faff8a9b0e5bc1e28d7006"
+      "sha256": "3b2edfa4a23308dfea57cbb5586ba5c35b265014efc32d0a22c73726fade264b"
     },
     {
       "path": "machine-readable/handover_state.json",
-      "bytes": 4181,
-      "sha256": "334f35ed74c8de199a0841253edc37ae7d626921f28ec92c7ef419e006123674"
+      "bytes": 4501,
+      "sha256": "9545138cb89b1f4c6a1332e6951ae0beeace5de60c598bcdf7c90e474f4bd5a3"
     },
     {
       "path": "machine-readable/release_policy.json",
       "bytes": 1634,
-      "sha256": "cfffaf643638a8ea43efb9e6405072eca11cd40411a38c93f6a3ed85126494c0"
+      "sha256": "12c6401a5a625bdc2ee6073a6409202ebd2a58c8a7d5cdd32e0c8754693a524d"
     },
     {
       "path": "machine-readable/release_sbom.spdx.json",
       "bytes": 21145,
-      "sha256": "cac00d1904fd356c11c7d874df7325dff85d3569c0344645f74b006c68f0e17f"
+      "sha256": "65de21a8f880d6aaa0e0a96a0d9d4083caf388c22272d5bc20cec0658f9bd068"
     },
     {
       "path": "machine-readable/source_sbom.spdx.json",
       "bytes": 9495,
-      "sha256": "26339e676093ceaa453f84601f6b2d9ff46ebaf057ad1e09dcf0cb55e912cf71"
+      "sha256": "8ea1fe1fa2febc04d3e64d09059a8255ae4869cd1630cf8681570dfd2fae3e15"
     },
     {
       "path": "native/cmake/Hardening.cmake",
@@ -345,8 +355,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 4755,
-      "sha256": "4c46dcbd52da3ab1a600425a58405a71e1021659eb905b3d33088cbb9b8994cc"
+      "bytes": 5283,
+      "sha256": "88313596d132aa06d580b0290838a90be8ffa7c1077822a1ca4cccbe017143e6"
     },
     {
       "path": "reference-images/01_system_architecture.dot",
@@ -500,8 +510,8 @@
     },
     {
       "path": "scripts/verify_repository.py",
-      "bytes": 10910,
-      "sha256": "8cb3149354c509ea3a8f2519440c85bc62181735916e4c21260a9c1c644a1807"
+      "bytes": 11874,
+      "sha256": "f999a1c1ed3b38f16cc03c47246d426aecefdb7a321a45e76c02c822a0d47e58"
     },
     {
       "path": "scripts/workspace_file_policy.py",
@@ -525,13 +535,23 @@
     },
     {
       "path": "src/Converty.Bridge/Ipc/BridgeClient.cs",
-      "bytes": 6752,
-      "sha256": "0663eb08afb8815859d1088e73c092f25dee8fe5a9f319d2589899cfaa9e3d42"
+      "bytes": 7175,
+      "sha256": "e0e966b520ef6b3237e0cb1756eb7d4ba972357657c33cad758a615b5419ed3f"
+    },
+    {
+      "path": "src/Converty.Bridge/Ipc/BridgeHostUnavailableException.cs",
+      "bytes": 437,
+      "sha256": "d40173c4f0de16acf38dc1550637bae1f0cd3666298e46f872b521451f0bfb04"
     },
     {
       "path": "src/Converty.Bridge/Ipc/BridgeSubmissionResult.cs",
       "bytes": 130,
       "sha256": "c5ab91bf36e2a27e994f73be543561525229f78a033061c5554b14633976e215"
+    },
+    {
+      "path": "src/Converty.Bridge/Ipc/IBridgeRequestClient.cs",
+      "bytes": 249,
+      "sha256": "471a089af7fcfab64a2d062e7a925e644374b2d381cb1dd025ce7f147fe0e24d"
     },
     {
       "path": "src/Converty.Bridge/MODULE.md",
@@ -542,6 +562,26 @@
       "path": "src/Converty.Bridge/packages.lock.json",
       "bytes": 403,
       "sha256": "5ec6117c15b5a4309d936a4bd4407cc7575632d7ee5a9d445e8da467d52add3c"
+    },
+    {
+      "path": "src/Converty.Bridge/Startup/BridgeSubmissionCoordinator.cs",
+      "bytes": 3270,
+      "sha256": "1ce1792fb90e67278d441fa082c2895d8b4f78023ebbe270fb48e1a949b06665"
+    },
+    {
+      "path": "src/Converty.Bridge/Startup/IHostProcessLauncher.cs",
+      "bytes": 100,
+      "sha256": "75e74656502be0f9f5201b84b93d840d0dd0c7fa485b50b74bf59b2ae9f8f010"
+    },
+    {
+      "path": "src/Converty.Bridge/Startup/InstalledHostProcessLauncher.cs",
+      "bytes": 1225,
+      "sha256": "69e19c25e02156bf4f5d2af14c7ab0b3c36fa649837c3f34c324700626d6ea21"
+    },
+    {
+      "path": "src/Converty.Bridge/Startup/TrustedHostPath.cs",
+      "bytes": 1885,
+      "sha256": "18b348dc71e97015c5860771369e0bb413ed08c93208826b270ea931e0da4cdd"
     },
     {
       "path": "src/Converty.Contracts/Conversion/CapabilityDescriptor.cs",
@@ -890,13 +930,23 @@
     },
     {
       "path": "tests/Converty.Bridge.Tests/Ipc/BridgeClientTests.cs",
-      "bytes": 5013,
-      "sha256": "09f1f192b3717eebdf5f1b1372c30986fad058bd4ae003142928cc05c597abee"
+      "bytes": 5127,
+      "sha256": "e1c91f425179a88461a1e42cb6d0da1ba0a9cf848447c2669450fc8f5f2df721"
     },
     {
       "path": "tests/Converty.Bridge.Tests/packages.lock.json",
       "bytes": 5561,
       "sha256": "ce10fdba8506c1c3786be7d53a253a57a5201d3be378f7248d40119d6673d1be"
+    },
+    {
+      "path": "tests/Converty.Bridge.Tests/Startup/BridgeSubmissionCoordinatorTests.cs",
+      "bytes": 6054,
+      "sha256": "0767514b420d885bb4ddb15f5a3efe87d721852dc1aeecbd862ab7c233b3b69a"
+    },
+    {
+      "path": "tests/Converty.Bridge.Tests/Startup/TrustedHostStartupTests.cs",
+      "bytes": 2263,
+      "sha256": "e8be64e1e5120a1589aa4dcad275694a1783d2fe571e6cf9178ee2c547ef94e4"
     },
     {
       "path": "tests/Converty.Contracts.Tests/Conversion/ContractTests.cs",
@@ -1120,13 +1170,18 @@
     },
     {
       "path": "tests/static/test_dev6_b2_ipc.py",
-      "bytes": 4231,
-      "sha256": "0c0a01da4b56fb92c698f6d8ad918e7ff1ccb48dd22647ea7e107a501366ef2a"
+      "bytes": 4875,
+      "sha256": "1919c25c1ef8cb7c6b7eaf7e45cc69655f26310577115997b0febc962054714d"
     },
     {
       "path": "tests/static/test_dev7_b2_journal_runtime.py",
-      "bytes": 2706,
-      "sha256": "b93f01e480b9564f3015936a73e26a305a44ad3fbd32d11028ef5e63af253e6a"
+      "bytes": 3113,
+      "sha256": "b3c8fc0a21384cfb99ff15163f87575f8bd61d4d8423a28a3f9260dd2c9a2142"
+    },
+    {
+      "path": "tests/static/test_dev8_bridge_startup.py",
+      "bytes": 3044,
+      "sha256": "639944c730ace91f9a925c0c3412c42eea683b345ae258e32827dfcb1725b1f3"
     },
     {
       "path": "tests/static/test_package_workspace.py",
@@ -1137,6 +1192,11 @@
       "path": "tests/static/test_release_closure.py",
       "bytes": 3611,
       "sha256": "079f1af64367cc7d1695a44776e5e14d7538735cbe57a5b8ca26b63604d0b0b9"
+    },
+    {
+      "path": "tests/static/test_repository_verifier_version.py",
+      "bytes": 577,
+      "sha256": "13ef31f05fa4ff441448dc1ac9cdb0f147cecdc822457040d29d720643732996"
     },
     {
       "path": "tests/vectors/v1/manifest.json",
@@ -1171,7 +1231,7 @@
     {
       "path": "VERSION",
       "bytes": 12,
-      "sha256": "51456ab58180312a3ba96c5073b4107c0b5a013f935051572fab128c3340fe1f"
+      "sha256": "12139cf0e2399ed5e3b8fa00365f48e750d41fbf9e9989842ce375470225adc4"
     }
   ]
 }

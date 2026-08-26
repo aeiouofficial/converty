@@ -72,13 +72,15 @@ public sealed class BridgeClientTests
     }
 
     [Fact]
-    public async Task SubmitAsyncHonorsConnectTimeoutWhenHostIsUnavailable()
+    public async Task SubmitAsyncReportsConnectTimeoutAsHostUnavailable()
     {
         var client = new BridgeClient(TestPipeName(), TimeSpan.FromMilliseconds(100));
         ConversionRequest request = CreateRequest(Guid.NewGuid());
 
-        await Assert.ThrowsAsync<TimeoutException>(async () =>
+        BridgeHostUnavailableException error = await Assert.ThrowsAsync<BridgeHostUnavailableException>(async () =>
             await client.SubmitAsync(request, TestContext.Current.CancellationToken));
+
+        Assert.IsType<TimeoutException>(error.InnerException);
     }
 
     [Fact]

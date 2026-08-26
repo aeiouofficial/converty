@@ -1,11 +1,11 @@
 {
   "schemaVersion": 1,
-  "workspaceVersion": "0.1.0-dev.7",
+  "workspaceVersion": "0.1.0-dev.8",
   "evidenceDate": "2026-08-26",
   "behaviorQualification": {
-    "headSha": "221a6bcd7e9a2238ded79a65d9cbabbca0b7079c",
-    "workflowRunId": 32885833243,
-    "managedJobId": 97925935937,
+    "headSha": "ff35b262a68fa5b3a2adcfacb7cd3e8f2caf0fd2",
+    "workflowRunId": 32919140975,
+    "managedJobId": 98028998724,
     "runner": {
       "os": "Windows Server 2025",
       "image": "windows-2025-vs2026",
@@ -20,105 +20,60 @@
       "warnings": 0,
       "errors": 0,
       "tests": {
-        "total": 120,
-        "succeeded": 120,
+        "total": 129,
+        "succeeded": 129,
         "failed": 0,
         "skipped": 0
       },
-      "nativeTopologySmoke": "PASS"
+      "nativeTopologySmoke": "PASS",
+      "deterministicWorkspacePackage": "PASS",
+      "verifiedDeliveryUpload": "PASS"
+    },
+    "static": {
+      "jobId": 98028998961,
+      "tests": "41/41 PASS",
+      "contractVectors": "5/5 PASS",
+      "repositoryVerifier": "PASS",
+      "immutableActionPins": "PASS",
+      "sourceSbomRegeneration": "PASS",
+      "releaseSbomRegeneration": "PASS",
+      "packageManifestRegeneration": "PASS",
+      "sha256ManifestRegeneration": "PASS",
+      "generatedAuthorityDiff": "CLEAN"
     }
   },
   "b2Evidence": {
     "protocolFrameMaxPayloadBytes": 1048576,
     "bridgeMaximumConnectTimeoutSeconds": 30,
+    "bridgeMaximumStartupTimeoutSeconds": 30,
+    "bridgeMaximumRetryDelaySeconds": 1,
     "explicitPipeDacl": "IMPLEMENTED_AND_TESTED",
     "connectedPeerSidValidation": "IMPLEMENTED_AND_TESTED_BEFORE_APPLICATION_FRAME_READ",
     "hostQueue": "BOUNDED_IMPLEMENTED_AND_TESTED",
-    "hostJournal": {
-      "status": "IMPLEMENTED_AND_TESTED",
-      "maxEntries": 4096,
-      "maxBytes": 8388608,
-      "strictSchema": true,
-      "atomicPublication": "SAME_DIRECTORY_TEMP_WRITE_THROUGH_FLUSH_TO_DISK_THEN_MOVE",
-      "orphanTempPolicy": "IGNORED_AND_REMOVED",
-      "inFlightRecovery": "PROBING_THROUGH_COMMITTING_BECOME_FAILED",
-      "mutationOrdering": "PERSIST_BEFORE_IN_MEMORY_PUBLICATION"
-    },
-    "queuedStatusCancellation": "IMPLEMENTED_AND_TESTED",
+    "hostJournal": "IMPLEMENTED_AND_TESTED_PERSIST_BEFORE_PUBLISH",
     "hostSingleInstance": "PER_USER_LEASE_WIRED_TO_RUNTIME_LOOP_AND_TESTED",
     "hostExecutable": "WINEXE_ENTRYPOINT_IMPLEMENTED; LOCALAPPDATA_JOURNAL; NO_CONSOLE",
-    "bridge": "BOUNDED_CLIENT_IMPLEMENTED_AND_TESTED; HOST_STARTUP_RETRY_OPEN",
+    "bridgeTrustedHostPath": "FIXED_CONVERTY_HOST_EXE_FROM_ABSOLUTE_EXISTING_NON_REPARSE_INSTALL_DIRECTORY",
+    "bridgeHostLauncher": "NO_SHELL; EMPTY_ARGUMENTS; CREATE_NO_WINDOW; SINGLE_APPROVED_PROCESS_START_SITE",
+    "bridgeStartupRetry": "ONLY_CONNECT_STAGE_UNAVAILABLE_TRIGGERS_ONE_LAUNCH; BOUNDED_DEADLINE; CANCELLABLE",
+    "bridgeServerAuthentication": "NOT_YET_QUALIFIED",
     "mediaExecutionInHostOrBridge": "NONE"
-  },
-  "staticEvidence": {
-    "dev7BoundaryGate": "tests/static/test_dev7_b2_journal_runtime.py",
-    "canonicalPackageGate": "tests/static/test_package_workspace.py",
-    "staticTests": {
-      "total": 36,
-      "succeeded": 36,
-      "failed": 0
-    },
-    "contractVectors": "5/5 PASS",
-    "repositoryVerifier": "PASS"
   },
   "authorityClosure": {
     "status": "PASS",
-    "qualificationHeadSha": "4bb90dcbdc3a7da60c3ae6dfbd45bc6d49583a2d",
-    "workflowRunId": 32917811937,
-    "staticJobId": 98025090776,
-    "managedJobId": 98025090806,
-    "runner": {
-      "os": "Windows Server 2025",
-      "image": "windows-2025-vs2026",
-      "imageVersion": "20260818.207.1",
-      "dotnetSdk": "10.0.400",
-      "python": "3.13.15"
-    },
-    "permanentGates": {
-      "lockedRestore": "PASS_15_OF_15_PROJECTS",
-      "dependencyAudit": "PASS_0_VULNERABLE_RESULT_PACKAGES",
-      "releaseBuild": "PASS_0_WARNINGS_0_ERRORS",
-      "managedTests": "PASS_120_OF_120",
-      "nativeTopologySmoke": "PASS",
-      "immutableActionPins": "PASS",
-      "contractVectors": "PASS_5_OF_5",
-      "staticTests": "PASS_36_OF_36",
-      "sourceSbomRegeneration": "PASS",
-      "releaseSbomRegeneration": "PASS",
-      "packageManifestRegeneration": "PASS",
-      "sha256ManifestRegeneration": "PASS",
-      "generatedAuthorityDiff": "PASS"
-    },
-    "sbomVersions": {
-      "source": "0.1.0-dev.7",
-      "release": "0.1.0-dev.7"
-    },
-    "package": {
-      "name": "Converty_0.1.0-dev.7_full_workspace.zip",
-      "sha256": "046480923c26ad9cd719c983868032a12b8686f97a2b316889d357fb46065e50",
-      "bytes": 247147,
-      "files": 231,
-      "packageManifestEntries": 229,
-      "sha256ManifestEntries": 230,
-      "source": "git-head",
-      "deterministicDoubleBuild": "PASS",
-      "crc": "PASS",
-      "embeddedPackageManifestVerification": "PASS",
-      "embeddedSha256ManifestVerification": "PASS",
-      "exclusionPolicy": "PASS"
-    },
-    "deliveryArtifact": {
-      "githubArtifactId": 9588802784,
-      "name": "converty-verified-delivery-4bb90dcbdc3a7da60c3ae6dfbd45bc6d49583a2d",
-      "archiveSha256": "d112a1b42a9da8480baba69dd94735134330e00ec9fee510c7233a24d028bf44",
-      "archiveBytes": 255690
-    },
-    "evidenceFreezePolicy": "This file records the first fully green permanent exact-head qualification. Updating this evidence changes generated package/hash authority, so the evidence-frozen tree must itself be regenerated and independently requalified before merge; that later CI run is external evidence and is not self-referentially embedded here."
+    "qualifiedHeadSha": "ff35b262a68fa5b3a2adcfacb7cd3e8f2caf0fd2",
+    "workflowRunId": 32919140975,
+    "managedJobId": 98028998724,
+    "staticJobId": 98028998961,
+    "permanentGates": "PASS",
+    "generatedAuthorityDiff": "CLEAN",
+    "deterministicDoubleWorkspaceZip": "PASS",
+    "crcManifestHashAndExclusionVerification": "PASS",
+    "note": "This records the fully green permanent exact-head qualification immediately preceding the evidence freeze. The evidence-frozen tree is regenerated and independently requalified; no self-referential archive hash is embedded in this file."
   },
   "unverifiedClaimsExplicitlyForbidden": [
     "B2 is fully closed",
-    "Bridge starts or restarts Host",
-    "Bridge verifies a signed Host executable or selected packaging identity",
+    "Bridge fully authenticates the connected Host server",
     "pipe-squatting/server-auth acceptance is fully qualified",
     "Windows artifacts are signed",
     "Windows/MSVC production Explorer target compiles",

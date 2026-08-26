@@ -51,18 +51,20 @@ def test_host_is_no_console_executable_with_local_state_journal() -> None:
 
 
 def test_host_and_bridge_still_do_not_execute_engines_or_parse_media() -> None:
-    forbidden = (
-        "System.Diagnostics.Process",
-        "Process.Start(",
-        "ProcessStartInfo",
-        "ffmpeg",
-        "ffprobe",
-        "HttpClient",
-        "WebRequest",
-    )
+    engine_forbidden = ("ffmpeg", "ffprobe", "HttpClient", "WebRequest")
     active_files = list((ROOT / "src/Converty.Host").rglob("*.cs")) + list(
         (ROOT / "src/Converty.Bridge").rglob("*.cs")
     )
     combined = "\n".join(path.read_text(encoding="utf-8") for path in active_files)
-    for token in forbidden:
+    for token in engine_forbidden:
         assert token not in combined
+
+    process_forbidden = ("System.Diagnostics.Process", "Process.Start(", "ProcessStartInfo")
+    bridge_root = ROOT / "src/Converty.Bridge"
+    startup_root = bridge_root / "Startup"
+    process_files = list((ROOT / "src/Converty.Host").rglob("*.cs")) + [
+        path for path in bridge_root.rglob("*.cs") if startup_root not in path.parents
+    ]
+    process_combined = "\n".join(path.read_text(encoding="utf-8") for path in process_files)
+    for token in process_forbidden:
+        assert token not in process_combined
