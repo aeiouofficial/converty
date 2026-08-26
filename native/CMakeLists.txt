@@ -36,6 +36,7 @@ if(WIN32)
         _UNICODE)
 
     target_link_libraries(Converty.ExplorerRegistrationSmoke PRIVATE
+        onecore
         ole32
         shell32
         uuid)
