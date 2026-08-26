@@ -13,10 +13,10 @@ $packageName = 'Converty.Dev'
 if (-not $IsWindows) {
     throw 'The Explorer registration smoke is Windows-only.'
 }
-if (-not (Test-Path $manifest)) {
+if (-not (Test-Path -LiteralPath $manifest)) {
     throw 'Development package layout is missing. Stage it before registration smoke.'
 }
-if (-not (Test-Path $shellDll)) {
+if (-not (Test-Path -LiteralPath $shellDll)) {
     throw 'Staged Converty.ShellExtension.dll is missing.'
 }
 
@@ -30,8 +30,8 @@ if ($preexisting.Count -gt 0) {
     throw "A $packageName development package is already registered. Remove it before running this smoke to avoid testing stale registration."
 }
 
-if (Test-Path $smokeRoot) {
-    Remove-Item -Recurse -Force $smokeRoot
+if (Test-Path -LiteralPath $smokeRoot) {
+    Remove-Item -LiteralPath $smokeRoot -Recurse -Force
 }
 New-Item -ItemType Directory -Force $smokeRoot | Out-Null
 
@@ -78,7 +78,7 @@ finally {
 if ($LASTEXITCODE -ne 0) {
     throw "Direct staged shell DLL activation/invoke smoke failed with exit code $LASTEXITCODE."
 }
-if (-not (Test-Path $output) -or (Get-Item $output).Length -le 0) {
+if (-not (Test-Path -LiteralPath $output) -or (Get-Item -LiteralPath $output).Length -le 0) {
     throw 'Direct staged shell DLL Invoke did not produce a non-empty conversion output.'
 }
 Write-Host 'Direct staged shell DLL class-factory + Invoke conversion smoke: PASS'
@@ -97,10 +97,10 @@ try {
         throw "Packaged Explorer COM activation/invoke smoke failed with exit code $LASTEXITCODE."
     }
 
-    if (-not (Test-Path $output)) {
+    if (-not (Test-Path -LiteralPath $output)) {
         throw "Explorer COM Invoke did not create the expected conversion output: $output"
     }
-    if ((Get-Item $output).Length -le 0) {
+    if ((Get-Item -LiteralPath $output).Length -le 0) {
         throw 'Explorer COM Invoke produced an empty conversion output.'
     }
 
