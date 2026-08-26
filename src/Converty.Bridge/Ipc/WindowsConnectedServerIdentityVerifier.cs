@@ -37,8 +37,29 @@ public sealed class WindowsConnectedServerIdentityVerifier : IConnectedServerIde
     public void VerifySnapshot(ConnectedServerIdentitySnapshot snapshot)
     {
         ArgumentNullException.ThrowIfNull(snapshot);
-        _ = _expectedHostPath;
-        _ = _expectedPackageFamilyName;
-        throw new BridgeServerIdentityException("Connected server identity verification is not implemented.");
+
+        if (snapshot.ServerProcessId == 0
+            || snapshot.ConfirmedServerProcessId == 0
+            || snapshot.ServerProcessId != snapshot.ConfirmedServerProcessId)
+        {
+            throw new BridgeServerIdentityException(
+                "Connected server process identity changed during verification.");
+        }
+
+        if (!string.Equals(snapshot.ImagePath, _expectedHostPath, StringComparison.OrdinalIgnoreCase))
+        {
+            throw new BridgeServerIdentityException(
+                "Connected server image path does not match the trusted Converty Host path.");
+        }
+
+        if (string.IsNullOrWhiteSpace(snapshot.PackageFamilyName)
+            || !string.Equals(
+                snapshot.PackageFamilyName,
+                _expectedPackageFamilyName,
+                StringComparison.Ordinal))
+        {
+            throw new BridgeServerIdentityException(
+                "Connected server package family does not match the expected Converty package family.");
+        }
     }
 }
