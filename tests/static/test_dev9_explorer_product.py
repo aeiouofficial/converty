@@ -134,3 +134,19 @@ def test_product_smokes_treat_metacharacter_filenames_as_literal_paths() -> None
     assert "Test-Path -LiteralPath $expectedOutput" in conversion
     assert "Get-Item -LiteralPath $expectedOutput" in conversion
     assert "Get-FileHash -LiteralPath $existingOutput -Algorithm SHA256" in conversion
+
+
+def test_product_smoke_waits_for_winexe_bridge_and_reads_process_exit_code() -> None:
+    script = text("build/product-conversion-smoke.ps1")
+
+    assert "[System.Diagnostics.ProcessStartInfo]::new()" in script
+    assert "$bridgeStartInfo.UseShellExecute = $false" in script
+    assert "$bridgeStartInfo.CreateNoWindow = $true" in script
+    assert "$bridgeStartInfo.ArgumentList.Add('--preset')" in script
+    assert "$bridgeStartInfo.ArgumentList.Add('audio.mp3')" in script
+    assert "$bridgeStartInfo.ArgumentList.Add('--')" in script
+    assert "$bridgeStartInfo.ArgumentList.Add($input)" in script
+    assert "[System.Diagnostics.Process]::Start($bridgeStartInfo)" in script
+    assert "$bridgeProcess.WaitForExit(30000)" in script
+    assert "$bridgeExitCode = $bridgeProcess.ExitCode" in script
+    assert "& $bridge '--preset' 'audio.mp3' '--' $input" not in script
