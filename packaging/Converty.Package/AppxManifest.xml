@@ -56,7 +56,7 @@
           <desktop4:FileExplorerContextMenus>
             <desktop5:ItemType Type="*">
               <desktop5:Verb
-                Id="Converty.Convert"
+                Id="ConvertyConvert"
                 Clsid="20E7C5C1-3E5F-4D0F-9C56-2E9F2A978A10" />
             </desktop5:ItemType>
           </desktop4:FileExplorerContextMenus>
