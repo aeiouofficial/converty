@@ -2,7 +2,6 @@ using System.ComponentModel;
 using System.IO.Pipes;
 using System.Runtime.InteropServices;
 using System.Runtime.Versioning;
-using System.Text;
 using Microsoft.Win32.SafeHandles;
 
 namespace Converty.Bridge.Ipc;
@@ -63,16 +62,17 @@ public sealed class WindowsConnectedServerIdentityProbe : IConnectedServerIdenti
 
     private static string ReadImagePath(SafeProcessHandle process)
     {
-        var imagePath = new StringBuilder(MaximumImagePathCharacters);
+        var imagePath = new char[MaximumImagePathCharacters];
         uint length = MaximumImagePathCharacters;
         if (!NativeMethods.QueryFullProcessImageNameW(process, 0, imagePath, ref length)
-            || length == 0)
+            || length == 0
+            || length > imagePath.Length)
         {
             throw NativeFailure(
                 "Unable to determine the connected server executable image path.");
         }
 
-        return imagePath.ToString();
+        return new string(imagePath, 0, checked((int)length));
     }
 
     private static string ReadPackageFamilyName(SafeProcessHandle process)
@@ -91,18 +91,25 @@ public sealed class WindowsConnectedServerIdentityProbe : IConnectedServerIdenti
                 $"Unable to determine the connected server package family identity (Win32 error {result}).");
         }
 
-        var packageFamilyName = new StringBuilder(checked((int)requiredLength));
+        var packageFamilyName = new char[checked((int)requiredLength)];
         result = NativeMethods.GetPackageFamilyName(
             process,
             ref requiredLength,
             packageFamilyName);
-        if (result != ErrorSuccess || packageFamilyName.Length == 0)
+        if (result != ErrorSuccess || requiredLength <= 1 || requiredLength > packageFamilyName.Length)
         {
             throw new BridgeServerIdentityException(
                 $"Unable to read the connected server package family identity (Win32 error {result}).");
         }
 
-        return packageFamilyName.ToString();
+        int textLength = checked((int)requiredLength) - 1;
+        if (textLength <= 0 || packageFamilyName[textLength] != '\0')
+        {
+            throw new BridgeServerIdentityException(
+                "Connected server package family identity is empty or not terminated.");
+        }
+
+        return new string(packageFamilyName, 0, textLength);
     }
 
     private static BridgeServerIdentityException NativeFailure(string message)
@@ -135,7 +142,7 @@ public sealed class WindowsConnectedServerIdentityProbe : IConnectedServerIdenti
         internal static extern bool QueryFullProcessImageNameW(
             SafeProcessHandle process,
             uint flags,
-            StringBuilder imagePath,
+            [Out] char[] imagePath,
             ref uint size);
 
         [DllImport(
@@ -145,6 +152,6 @@ public sealed class WindowsConnectedServerIdentityProbe : IConnectedServerIdenti
         internal static extern int GetPackageFamilyName(
             SafeProcessHandle process,
             ref uint packageFamilyNameLength,
-            StringBuilder? packageFamilyName);
+            [Out] char[]? packageFamilyName);
     }
 }
