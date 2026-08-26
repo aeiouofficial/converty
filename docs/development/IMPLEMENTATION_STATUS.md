@@ -1,50 +1,57 @@
-# Implementation status — 0.1.0-dev.8
+# Implementation status — 0.1.0-dev.9
 
 ## Tranche result
-`0.1.0-dev.8` advances B2 by adding a trusted fixed installed-Host startup boundary and a bounded one-launch Bridge startup/retry coordinator. It does not add media parsing, FFmpeg/WIC execution, provider loading, or worker execution to Host or Bridge.
+`0.1.0-dev.9` delivers the first automated functional Converty product path under the explicitly approved ADR-013 product-first exception:
 
-## Qualified behavior evidence
-The dev.8 behavior qualification used GitHub Actions Windows Server 2025 with .NET SDK exactly `10.0.400`:
-- 15 managed projects restored from committed lock files.
-- Restored-graph NuGet vulnerability audit: PASS, zero vulnerable-result packages.
-- Release build: PASS, zero warnings, zero errors.
-- Microsoft Testing Platform/xUnit: 129 total, 129 succeeded, 0 failed, 0 skipped.
-- Raw contract vectors and repository/static boundary verification: PASS on the behavior workflow.
-- Native CMake topology smoke: PASS.
+`IExplorerCommand → fixed app-local Bridge → typed preset → fixed app-local FFmpeg → transactional numbered output`
 
-The immutable behavior run is recorded in `machine-readable/build_evidence.json`. Final generated-authority/package synchronization is performed separately by the self-cleaning tranche closure workflow.
+This is a development qualification milestone. It does not claim final worker containment, signed release packaging, production FFmpeg redistribution approval, or headed Windows 11 UI acceptance.
 
-## B2 implemented through this tranche
-Existing dev.6/dev.7 controls remain intact:
-- fixed 12-byte v1 framing with checked exact reads and a 1 MiB payload ceiling;
-- protected current-user named-pipe DACL;
-- SID-hashed endpoint identity;
-- connected-client SID validation before application-frame parsing;
-- bounded Host admission/status/cancellation queue;
-- strict persistent 4096-entry / 8 MiB crash-recovery journal with persist-before-publish mutation ordering;
-- per-user Host single-instance WinExe server loop;
-- strict Bridge request/acknowledgement transport with a maximum 30-second connect timeout;
-- checked-in IPC adversarial corpus.
+## Behavior qualification
+Immutable functional behavior head: `b71aa06fb024afe85f64707b05d996e86c37d8c8`.
+Permanent GitHub Actions run: `33001019450`; managed job `98282574626`; static job `98282574403`.
+Runner: Windows Server 2025 (`windows-2025-vs2026`) with .NET SDK exactly `10.0.400`.
 
-Dev.8 adds:
-- `TrustedHostPath`, which accepts only an absolute existing installation directory and derives the fixed `Converty.Host.exe` filename;
-- rejection of reparse-point install directories or Host executables at trust-path construction time;
-- `InstalledHostProcessLauncher`, the only approved Bridge `Process.Start` site, with no shell execution, no caller arguments, no console window, and a trusted working directory;
-- a narrow `BridgeHostUnavailableException` emitted only by the connection stage, not by frame/response parsing;
-- `IBridgeRequestClient` so startup orchestration is independently testable without weakening `BridgeClient`;
-- `BridgeSubmissionCoordinator`: first tries the existing Host, starts the fixed Host at most once only for connect-stage unavailability, then retries inside a maximum 30-second startup deadline with delay capped at one second;
-- protocol failures and application rejections that never trigger process startup;
-- cancellation that terminates startup/retry rather than being translated into Host-unavailable behavior;
-- static/repository gates that still forbid process APIs in Host and everywhere in Bridge except the dedicated startup module, while media/network execution remains forbidden across both modules.
+Executed results:
+- 15/15 managed projects locked restore PASS.
+- NuGet vulnerability audit PASS; 0 vulnerable-result packages.
+- Release managed build PASS; 0 warnings, 0 errors.
+- Native C++20/MSVC Explorer Release build PASS.
+- Development FFmpeg/ffprobe 9.0.1 archive SHA-256 verification PASS; both executables execute successfully.
+- MakeAppx unsigned development-package schema/layout validation PASS.
+- Direct staged shell DLL class factory + `IExplorerCommand::Invoke` conversion PASS.
+- Loose package registration + packaged COM activation + `IExplorerCommand::Invoke` conversion PASS.
+- Direct Bridge→FFmpeg product smoke PASS with Unicode/metacharacter path, source preservation, collision preservation, numbered output, no partial-file leak, MP3 codec and exactly 320000 bit/s verified by ffprobe.
+- Microsoft Testing Platform/xUnit: 176 total, 176 succeeded, 0 failed, 0 skipped.
+- Static/repository gates at behavior head after in-job generation: 54/54 PASS; contract vectors 5/5 PASS.
+- Deterministic workspace ZIP double build produced matching bytes/hash at the behavior head; final embedded-manifest verification was intentionally blocked by stale tracked generated authority and is closed by the subsequent authority-synchronization cycle.
 
-## B2 intentionally still open
-B2 is **not fully closed**. B3 remains blocked until these items have executable acceptance evidence:
-1. connected-server identity / anti-squatting validation before Bridge trusts application data, aligned to the actual installer/signing/package authority;
-2. final decision and coverage for dedicated status/cancel wire operations if required by the runtime UX;
-3. remaining replay/disconnect/reconnect/session-confusion acceptance cases;
-4. explicit final B2 closure proving malformed, unauthorized, oversized, replayed, disconnected, wrong-server, and Host restart/crash paths cannot corrupt or incorrectly enqueue state.
+## Implemented product slice
+- Native root `IExplorerCommand` with fixed product subcommands and cheap extension-based visibility.
+- Fixed app-local `Converty.Bridge.exe` launch from the shell DLL using Win32 process creation, no shell execution.
+- Development Bridge mode validates a fixed typed preset ID and selected absolute files, then invokes the dedicated Core conversion runner.
+- `ProductPresetRegistry` provides fixed audio/video/image conversions; Explorer never receives raw FFmpeg arguments.
+- `audio.mp3` is the original 320 kbps Audio MVP.
+- `TrustedFfmpegPath` resolves only `tools/ffmpeg/ffmpeg.exe` beneath the application directory and rejects reparse points.
+- `FfmpegProcessLauncher` uses `ProcessStartInfo.ArgumentList`, no shell, hidden process, bounded stderr and finite timeout.
+- `ConversionBatchRunner` validates supported inputs and converts through an owned partial output followed by no-overwrite numbered publication.
+- Development package identity registers the shell class through `windows.comServer`/SurrogateServer and the modern context-menu verb through `windows.fileExplorerContextMenus`.
+- Native/package/product smokes use real Unicode/metacharacter filenames and real FFmpeg conversion.
 
-Fixed-path startup, pipe naming, or same-user ownership alone are **not** recorded as complete server authentication. Production signing private keys remain outside the repository/workspace.
+## Important corrections made during qualification
+- FFmpeg/ffprobe version probes now capture process exit before truncating log output.
+- Explorer context-menu verb ID changed from schema-invalid `Converty.Convert` to `ConvertyConvert`.
+- PowerShell smoke validation uses literal-path semantics for filenames containing `[ ]`.
+- Product smoke explicitly waits for the `WinExe` Bridge process and reads its process-object exit code.
+
+## Remaining shipping gates
+1. Headed Windows 11 Explorer acceptance: visually prove Converty appears in the modern right-click menu, enumerate the expected submenu, invoke a real conversion through Explorer UI, and capture current-version screenshots/evidence.
+2. B4 containment: private staging, restricted disposable workers, Job Object/resources, no-network and outside-scope-write canaries, no silent isolation downgrade.
+3. Move FFmpeg execution from the dev.9 Core/Bridge product spike to the final worker/provider architecture without regressing Explorer UX/output behavior.
+4. Finish B2 connected-server anti-squatting/final status-wire/replay-session acceptance.
+5. Production FFmpeg licensing/redistribution/signature/hash/notices decision; dev Gyan payload is qualification-only.
+6. Signed production MSIX and clean Windows 11 VM install/update/uninstall acceptance.
+7. Final security/fuzz/chaos/release audit and end-user shipping acceptance.
 
 ## Boundary status
-Contracts/Core/Serialization remain free of process/network/engine/native-loading logic. Host still contains no process-launch/media-engine path. Bridge process creation is restricted to the dedicated fixed-Host startup module; all other Bridge code remains process-free. Host/Bridge do not execute conversion engines or parse hostile media. Worker containment remains B4 authority; FFmpeg/WIC execution remains prohibited until those foundations are qualified.
+Contracts and Serialization remain engine-independent. Host remains non-executing and does not parse hostile media. Explorer remains trigger-only. Dev.9 temporarily permits conversion execution in the dedicated Core launcher invoked by Bridge under ADR-013; this development exception must be removed by migrating engine execution into the restricted worker/provider boundary before release.

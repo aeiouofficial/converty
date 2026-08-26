@@ -1,38 +1,126 @@
-# Converty Continuation Prompt
+# CONVERTY — CONTINUATION HANDOVER
+# PRODUCT-FIRST ROADMAP — 0.1.0-dev.9 → 0.1.0-dev.10
 
-Continue development directly in the GitHub repository:
+Continue development directly in:
 
-`https://github.com/aeiouofficial/converty`
+https://github.com/aeiouofficial/converty
 
-The current delivered authority is `Converty 0.1.0-dev.8`. If I also provide `Converty_0.1.0-dev.8_full_workspace.zip`, treat the repository plus that verified package as the same tranche authority.
+The delivered authority is Converty `0.1.0-dev.9`. Start by resolving and verifying the current `main` HEAD. The final frozen main SHA may be later than the immutable behavior head because generated SBOM/package/hash authority is synchronized after behavior qualification.
+
+IMMUTABLE DEV.9 BEHAVIOR HEAD:
+`b71aa06fb024afe85f64707b05d996e86c37d8c8`
+
+DEV.9 BEHAVIOR QUALIFICATION:
+- GitHub Actions run: `33001019450`
+- managed job: `98282574626`
+- static job: `98282574403`
+- runner: Windows Server 2025 / windows-2025-vs2026
+- .NET SDK: 10.0.400
+- 15/15 locked restore PASS
+- NuGet vulnerability audit PASS; 0 vulnerable-result packages
+- Release build PASS; 0 warnings; 0 errors
+- native C++20/MSVC Explorer build PASS
+- pinned development FFmpeg/ffprobe 9.0.1 archive SHA-256/execution PASS
+- MakeAppx unsigned development package validation PASS
+- direct staged Converty.ShellExtension.dll class factory + IExplorerCommand::Invoke conversion PASS
+- loose package registration + packaged COM activation + IExplorerCommand::Invoke conversion PASS
+- Bridge → FFmpeg product smoke PASS using Unicode/metacharacter path, preserving source and pre-existing base destination, creating numbered output with no partial-file leak, ffprobe-verifying MP3 at exactly 320000 bit/s
+- managed tests: 176/176 PASS, 0 failed, 0 skipped
+- static tests: 54/54 PASS after in-job generated authority
+- contract vectors: 5/5 PASS
 
 Read these first, in order:
-1. `docs/HANDOVER_NEXT_AGENT.md`
-2. `machine-readable/handover_state.json`
-3. `machine-readable/build_evidence.json`
-4. `docs/development/IMPLEMENTATION_STATUS.md`
-5. `docs/TASK_BACKLOG.md`
-6. `docs/Converty_Master_Build_Plan.md`
-7. `docs/SECURITY_THREAT_MODEL.md`
-8. `docs/TEST_AND_RELEASE_GATES.md`
-9. `docs/security/B2_SERVER_AUTH_GATE.md`
-10. `docs/supply-chain/SBOM_POLICY.md`
-11. `docs/supply-chain/RELEASE_SIGNING_POLICY.md`
-12. `docs/superpowers/plans/2026-08-25-b2-dev8-bridge-startup.md`
+1. docs/HANDOVER_NEXT_AGENT.md
+2. machine-readable/handover_state.json
+3. machine-readable/build_evidence.json
+4. docs/development/IMPLEMENTATION_STATUS.md
+5. docs/TASK_BACKLOG.md
+6. docs/Converty_Master_Build_Plan.md
+7. docs/adr/ADR-013-dev9-functional-product-spike.md
+8. docs/SECURITY_THREAT_MODEL.md
+9. docs/TEST_AND_RELEASE_GATES.md
+10. docs/security/B2_SERVER_AUTH_GATE.md
+11. docs/supply-chain/SBOM_POLICY.md
+12. docs/supply-chain/RELEASE_SIGNING_POLICY.md
 
-Continue immediately from the evidence-backed state; do not restart the architecture or ask me to re-specify locked decisions. The next delivered workspace must be `0.1.0-dev.9`, remain inside B2, and again end with a complete verified full-workspace ZIP plus synchronized handover/evidence/checksums and a new copy-paste continuation prompt.
+PRODUCT STATE YOU MUST PRESERVE
 
-Dev.8 adds the trusted Bridge-to-Host activation tranche. `TrustedHostPath` derives only fixed `Converty.Host.exe` from an absolute existing non-reparse installation directory. `InstalledHostProcessLauncher` is the only approved Bridge process-start site and uses no shell, no caller-provided executable/arguments, hidden/no-console startup, and the trusted install directory. `BridgeSubmissionCoordinator` first tries the existing Host, launches at most once only after connect-stage unavailability, retries within a maximum 30-second startup deadline with delay capped at one second, propagates protocol/application failures without launch, and honors cancellation. The behavior qualification recorded in `machine-readable/build_evidence.json` reached 15/15 locked restore, zero vulnerable-result packages, zero-warning/zero-error Release build, 129/129 managed tests, contract/static gates at the behavior head, and native topology smoke.
+The minimum functional Windows product path now exists:
 
-B2 is NOT fully closed. Keep B3 blocked and continue B2 test-first. Priority order for dev.9:
-1. Implement reciprocal connected-server identity verification before Bridge writes any application request frame. Bind it to the actual Windows installer/signing/package authority; do not invent a shared secret. Fixed path, pipe name, and same-user ownership alone are not sufficient authentication.
-2. Revalidate server identity for every new pipe session and fail closed for a wrong, unverifiable, raced, or squatted server. Production signing claims require real signed artifacts and signer/timestamp evidence; unsigned CI binaries must never be mislabeled as signed-server evidence.
-3. Decide and test whether status/cancel become explicit bounded versioned IPC operations. Continue rejecting unknown operation types, duplicate JSON members, future versions, malformed GUIDs, oversized payloads, and executable-text fields.
-4. Expand executable B2 adversarial coverage for Host restart during queued work, orphan/corrupt journal cases, replay after restart, duplicate RequestId, disconnect before completion/acknowledgement, partial frame/header, oversized declared frame, connect/read/write timeouts, unauthorized SID, fake/squatted server, Host launch failure, second Host instance, and queue/journal failure with no partial in-memory mutation.
-5. Close B2 only when the full process-start/server-auth/replay/restart acceptance matrix is executable and green. Only then may a later tranche begin B3 native Explorer `IExplorerCommand` integration.
+Windows Explorer / IExplorerCommand
+    → fixed Converty.Bridge.exe
+    → typed fixed ProductPresetRegistry preset
+    → fixed app-local ffmpeg.exe
+    → Converty-owned partial output
+    → validated/no-overwrite numbered same-folder publication
 
-Preserve non-negotiable boundaries: Explorer trigger only; Host never parses untrusted media or loads codec/plugin code; probing/conversion belongs to disposable restricted workers; ordinary local conversion has no network requirement; IPC uses same-user ACL plus peer validation and bounded/versioned framing; presets/IPC never carry executable commands or pass-through argument vectors; provider options are typed/whitelisted; strict isolation never silently downgrades; workers later write only private staging; Host later validates then atomically commits; numbered-copy remains the safe default; signing private keys never enter the repository/workspace.
+The Audio MVP is WAV/FLAC/etc. → MP3 320k. `audio.mp3` is 320 kbps. The product smoke verifies codec+bitrate with ffprobe. Unicode and shell-metacharacter filenames are regression cases. Output collision behavior must never overwrite source or a destination created by someone else.
 
-Do not implement FFmpeg/WIC/media-provider execution before B4 containment is qualified. Do not weaken existing DACL, peer validation, frame bounds, queue/journal limits, strict JSON, startup limits, or process-start confinement to make the remaining work easier.
+ADR-013 is deliberate. It supersedes the old infrastructure-first rule that B3/FFmpeg could not begin until B2/B4 were fully closed. Do NOT revert the functional product merely to restore that old ordering. However ADR-013 is development-only: it does not waive final containment/security/release gates.
 
-Report only gates actually executed. At tranche end synchronize VERSION/README/CHANGELOG/backlog/status/handover/machine-readable evidence, regenerate source/release SBOM plus `machine-readable/package_manifest.json` and `SHA256SUMS.txt`, require zero generated diff on the qualified exact head, build the workspace ZIP twice deterministically, reopen it and verify CRC/embedded hashes/exclusions, update GitHub, and provide the verified `Converty_0.1.0-dev.9_full_workspace.zip` plus the next handover prompt.
+WHAT IS STILL NOT SHIPPED
+
+Do not call dev.9 a production release. These remain open:
+- real headed Windows 11 Explorer modern-context-menu acceptance;
+- Explorer crash/hang/failure acceptance matrix;
+- B4 worker containment and resource/network/filesystem canaries;
+- migration of FFmpeg execution from the dev.9 Core/Bridge spike into the final restricted worker/provider architecture;
+- remaining B2 connected-server anti-squatting, final status/cancel wire decision, replay/disconnect/session matrix;
+- production FFmpeg redistribution/license/notices/signature/hash decision (the Gyan payload is development qualification only);
+- signed production MSIX;
+- clean Windows 11 VM install/update/uninstall;
+- final security/fuzz/chaos/release audit.
+
+NEXT TASK — DO THIS FIRST
+
+Get the first real headed Windows 11 acceptance of the actual Explorer product:
+1. use an interactive Windows 11 x64 environment;
+2. build/stage/register/install the exact current dev package;
+3. select/right-click a supported WAV in Windows 11 Explorer;
+4. prove `Converty` appears in the MODERN context menu and the fixed conversion submenu is usable;
+5. invoke `Convert to MP3` via Explorer itself;
+6. verify source preserved, base destination not overwritten, numbered MP3 produced, non-empty, MP3/320k;
+7. capture fresh screenshots/evidence from the exact tested version and record the headed acceptance in the repo.
+
+If headed Windows 11 is unavailable in your environment, do NOT fake or substitute this acceptance. Continue immediately with the next code-bearing shipping tranche: B4 worker containment + migration of FFmpeg execution into restricted disposable workers while preserving the current product UX and regression suite.
+
+B4 SHIPPING-HARDENING ORDER
+- private per-job staging;
+- disposable restricted worker launcher;
+- Job Object kill-on-close;
+- memory/CPU/process/output/time ceilings;
+- no-network canary;
+- outside-scope file-write canary;
+- strict/compatibility isolation policy with no silent downgrade;
+- move FFmpeg process execution out of the Core/Bridge dev spike into worker/provider code;
+- retain typed/whitelisted preset translation, app-local trusted engine path, Unicode handling, transactional numbered output and Explorer behavior.
+
+After B4, finish remaining B2 acceptance, production FFmpeg supply-chain/licensing, signed MSIX, clean-VM lifecycle tests and final release gates. Optimize for getting the real Windows product shipped; do not spend large tranches on unrelated enterprise infrastructure before user-visible/shipping blockers.
+
+NON-NEGOTIABLES
+- Explorer is trigger-only and must stay cheap/bounded.
+- Host never parses hostile media or loads codec/plugin code.
+- Production parsing/conversion belongs in disposable restricted workers.
+- Local conversion requires no network; strict profile denies network.
+- No raw command strings/pass-through FFmpeg arguments from user/IPC/Explorer.
+- No shell execution.
+- Never overwrite input or an externally created output; numbered copy remains default.
+- No silent isolation downgrade.
+- Signing private keys never enter repo/workspace.
+- Report only gates actually executed.
+
+MANDATORY RECURSIVE HANDOVER
+
+At the end of your work — whether complete, partial, or blocked — you MUST produce a new full-context copy-paste handover prompt for the NEXT agent/new chat. It must contain:
+- exact repository and working branch/main HEAD SHA;
+- exact immutable qualification SHA and GitHub Actions run/job IDs;
+- what you changed and why;
+- tests and acceptance gates actually executed with exact results;
+- remaining shipping blockers and explicit unverified claims;
+- the single highest-priority next task;
+- all non-negotiable product/security constraints;
+- and this exact recursive rule requiring that next agent to hand over again.
+
+Repeat that handover chain at every tranche until Converty is actually shipped.
+
+At tranche end, synchronize VERSION/README/CHANGELOG/backlog/status/handover/machine-readable evidence; regenerate source/release SBOM, package manifest and SHA256SUMS; require zero generated diff; build workspace ZIP twice deterministically; reopen and verify CRC/embedded manifest hashes/exclusions; update GitHub; and provide the verified workspace/handover artifacts.

@@ -1,12 +1,12 @@
 {
   "schemaVersion": 1,
   "project": "Converty",
-  "workspaceVersion": "0.1.0-dev.8",
-  "baselineDate": "2026-08-25",
-  "implementationStatus": "B0_B1_QUALIFIED_B2_ADVANCED_PARTIAL",
-  "batchesTouched": ["B0", "B1", "B2"],
-  "nextWorkspaceVersion": "0.1.0-dev.9",
-  "nextBatch": "B2",
+  "workspaceVersion": "0.1.0-dev.9",
+  "baselineDate": "2026-08-26",
+  "implementationStatus": "FUNCTIONAL_EXPLORER_PRODUCT_AUTOMATED_QUALIFIED_SHIPPING_HARDENING_OPEN",
+  "batchesTouched": ["B0", "B1", "B2", "B3", "B5"],
+  "nextWorkspaceVersion": "0.1.0-dev.10",
+  "nextBatch": "B3_HEADED_ACCEPTANCE_THEN_B4_CONTAINMENT",
   "targetOs": "Windows 11 x64",
   "toolchain": {
     "dotnetSdk": "10.0.400",
@@ -14,70 +14,63 @@
     "csharp": "14.0",
     "dotnetTestRunner": "Microsoft.Testing.Platform",
     "xunit": "xunit.v3.mtp-v2 4.0.0",
-    "native": "C++20 / CMake 3.28+ / MSVC for production shell"
+    "native": "C++20 / CMake 3.28+ / MSVC"
   },
   "qualifiedEvidence": {
-    "workflowRunId": 32905137143,
-    "managedJobId": 97987440961,
-    "headSha": "4819ad944b04175a3af6acd2ea26e59c6fce2609",
-    "managedTests": "129/129 PASS",
+    "workflowRunId": 33001019450,
+    "managedJobId": 98282574626,
+    "staticJobId": 98282574403,
+    "behaviorHeadSha": "b71aa06fb024afe85f64707b05d996e86c37d8c8",
+    "managedTests": "176/176 PASS",
+    "staticTests": "54/54 PASS after in-job authority generation",
     "releaseBuild": "PASS; 0 warnings; 0 errors",
     "dependencyAudit": "PASS; 0 vulnerable-result packages",
     "lockedProjects": "15/15",
-    "nativeTopologySmoke": "PASS"
+    "nativeExplorerBuild": "PASS",
+    "makeAppx": "PASS",
+    "directExplorerInvoke": "PASS",
+    "packagedComInvoke": "PASS",
+    "bridgeFfmpegMp3320k": "PASS"
   },
   "implementedSource": [
-    "Qualified B0/B1 contracts/core/serialization/fake-provider foundation",
-    "Converty.Ipc v1 fixed bounded framing with checked exact reads",
-    "Converty.Security protected current-user pipe DACL, SID-qualified endpoint, and connected-client SID validation",
-    "Converty.Host bounded queue/admission/status/cancellation, persistent atomic journal/recovery, per-user single-instance WinExe runtime, and ACL-backed pipe server",
-    "Converty.Bridge strict bounded request client with connect-stage Host-unavailable classification",
-    "TrustedHostPath deriving only Converty.Host.exe from an absolute existing non-reparse installation directory",
-    "InstalledHostProcessLauncher using no shell, no caller arguments, hidden/no-console startup, and fixed trusted working directory",
-    "BridgeSubmissionCoordinator using exactly one Host launch attempt and a bounded retry deadline only after connect-stage Host unavailability",
-    "Static gates confining Process.Start to the single approved Bridge startup launcher while preserving Host/media/network bans",
-    "Fifteen committed NuGet lock files with locked restore and restored-graph vulnerability auditing"
+    "Qualified B0/B1 contracts/core/serialization foundation and B2 Host/IPC runtime controls",
+    "Real native C++20 IExplorerCommand root and fixed subcommands",
+    "Fixed app-local Bridge handoff from Explorer with no shell execution",
+    "Development full-MSIX identity manifest with COM SurrogateServer and modern fileExplorerContextMenus registration",
+    "Typed ProductPresetRegistry including audio.mp3 at 320 kbps",
+    "Trusted fixed app-local FFmpeg path and structured no-shell process launcher",
+    "Transactional Converty-owned partial output followed by no-overwrite numbered publication",
+    "Pinned development FFmpeg/ffprobe 9.0.1 archive SHA-256 verification",
+    "Direct DLL, package COM activation/Invoke, and Bridge-to-FFmpeg real conversion smokes",
+    "ADR-013 product-first development exception preserving final shipping gates"
   ],
-  "b2Completed": [
-    "Explicit named-pipe DACL",
-    "Connected-peer current-user SID validation before application frames",
-    "Bounded/versioned frame codec",
-    "Bounded Host queue admission",
-    "Persistent crash-safe bounded atomic journal and recovery",
-    "Queued status/cancellation in Host queue",
-    "Per-user Host single-instance runtime loop and no-console executable entrypoint",
-    "Trusted fixed installed Host startup with no arbitrary executable/argument surface",
-    "One-launch bounded Bridge Host startup/retry behavior reacting only to connect-stage unavailability",
-    "Managed IPC adversarial corpus"
-  ],
-  "b2Partial": [
-    "Bridge-to-Host connected-server identity / anti-squatting acceptance remains open under the selected package/signing authority",
-    "Status/cancel exist in Host queue but dedicated wire operations are not yet exposed or explicitly waived",
-    "Final replay/disconnect/session-confusion acceptance matrix remains open"
+  "shippingOpen": [
+    "Headed Windows 11 modern Explorer menu/conversion acceptance",
+    "Explorer crash/hang/failure matrix",
+    "B4 restricted disposable worker containment and resource/network/filesystem canaries",
+    "Migration of FFmpeg execution from dev.9 Core/Bridge spike to final worker/provider architecture",
+    "Remaining B2 connected-server anti-squatting/status-wire/replay-session acceptance",
+    "Production FFmpeg redistribution/license/notices/signature/hash approval",
+    "Signed production MSIX and clean Windows 11 VM lifecycle acceptance",
+    "Final security/fuzz/chaos/release gates"
   ],
   "nextActions": [
-    "Implement and qualify connected-server identity verification before Bridge trusts a session, aligned to the actual installer/signing/package model",
-    "Decide and test whether status/cancel require dedicated IPC wire operations",
-    "Extend replay/disconnect/reconnect/session adversarial coverage and close the final B2 matrix",
-    "Do not start B3 until B2 is explicitly closed with executable evidence",
-    "Do not begin FFmpeg/WIC execution before B4 containment is qualified"
+    "Perform real headed Windows 11 Explorer modern-menu acceptance and capture fresh exact-version evidence",
+    "If headed Windows 11 is unavailable, implement B4 worker containment and migrate FFmpeg execution into restricted workers without regressing the functional product",
+    "Finish remaining B2 acceptance and production FFmpeg supply-chain/licensing work",
+    "Qualify signed production MSIX install/update/uninstall and final release gates"
   ],
-  "openInvestigations": [
-    "Bridge-to-Host server identity and anti-squatting validation under selected packaging/signing model",
-    "production sandbox mechanism compatibility per engine",
-    "safe path/reparse/commit mechanics across supported filesystem classes",
-    "full MSIX vs sparse package",
-    "production signing identity/timestamp service and release-host key custody"
-  ],
+  "recursiveHandoverRequired": true,
+  "recursiveHandoverRule": "Every agent must end its tranche with a new full-context copy-paste handover for the next agent/new chat, including exact repo/branch/main SHA, qualification evidence, remaining blockers, highest-priority next task, and this same recursive rule, until Converty is shipped.",
   "authorityFiles": [
     "docs/HANDOVER_NEXT_AGENT.md",
+    "docs/HANDOVER_PROMPT.txt",
     "docs/Converty_Master_Build_Plan.md",
+    "docs/adr/ADR-013-dev9-functional-product-spike.md",
     "docs/SECURITY_THREAT_MODEL.md",
     "docs/TEST_AND_RELEASE_GATES.md",
     "docs/TASK_BACKLOG.md",
     "docs/development/IMPLEMENTATION_STATUS.md",
-    "docs/security/B2_SERVER_AUTH_GATE.md",
-    "docs/superpowers/plans/2026-08-25-b2-dev8-bridge-startup.md",
     "machine-readable/build_evidence.json",
     "machine-readable/release_policy.json"
   ]

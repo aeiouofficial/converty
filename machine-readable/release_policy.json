@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "workspaceVersion": "0.1.0-dev.8",
+  "workspaceVersion": "0.1.0-dev.9",
   "hashAlgorithm": "SHA-256",
   "forbiddenHashAlgorithms": ["MD5", "SHA-1"],
   "ciProvenance": {
@@ -41,6 +41,10 @@
     "machine-readable dependency vulnerability report passes",
     "managed Release build passes",
     "managed tests pass",
+    "headed Windows 11 Explorer acceptance passes",
+    "restricted worker containment passes",
+    "production engine redistribution/license/signature policy is approved",
+    "signed package and clean Windows 11 VM lifecycle acceptance pass",
     "release SBOM generated and reviewed"
   ]
 }

@@ -1,11 +1,12 @@
 {
   "schemaVersion": 1,
-  "workspaceVersion": "0.1.0-dev.8",
+  "workspaceVersion": "0.1.0-dev.9",
   "evidenceDate": "2026-08-26",
   "behaviorQualification": {
-    "headSha": "ff35b262a68fa5b3a2adcfacb7cd3e8f2caf0fd2",
-    "workflowRunId": 32919140975,
-    "managedJobId": 98028998724,
+    "headSha": "b71aa06fb024afe85f64707b05d996e86c37d8c8",
+    "workflowRunId": 33001019450,
+    "managedJobId": 98282574626,
+    "staticJobId": 98282574403,
     "runner": {
       "os": "Windows Server 2025",
       "image": "windows-2025-vs2026",
@@ -20,18 +21,26 @@
       "warnings": 0,
       "errors": 0,
       "tests": {
-        "total": 129,
-        "succeeded": 129,
+        "total": 176,
+        "succeeded": 176,
         "failed": 0,
         "skipped": 0
       },
       "nativeTopologySmoke": "PASS",
-      "deterministicWorkspacePackage": "PASS",
-      "verifiedDeliveryUpload": "PASS"
+      "nativeExplorerReleaseBuild": "PASS",
+      "developmentFfmpegPinHashAndExecution": "PASS",
+      "makeAppxUnsignedDevelopmentPackage": "PASS",
+      "directShellDllClassFactoryInvoke": "PASS",
+      "loosePackageRegistrationComActivationInvoke": "PASS",
+      "productBridgeToFfmpegSmoke": "PASS",
+      "audioMp3CodecBitrate": "mp3 / 320000 bit/s PASS",
+      "transactionalNumberedCollision": "PASS",
+      "sourceAndExistingDestinationPreserved": "PASS",
+      "deterministicWorkspacePackageBytes": "MATCH_AT_BEHAVIOR_HEAD",
+      "verifiedDeliveryUpload": "PENDING_AUTHORITY_SYNC"
     },
     "static": {
-      "jobId": 98028998961,
-      "tests": "41/41 PASS",
+      "tests": "54/54 PASS after in-job generated authority",
       "contractVectors": "5/5 PASS",
       "repositoryVerifier": "PASS",
       "immutableActionPins": "PASS",
@@ -39,8 +48,22 @@
       "releaseSbomRegeneration": "PASS",
       "packageManifestRegeneration": "PASS",
       "sha256ManifestRegeneration": "PASS",
-      "generatedAuthorityDiff": "CLEAN"
+      "generatedAuthorityDiff": "STALE_BEFORE_DEV9_CLOSURE"
     }
+  },
+  "productEvidence": {
+    "explorerCommandDll": "IMPLEMENTED_MSVC_RELEASE_AND_DIRECT_INVOKE_TESTED",
+    "packageManifest": "MAKEAPPX_ACCEPTED_LOOSE_REGISTERED_AND_COM_ACTIVATED",
+    "modernContextMenuRegistration": "AUTOMATED_REGISTRATION_AND_COM_INVOKE_PASS; HEADED_WINDOWS_11_UI_ACCEPTANCE_OPEN",
+    "bridgeHandoff": "FIXED_APP_LOCAL_NO_SHELL",
+    "developmentFfmpeg": {
+      "version": "9.0.1",
+      "archiveSha256": "fec81ae03971d9dd4be3ebe02e263bd2ec1d789483f931bdba5f5715e65da2e9",
+      "purpose": "development-qualification-only",
+      "productionRedistributionApproval": false
+    },
+    "audioMvp": "WAV_TO_MP3_320K_REAL_CONVERSION_PASS",
+    "outputPublication": "OWNED_PARTIAL_VALIDATE_NO_OVERWRITE_NUMBERED_PUBLISH"
   },
   "b2Evidence": {
     "protocolFrameMaxPayloadBytes": 1048576,
@@ -49,37 +72,24 @@
     "bridgeMaximumRetryDelaySeconds": 1,
     "explicitPipeDacl": "IMPLEMENTED_AND_TESTED",
     "connectedPeerSidValidation": "IMPLEMENTED_AND_TESTED_BEFORE_APPLICATION_FRAME_READ",
-    "hostQueue": "BOUNDED_IMPLEMENTED_AND_TESTED",
-    "hostJournal": "IMPLEMENTED_AND_TESTED_PERSIST_BEFORE_PUBLISH",
-    "hostSingleInstance": "PER_USER_LEASE_WIRED_TO_RUNTIME_LOOP_AND_TESTED",
-    "hostExecutable": "WINEXE_ENTRYPOINT_IMPLEMENTED; LOCALAPPDATA_JOURNAL; NO_CONSOLE",
-    "bridgeTrustedHostPath": "FIXED_CONVERTY_HOST_EXE_FROM_ABSOLUTE_EXISTING_NON_REPARSE_INSTALL_DIRECTORY",
-    "bridgeHostLauncher": "NO_SHELL; EMPTY_ARGUMENTS; CREATE_NO_WINDOW; SINGLE_APPROVED_PROCESS_START_SITE",
-    "bridgeStartupRetry": "ONLY_CONNECT_STAGE_UNAVAILABLE_TRIGGERS_ONE_LAUNCH; BOUNDED_DEADLINE; CANCELLABLE",
-    "bridgeServerAuthentication": "NOT_YET_QUALIFIED",
-    "mediaExecutionInHostOrBridge": "NONE"
+    "hostQueueJournalSingleInstance": "IMPLEMENTED_AND_TESTED",
+    "trustedHostStartup": "IMPLEMENTED_AND_TESTED",
+    "bridgeServerAuthentication": "FINAL_SHIPPING_ACCEPTANCE_STILL_OPEN"
   },
   "authorityClosure": {
-    "status": "PASS",
-    "qualifiedHeadSha": "ff35b262a68fa5b3a2adcfacb7cd3e8f2caf0fd2",
-    "workflowRunId": 32919140975,
-    "managedJobId": 98028998724,
-    "staticJobId": 98028998961,
-    "permanentGates": "PASS",
-    "generatedAuthorityDiff": "CLEAN",
-    "deterministicDoubleWorkspaceZip": "PASS",
-    "crcManifestHashAndExclusionVerification": "PASS",
-    "note": "This records the fully green permanent exact-head qualification immediately preceding the evidence freeze. The evidence-frozen tree is regenerated and independently requalified; no self-referential archive hash is embedded in this file."
+    "status": "PENDING_GENERATED_AUTHORITY_SYNC",
+    "behaviorQualifiedHeadSha": "b71aa06fb024afe85f64707b05d996e86c37d8c8",
+    "behaviorWorkflowRunId": 33001019450,
+    "note": "Runtime/product behavior is green. Final source/release SBOM, package manifest and SHA256SUMS are regenerated from the dev.9 closure tree and independently requalified before main promotion."
   },
   "unverifiedClaimsExplicitlyForbidden": [
+    "Converty is shipped or production-ready",
+    "Headed Windows 11 modern Explorer menu acceptance is complete",
+    "Explorer crash/hang/failure matrix is complete",
     "B2 is fully closed",
-    "Bridge fully authenticates the connected Host server",
-    "pipe-squatting/server-auth acceptance is fully qualified",
-    "Windows artifacts are signed",
-    "Windows/MSVC production Explorer target compiles",
-    "Explorer integration works",
-    "runtime media conversion works",
-    "worker sandbox works",
-    "release dependency license review is complete"
+    "B4 worker containment is qualified",
+    "FFmpeg production redistribution/license/signature approval is complete",
+    "Windows artifacts are production-signed",
+    "Clean Windows 11 VM install/update/uninstall acceptance is complete"
   ]
 }

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "workspaceVersion": "0.1.0-dev.8",
+  "workspaceVersion": "0.1.0-dev.9",
   "targetOs": "Windows 11",
   "dotnetSdk": "10.0.400",
   "targetFramework": "net10.0",
@@ -9,11 +9,11 @@
   "nativeBuild": "CMake + MSVC",
   "architecture": "x64-first",
   "notes": [
-    "The dev.8 B2 Bridge startup qualification ran on GitHub Actions Windows Server 2025 with .NET SDK 10.0.400.",
-    "All 15 managed projects restore from committed lock files; restored-graph NuGet vulnerability audit reports zero vulnerable-result packages.",
-    "The qualified Release build completed with zero warnings and zero errors; Microsoft Testing Platform executed 129 tests with 129 successes.",
-    "B2 now includes fixed installed Converty.Host.exe startup with no shell or caller argument surface plus a one-launch bounded retry coordinator that reacts only to connect-stage Host unavailability.",
-    "Connected-server identity / anti-squatting evidence and the final status/cancel wire decision remain open; native topology smoke is topology-only and B3 stays blocked."
+    "Dev.9 behavior qualification ran on GitHub Actions Windows Server 2025 with .NET SDK 10.0.400 and MSVC Release native Explorer targets.",
+    "All 15 managed projects restore from committed lock files; NuGet vulnerability audit reports zero vulnerable-result packages.",
+    "Release build completed with zero warnings/errors; Microsoft Testing Platform executed 176 tests with 176 successes.",
+    "Native Explorer DLL build, MakeAppx, direct IExplorerCommand Invoke, package COM registration/Invoke and Bridge-to-FFmpeg MP3/320k smoke pass.",
+    "The FFmpeg/ffprobe 9.0.1 payload is development qualification only; headed Windows 11 acceptance, B4 containment, production engine redistribution/signing and signed release packaging remain open."
   ],
   "testRunner": "Microsoft.Testing.Platform",
   "xunitMtpV2": "4.0.0"
