@@ -97,6 +97,9 @@ jobs:
         run: |
           ./build/stage-dev-package.ps1 -Configuration Release -FfmpegPath ./artifacts/dev-ffmpeg/ffmpeg.exe
           ./build/validate-dev-package.ps1
+      - name: Explorer package COM registration smoke
+        shell: pwsh
+        run: ./build/explorer-registration-smoke.ps1
       - name: Product Bridge to FFmpeg smoke
         shell: pwsh
         run: ./build/product-conversion-smoke.ps1
