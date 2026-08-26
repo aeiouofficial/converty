@@ -12,18 +12,18 @@ $smokeRoot = Join-Path $root 'artifacts/product-conversion-smoke'
 if (-not $IsWindows) {
     throw 'The Converty product conversion smoke is Windows-only.'
 }
-if (-not (Test-Path $bridge)) {
+if (-not (Test-Path -LiteralPath $bridge)) {
     throw 'Staged Converty.Bridge.exe is missing.'
 }
-if (-not (Test-Path $ffmpeg)) {
+if (-not (Test-Path -LiteralPath $ffmpeg)) {
     throw 'Staged trusted ffmpeg.exe is missing.'
 }
-if (-not (Test-Path $ffprobe)) {
+if (-not (Test-Path -LiteralPath $ffprobe)) {
     throw 'Pinned development ffprobe.exe is missing.'
 }
 
-if (Test-Path $smokeRoot) {
-    Remove-Item -Recurse -Force $smokeRoot
+if (Test-Path -LiteralPath $smokeRoot) {
+    Remove-Item -LiteralPath $smokeRoot -Recurse -Force
 }
 New-Item -ItemType Directory -Force $smokeRoot | Out-Null
 
@@ -66,23 +66,23 @@ finally {
 
 # Reserve the base destination to prove Converty never silently overwrites it.
 [System.IO.File]::WriteAllBytes($existingOutput, [byte[]](1, 2, 3, 4))
-$existingHash = (Get-FileHash -Algorithm SHA256 $existingOutput).Hash
+$existingHash = (Get-FileHash -LiteralPath $existingOutput -Algorithm SHA256).Hash
 
 & $bridge '--preset' 'audio.mp3' '--' $input
 if ($LASTEXITCODE -ne 0) {
     throw "Converty.Bridge.exe product smoke failed with exit code $LASTEXITCODE."
 }
 
-if (-not (Test-Path $input)) {
+if (-not (Test-Path -LiteralPath $input)) {
     throw 'Product smoke removed or replaced the source file.'
 }
-if (-not (Test-Path $expectedOutput)) {
+if (-not (Test-Path -LiteralPath $expectedOutput)) {
     throw "Expected numbered conversion output was not created: $expectedOutput"
 }
-if ((Get-Item $expectedOutput).Length -le 0) {
+if ((Get-Item -LiteralPath $expectedOutput).Length -le 0) {
     throw 'Product smoke produced an empty conversion output.'
 }
-if ((Get-FileHash -Algorithm SHA256 $existingOutput).Hash -ne $existingHash) {
+if ((Get-FileHash -LiteralPath $existingOutput -Algorithm SHA256).Hash -ne $existingHash) {
     throw 'Product smoke overwrote the pre-existing destination file.'
 }
 
