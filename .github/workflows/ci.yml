@@ -52,20 +52,7 @@ jobs:
       - name: Verify raw contract vectors
         run: python scripts/verify_contract_vectors.py
       - name: Run static gates
-        shell: bash
-        run: |
-          mkdir -p artifacts
-          set -o pipefail
-          python -m pytest -vv tests/static 2>&1 | tee artifacts/static-pytest.txt
-      - name: Upload static diagnostics
-        if: always()
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
-        with:
-          name: converty-static-diagnostics-${{ github.sha }}
-          path: artifacts/static-pytest.txt
-          if-no-files-found: error
-          retention-days: 1
-          compression-level: 0
+        run: python -m pytest -q tests/static
       - name: Verify tracked generated authority is current
         run: git diff --exit-code -- machine-readable/source_sbom.spdx.json machine-readable/release_sbom.spdx.json machine-readable/package_manifest.json SHA256SUMS.txt
 
