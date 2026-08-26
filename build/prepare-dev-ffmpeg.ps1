@@ -52,14 +52,19 @@ if ($ffprobeMatches.Count -ne 1) {
 Copy-Item -LiteralPath $ffmpegMatches[0].FullName -Destination $ffmpegOutputPath -Force
 Copy-Item -LiteralPath $ffprobeMatches[0].FullName -Destination $ffprobeOutputPath -Force
 
-& $ffmpegOutputPath -hide_banner -version | Select-Object -First 1 | Write-Host
-if ($LASTEXITCODE -ne 0) {
-    throw 'Pinned development ffmpeg.exe did not execute successfully.'
+$ffmpegVersionOutput = @(& $ffmpegOutputPath -hide_banner -version 2>&1)
+$ffmpegExitCode = $LASTEXITCODE
+if ($ffmpegExitCode -ne 0) {
+    throw "Pinned development ffmpeg.exe did not execute successfully (exit code $ffmpegExitCode)."
 }
-& $ffprobeOutputPath -hide_banner -version | Select-Object -First 1 | Write-Host
-if ($LASTEXITCODE -ne 0) {
-    throw 'Pinned development ffprobe.exe did not execute successfully.'
+$ffmpegVersionOutput | Select-Object -First 1 | Write-Host
+
+$ffprobeVersionOutput = @(& $ffprobeOutputPath -hide_banner -version 2>&1)
+$ffprobeExitCode = $LASTEXITCODE
+if ($ffprobeExitCode -ne 0) {
+    throw "Pinned development ffprobe.exe did not execute successfully (exit code $ffprobeExitCode)."
 }
+$ffprobeVersionOutput | Select-Object -First 1 | Write-Host
 
 Write-Host "Development FFmpeg archive SHA-256: $actualHash"
 Write-Host "Trusted development FFmpeg: $ffmpegOutputPath"
