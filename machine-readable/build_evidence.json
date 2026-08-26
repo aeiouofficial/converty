@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "workspaceVersion": "0.1.0-dev.7",
-  "evidenceDate": "2026-08-25",
+  "evidenceDate": "2026-08-26",
   "behaviorQualification": {
     "headSha": "221a6bcd7e9a2238ded79a65d9cbabbca0b7079c",
     "workflowRunId": 32885833243,
@@ -52,20 +52,68 @@
   },
   "staticEvidence": {
     "dev7BoundaryGate": "tests/static/test_dev7_b2_journal_runtime.py",
-    "contractVectors": "5/5 PASS on behavior workflow",
-    "repositoryVerifier": "PASS on behavior workflow before version freeze; final authority run required after generated-file promotion"
+    "canonicalPackageGate": "tests/static/test_package_workspace.py",
+    "staticTests": {
+      "total": 36,
+      "succeeded": 36,
+      "failed": 0
+    },
+    "contractVectors": "5/5 PASS",
+    "repositoryVerifier": "PASS"
   },
   "authorityClosure": {
     "status": "PASS",
-    "note": "Final dev.7 authority regenerated and verified by the self-cleaning closure workflow.",
-    "workflowRunId": 32893693907,
-    "managed": "PASS_120_OF_120",
-    "staticGate": "PASS",
-    "releasePreflight": "PASS",
-    "sourceSbom": "PASS",
-    "releaseSbom": "PASS",
-    "hashManifest": "PASS_GENERATED",
-    "packageManifest": "PASS_GENERATED"
+    "qualificationHeadSha": "4bb90dcbdc3a7da60c3ae6dfbd45bc6d49583a2d",
+    "workflowRunId": 32917811937,
+    "staticJobId": 98025090776,
+    "managedJobId": 98025090806,
+    "runner": {
+      "os": "Windows Server 2025",
+      "image": "windows-2025-vs2026",
+      "imageVersion": "20260818.207.1",
+      "dotnetSdk": "10.0.400",
+      "python": "3.13.15"
+    },
+    "permanentGates": {
+      "lockedRestore": "PASS_15_OF_15_PROJECTS",
+      "dependencyAudit": "PASS_0_VULNERABLE_RESULT_PACKAGES",
+      "releaseBuild": "PASS_0_WARNINGS_0_ERRORS",
+      "managedTests": "PASS_120_OF_120",
+      "nativeTopologySmoke": "PASS",
+      "immutableActionPins": "PASS",
+      "contractVectors": "PASS_5_OF_5",
+      "staticTests": "PASS_36_OF_36",
+      "sourceSbomRegeneration": "PASS",
+      "releaseSbomRegeneration": "PASS",
+      "packageManifestRegeneration": "PASS",
+      "sha256ManifestRegeneration": "PASS",
+      "generatedAuthorityDiff": "PASS"
+    },
+    "sbomVersions": {
+      "source": "0.1.0-dev.7",
+      "release": "0.1.0-dev.7"
+    },
+    "package": {
+      "name": "Converty_0.1.0-dev.7_full_workspace.zip",
+      "sha256": "046480923c26ad9cd719c983868032a12b8686f97a2b316889d357fb46065e50",
+      "bytes": 247147,
+      "files": 231,
+      "packageManifestEntries": 229,
+      "sha256ManifestEntries": 230,
+      "source": "git-head",
+      "deterministicDoubleBuild": "PASS",
+      "crc": "PASS",
+      "embeddedPackageManifestVerification": "PASS",
+      "embeddedSha256ManifestVerification": "PASS",
+      "exclusionPolicy": "PASS"
+    },
+    "deliveryArtifact": {
+      "githubArtifactId": 9588802784,
+      "name": "converty-verified-delivery-4bb90dcbdc3a7da60c3ae6dfbd45bc6d49583a2d",
+      "archiveSha256": "d112a1b42a9da8480baba69dd94735134330e00ec9fee510c7233a24d028bf44",
+      "archiveBytes": 255690
+    },
+    "evidenceFreezePolicy": "This file records the first fully green permanent exact-head qualification. Updating this evidence changes generated package/hash authority, so the evidence-frozen tree must itself be regenerated and independently requalified before merge; that later CI run is external evidence and is not self-referentially embedded here."
   },
   "unverifiedClaimsExplicitlyForbidden": [
     "B2 is fully closed",
