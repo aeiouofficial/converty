@@ -12,3 +12,4 @@
 - **ADR-010** — Strict isolation has no silent compatibility downgrade.
 - **ADR-011** — Signed/pinned provider supply chain; plugin code only in worker.
 - **ADR-012** — Offline/local conversion has network denied by default.
+- **ADR-013** — Dev.9 minimum-functional-product spike may qualify Explorer → fixed Bridge/Core → fixed app-local FFmpeg before final B2/B4 closure; development exception only, release gates unchanged.
