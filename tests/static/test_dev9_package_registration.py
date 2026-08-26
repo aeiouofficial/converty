@@ -42,7 +42,8 @@ def test_development_package_registers_shell_com_class_and_modern_context_menu()
     assert item_type.attrib["Type"] == "*"
     verb = item_type.find("desktop5:Verb", NS)
     assert verb is not None
-    assert verb.attrib["Id"] == "Converty.Convert"
+    assert verb.attrib["Id"] == "ConvertyConvert"
+    assert verb.attrib["Id"].isascii() and verb.attrib["Id"].isalnum()
     assert verb.attrib["Clsid"].upper() == CLSID
 
     full_trust = root.find("foundation:Capabilities/rescap:Capability[@Name='runFullTrust']", NS)
