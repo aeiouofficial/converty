@@ -77,10 +77,16 @@
     "bridgeServerAuthentication": "FINAL_SHIPPING_ACCEPTANCE_STILL_OPEN"
   },
   "authorityClosure": {
-    "status": "PENDING_GENERATED_AUTHORITY_SYNC",
-    "behaviorQualifiedHeadSha": "b71aa06fb024afe85f64707b05d996e86c37d8c8",
-    "behaviorWorkflowRunId": 33001019450,
-    "note": "Runtime/product behavior is green. Final source/release SBOM, package manifest and SHA256SUMS are regenerated from the dev.9 closure tree and independently requalified before main promotion."
+    "status": "PASS",
+    "qualifiedHeadSha": "b646e21ee9115772299a87ec23033209cd03d190",
+    "workflowRunId": 33006097943,
+    "managedJobId": 98300110836,
+    "staticJobId": 98300110228,
+    "permanentGates": "PASS",
+    "generatedAuthorityDiff": "CLEAN",
+    "deterministicDoubleWorkspaceZip": "PASS",
+    "crcManifestHashAndExclusionVerification": "PASS",
+    "note": "This records the fully green permanent exact-head qualification immediately preceding the evidence freeze. The evidence-frozen tree is regenerated and independently requalified; no self-referential archive hash is embedded in this file."
   },
   "unverifiedClaimsExplicitlyForbidden": [
     "Converty is shipped or production-ready",
