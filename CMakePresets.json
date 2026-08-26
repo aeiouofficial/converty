@@ -8,10 +8,11 @@
   "configurePresets": [
     {
       "name": "native-smoke",
-      "displayName": "Native topology smoke",
+      "displayName": "Native Explorer release smoke",
       "generator": "Ninja",
       "binaryDir": "${sourceDir}/artifacts/native-smoke",
       "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
         "CMAKE_CXX_STANDARD": "20",
         "CMAKE_CXX_STANDARD_REQUIRED": "ON",
         "CMAKE_CXX_EXTENSIONS": "OFF"
