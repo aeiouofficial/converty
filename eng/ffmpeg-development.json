@@ -5,6 +5,7 @@
   "archiveUrl": "https://www.gyan.dev/ffmpeg/builds/packages/ffmpeg-9.0.1-essentials_build.zip",
   "archiveSha256": "fec81ae03971d9dd4be3ebe02e263bd2ec1d789483f931bdba5f5715e65da2e9",
   "expectedExecutableName": "ffmpeg.exe",
+  "expectedProbeExecutableName": "ffprobe.exe",
   "licenseNotice": "The vendor states these Windows builds are licensed as GPLv3. This pin is for development qualification and is not production redistribution approval.",
   "sourceCommit": "bf1b838f2a"
 }
