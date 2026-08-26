@@ -1,11 +1,11 @@
 {
   "schemaVersion": 1,
   "workspaceVersion": "0.1.0-dev.8",
-  "evidenceDate": "2026-08-25",
+  "evidenceDate": "2026-08-26",
   "behaviorQualification": {
-    "headSha": "4819ad944b04175a3af6acd2ea26e59c6fce2609",
-    "workflowRunId": 32905137143,
-    "managedJobId": 97987440961,
+    "headSha": "ff35b262a68fa5b3a2adcfacb7cd3e8f2caf0fd2",
+    "workflowRunId": 32919140975,
+    "managedJobId": 98028998724,
     "runner": {
       "os": "Windows Server 2025",
       "image": "windows-2025-vs2026",
@@ -25,13 +25,21 @@
         "failed": 0,
         "skipped": 0
       },
-      "nativeTopologySmoke": "PASS"
+      "nativeTopologySmoke": "PASS",
+      "deterministicWorkspacePackage": "PASS",
+      "verifiedDeliveryUpload": "PASS"
     },
-    "staticAtBehaviorHead": {
-      "tests": "38 PASS inside managed test script",
+    "static": {
+      "jobId": 98028998961,
+      "tests": "41/41 PASS",
       "contractVectors": "5/5 PASS",
       "repositoryVerifier": "PASS",
-      "note": "The final dev.8 coordinator-invariant static test was added after this behavior head and is rerun by final closure."
+      "immutableActionPins": "PASS",
+      "sourceSbomRegeneration": "PASS",
+      "releaseSbomRegeneration": "PASS",
+      "packageManifestRegeneration": "PASS",
+      "sha256ManifestRegeneration": "PASS",
+      "generatedAuthorityDiff": "CLEAN"
     }
   },
   "b2Evidence": {
@@ -52,8 +60,16 @@
     "mediaExecutionInHostOrBridge": "NONE"
   },
   "authorityClosure": {
-    "status": "IN_PROGRESS",
-    "note": "Version/docs are synchronized to dev.8; final self-cleaning closure must regenerate source/release SBOM, manifests, rerun all gates and deterministic packaging before merge."
+    "status": "PASS",
+    "qualifiedHeadSha": "ff35b262a68fa5b3a2adcfacb7cd3e8f2caf0fd2",
+    "workflowRunId": 32919140975,
+    "managedJobId": 98028998724,
+    "staticJobId": 98028998961,
+    "permanentGates": "PASS",
+    "generatedAuthorityDiff": "CLEAN",
+    "deterministicDoubleWorkspaceZip": "PASS",
+    "crcManifestHashAndExclusionVerification": "PASS",
+    "note": "This records the fully green permanent exact-head qualification immediately preceding the evidence freeze. The evidence-frozen tree is regenerated and independently requalified; no self-referential archive hash is embedded in this file."
   },
   "unverifiedClaimsExplicitlyForbidden": [
     "B2 is fully closed",
