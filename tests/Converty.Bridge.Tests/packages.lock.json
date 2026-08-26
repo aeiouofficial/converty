@@ -125,6 +125,7 @@
         "type": "Project",
         "dependencies": {
           "Converty.Contracts": "[1.0.0, )",
+          "Converty.Core": "[1.0.0, )",
           "Converty.Ipc": "[1.0.0, )",
           "Converty.Security": "[1.0.0, )",
           "Converty.Serialization": "[1.0.0, )"
@@ -132,6 +133,12 @@
       },
       "converty.contracts": {
         "type": "Project"
+      },
+      "converty.core": {
+        "type": "Project",
+        "dependencies": {
+          "Converty.Contracts": "[1.0.0, )"
+        }
       },
       "converty.ipc": {
         "type": "Project"
