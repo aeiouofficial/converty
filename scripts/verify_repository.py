@@ -99,6 +99,7 @@ ALLOWED_CORE_EXECUTION_PROCESS_FILES = {
 }
 
 ALLOWED_CORE_FFMPEG_FILES = {
+    "src/Converty.Core/Execution/ConversionBatchRunner.cs",
     "src/Converty.Core/Execution/FfmpegExecutionResult.cs",
     "src/Converty.Core/Execution/FfmpegProcessLauncher.cs",
     "src/Converty.Core/Execution/IFfmpegProcessLauncher.cs",
