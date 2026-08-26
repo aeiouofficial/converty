@@ -108,11 +108,16 @@ def test_development_package_registers_and_invokes_the_same_shell_command() -> N
     assert "./build/product-conversion-smoke.ps1" in workflow
 
 
-def test_ffmpeg_preparation_waits_for_the_version_process_before_truncating_output() -> None:
+def test_ffmpeg_preparation_waits_for_version_processes_before_truncating_output() -> None:
     script = text("build/prepare-dev-ffmpeg.ps1")
 
-    assert "$versionOutput = @(& $outputPath -hide_banner -version 2>&1)" in script
+    assert "$ffmpegVersionOutput = @(& $ffmpegOutputPath -hide_banner -version 2>&1)" in script
     assert "$ffmpegExitCode = $LASTEXITCODE" in script
     assert "if ($ffmpegExitCode -ne 0)" in script
-    assert "$versionOutput | Select-Object -First 1 | Write-Host" in script
-    assert "& $outputPath -hide_banner -version | Select-Object -First 1" not in script
+    assert "$ffmpegVersionOutput | Select-Object -First 1 | Write-Host" in script
+    assert "$ffprobeVersionOutput = @(& $ffprobeOutputPath -hide_banner -version 2>&1)" in script
+    assert "$ffprobeExitCode = $LASTEXITCODE" in script
+    assert "if ($ffprobeExitCode -ne 0)" in script
+    assert "$ffprobeVersionOutput | Select-Object -First 1 | Write-Host" in script
+    assert "& $ffmpegOutputPath -hide_banner -version | Select-Object -First 1" not in script
+    assert "& $ffprobeOutputPath -hide_banner -version | Select-Object -First 1" not in script
