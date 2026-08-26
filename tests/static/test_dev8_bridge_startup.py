@@ -56,9 +56,12 @@ def test_startup_coordinator_catches_only_connect_stage_unavailability() -> None
     assert "throw new TimeoutException" in coordinator
 
     connect_index = client.index("await pipe.ConnectAsync")
-    write_index = client.index("ProtocolFrameCodec.WriteAsync")
+    write_index = client.index("BoundedProtocolFrameIo.WriteAndFlushAsync")
     unavailable_index = client.index("BridgeHostUnavailableException")
     assert connect_index < unavailable_index < write_index
+    assert "BoundedProtocolFrameIo.ReadAsync" in client
+    assert "ProtocolFrameCodec.WriteAsync(pipe" not in client
+    assert "ProtocolFrameCodec.ReadAsync(pipe" not in client
     assert "catch (TimeoutException error)" in client
     assert "catch (IOException error)" in client
     assert "catch (OperationCanceledException" not in client
