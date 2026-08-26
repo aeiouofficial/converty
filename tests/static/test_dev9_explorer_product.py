@@ -121,3 +121,18 @@ def test_ffmpeg_preparation_waits_for_version_processes_before_truncating_output
     assert "$ffprobeVersionOutput | Select-Object -First 1 | Write-Host" in script
     assert "& $ffmpegOutputPath -hide_banner -version | Select-Object -First 1" not in script
     assert "& $ffprobeOutputPath -hide_banner -version | Select-Object -First 1" not in script
+
+
+def test_product_smokes_treat_metacharacter_filenames_as_literal_paths() -> None:
+    registration = text("build/explorer-registration-smoke.ps1")
+    conversion = text("build/product-conversion-smoke.ps1")
+
+    assert "Test-Path -LiteralPath $output" in registration
+    assert "Get-Item -LiteralPath $output" in registration
+
+    assert "Test-Path -LiteralPath $input" in conversion
+    assert "Test-Path -LiteralPath $expectedOutput" in conversion
+    assert "Get-Item -LiteralPath $expectedOutput" in conversion
+    assert "Get-FileHash -LiteralPath $existingOutput -Algorithm SHA256" in conversion
+    assert "-of json $expectedOutput" not in conversion
+    assert "-of json -- $expectedOutput" in conversion
