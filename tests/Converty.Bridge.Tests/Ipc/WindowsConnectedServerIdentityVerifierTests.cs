@@ -32,17 +32,13 @@ public sealed class WindowsConnectedServerIdentityVerifierTests
     [Fact]
     public void RejectsWrongOrMissingPackageFamily()
     {
-        var wrong = new WindowsConnectedServerIdentityVerifier(
-            ExpectedPath,
-            ExpectedFamily,
-            new FakeProbe(new ConnectedServerIdentitySnapshot(42, ExpectedPath, "Other.Publisher_xyz", 42)));
-        var missing = new WindowsConnectedServerIdentityVerifier(
-            ExpectedPath,
-            ExpectedFamily,
-            new FakeProbe(new ConnectedServerIdentitySnapshot(42, ExpectedPath, null, 42)));
+        var wrongProbe = new FakeProbe(new ConnectedServerIdentitySnapshot(42, ExpectedPath, "Other.Publisher_xyz", 42));
+        var wrong = new WindowsConnectedServerIdentityVerifier(ExpectedPath, ExpectedFamily, wrongProbe);
+        var missingProbe = new FakeProbe(new ConnectedServerIdentitySnapshot(42, ExpectedPath, null, 42));
+        var missing = new WindowsConnectedServerIdentityVerifier(ExpectedPath, ExpectedFamily, missingProbe);
 
-        Assert.Throws<BridgeServerIdentityException>(() => wrong.VerifySnapshot(((FakeProbe)wrong.ProbeForTests).Snapshot));
-        Assert.Throws<BridgeServerIdentityException>(() => missing.VerifySnapshot(((FakeProbe)missing.ProbeForTests).Snapshot));
+        Assert.Throws<BridgeServerIdentityException>(() => wrong.VerifySnapshot(wrongProbe.Snapshot));
+        Assert.Throws<BridgeServerIdentityException>(() => missing.VerifySnapshot(missingProbe.Snapshot));
     }
 
     [Fact]
