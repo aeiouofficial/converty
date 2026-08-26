@@ -55,6 +55,16 @@ public sealed class ProductPresetRegistryTests
     }
 
     [Fact]
+    public void AudioMp3PresetUsesThe320kProductMvpBitrate()
+    {
+        ProductPresetDefinition preset = ProductPresetRegistry.Default.GetRequired(PresetId.Parse("audio.mp3"));
+
+        Assert.Contains("libmp3lame", preset.FfmpegArgumentsAfterInput);
+        Assert.Contains("320k", preset.FfmpegArgumentsAfterInput);
+        Assert.DoesNotContain("192k", preset.FfmpegArgumentsAfterInput);
+    }
+
+    [Fact]
     public void FfmpegArgumentsKeepPathsAsIndependentTokens()
     {
         ProductPresetDefinition preset = ProductPresetRegistry.Default.GetRequired(PresetId.Parse("audio.mp3"));
