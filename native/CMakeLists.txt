@@ -7,8 +7,27 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 include(cmake/Hardening.cmake)
 
-# B3 will add the Windows Explorer COM target. Keeping B0 target-free prevents
-# a stub DLL from being mistaken for working shell integration.
-add_custom_target(converty_native_topology ALL
-    COMMAND ${CMAKE_COMMAND} -E echo "Converty native topology configured; Explorer target begins in B3."
-    VERBATIM)
+if(WIN32)
+    add_library(Converty.ShellExtension SHARED
+        Converty.ShellExtension/ConvertyShellExtension.cpp)
+
+    target_compile_definitions(Converty.ShellExtension PRIVATE
+        UNICODE
+        _UNICODE)
+
+    target_link_libraries(Converty.ShellExtension PRIVATE
+        ole32
+        shell32
+        user32
+        uuid)
+
+    converty_apply_msvc_hardening(Converty.ShellExtension)
+
+    set_target_properties(Converty.ShellExtension PROPERTIES
+        PREFIX ""
+        OUTPUT_NAME "Converty.ShellExtension")
+else()
+    add_custom_target(converty_native_topology ALL
+        COMMAND ${CMAKE_COMMAND} -E echo "Converty Explorer shell extension is Windows-only."
+        VERBATIM)
+endif()
