@@ -33,15 +33,18 @@ jobs:
         run: python scripts/verify_release_inputs.py
       - name: Generate release dependency SBOM
         run: python scripts/generate_sbom.py --mode release
+      - name: Generate package manifest
+        run: python scripts/generate_package_manifest.py
       - name: Regenerate SHA-256 workspace manifest
         run: python scripts/generate_hash_manifest.py
-      - name: Upload supply-chain evidence
+      - name: Upload generated authority evidence
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
-          name: converty-dev6-supply-chain-evidence
+          name: converty-generated-authority-${{ github.sha }}
           path: |
             machine-readable/source_sbom.spdx.json
             machine-readable/release_sbom.spdx.json
+            machine-readable/package_manifest.json
             SHA256SUMS.txt
           if-no-files-found: error
           retention-days: 7
@@ -51,7 +54,7 @@ jobs:
       - name: Run static gates
         run: python -m pytest -q tests/static
       - name: Verify tracked generated authority is current
-        run: git diff --exit-code -- machine-readable/source_sbom.spdx.json machine-readable/release_sbom.spdx.json SHA256SUMS.txt
+        run: git diff --exit-code -- machine-readable/source_sbom.spdx.json machine-readable/release_sbom.spdx.json machine-readable/package_manifest.json SHA256SUMS.txt
 
   managed:
     runs-on: windows-2025
@@ -60,6 +63,11 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
+      - name: Normalize worktree to committed bytes
+        shell: pwsh
+        run: |
+          git config core.autocrlf false
+          git reset --hard HEAD
       - uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v6.0.0
         with:
           dotnet-version: 10.0.400
@@ -84,3 +92,77 @@ jobs:
       - name: Native topology smoke
         shell: pwsh
         run: ./build/native-smoke.ps1
+      - name: Build workspace ZIP twice and verify
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force artifacts/pkg-a, artifacts/pkg-b | Out-Null
+          python scripts/package_workspace.py --output-dir artifacts/pkg-a
+          python scripts/package_workspace.py --output-dir artifacts/pkg-b
+          $version = (Get-Content -Raw VERSION).Trim()
+          $a = "artifacts/pkg-a/Converty_${version}_full_workspace.zip"
+          $b = "artifacts/pkg-b/Converty_${version}_full_workspace.zip"
+          $ha = (Get-FileHash -Algorithm SHA256 $a).Hash.ToLowerInvariant()
+          $hb = (Get-FileHash -Algorithm SHA256 $b).Hash.ToLowerInvariant()
+          if ($ha -ne $hb) { throw "deterministic package hashes differ: $ha vs $hb" }
+          @'
+          import hashlib, json, sys, zipfile
+          from pathlib import Path, PurePosixPath
+          sys.path.insert(0, 'scripts')
+          from workspace_file_policy import EXCLUDED_NAMES, EXCLUDED_PARTS, EXCLUDED_SUFFIXES
+          version = Path('VERSION').read_text(encoding='utf-8').strip()
+          archive = Path(f'artifacts/pkg-a/Converty_{version}_full_workspace.zip')
+          root = f'Converty_{version}/'
+          with zipfile.ZipFile(archive) as z:
+              assert z.testzip() is None
+              names = z.namelist()
+              assert names and all(name.startswith(root) for name in names)
+              for name in names:
+                  rel = PurePosixPath(name[len(root):])
+                  assert not any(part in EXCLUDED_PARTS for part in rel.parts), name
+                  assert rel.name not in EXCLUDED_NAMES, name
+                  assert rel.suffix.lower() not in EXCLUDED_SUFFIXES, name
+              assert z.read(root + 'VERSION').decode('utf-8').strip() == version
+              package = json.loads(z.read(root + 'machine-readable/package_manifest.json'))
+              assert package['workspaceVersion'] == version
+              for entry in package['files']:
+                  data = z.read(root + entry['path'])
+                  assert len(data) == entry['bytes'], entry['path']
+                  assert hashlib.sha256(data).hexdigest() == entry['sha256'], entry['path']
+              sums = z.read(root + 'SHA256SUMS.txt').decode('utf-8').splitlines()
+              for line in sums:
+                  digest, rel = line.split('  ', 1)
+                  assert hashlib.sha256(z.read(root + rel)).hexdigest() == digest, rel
+          meta = {
+              'archive': archive.name,
+              'sha256': hashlib.sha256(archive.read_bytes()).hexdigest(),
+              'bytes': archive.stat().st_size,
+              'files': len(names),
+              'packageManifestEntries': len(package['files']),
+              'shaManifestEntries': len(sums),
+              'crc': 'PASS',
+              'deterministicDoubleBuild': 'PASS',
+              'exclusionPolicy': 'PASS',
+              'root': root,
+          }
+          Path('artifacts/package-evidence.json').write_text(json.dumps(meta, indent=2) + '\n', encoding='utf-8')
+          print(json.dumps(meta, indent=2))
+          '@ | python -
+      - name: Stage handoff delivery
+        shell: pwsh
+        run: |
+          $version = (Get-Content -Raw VERSION).Trim()
+          Copy-Item docs/HANDOVER_PROMPT.txt "artifacts/Converty_${version}_HANDOVER_PROMPT.txt"
+          Copy-Item machine-readable/build_evidence.json "artifacts/Converty_${version}_build_evidence.json"
+          Copy-Item "artifacts/pkg-a/Converty_${version}_full_workspace.zip" "artifacts/Converty_${version}_full_workspace.zip"
+      - name: Upload verified delivery candidate
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: converty-verified-delivery-${{ github.sha }}
+          path: |
+            artifacts/Converty_*_full_workspace.zip
+            artifacts/Converty_*_HANDOVER_PROMPT.txt
+            artifacts/Converty_*_build_evidence.json
+            artifacts/package-evidence.json
+          if-no-files-found: error
+          retention-days: 7
+          compression-level: 0
