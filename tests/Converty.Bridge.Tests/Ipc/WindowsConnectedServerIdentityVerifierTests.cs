@@ -67,6 +67,23 @@ public sealed class WindowsConnectedServerIdentityVerifierTests
         Assert.Equal(2, probe.CaptureCount);
     }
 
+    [Fact]
+    public void ProbeFailureFailsClosedAsServerIdentityError()
+    {
+        var failure = new IOException("native identity query failed");
+        var verifier = new WindowsConnectedServerIdentityVerifier(
+            ExpectedPath,
+            ExpectedFamily,
+            new ThrowingProbe(failure));
+        using var pipe = new NamedPipeClientStream("unused");
+
+        BridgeServerIdentityException error = Assert.Throws<BridgeServerIdentityException>(
+            () => verifier.VerifyConnectedServer(pipe));
+
+        Assert.Same(failure, error.InnerException);
+        Assert.Contains("identity", error.Message, StringComparison.OrdinalIgnoreCase);
+    }
+
     private sealed class FakeProbe(ConnectedServerIdentitySnapshot snapshot) : IConnectedServerIdentityProbe
     {
         public ConnectedServerIdentitySnapshot Snapshot { get; } = snapshot;
@@ -77,5 +94,10 @@ public sealed class WindowsConnectedServerIdentityVerifierTests
             CaptureCount++;
             return Snapshot;
         }
+    }
+
+    private sealed class ThrowingProbe(Exception error) : IConnectedServerIdentityProbe
+    {
+        public ConnectedServerIdentitySnapshot Capture(NamedPipeClientStream pipe) => throw error;
     }
 }
