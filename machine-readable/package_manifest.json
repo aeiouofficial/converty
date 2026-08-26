@@ -280,8 +280,8 @@
     },
     {
       "path": "machine-readable/build_evidence.json",
-      "bytes": 3224,
-      "sha256": "c5b4648d4ac8ddb58636fd3585fa07d3ce087361bbf65a7371583b1621244d76"
+      "bytes": 4887,
+      "sha256": "174a577c2724657786ea14be467ba0d042c07595e72599fed60590f8d6891f03"
     },
     {
       "path": "machine-readable/ci_action_pins.json",
