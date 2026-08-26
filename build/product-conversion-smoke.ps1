@@ -68,9 +68,39 @@ finally {
 [System.IO.File]::WriteAllBytes($existingOutput, [byte[]](1, 2, 3, 4))
 $existingHash = (Get-FileHash -LiteralPath $existingOutput -Algorithm SHA256).Hash
 
-& $bridge '--preset' 'audio.mp3' '--' $input
-if ($LASTEXITCODE -ne 0) {
-    throw "Converty.Bridge.exe product smoke failed with exit code $LASTEXITCODE."
+# Bridge is a Windows GUI-subsystem executable (WinExe), so a shell invocation
+# does not reliably block or populate $LASTEXITCODE. Start it explicitly, keep
+# every argument structured, and wait for the exact process with a finite bound.
+$bridgeStartInfo = [System.Diagnostics.ProcessStartInfo]::new()
+$bridgeStartInfo.FileName = $bridge
+$bridgeStartInfo.UseShellExecute = $false
+$bridgeStartInfo.CreateNoWindow = $true
+$bridgeStartInfo.WorkingDirectory = $layout
+$bridgeStartInfo.ArgumentList.Add('--preset')
+$bridgeStartInfo.ArgumentList.Add('audio.mp3')
+$bridgeStartInfo.ArgumentList.Add('--')
+$bridgeStartInfo.ArgumentList.Add($input)
+
+$bridgeProcess = [System.Diagnostics.Process]::Start($bridgeStartInfo)
+if ($null -eq $bridgeProcess) {
+    throw 'Converty.Bridge.exe product smoke could not start the Bridge process.'
+}
+try {
+    if (-not $bridgeProcess.WaitForExit(30000)) {
+        try {
+            $bridgeProcess.Kill($true)
+        }
+        catch [System.InvalidOperationException] {
+        }
+        throw 'Converty.Bridge.exe product smoke exceeded the 30-second process deadline.'
+    }
+    $bridgeExitCode = $bridgeProcess.ExitCode
+}
+finally {
+    $bridgeProcess.Dispose()
+}
+if ($bridgeExitCode -ne 0) {
+    throw "Converty.Bridge.exe product smoke failed with exit code $bridgeExitCode."
 }
 
 if (-not (Test-Path -LiteralPath $input)) {
@@ -92,8 +122,9 @@ if ($partialOutputs.Count -ne 0) {
 }
 
 $probeJson = (& $ffprobe -v error -select_streams 'a:0' -show_entries 'stream=codec_name,bit_rate' -of json $expectedOutput | Out-String)
-if ($LASTEXITCODE -ne 0) {
-    throw 'ffprobe could not inspect the product smoke output.'
+$ffprobeExitCode = $LASTEXITCODE
+if ($ffprobeExitCode -ne 0) {
+    throw "ffprobe could not inspect the product smoke output (exit code $ffprobeExitCode)."
 }
 $probe = $probeJson | ConvertFrom-Json
 $streams = @($probe.streams)
