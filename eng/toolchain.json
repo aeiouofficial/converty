@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "workspaceVersion": "0.1.0-dev.7",
+  "workspaceVersion": "0.1.0-dev.8",
   "targetOs": "Windows 11",
   "dotnetSdk": "10.0.400",
   "targetFramework": "net10.0",
@@ -9,11 +9,11 @@
   "nativeBuild": "CMake + MSVC",
   "architecture": "x64-first",
   "notes": [
-    "The dev.7 B2 journal/runtime qualification ran on GitHub Actions Windows Server 2025 with .NET SDK 10.0.400.",
+    "The dev.8 B2 Bridge startup qualification ran on GitHub Actions Windows Server 2025 with .NET SDK 10.0.400.",
     "All 15 managed projects restore from committed lock files; restored-graph NuGet vulnerability audit reports zero vulnerable-result packages.",
-    "The qualified Release build completed with zero warnings and zero errors; Microsoft Testing Platform executed 120 tests with 120 successes.",
-    "B2 now includes persistent bounded atomic Host journal/recovery, journal-backed queue mutation ordering, a per-user Host runtime loop, and a no-console Converty.Host WinExe entrypoint in addition to dev.6 hardened IPC.",
-    "Bridge Host startup/retry and trusted Host server-auth/anti-squatting acceptance remain open; native topology smoke is topology-only and the production Explorer target begins in B3."
+    "The qualified Release build completed with zero warnings and zero errors; Microsoft Testing Platform executed 129 tests with 129 successes.",
+    "B2 now includes fixed installed Converty.Host.exe startup with no shell or caller argument surface plus a one-launch bounded retry coordinator that reacts only to connect-stage Host unavailability.",
+    "Connected-server identity / anti-squatting evidence and the final status/cancel wire decision remain open; native topology smoke is topology-only and B3 stays blocked."
   ],
   "testRunner": "Microsoft.Testing.Platform",
   "xunitMtpV2": "4.0.0"

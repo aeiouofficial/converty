@@ -1,11 +1,11 @@
 {
   "schemaVersion": 1,
   "project": "Converty",
-  "workspaceVersion": "0.1.0-dev.7",
+  "workspaceVersion": "0.1.0-dev.8",
   "baselineDate": "2026-08-25",
   "implementationStatus": "B0_B1_QUALIFIED_B2_ADVANCED_PARTIAL",
   "batchesTouched": ["B0", "B1", "B2"],
-  "nextWorkspaceVersion": "0.1.0-dev.8",
+  "nextWorkspaceVersion": "0.1.0-dev.9",
   "nextBatch": "B2",
   "targetOs": "Windows 11 x64",
   "toolchain": {
@@ -17,10 +17,10 @@
     "native": "C++20 / CMake 3.28+ / MSVC for production shell"
   },
   "qualifiedEvidence": {
-    "workflowRunId": 32885833243,
-    "managedJobId": 97925935937,
-    "headSha": "221a6bcd7e9a2238ded79a65d9cbabbca0b7079c",
-    "managedTests": "120/120 PASS",
+    "workflowRunId": 32905137143,
+    "managedJobId": 97987440961,
+    "headSha": "4819ad944b04175a3af6acd2ea26e59c6fce2609",
+    "managedTests": "129/129 PASS",
     "releaseBuild": "PASS; 0 warnings; 0 errors",
     "dependencyAudit": "PASS; 0 vulnerable-result packages",
     "lockedProjects": "15/15",
@@ -30,13 +30,12 @@
     "Qualified B0/B1 contracts/core/serialization/fake-provider foundation",
     "Converty.Ipc v1 fixed bounded framing with checked exact reads",
     "Converty.Security protected current-user pipe DACL, SID-qualified endpoint, and connected-client SID validation",
-    "Converty.Host bounded queue/admission/status/cancellation and ACL-backed pipe server",
-    "Persistent strict bounded Host journal with disk-flushed same-directory atomic publication and crash recovery",
-    "Journal-backed queue restores before IPC and persists enqueue/cancel before publishing memory mutations",
-    "Per-user Host single-instance lease wired into bounded Host runtime server loop",
-    "Converty.Host WinExe entrypoint using LocalAppData Converty state journal",
-    "Converty.Bridge bounded same-user request client with strict acknowledgement parsing",
-    "Seven-case checked-in IPC adversarial corpus plus dev.7 journal/runtime tests and static boundary gate",
+    "Converty.Host bounded queue/admission/status/cancellation, persistent atomic journal/recovery, per-user single-instance WinExe runtime, and ACL-backed pipe server",
+    "Converty.Bridge strict bounded request client with connect-stage Host-unavailable classification",
+    "TrustedHostPath deriving only Converty.Host.exe from an absolute existing non-reparse installation directory",
+    "InstalledHostProcessLauncher using no shell, no caller arguments, hidden/no-console startup, and fixed trusted working directory",
+    "BridgeSubmissionCoordinator using exactly one Host launch attempt and a bounded retry deadline only after connect-stage Host unavailability",
+    "Static gates confining Process.Start to the single approved Bridge startup launcher while preserving Host/media/network bans",
     "Fifteen committed NuGet lock files with locked restore and restored-graph vulnerability auditing"
   ],
   "b2Completed": [
@@ -47,22 +46,24 @@
     "Persistent crash-safe bounded atomic journal and recovery",
     "Queued status/cancellation in Host queue",
     "Per-user Host single-instance runtime loop and no-console executable entrypoint",
+    "Trusted fixed installed Host startup with no arbitrary executable/argument surface",
+    "One-launch bounded Bridge Host startup/retry behavior reacting only to connect-stage unavailability",
     "Managed IPC adversarial corpus"
   ],
   "b2Partial": [
-    "Bridge bounded client exists; trusted Host startup/retry process behavior remains",
-    "Server-auth/pipe-squatting and selected-packaging signature/session policy still require acceptance evidence",
-    "Status/cancel exist in Host queue but dedicated wire operations are not yet exposed"
+    "Bridge-to-Host connected-server identity / anti-squatting acceptance remains open under the selected package/signing authority",
+    "Status/cancel exist in Host queue but dedicated wire operations are not yet exposed or explicitly waived",
+    "Final replay/disconnect/session-confusion acceptance matrix remains open"
   ],
   "nextActions": [
-    "Implement Bridge trusted Host startup/retry/fast-failure behavior with finite timeout and installed-path/signature policy",
-    "Close B2 pipe-squatting/server-auth/session acceptance under the selected packaging model",
-    "Decide and test whether status/cancel require dedicated IPC operations before declaring B2 closed",
-    "Do not start B3 until remaining B2 acceptance gaps are explicitly closed or scoped by authority",
+    "Implement and qualify connected-server identity verification before Bridge trusts a session, aligned to the actual installer/signing/package model",
+    "Decide and test whether status/cancel require dedicated IPC wire operations",
+    "Extend replay/disconnect/reconnect/session adversarial coverage and close the final B2 matrix",
+    "Do not start B3 until B2 is explicitly closed with executable evidence",
     "Do not begin FFmpeg/WIC execution before B4 containment is qualified"
   ],
   "openInvestigations": [
-    "Bridge-to-Host signed-peer/anti-squatting validation under selected packaging model",
+    "Bridge-to-Host server identity and anti-squatting validation under selected packaging/signing model",
     "production sandbox mechanism compatibility per engine",
     "safe path/reparse/commit mechanics across supported filesystem classes",
     "full MSIX vs sparse package",
@@ -75,8 +76,8 @@
     "docs/TEST_AND_RELEASE_GATES.md",
     "docs/TASK_BACKLOG.md",
     "docs/development/IMPLEMENTATION_STATUS.md",
-    "docs/superpowers/plans/2026-08-25-b2-host-bridge-ipc.md",
-    "docs/superpowers/plans/2026-08-25-b2-dev7-journal-runtime.md",
+    "docs/security/B2_SERVER_AUTH_GATE.md",
+    "docs/superpowers/plans/2026-08-25-b2-dev8-bridge-startup.md",
     "machine-readable/build_evidence.json",
     "machine-readable/release_policy.json"
   ]

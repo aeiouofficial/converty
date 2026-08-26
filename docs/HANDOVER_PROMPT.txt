@@ -4,7 +4,7 @@ Continue development directly in the GitHub repository:
 
 `https://github.com/aeiouofficial/converty`
 
-The current delivered authority is `Converty 0.1.0-dev.7`. If I also provide `Converty_0.1.0-dev.7_full_workspace.zip`, treat the repository plus that verified package as the same tranche authority.
+The current delivered authority is `Converty 0.1.0-dev.8`. If I also provide `Converty_0.1.0-dev.8_full_workspace.zip`, treat the repository plus that verified package as the same tranche authority.
 
 Read these first, in order:
 1. `docs/HANDOVER_NEXT_AGENT.md`
@@ -15,24 +15,24 @@ Read these first, in order:
 6. `docs/Converty_Master_Build_Plan.md`
 7. `docs/SECURITY_THREAT_MODEL.md`
 8. `docs/TEST_AND_RELEASE_GATES.md`
-9. `docs/supply-chain/SBOM_POLICY.md`
-10. `docs/supply-chain/RELEASE_SIGNING_POLICY.md`
-11. `docs/superpowers/plans/2026-08-25-b2-host-bridge-ipc.md`
-12. `docs/superpowers/plans/2026-08-25-b2-dev7-journal-runtime.md`
+9. `docs/security/B2_SERVER_AUTH_GATE.md`
+10. `docs/supply-chain/SBOM_POLICY.md`
+11. `docs/supply-chain/RELEASE_SIGNING_POLICY.md`
+12. `docs/superpowers/plans/2026-08-25-b2-dev8-bridge-startup.md`
 
-Continue immediately from the evidence-backed state; do not restart the architecture or ask me to re-specify locked decisions. The next delivered workspace must be `0.1.0-dev.8` and again be a complete full-workspace ZIP with synchronized handover/evidence/checksums and a new copy-paste continuation prompt.
+Continue immediately from the evidence-backed state; do not restart the architecture or ask me to re-specify locked decisions. The next delivered workspace must be `0.1.0-dev.9`, remain inside B2, and again end with a complete verified full-workspace ZIP plus synchronized handover/evidence/checksums and a new copy-paste continuation prompt.
 
-Dev.7 extends the qualified B2 implementation with a persistent strict bounded Host job journal and a real Host WinExe lifetime/server loop. The journal is schema-v1, capped at 4096 entries / 8 MiB, rejects unknown/duplicate members and duplicate IDs, publishes through a same-directory temporary file with write-through and disk flush before atomic replacement, removes orphan temp files, converts interrupted in-flight states to `Failed` on recovery, and is integrated so queue mutations persist before in-memory publication. The Host runtime acquires the per-user single-instance lease, restores journal state before IPC admission, then runs bounded ACL-backed pipe sessions. The dev.7 Windows behavior gate uses .NET SDK 10.0.400 and records 15/15 locked projects, 0 vulnerable-result packages, a zero-warning/zero-error Release build, 120/120 managed tests, and native topology smoke PASS.
+Dev.8 adds the trusted Bridge-to-Host activation tranche. `TrustedHostPath` derives only fixed `Converty.Host.exe` from an absolute existing non-reparse installation directory. `InstalledHostProcessLauncher` is the only approved Bridge process-start site and uses no shell, no caller-provided executable/arguments, hidden/no-console startup, and the trusted install directory. `BridgeSubmissionCoordinator` first tries the existing Host, launches at most once only after connect-stage unavailability, retries within a maximum 30-second startup deadline with delay capped at one second, propagates protocol/application failures without launch, and honors cancellation. The behavior qualification recorded in `machine-readable/build_evidence.json` reached 15/15 locked restore, zero vulnerable-result packages, zero-warning/zero-error Release build, 129/129 managed tests, contract/static gates at the behavior head, and native topology smoke.
 
-B2 is NOT fully closed. Keep B3 blocked and continue B2 test-first. Priority order for dev.8:
-1. Bridge trusted Host startup/retry/fast-failure behavior with finite deadlines and a trusted installed executable identity/path abstraction; never accept arbitrary executable command text or pass-through arguments from IPC/presets.
-2. Server-auth / pipe-squatting resistance appropriate to the selected packaging/signing model, beyond the existing same-user client SID validation.
-3. Decide and test whether status/cancel need dedicated final wire operations.
-4. Extend adversarial integration coverage for restart, replay, disconnect, timeout stages, endpoint squatting/session confusion, and recovery.
-5. Close B2 only when the remaining acceptance matrix is backed by executable evidence. Do not begin B3 before that closure.
+B2 is NOT fully closed. Keep B3 blocked and continue B2 test-first. Priority order for dev.9:
+1. Implement reciprocal connected-server identity verification before Bridge writes any application request frame. Bind it to the actual Windows installer/signing/package authority; do not invent a shared secret. Fixed path, pipe name, and same-user ownership alone are not sufficient authentication.
+2. Revalidate server identity for every new pipe session and fail closed for a wrong, unverifiable, raced, or squatted server. Production signing claims require real signed artifacts and signer/timestamp evidence; unsigned CI binaries must never be mislabeled as signed-server evidence.
+3. Decide and test whether status/cancel become explicit bounded versioned IPC operations. Continue rejecting unknown operation types, duplicate JSON members, future versions, malformed GUIDs, oversized payloads, and executable-text fields.
+4. Expand executable B2 adversarial coverage for Host restart during queued work, orphan/corrupt journal cases, replay after restart, duplicate RequestId, disconnect before completion/acknowledgement, partial frame/header, oversized declared frame, connect/read/write timeouts, unauthorized SID, fake/squatted server, Host launch failure, second Host instance, and queue/journal failure with no partial in-memory mutation.
+5. Close B2 only when the full process-start/server-auth/replay/restart acceptance matrix is executable and green. Only then may a later tranche begin B3 native Explorer `IExplorerCommand` integration.
 
-Preserve non-negotiable boundaries: Explorer trigger only; Host never parses untrusted media or loads codec/plugin code; probing/conversion belongs to disposable restricted workers; ordinary local conversion has no network requirement; presets/IPC never carry executable commands/pass-through argument vectors; provider options are whitelisted/typed; strict isolation never silently downgrades; workers later write only private staging; Host later validates then atomically commits; numbered-copy remains safe default; unknown JSON versions/members/duplicates fail closed; release dependency versions are never fabricated; signing private keys never enter the repository/workspace.
+Preserve non-negotiable boundaries: Explorer trigger only; Host never parses untrusted media or loads codec/plugin code; probing/conversion belongs to disposable restricted workers; ordinary local conversion has no network requirement; IPC uses same-user ACL plus peer validation and bounded/versioned framing; presets/IPC never carry executable commands or pass-through argument vectors; provider options are typed/whitelisted; strict isolation never silently downgrades; workers later write only private staging; Host later validates then atomically commits; numbered-copy remains the safe default; signing private keys never enter the repository/workspace.
 
-Do not implement FFmpeg/WIC/media-provider execution before B4 containment is qualified. Do not weaken the existing B2 tests, DACL, peer validation, frame bounds, journal limits, queue limits, or strict JSON behavior to make runtime wiring easier.
+Do not implement FFmpeg/WIC/media-provider execution before B4 containment is qualified. Do not weaken existing DACL, peer validation, frame bounds, queue/journal limits, strict JSON, startup limits, or process-start confinement to make the remaining work easier.
 
-Report only gates actually executed. At tranche end update VERSION/README/CHANGELOG/backlog/status/handover/machine-readable evidence consistently, regenerate source/release SBOM, package_manifest.json and SHA256SUMS.txt, verify the ZIP by reopening it and checking CRC/embedded hashes, update the GitHub repo, and give me a direct download link for `Converty_0.1.0-dev.8_full_workspace.zip` plus the next handover prompt to paste back.
+Report only gates actually executed. At tranche end synchronize VERSION/README/CHANGELOG/backlog/status/handover/machine-readable evidence, regenerate source/release SBOM plus `machine-readable/package_manifest.json` and `SHA256SUMS.txt`, require zero generated diff on the qualified exact head, build the workspace ZIP twice deterministically, reopen it and verify CRC/embedded hashes/exclusions, update GitHub, and provide the verified `Converty_0.1.0-dev.9_full_workspace.zip` plus the next handover prompt.

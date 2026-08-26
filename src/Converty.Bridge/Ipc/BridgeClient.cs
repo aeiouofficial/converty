@@ -13,7 +13,7 @@ using Converty.Serialization;
 namespace Converty.Bridge.Ipc;
 
 [SupportedOSPlatform("windows")]
-public sealed class BridgeClient
+public sealed class BridgeClient : IBridgeRequestClient
 {
     public static readonly TimeSpan MaximumConnectTimeout = TimeSpan.FromSeconds(30);
 
@@ -68,7 +68,18 @@ public sealed class BridgeClient
             PipeOptions.Asynchronous,
             TokenImpersonationLevel.Impersonation);
 
-        await pipe.ConnectAsync(_connectTimeout, cancellationToken);
+        try
+        {
+            await pipe.ConnectAsync(_connectTimeout, cancellationToken);
+        }
+        catch (TimeoutException error)
+        {
+            throw new BridgeHostUnavailableException("Converty Host did not accept the pipe connection before the connect timeout.", error);
+        }
+        catch (IOException error)
+        {
+            throw new BridgeHostUnavailableException("Converty Host pipe connection is unavailable.", error);
+        }
 
         byte[] payload = Encoding.UTF8.GetBytes(ContractJson.Serialize(request));
         await ProtocolFrameCodec.WriteAsync(pipe, payload, cancellationToken);

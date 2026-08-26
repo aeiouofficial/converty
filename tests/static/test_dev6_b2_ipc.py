@@ -73,21 +73,28 @@ def test_host_single_instance_queue_and_fuzz_corpus_are_present() -> None:
     assert "IpcFuzzCorpusTests" in text("tests/Converty.Host.Tests/Ipc/IpcFuzzCorpusTests.cs")
 
 
-def test_b2_host_and_bridge_do_not_execute_media_or_processes() -> None:
-    forbidden = (
-        "Process.Start",
-        "System.Diagnostics.Process",
-        "ffmpeg",
-        "ffprobe",
-        "cmd.exe",
-        "powershell.exe",
-    )
-    roots = (ROOT / "src/Converty.Host", ROOT / "src/Converty.Bridge")
-    for root in roots:
+def test_b2_host_and_bridge_do_not_execute_media_or_unapproved_processes() -> None:
+    media_forbidden = ("ffmpeg", "ffprobe", "cmd.exe", "powershell.exe")
+    for root in (ROOT / "src/Converty.Host", ROOT / "src/Converty.Bridge"):
         for path in root.rglob("*.cs"):
             source = path.read_text(encoding="utf-8").lower()
-            for token in forbidden:
-                assert token.lower() not in source, f"{token} found in {path.relative_to(ROOT)}"
+            for token in media_forbidden:
+                assert token not in source, f"{token} found in {path.relative_to(ROOT)}"
+
+    process_forbidden = ("process.start", "system.diagnostics.process", "processstartinfo")
+    for path in (ROOT / "src/Converty.Host").rglob("*.cs"):
+        source = path.read_text(encoding="utf-8").lower()
+        for token in process_forbidden:
+            assert token not in source, f"{token} found in {path.relative_to(ROOT)}"
+
+    bridge_root = ROOT / "src/Converty.Bridge"
+    startup_root = bridge_root / "Startup"
+    for path in bridge_root.rglob("*.cs"):
+        if startup_root in path.parents:
+            continue
+        source = path.read_text(encoding="utf-8").lower()
+        for token in process_forbidden:
+            assert token not in source, f"{token} found outside approved startup boundary in {path.relative_to(ROOT)}"
 
 
 def test_all_managed_projects_are_locked_and_handover_advances_one_tranche() -> None:
