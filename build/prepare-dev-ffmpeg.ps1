@@ -7,7 +7,8 @@ $pinPath = Join-Path $root 'eng/ffmpeg-development.json'
 $workRoot = Join-Path $root 'artifacts/dev-ffmpeg'
 $archivePath = Join-Path $workRoot 'ffmpeg.zip'
 $extractRoot = Join-Path $workRoot 'expanded'
-$outputPath = Join-Path $workRoot 'ffmpeg.exe'
+$ffmpegOutputPath = Join-Path $workRoot 'ffmpeg.exe'
+$ffprobeOutputPath = Join-Path $workRoot 'ffprobe.exe'
 
 if (-not $IsWindows) {
     throw 'The pinned development FFmpeg payload is Windows-only.'
@@ -20,7 +21,9 @@ $pin = Get-Content -Raw $pinPath | ConvertFrom-Json
 if ($pin.purpose -ne 'development-qualification-only') {
     throw 'Development FFmpeg pin has an unexpected purpose.'
 }
-if (-not $pin.archiveUrl -or -not $pin.archiveSha256 -or $pin.expectedExecutableName -ne 'ffmpeg.exe') {
+if (-not $pin.archiveUrl -or -not $pin.archiveSha256 -or
+    $pin.expectedExecutableName -ne 'ffmpeg.exe' -or
+    $pin.expectedProbeExecutableName -ne 'ffprobe.exe') {
     throw 'Development FFmpeg pin is incomplete.'
 }
 
@@ -37,17 +40,28 @@ if ($actualHash -ne $expectedHash) {
 }
 
 Expand-Archive -LiteralPath $archivePath -DestinationPath $extractRoot -Force
-$matches = @(Get-ChildItem -Path $extractRoot -Recurse -Filter 'ffmpeg.exe' -File)
-if ($matches.Count -ne 1) {
-    throw "Expected exactly one ffmpeg.exe in the pinned archive; found $($matches.Count)."
+$ffmpegMatches = @(Get-ChildItem -Path $extractRoot -Recurse -Filter 'ffmpeg.exe' -File)
+$ffprobeMatches = @(Get-ChildItem -Path $extractRoot -Recurse -Filter 'ffprobe.exe' -File)
+if ($ffmpegMatches.Count -ne 1) {
+    throw "Expected exactly one ffmpeg.exe in the pinned archive; found $($ffmpegMatches.Count)."
+}
+if ($ffprobeMatches.Count -ne 1) {
+    throw "Expected exactly one ffprobe.exe in the pinned archive; found $($ffprobeMatches.Count)."
 }
 
-Copy-Item -LiteralPath $matches[0].FullName -Destination $outputPath -Force
-& $outputPath -hide_banner -version | Select-Object -First 1 | Write-Host
+Copy-Item -LiteralPath $ffmpegMatches[0].FullName -Destination $ffmpegOutputPath -Force
+Copy-Item -LiteralPath $ffprobeMatches[0].FullName -Destination $ffprobeOutputPath -Force
+
+& $ffmpegOutputPath -hide_banner -version | Select-Object -First 1 | Write-Host
 if ($LASTEXITCODE -ne 0) {
     throw 'Pinned development ffmpeg.exe did not execute successfully.'
 }
+& $ffprobeOutputPath -hide_banner -version | Select-Object -First 1 | Write-Host
+if ($LASTEXITCODE -ne 0) {
+    throw 'Pinned development ffprobe.exe did not execute successfully.'
+}
 
 Write-Host "Development FFmpeg archive SHA-256: $actualHash"
-Write-Host "Trusted development FFmpeg: $outputPath"
-Write-Host 'This payload is development qualification input only; it is not production redistribution approval.'
+Write-Host "Trusted development FFmpeg: $ffmpegOutputPath"
+Write-Host "Development probe verifier: $ffprobeOutputPath"
+Write-Host 'These payloads are development qualification input only; they are not production redistribution approval.'
