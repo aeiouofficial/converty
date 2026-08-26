@@ -9,7 +9,7 @@ import xml.etree.ElementTree as ET
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-CURRENT = "0.1.0-dev.7"
+CURRENT = (ROOT / "VERSION").read_text(encoding="utf-8").strip()
 
 REQUIRED_FILES = [
     "VERSION", "global.json", "Directory.Build.props", "Directory.Packages.props",
