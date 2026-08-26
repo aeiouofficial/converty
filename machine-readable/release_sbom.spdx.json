@@ -8,8 +8,8 @@
     ]
   },
   "dataLicense": "CC0-1.0",
-  "documentNamespace": "https://converty.invalid/spdx/release/0.1.0-dev.8/1378ceaad605343b5ca7f5230028edf9ae46ffa1d2569fcc5c69befefcc6b1a9",
-  "name": "Converty-release-0.1.0-dev.8",
+  "documentNamespace": "https://converty.invalid/spdx/release/0.1.0-dev.9/ebf5e53c23ad5dd3472716eaf345e873dc8a3c74f9ee12d1d75f46787036bd9d",
+  "name": "Converty-release-0.1.0-dev.9",
   "packages": [
     {
       "SPDXID": "SPDXRef-Project-Converty.Bridge",
@@ -20,7 +20,7 @@
       "licenseConcluded": "NOASSERTION",
       "licenseDeclared": "NOASSERTION",
       "name": "Converty.Bridge",
-      "versionInfo": "0.1.0-dev.8"
+      "versionInfo": "0.1.0-dev.9"
     },
     {
       "SPDXID": "SPDXRef-Project-Converty.Contracts",
@@ -31,7 +31,7 @@
       "licenseConcluded": "NOASSERTION",
       "licenseDeclared": "NOASSERTION",
       "name": "Converty.Contracts",
-      "versionInfo": "0.1.0-dev.8"
+      "versionInfo": "0.1.0-dev.9"
     },
     {
       "SPDXID": "SPDXRef-Project-Converty.Core",
@@ -42,7 +42,7 @@
       "licenseConcluded": "NOASSERTION",
       "licenseDeclared": "NOASSERTION",
       "name": "Converty.Core",
-      "versionInfo": "0.1.0-dev.8"
+      "versionInfo": "0.1.0-dev.9"
     },
     {
       "SPDXID": "SPDXRef-Project-Converty.FakeProviders",
@@ -53,7 +53,7 @@
       "licenseConcluded": "NOASSERTION",
       "licenseDeclared": "NOASSERTION",
       "name": "Converty.FakeProviders",
-      "versionInfo": "0.1.0-dev.8"
+      "versionInfo": "0.1.0-dev.9"
     },
     {
       "SPDXID": "SPDXRef-Project-Converty.Host",
@@ -64,7 +64,7 @@
       "licenseConcluded": "NOASSERTION",
       "licenseDeclared": "NOASSERTION",
       "name": "Converty.Host",
-      "versionInfo": "0.1.0-dev.8"
+      "versionInfo": "0.1.0-dev.9"
     },
     {
       "SPDXID": "SPDXRef-Project-Converty.Ipc",
@@ -75,7 +75,7 @@
       "licenseConcluded": "NOASSERTION",
       "licenseDeclared": "NOASSERTION",
       "name": "Converty.Ipc",
-      "versionInfo": "0.1.0-dev.8"
+      "versionInfo": "0.1.0-dev.9"
     },
     {
       "SPDXID": "SPDXRef-Project-Converty.Security",
@@ -86,7 +86,7 @@
       "licenseConcluded": "NOASSERTION",
       "licenseDeclared": "NOASSERTION",
       "name": "Converty.Security",
-      "versionInfo": "0.1.0-dev.8"
+      "versionInfo": "0.1.0-dev.9"
     },
     {
       "SPDXID": "SPDXRef-Project-Converty.Serialization",
@@ -97,7 +97,7 @@
       "licenseConcluded": "NOASSERTION",
       "licenseDeclared": "NOASSERTION",
       "name": "Converty.Serialization",
-      "versionInfo": "0.1.0-dev.8"
+      "versionInfo": "0.1.0-dev.9"
     },
     {
       "SPDXID": "SPDXRef-Project-Converty.Bridge.Tests",
@@ -108,7 +108,7 @@
       "licenseConcluded": "NOASSERTION",
       "licenseDeclared": "NOASSERTION",
       "name": "Converty.Bridge.Tests",
-      "versionInfo": "0.1.0-dev.8"
+      "versionInfo": "0.1.0-dev.9"
     },
     {
       "SPDXID": "SPDXRef-Project-Converty.Contracts.Tests",
@@ -119,7 +119,7 @@
       "licenseConcluded": "NOASSERTION",
       "licenseDeclared": "NOASSERTION",
       "name": "Converty.Contracts.Tests",
-      "versionInfo": "0.1.0-dev.8"
+      "versionInfo": "0.1.0-dev.9"
     },
     {
       "SPDXID": "SPDXRef-Project-Converty.Core.Tests",
@@ -130,7 +130,7 @@
       "licenseConcluded": "NOASSERTION",
       "licenseDeclared": "NOASSERTION",
       "name": "Converty.Core.Tests",
-      "versionInfo": "0.1.0-dev.8"
+      "versionInfo": "0.1.0-dev.9"
     },
     {
       "SPDXID": "SPDXRef-Project-Converty.Host.Tests",
@@ -141,7 +141,7 @@
       "licenseConcluded": "NOASSERTION",
       "licenseDeclared": "NOASSERTION",
       "name": "Converty.Host.Tests",
-      "versionInfo": "0.1.0-dev.8"
+      "versionInfo": "0.1.0-dev.9"
     },
     {
       "SPDXID": "SPDXRef-Project-Converty.Ipc.Tests",
@@ -152,7 +152,7 @@
       "licenseConcluded": "NOASSERTION",
       "licenseDeclared": "NOASSERTION",
       "name": "Converty.Ipc.Tests",
-      "versionInfo": "0.1.0-dev.8"
+      "versionInfo": "0.1.0-dev.9"
     },
     {
       "SPDXID": "SPDXRef-Project-Converty.Security.Tests",
@@ -163,7 +163,7 @@
       "licenseConcluded": "NOASSERTION",
       "licenseDeclared": "NOASSERTION",
       "name": "Converty.Security.Tests",
-      "versionInfo": "0.1.0-dev.8"
+      "versionInfo": "0.1.0-dev.9"
     },
     {
       "SPDXID": "SPDXRef-Project-Converty.Serialization.Tests",
@@ -174,7 +174,7 @@
       "licenseConcluded": "NOASSERTION",
       "licenseDeclared": "NOASSERTION",
       "name": "Converty.Serialization.Tests",
-      "versionInfo": "0.1.0-dev.8"
+      "versionInfo": "0.1.0-dev.9"
     },
     {
       "SPDXID": "SPDXRef-NuGet-Microsoft.ApplicationInsights-2.23.0",
