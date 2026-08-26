@@ -91,10 +91,9 @@ public sealed class BridgeClient : IBridgeRequestClient
         _serverIdentityVerifier.VerifyConnectedServer(pipe);
 
         byte[] payload = Encoding.UTF8.GetBytes(ContractJson.Serialize(request));
-        await ProtocolFrameCodec.WriteAsync(pipe, payload, cancellationToken);
-        await pipe.FlushAsync(cancellationToken);
+        await BoundedProtocolFrameIo.WriteAndFlushAsync(pipe, payload, _connectTimeout, cancellationToken);
 
-        ProtocolFrame response = await ProtocolFrameCodec.ReadAsync(pipe, cancellationToken);
+        ProtocolFrame response = await BoundedProtocolFrameIo.ReadAsync(pipe, _connectTimeout, cancellationToken);
         return ParseResponse(response.Payload);
     }
 
