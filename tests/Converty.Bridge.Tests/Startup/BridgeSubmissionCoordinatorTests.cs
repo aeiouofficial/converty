@@ -85,20 +85,20 @@ public sealed class BridgeSubmissionCoordinatorTests
     [Fact]
     public async Task CallerCancellationStopsStartupRetryPromptly()
     {
+        using var cancellation = CancellationTokenSource.CreateLinkedTokenSource(TestContext.Current.CancellationToken);
         var client = new AlwaysUnavailableClient();
-        var launcher = new CountingLauncher();
+        var launcher = new CountingLauncher(cancellation.Cancel);
         var coordinator = new BridgeSubmissionCoordinator(
             client,
             launcher,
             startupTimeout: TimeSpan.FromSeconds(2),
             retryDelay: TimeSpan.FromMilliseconds(50));
-        using var cancellation = CancellationTokenSource.CreateLinkedTokenSource(TestContext.Current.CancellationToken);
-        cancellation.CancelAfter(TimeSpan.FromMilliseconds(75));
 
         await Assert.ThrowsAnyAsync<OperationCanceledException>(
             () => coordinator.SubmitAsync(CreateRequest(), cancellation.Token));
 
         Assert.Equal(1, launcher.StartCount);
+        Assert.Equal(1, client.CallCount);
     }
 
     private static BridgeSubmissionCoordinator CreateCoordinator(IBridgeRequestClient client, IHostProcessLauncher launcher) =>
@@ -113,11 +113,15 @@ public sealed class BridgeSubmissionCoordinatorTests
             targetFormat: null,
             presetId: null);
 
-    private sealed class CountingLauncher : IHostProcessLauncher
+    private sealed class CountingLauncher(Action? onStart = null) : IHostProcessLauncher
     {
         public int StartCount { get; private set; }
 
-        public void StartHost() => StartCount++;
+        public void StartHost()
+        {
+            StartCount++;
+            onStart?.Invoke();
+        }
     }
 
     private sealed class SequenceClient(params object[] outcomes) : IBridgeRequestClient
