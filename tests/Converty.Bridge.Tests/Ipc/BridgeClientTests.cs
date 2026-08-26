@@ -16,7 +16,7 @@ namespace Converty.Bridge.Tests.Ipc;
 public sealed class BridgeClientTests
 {
     [Fact]
-    public async Task SubmitAsyncExchangesOneVersionedRequestAndResponseFrame()
+    public async Task SubmitAsyncVerifiesConnectedServerBeforeFirstApplicationFrame()
     {
         string pipeName = TestPipeName();
         Guid expectedJobId = Guid.NewGuid();
@@ -27,13 +27,14 @@ public sealed class BridgeClientTests
             maxNumberOfServerInstances: 1,
             PipeTransmissionMode.Byte,
             PipeOptions.Asynchronous);
+        var verifier = new RecordingVerifier();
 
         Task serverTask = ServeAcceptedResponseAsync(
             server,
             request.RequestId,
             expectedJobId,
             TestContext.Current.CancellationToken);
-        var client = new BridgeClient(pipeName, TimeSpan.FromSeconds(5));
+        var client = new BridgeClient(pipeName, TimeSpan.FromSeconds(5), verifier);
 
         BridgeSubmissionResult result = await client.SubmitAsync(request, TestContext.Current.CancellationToken);
         await serverTask;
@@ -41,6 +42,31 @@ public sealed class BridgeClientTests
         Assert.True(result.Accepted);
         Assert.Equal(expectedJobId, result.JobId);
         Assert.Null(result.Reason);
+        Assert.Equal(1, verifier.CallCount);
+        Assert.True(verifier.SawConnectedPipe);
+    }
+
+    [Fact]
+    public async Task IdentityRejectionWritesNoApplicationFrame()
+    {
+        string pipeName = TestPipeName();
+        ConversionRequest request = CreateRequest(Guid.NewGuid());
+        using var server = new NamedPipeServerStream(
+            pipeName,
+            PipeDirection.InOut,
+            maxNumberOfServerInstances: 1,
+            PipeTransmissionMode.Byte,
+            PipeOptions.Asynchronous);
+        var verifier = new RecordingVerifier(new BridgeServerIdentityException("fake server"));
+        var client = new BridgeClient(pipeName, TimeSpan.FromSeconds(5), verifier);
+
+        Task serverTask = AssertConnectionClosesWithoutPayloadAsync(server, TestContext.Current.CancellationToken);
+
+        await Assert.ThrowsAsync<BridgeServerIdentityException>(
+            () => client.SubmitAsync(request, TestContext.Current.CancellationToken));
+        await serverTask;
+
+        Assert.Equal(1, verifier.CallCount);
     }
 
     [Fact]
@@ -64,7 +90,7 @@ public sealed class BridgeClientTests
                 jobId = Guid.NewGuid().ToString("D"),
             }),
             TestContext.Current.CancellationToken);
-        var client = new BridgeClient(pipeName, TimeSpan.FromSeconds(5));
+        var client = new BridgeClient(pipeName, TimeSpan.FromSeconds(5), new RecordingVerifier());
 
         await Assert.ThrowsAsync<InvalidDataException>(async () =>
             await client.SubmitAsync(request, TestContext.Current.CancellationToken));
@@ -72,23 +98,26 @@ public sealed class BridgeClientTests
     }
 
     [Fact]
-    public async Task SubmitAsyncReportsConnectTimeoutAsHostUnavailable()
+    public async Task SubmitAsyncReportsConnectTimeoutAsHostUnavailableWithoutRunningIdentityVerifier()
     {
-        var client = new BridgeClient(TestPipeName(), TimeSpan.FromMilliseconds(100));
+        var verifier = new RecordingVerifier();
+        var client = new BridgeClient(TestPipeName(), TimeSpan.FromMilliseconds(100), verifier);
         ConversionRequest request = CreateRequest(Guid.NewGuid());
 
         BridgeHostUnavailableException error = await Assert.ThrowsAsync<BridgeHostUnavailableException>(async () =>
             await client.SubmitAsync(request, TestContext.Current.CancellationToken));
 
         Assert.IsType<TimeoutException>(error.InnerException);
+        Assert.Equal(0, verifier.CallCount);
     }
 
     [Fact]
     public void ForCurrentUserUsesSidQualifiedEndpoint()
     {
         SecurityIdentifier currentUser = CurrentUserSid();
+        var verifier = new RecordingVerifier();
 
-        BridgeClient client = BridgeClient.ForCurrentUser(TimeSpan.FromSeconds(5));
+        BridgeClient client = BridgeClient.ForCurrentUser(TimeSpan.FromSeconds(5), verifier);
 
         Assert.Equal(PipeEndpointName.ForUser(currentUser), client.PipeName);
     }
@@ -123,6 +152,16 @@ public sealed class BridgeClientTests
         await ProtocolFrameCodec.WriteAsync(server, response, cancellationToken);
     }
 
+    private static async Task AssertConnectionClosesWithoutPayloadAsync(
+        NamedPipeServerStream server,
+        CancellationToken cancellationToken)
+    {
+        await server.WaitForConnectionAsync(cancellationToken);
+        byte[] buffer = new byte[1];
+        int read = await server.ReadAsync(buffer, cancellationToken);
+        Assert.Equal(0, read);
+    }
+
     private static ConversionRequest CreateRequest(Guid requestId) =>
         new(
             SchemaVersions.Current,
@@ -137,4 +176,20 @@ public sealed class BridgeClientTests
         ?? throw new InvalidOperationException("Current Windows identity has no user SID.");
 
     private static string TestPipeName() => "converty.bridge.test." + Guid.NewGuid().ToString("N");
+
+    private sealed class RecordingVerifier(Exception? error = null) : IConnectedServerIdentityVerifier
+    {
+        public int CallCount { get; private set; }
+        public bool SawConnectedPipe { get; private set; }
+
+        public void VerifyConnectedServer(NamedPipeClientStream pipe)
+        {
+            CallCount++;
+            SawConnectedPipe |= pipe.IsConnected;
+            if (error is not null)
+            {
+                throw error;
+            }
+        }
+    }
 }
