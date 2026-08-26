@@ -78,10 +78,6 @@ def filesystem_entries(root: Path) -> list[tuple[PurePosixPath, bytes]]:
     return [(PurePosixPath(path.relative_to(root).as_posix()), path.read_bytes()) for path in files]
 
 
-def workspace_entries(root: Path) -> list[tuple[PurePosixPath, bytes]]:
-    return committed_entries(root) or filesystem_entries(root)
-
-
 def main() -> None:
     parser = argparse.ArgumentParser(description="Create a deterministic full-workspace Converty ZIP.")
     parser.add_argument("--source-root", type=Path, default=ROOT)
@@ -89,7 +85,12 @@ def main() -> None:
     args = parser.parse_args()
 
     source_root = args.source_root.resolve()
-    entries = workspace_entries(source_root)
+    entries = committed_entries(source_root)
+    source_mode = "git-head"
+    if entries is None:
+        entries = filesystem_entries(source_root)
+        source_mode = "filesystem"
+
     version_entry = next((data for relative, data in entries if relative.as_posix() == "VERSION"), None)
     if version_entry is None:
         raise SystemExit(f"VERSION is missing from workspace source: {source_root}")
@@ -115,7 +116,7 @@ def main() -> None:
         "sha256": file_sha256(archive),
         "bytes": archive.stat().st_size,
         "files": len(entries),
-        "source": "git-head" if committed_entries(source_root) is not None else "filesystem",
+        "source": source_mode,
     }
     print(json.dumps(result, indent=2))
 
