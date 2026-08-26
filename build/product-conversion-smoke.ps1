@@ -6,6 +6,7 @@ $root = Split-Path -Parent $PSScriptRoot
 $layout = Join-Path $root 'artifacts/dev-package-layout'
 $bridge = Join-Path $layout 'Converty.Bridge.exe'
 $ffmpeg = Join-Path $layout 'tools/ffmpeg/ffmpeg.exe'
+$ffprobe = Join-Path $root 'artifacts/dev-ffmpeg/ffprobe.exe'
 $smokeRoot = Join-Path $root 'artifacts/product-conversion-smoke'
 
 if (-not $IsWindows) {
@@ -16,6 +17,9 @@ if (-not (Test-Path $bridge)) {
 }
 if (-not (Test-Path $ffmpeg)) {
     throw 'Staged trusted ffmpeg.exe is missing.'
+}
+if (-not (Test-Path $ffprobe)) {
+    throw 'Pinned development ffprobe.exe is missing.'
 }
 
 if (Test-Path $smokeRoot) {
@@ -82,7 +86,29 @@ if ((Get-FileHash -Algorithm SHA256 $existingOutput).Hash -ne $existingHash) {
     throw 'Product smoke overwrote the pre-existing destination file.'
 }
 
+$partialOutputs = @(Get-ChildItem -LiteralPath $smokeRoot -File | Where-Object Name -Like '.converty-*.partial.*')
+if ($partialOutputs.Count -ne 0) {
+    throw "Transactional publish left $($partialOutputs.Count) temporary output file(s) behind."
+}
+
+$probeJson = (& $ffprobe -v error -select_streams 'a:0' -show_entries 'stream=codec_name,bit_rate' -of json $expectedOutput | Out-String)
+if ($LASTEXITCODE -ne 0) {
+    throw 'ffprobe could not inspect the product smoke output.'
+}
+$probe = $probeJson | ConvertFrom-Json
+$streams = @($probe.streams)
+if ($streams.Count -ne 1) {
+    throw "Expected exactly one audio stream in MP3 output; found $($streams.Count)."
+}
+if ([string]$streams[0].codec_name -ne 'mp3') {
+    throw "Expected MP3 codec; ffprobe reported '$($streams[0].codec_name)'."
+}
+if ([int64]$streams[0].bit_rate -ne 320000) {
+    throw "Expected 320000 bit/s MP3; ffprobe reported '$($streams[0].bit_rate)'."
+}
+
 Write-Host 'Product conversion smoke: PASS'
 Write-Host "Source preserved: $input"
 Write-Host "Existing destination preserved: $existingOutput"
 Write-Host "Converted output: $expectedOutput"
+Write-Host 'Verified codec/bitrate: mp3 / 320000 bit/s'
