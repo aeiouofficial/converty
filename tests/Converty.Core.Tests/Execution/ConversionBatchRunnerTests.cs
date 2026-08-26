@@ -36,6 +36,12 @@ public sealed class ConversionBatchRunnerTests
             Assert.Equal(Path.Combine(root, "a (1).mp3"), result.Files[0].OutputPath);
             Assert.Equal(Path.Combine(root, "b.mp3"), result.Files[1].OutputPath);
             Assert.Equal([first, second], launcher.Inputs);
+            Assert.All(launcher.Outputs, temporaryPath =>
+            {
+                Assert.StartsWith(".converty-", Path.GetFileName(temporaryPath), StringComparison.Ordinal);
+                Assert.EndsWith(".partial.mp3", temporaryPath, StringComparison.OrdinalIgnoreCase);
+                Assert.False(File.Exists(temporaryPath));
+            });
             Assert.True(File.Exists(first));
             Assert.True(File.Exists(second));
             Assert.Equal([9], File.ReadAllBytes(Path.Combine(root, "a.mp3")));
@@ -64,6 +70,7 @@ public sealed class ConversionBatchRunnerTests
                     TestContext.Current.CancellationToken));
 
             Assert.Empty(launcher.Inputs);
+            Assert.Empty(launcher.Outputs);
         }
         finally
         {
@@ -72,7 +79,7 @@ public sealed class ConversionBatchRunnerTests
     }
 
     [Fact]
-    public async Task RunAsyncDeletesPartialOutputWhenFfmpegFails()
+    public async Task RunAsyncDeletesOnlyOwnedTemporaryOutputWhenFfmpegFails()
     {
         string root = CreateTempDirectory();
         try
@@ -93,6 +100,42 @@ public sealed class ConversionBatchRunnerTests
             Assert.Equal(output, error.OutputPath);
             Assert.False(File.Exists(output));
             Assert.True(File.Exists(input));
+            string temporaryOutput = Assert.Single(launcher.Outputs);
+            Assert.NotEqual(output, temporaryOutput);
+            Assert.False(File.Exists(temporaryOutput));
+        }
+        finally
+        {
+            Directory.Delete(root, recursive: true);
+        }
+    }
+
+    [Fact]
+    public async Task RunAsyncPreservesCompetingDestinationAndPublishesNextNumberedCopy()
+    {
+        string root = CreateTempDirectory();
+        try
+        {
+            string input = Path.Combine(root, "voice.wav");
+            string competingOutput = Path.Combine(root, "voice.mp3");
+            string expectedOutput = Path.Combine(root, "voice (1).mp3");
+            File.WriteAllBytes(input, [1]);
+
+            var launcher = new RecordingLauncher(
+                exitCode: 0,
+                writeOutput: true,
+                afterWrite: (_, _) => File.WriteAllBytes(competingOutput, [42]));
+            var runner = CreateRunner(launcher);
+
+            ConversionBatchResult result = await runner.RunAsync(
+                PresetId.Parse("audio.mp3"),
+                [input],
+                TestContext.Current.CancellationToken);
+
+            Assert.Equal(expectedOutput, Assert.Single(result.Files).OutputPath);
+            Assert.Equal([42], File.ReadAllBytes(competingOutput));
+            Assert.Equal([7], File.ReadAllBytes(expectedOutput));
+            Assert.False(File.Exists(Assert.Single(launcher.Outputs)));
         }
         finally
         {
@@ -116,6 +159,8 @@ public sealed class ConversionBatchRunnerTests
                     PresetId.Parse("audio.mp3"),
                     [input],
                     TestContext.Current.CancellationToken));
+
+            Assert.False(File.Exists(Assert.Single(launcher.Outputs)));
         }
         finally
         {
@@ -138,9 +183,13 @@ public sealed class ConversionBatchRunnerTests
         return path;
     }
 
-    private sealed class RecordingLauncher(int exitCode, bool writeOutput) : IFfmpegProcessLauncher
+    private sealed class RecordingLauncher(
+        int exitCode,
+        bool writeOutput,
+        Action<string, string>? afterWrite = null) : IFfmpegProcessLauncher
     {
         public List<string> Inputs { get; } = [];
+        public List<string> Outputs { get; } = [];
 
         public Task<FfmpegExecutionResult> ExecuteAsync(
             string ffmpegPath,
@@ -152,11 +201,13 @@ public sealed class ConversionBatchRunnerTests
         {
             cancellationToken.ThrowIfCancellationRequested();
             Inputs.Add(inputPath);
+            Outputs.Add(outputPath);
             if (writeOutput)
             {
                 File.WriteAllBytes(outputPath, [7]);
             }
 
+            afterWrite?.Invoke(inputPath, outputPath);
             return Task.FromResult(new FfmpegExecutionResult(exitCode, exitCode == 0 ? string.Empty : "test failure"));
         }
     }
