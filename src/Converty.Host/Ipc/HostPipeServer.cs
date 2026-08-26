@@ -18,6 +18,7 @@ public enum HostPipeSessionResult
 public sealed class HostPipeServer : IHostPipeSessionRunner
 {
     private const int PipeBufferBytes = 64 * 1024;
+    private static readonly TimeSpan FrameIoTimeout = TimeSpan.FromSeconds(30);
 
     private readonly string _pipeName;
     private readonly SecurityIdentifier _expectedUser;
@@ -69,11 +70,15 @@ public sealed class HostPipeServer : IHostPipeSessionRunner
         ProtocolFrame request;
         try
         {
-            request = await ProtocolFrameCodec.ReadAsync(pipe, cancellationToken);
+            request = await BoundedProtocolFrameIo.ReadAsync(pipe, FrameIoTimeout, cancellationToken);
         }
         catch (ProtocolException)
         {
             return HostPipeSessionResult.InvalidFrame;
+        }
+        catch (TimeoutException)
+        {
+            return HostPipeSessionResult.TransportClosed;
         }
         catch (IOException)
         {
@@ -87,8 +92,11 @@ public sealed class HostPipeServer : IHostPipeSessionRunner
 
         try
         {
-            await ProtocolFrameCodec.WriteAsync(pipe, response, cancellationToken);
-            await pipe.FlushAsync(cancellationToken);
+            await BoundedProtocolFrameIo.WriteAndFlushAsync(pipe, response, FrameIoTimeout, cancellationToken);
+        }
+        catch (TimeoutException)
+        {
+            return HostPipeSessionResult.TransportClosed;
         }
         catch (IOException)
         {
