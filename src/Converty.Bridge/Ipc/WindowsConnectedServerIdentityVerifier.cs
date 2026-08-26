@@ -31,7 +31,25 @@ public sealed class WindowsConnectedServerIdentityVerifier : IConnectedServerIde
     public void VerifyConnectedServer(NamedPipeClientStream pipe)
     {
         ArgumentNullException.ThrowIfNull(pipe);
-        VerifySnapshot(_probe.Capture(pipe));
+
+        try
+        {
+            VerifySnapshot(_probe.Capture(pipe));
+        }
+        catch (BridgeServerIdentityException)
+        {
+            throw;
+        }
+        catch (Exception error) when (error is IOException
+                                      or UnauthorizedAccessException
+                                      or InvalidOperationException
+                                      or System.Security.SecurityException
+                                      or System.ComponentModel.Win32Exception)
+        {
+            throw new BridgeServerIdentityException(
+                "Unable to establish the connected Converty Host identity.",
+                error);
+        }
     }
 
     public void VerifySnapshot(ConnectedServerIdentitySnapshot snapshot)
