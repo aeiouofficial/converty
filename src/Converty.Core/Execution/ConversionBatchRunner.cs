@@ -7,6 +7,9 @@ namespace Converty.Core.Execution;
 
 public sealed class ConversionBatchRunner
 {
+    private const int MaximumPublishRaceRetries = 64;
+    private const int MaximumTemporaryNameAttempts = 16;
+
     private readonly ProductPresetRegistry _presets;
     private readonly OutputPathResolver _outputPaths;
     private readonly IFfmpegProcessLauncher _launcher;
@@ -67,47 +70,93 @@ public sealed class ConversionBatchRunner
             cancellationToken.ThrowIfCancellationRequested();
             ValidateInputPath(inputPath, preset);
 
-            string outputPath = _outputPaths.Resolve(inputPath, preset.OutputExtension);
-            FfmpegExecutionResult execution;
+            string plannedOutputPath = _outputPaths.Resolve(inputPath, preset.OutputExtension);
+            string temporaryOutputPath = CreateUniqueTemporaryOutputPath(inputPath, preset.OutputExtension);
             try
             {
-                execution = await _launcher.ExecuteAsync(
+                FfmpegExecutionResult execution = await _launcher.ExecuteAsync(
                     _ffmpegPath,
                     preset,
                     inputPath,
-                    outputPath,
+                    temporaryOutputPath,
                     _executionTimeout,
                     cancellationToken).ConfigureAwait(false);
-            }
-            catch
-            {
-                DeleteFailedOutput(outputPath);
-                throw;
-            }
 
-            if (!execution.Succeeded)
-            {
-                DeleteFailedOutput(outputPath);
-                string detail = string.IsNullOrWhiteSpace(execution.StandardError)
-                    ? "FFmpeg reported a conversion failure."
-                    : $"FFmpeg reported a conversion failure: {execution.StandardError}";
-                throw new ConversionFailedException(inputPath, outputPath, execution.ExitCode, detail);
-            }
+                if (!execution.Succeeded)
+                {
+                    string detail = string.IsNullOrWhiteSpace(execution.StandardError)
+                        ? "FFmpeg reported a conversion failure."
+                        : $"FFmpeg reported a conversion failure: {execution.StandardError}";
+                    throw new ConversionFailedException(inputPath, plannedOutputPath, execution.ExitCode, detail);
+                }
 
-            if (!File.Exists(outputPath) || new FileInfo(outputPath).Length == 0)
-            {
-                DeleteFailedOutput(outputPath);
-                throw new ConversionFailedException(
+                if (!File.Exists(temporaryOutputPath) || new FileInfo(temporaryOutputPath).Length == 0)
+                {
+                    throw new ConversionFailedException(
+                        inputPath,
+                        plannedOutputPath,
+                        execution.ExitCode,
+                        "FFmpeg exited successfully but did not produce a non-empty output file.");
+                }
+
+                string publishedOutputPath = PublishTemporaryOutput(
                     inputPath,
-                    outputPath,
-                    execution.ExitCode,
-                    "FFmpeg exited successfully but did not produce a non-empty output file.");
+                    preset.OutputExtension,
+                    temporaryOutputPath);
+                results.Add(new ConversionFileResult(inputPath, publishedOutputPath, execution.ExitCode));
             }
-
-            results.Add(new ConversionFileResult(inputPath, outputPath, execution.ExitCode));
+            finally
+            {
+                DeleteTemporaryOutput(temporaryOutputPath);
+            }
         }
 
         return new ConversionBatchResult(results.AsReadOnly());
+    }
+
+    private string PublishTemporaryOutput(
+        string inputPath,
+        string outputExtension,
+        string temporaryOutputPath)
+    {
+        for (int attempt = 0; attempt < MaximumPublishRaceRetries; ++attempt)
+        {
+            string outputPath = _outputPaths.Resolve(inputPath, outputExtension);
+            try
+            {
+                File.Move(temporaryOutputPath, outputPath, overwrite: false);
+                return outputPath;
+            }
+            catch (IOException) when (File.Exists(outputPath) || Directory.Exists(outputPath))
+            {
+                // Another writer won the destination race after resolution. Re-resolve to the
+                // next numbered copy; never remove or overwrite the competing destination.
+            }
+        }
+
+        throw new IOException(
+            $"Unable to publish converted output after {MaximumPublishRaceRetries} destination races.");
+    }
+
+    private static string CreateUniqueTemporaryOutputPath(string inputPath, string outputExtension)
+    {
+        string? directory = Path.GetDirectoryName(inputPath);
+        if (string.IsNullOrWhiteSpace(directory))
+        {
+            throw new ArgumentException("Input path must have a destination directory.", nameof(inputPath));
+        }
+
+        for (int attempt = 0; attempt < MaximumTemporaryNameAttempts; ++attempt)
+        {
+            string temporaryName = $".converty-{Guid.NewGuid():N}.partial{outputExtension}";
+            string temporaryPath = Path.Combine(directory, temporaryName);
+            if (!File.Exists(temporaryPath) && !Directory.Exists(temporaryPath))
+            {
+                return temporaryPath;
+            }
+        }
+
+        throw new IOException("Unable to allocate a unique temporary conversion output path.");
     }
 
     private static void ValidateInputPath(string inputPath, ProductPresetDefinition preset)
@@ -134,13 +183,13 @@ public sealed class ConversionBatchRunner
         }
     }
 
-    private static void DeleteFailedOutput(string outputPath)
+    private static void DeleteTemporaryOutput(string temporaryOutputPath)
     {
         try
         {
-            if (File.Exists(outputPath))
+            if (File.Exists(temporaryOutputPath))
             {
-                File.Delete(outputPath);
+                File.Delete(temporaryOutputPath);
             }
         }
         catch (IOException)
