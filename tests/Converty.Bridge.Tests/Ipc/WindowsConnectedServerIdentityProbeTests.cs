@@ -25,8 +25,9 @@ public sealed class WindowsConnectedServerIdentityProbeTests
             PipeOptions.Asynchronous,
             TokenImpersonationLevel.Impersonation);
 
-        Task accept = server.WaitForConnectionAsync();
-        await client.ConnectAsync(TimeSpan.FromSeconds(2));
+        CancellationToken cancellationToken = TestContext.Current.CancellationToken;
+        Task accept = server.WaitForConnectionAsync(cancellationToken);
+        await client.ConnectAsync(2_000, cancellationToken);
         await accept;
 
         var probe = new WindowsConnectedServerIdentityProbe();
