@@ -25,6 +25,13 @@ public static class BoundedProtocolFrameIo
         {
             throw new TimeoutException("IPC frame read exceeded the configured timeout.");
         }
+        catch (ProtocolException error) when (
+            error.ErrorCode == ProtocolErrorCode.TruncatedFrame
+            && timeoutCancellation.IsCancellationRequested
+            && !cancellationToken.IsCancellationRequested)
+        {
+            throw new TimeoutException("IPC frame read exceeded the configured timeout.", error);
+        }
     }
 
     public static async ValueTask WriteAndFlushAsync(
