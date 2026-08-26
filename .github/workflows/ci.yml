@@ -89,6 +89,11 @@ jobs:
       - name: Native Explorer smoke
         shell: pwsh
         run: ./build/native-smoke.ps1
+      - name: Validate Explorer development package
+        shell: pwsh
+        run: |
+          ./build/stage-dev-package.ps1 -Configuration Release
+          ./build/validate-dev-package.ps1
       - name: Test
         shell: pwsh
         run: ./build/test.ps1 -Configuration Release
