@@ -53,19 +53,14 @@
   "staticEvidence": {
     "dev7BoundaryGate": "tests/static/test_dev7_b2_journal_runtime.py",
     "contractVectors": "5/5 PASS on behavior workflow",
-    "repositoryVerifier": "PASS on behavior workflow before version freeze; final authority run required after generated-file promotion"
+    "repositoryVerifier": "PASS on behavior workflow before version freeze; final exact-head authority qualification pending"
   },
   "authorityClosure": {
-    "status": "PASS",
-    "note": "Final dev.7 authority regenerated and verified by the self-cleaning closure workflow.",
-    "workflowRunId": 32893693907,
-    "managed": "PASS_120_OF_120",
-    "staticGate": "PASS",
-    "releasePreflight": "PASS",
-    "sourceSbom": "PASS",
-    "releaseSbom": "PASS",
-    "hashManifest": "PASS_GENERATED",
-    "packageManifest": "PASS_GENERATED"
+    "status": "IN_PROGRESS",
+    "note": "The prior self-cleaning closure changed the final tree after authority generation. Permanent CI at ece2b65101f801579a47d1d34e340e1c4dfa8951 passed managed, dependency, build, test, native, action-pin, release-preflight, contract-vector and static gates but correctly failed the final generated-authority diff. Dev.7 closure is being rerun without a self-mutating workflow.",
+    "failedExactHeadSha": "ece2b65101f801579a47d1d34e340e1c4dfa8951",
+    "failedExactHeadWorkflowRunId": 32903864022,
+    "failureBoundary": "GENERATED_AUTHORITY_DIFF_ONLY"
   },
   "unverifiedClaimsExplicitlyForbidden": [
     "B2 is fully closed",
