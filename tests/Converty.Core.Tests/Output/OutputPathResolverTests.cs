@@ -23,6 +23,30 @@ public sealed class OutputPathResolverTests
     }
 
     [Fact]
+    public void ResolveTreatsDestinationDirectoryAsCollision()
+    {
+        string root = Path.Combine(Path.GetTempPath(), "converty-output-test-" + Guid.NewGuid().ToString("N"));
+        Directory.CreateDirectory(root);
+        try
+        {
+            string input = Path.Combine(root, "chapter.wav");
+            string collidingDirectory = Path.Combine(root, "chapter.mp3");
+            File.WriteAllBytes(input, [1]);
+            Directory.CreateDirectory(collidingDirectory);
+
+            var resolver = new OutputPathResolver();
+            string result = resolver.Resolve(input, ".mp3");
+
+            Assert.Equal(Path.Combine(root, "chapter (1).mp3"), result);
+            Assert.True(Directory.Exists(collidingDirectory));
+        }
+        finally
+        {
+            Directory.Delete(root, recursive: true);
+        }
+    }
+
+    [Fact]
     public void ResolvePreservesUnicodeBasename()
     {
         var resolver = new OutputPathResolver(_ => false);
