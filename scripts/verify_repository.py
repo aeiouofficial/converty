@@ -16,12 +16,14 @@ REQUIRED_FILES = [
     "NuGet.Config", "Converty.slnx",
     "src/Converty.Contracts/Converty.Contracts.csproj",
     "src/Converty.Core/Converty.Core.csproj",
+    "src/Converty.EngineWorker/Converty.EngineWorker.csproj",
     "src/Converty.FakeProviders/Converty.FakeProviders.csproj",
     "src/Converty.Serialization/Converty.Serialization.csproj",
     "src/Converty.Ipc/Converty.Ipc.csproj",
     "src/Converty.Security/Converty.Security.csproj",
     "src/Converty.Host/Converty.Host.csproj",
     "src/Converty.Bridge/Converty.Bridge.csproj",
+    "providers/Converty.Provider.FFmpeg/Converty.Provider.FFmpeg.csproj",
     "src/Converty.Serialization/ContractJson.cs",
     "src/Converty.Host/Jobs/HostJobJournal.cs",
     "src/Converty.Host/Runtime/HostRuntime.cs",
@@ -71,13 +73,25 @@ REQUIRED_SOURCE_TOKENS = {
     "src/Converty.Host/Jobs/HostJobJournal.cs": ["MaximumJournalBytes", "FileOptions.WriteThrough", "Flush(flushToDisk: true)"],
     "src/Converty.Host/Runtime/HostRuntime.cs": ["HostSingleInstanceLease.TryAcquire", "HostJobQueue queue = _queueFactory()"],
     "src/Converty.Host/Program.cs": ["Environment.SpecialFolder.LocalApplicationData", "HostRuntime.CreateForCurrentUser"],
-    "src/Converty.Core/Execution/FfmpegProcessLauncher.cs": [
+    "src/Converty.EngineWorker/Program.cs": [
+        '"--preset"',
+        '"--input"',
+        '"--output"',
+        "ProductPresetRegistry.Default.GetRequired",
+    ],
+    "src/Converty.Security/Workers/WindowsWorkerProcessLauncher.cs": [
         "UseShellExecute = false",
         "ArgumentList.Add",
         "CreateNoWindow = true",
         "WaitForExitAsync",
     ],
-    "src/Converty.Core/Execution/TrustedFfmpegPath.cs": [
+    "providers/Converty.Provider.FFmpeg/FfmpegProcessLauncher.cs": [
+        "UseShellExecute = false",
+        "ArgumentList.Add",
+        "CreateNoWindow = true",
+        "WaitForExitAsync",
+    ],
+    "providers/Converty.Provider.FFmpeg/TrustedFfmpegPath.cs": [
         'ExecutableFileName = "ffmpeg.exe"',
         'Path.Combine(root, "tools", "ffmpeg")',
     ],
@@ -94,18 +108,19 @@ FORBIDDEN_B2_MEDIA_TOKENS = [
 
 FORBIDDEN_B2_PROCESS_TOKENS = ["Process.Start(", "ProcessStartInfo", "System.Diagnostics.Process"]
 
-ALLOWED_CORE_EXECUTION_PROCESS_FILES = {
-    "src/Converty.Core/Execution/FfmpegProcessLauncher.cs",
-}
+ALLOWED_CORE_EXECUTION_PROCESS_FILES: set[str] = set()
 
 ALLOWED_CORE_FFMPEG_FILES = {
-    "src/Converty.Core/Execution/ConversionBatchRunner.cs",
-    "src/Converty.Core/Execution/FfmpegExecutionResult.cs",
-    "src/Converty.Core/Execution/FfmpegProcessLauncher.cs",
-    "src/Converty.Core/Execution/IFfmpegProcessLauncher.cs",
-    "src/Converty.Core/Execution/TrustedFfmpegPath.cs",
     "src/Converty.Core/Presets/ProductPresetDefinition.cs",
     "src/Converty.Core/Presets/ProductPresetRegistry.cs",
+}
+
+ALLOWED_SECURITY_PROCESS_FILES = {
+    "src/Converty.Security/Workers/WindowsWorkerProcessLauncher.cs",
+}
+
+ALLOWED_PROVIDER_PROCESS_FILES = {
+    "providers/Converty.Provider.FFmpeg/FfmpegProcessLauncher.cs",
 }
 
 
@@ -245,14 +260,38 @@ def main() -> int:
         source = path.read_text(encoding="utf-8", errors="replace")
         lower = source.lower()
         if rel not in ALLOWED_CORE_EXECUTION_PROCESS_FILES:
-            for token in ("Process.Start(", "ProcessStartInfo", "System.Diagnostics.Process"):
+            for token in FORBIDDEN_B2_PROCESS_TOKENS:
                 if token.lower() in lower:
-                    fail(f"process execution token {token!r} found outside dedicated product launcher in {rel}")
+                    fail(f"process execution token {token!r} found in Core file {rel}")
         if "ffmpeg" in lower and rel not in ALLOWED_CORE_FFMPEG_FILES:
-            fail(f"FFmpeg reference found outside approved product preset/execution boundary in {rel}")
+            fail(f"FFmpeg reference found outside approved Core preset boundary in {rel}")
         for token in ("cmd.exe", "powershell.exe", "HttpClient", "Socket", "DllImport", "LibraryImport"):
             if token.lower() in lower:
                 fail(f"forbidden shell/network/native token {token!r} found in Core file {rel}")
+
+    security_root = ROOT / "src/Converty.Security"
+    for path in security_root.rglob("*.cs"):
+        rel = path.relative_to(ROOT).as_posix()
+        source = path.read_text(encoding="utf-8", errors="replace").lower()
+        if rel not in ALLOWED_SECURITY_PROCESS_FILES:
+            for token in FORBIDDEN_B2_PROCESS_TOKENS:
+                if token.lower() in source:
+                    fail(f"process execution token {token!r} found outside worker launcher in {rel}")
+        for token in ("ffmpeg", "ffprobe", "cmd.exe", "powershell.exe", "HttpClient", "WebRequest"):
+            if token.lower() in source:
+                fail(f"worker process launcher boundary must remain engine/network neutral: {token!r} in {rel}")
+
+    provider_root = ROOT / "providers/Converty.Provider.FFmpeg"
+    for path in provider_root.rglob("*.cs"):
+        rel = path.relative_to(ROOT).as_posix()
+        source = path.read_text(encoding="utf-8", errors="replace").lower()
+        if rel not in ALLOWED_PROVIDER_PROCESS_FILES:
+            for token in FORBIDDEN_B2_PROCESS_TOKENS:
+                if token.lower() in source:
+                    fail(f"process execution token {token!r} found outside FFmpeg provider launcher in {rel}")
+        for token in ("cmd.exe", "powershell.exe", "HttpClient", "WebRequest", "Socket"):
+            if token.lower() in source:
+                fail(f"forbidden shell/network token {token!r} found in FFmpeg provider file {rel}")
 
     b2_roots = [ROOT / "src/Converty.Host", ROOT / "src/Converty.Bridge"]
     for project_dir in b2_roots:
@@ -278,7 +317,12 @@ def main() -> int:
             if token.lower() in source.lower():
                 fail(f"forbidden Bridge process token {token!r} found outside Startup in {path.relative_to(ROOT)}")
 
-    all_cs = "\n".join(path.read_text(encoding="utf-8", errors="replace") for path in (ROOT / "src").rglob("*.cs"))
+    production_roots = [ROOT / "src", ROOT / "providers"]
+    all_cs = "\n".join(
+        path.read_text(encoding="utf-8", errors="replace")
+        for production_root in production_roots
+        for path in production_root.rglob("*.cs")
+    )
     if re.search(r'(?:command|arguments?)\s*=\s*"[^"]*(?:ffmpeg|cmd|powershell)', all_cs, re.I):
         fail("production source appears to embed executable command strings")
 
@@ -287,7 +331,7 @@ def main() -> int:
     print("PASS: SDK pin=10.0.400/latestPatch")
     print(f"PASS: {len(projects)}/{len(projects)} managed lock files present")
     print("PASS: source SBOM/release/CI/handover/toolchain authority is version-aligned")
-    print("PASS: Host remains non-executing; product FFmpeg execution is confined to the dedicated Core launcher")
+    print("PASS: Host/Bridge remain media/process neutral; FFmpeg execution is worker/provider-only")
     return 0
 
 
