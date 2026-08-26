@@ -38,10 +38,10 @@ New-Item -ItemType Directory -Force $smokeRoot | Out-Null
 $input = Join-Path $smokeRoot 'Explorer invoke Hör & [x].wav'
 $output = [System.IO.Path]::ChangeExtension($input, '.mp3')
 
-# Generate a valid, tiny PCM source so the shell command's Invoke path can launch
-# the staged Bridge and complete one real FFmpeg conversion.
-$sampleRate = 8000
-$sampleCount = 1600
+# Use a 44.1 kHz PCM source so the 320 kbps MP3 product preset is a valid
+# MPEG-1 Layer III combination while keeping the fixture tiny.
+$sampleRate = 44100
+$sampleCount = 8820
 $channels = 1
 $bitsPerSample = 16
 $bytesPerSample = $bitsPerSample / 8
