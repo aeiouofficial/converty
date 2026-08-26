@@ -27,7 +27,10 @@ public sealed class ConversionBatchRunnerTests
                 @"C:\Converty\tools\ffmpeg\ffmpeg.exe",
                 TimeSpan.FromMinutes(5));
 
-            ConversionBatchResult result = await runner.RunAsync(PresetId.Parse("audio.mp3"), [first, second]);
+            ConversionBatchResult result = await runner.RunAsync(
+                PresetId.Parse("audio.mp3"),
+                [first, second],
+                TestContext.Current.CancellationToken);
 
             Assert.Equal(2, result.Files.Count);
             Assert.Equal(Path.Combine(root, "a (1).mp3"), result.Files[0].OutputPath);
@@ -55,7 +58,10 @@ public sealed class ConversionBatchRunnerTests
             var runner = CreateRunner(launcher);
 
             await Assert.ThrowsAsync<InvalidOperationException>(() =>
-                runner.RunAsync(PresetId.Parse("audio.mp3"), [input]));
+                runner.RunAsync(
+                    PresetId.Parse("audio.mp3"),
+                    [input],
+                    TestContext.Current.CancellationToken));
 
             Assert.Empty(launcher.Inputs);
         }
@@ -78,7 +84,10 @@ public sealed class ConversionBatchRunnerTests
             var runner = CreateRunner(launcher);
 
             ConversionFailedException error = await Assert.ThrowsAsync<ConversionFailedException>(() =>
-                runner.RunAsync(PresetId.Parse("audio.mp3"), [input]));
+                runner.RunAsync(
+                    PresetId.Parse("audio.mp3"),
+                    [input],
+                    TestContext.Current.CancellationToken));
 
             Assert.Equal(input, error.InputPath);
             Assert.Equal(output, error.OutputPath);
@@ -103,7 +112,10 @@ public sealed class ConversionBatchRunnerTests
             var runner = CreateRunner(launcher);
 
             await Assert.ThrowsAsync<ConversionFailedException>(() =>
-                runner.RunAsync(PresetId.Parse("audio.mp3"), [input]));
+                runner.RunAsync(
+                    PresetId.Parse("audio.mp3"),
+                    [input],
+                    TestContext.Current.CancellationToken));
         }
         finally
         {
