@@ -15,6 +15,8 @@ constexpr DWORD kInvokeTimeoutMilliseconds = 30000;
 constexpr DWORD kPollIntervalMilliseconds = 200;
 constexpr unsigned int kRequiredStablePolls = 5;
 
+using DllGetClassObjectFunction = HRESULT(STDAPICALLTYPE*)(REFCLSID, REFIID, LPVOID*);
+
 int Fail(int code, HRESULT result) noexcept
 {
     return code | (result == S_OK ? 0 : 0x100);
@@ -45,6 +47,66 @@ HRESULT CreateSingleSelection(const wchar_t* path, IShellItemArray** selection) 
         reinterpret_cast<void**>(selection));
     item->Release();
     return result;
+}
+
+HRESULT CreateCommandFromModule(
+    const wchar_t* modulePath,
+    IExplorerCommand** command,
+    HMODULE* loadedModule) noexcept
+{
+    if (modulePath == nullptr || command == nullptr || loadedModule == nullptr)
+    {
+        return E_POINTER;
+    }
+    *command = nullptr;
+    *loadedModule = nullptr;
+
+    HMODULE module = LoadLibraryExW(
+        modulePath,
+        nullptr,
+        LOAD_LIBRARY_SEARCH_DLL_LOAD_DIR | LOAD_LIBRARY_SEARCH_SYSTEM32);
+    if (module == nullptr)
+    {
+        return HRESULT_FROM_WIN32(GetLastError());
+    }
+
+    FARPROC address = GetProcAddress(module, "DllGetClassObject");
+    if (address == nullptr)
+    {
+        const DWORD error = GetLastError();
+        FreeLibrary(module);
+        return HRESULT_FROM_WIN32(error);
+    }
+
+#pragma warning(push)
+#pragma warning(disable : 4191) // GetProcAddress is the required Win32 boundary for an exported COM entry point.
+    const auto getClassObject = reinterpret_cast<DllGetClassObjectFunction>(address);
+#pragma warning(pop)
+
+    IClassFactory* factory = nullptr;
+    HRESULT result = getClassObject(
+        kConvertyCommandClsid,
+        IID_IClassFactory,
+        reinterpret_cast<void**>(&factory));
+    if (FAILED(result) || factory == nullptr)
+    {
+        FreeLibrary(module);
+        return FAILED(result) ? result : E_FAIL;
+    }
+
+    result = factory->CreateInstance(
+        nullptr,
+        IID_IExplorerCommand,
+        reinterpret_cast<void**>(command));
+    factory->Release();
+    if (FAILED(result) || *command == nullptr)
+    {
+        FreeLibrary(module);
+        return FAILED(result) ? result : E_FAIL;
+    }
+
+    *loadedModule = module;
+    return S_OK;
 }
 
 HRESULT FindEnabledMp3Command(
@@ -221,14 +283,73 @@ HRESULT ExerciseInvoke(IExplorerCommand* root, const wchar_t* inputPath)
         ? S_OK
         : HRESULT_FROM_WIN32(ERROR_TIMEOUT);
 }
+
+HRESULT ValidateRootCommand(IExplorerCommand* command) noexcept
+{
+    if (command == nullptr)
+    {
+        return E_POINTER;
+    }
+
+    LPWSTR title = nullptr;
+    HRESULT result = command->GetTitle(nullptr, &title);
+    const bool titleValid = SUCCEEDED(result)
+        && title != nullptr
+        && std::wcscmp(title, L"Converty") == 0;
+    CoTaskMemFree(title);
+    if (!titleValid)
+    {
+        return FAILED(result) ? result : E_FAIL;
+    }
+
+    EXPCMDFLAGS flags = ECF_DEFAULT;
+    result = command->GetFlags(&flags);
+    if (FAILED(result) || (flags & ECF_HASSUBCOMMANDS) == 0)
+    {
+        return FAILED(result) ? result : E_FAIL;
+    }
+
+    IEnumExplorerCommand* enumerator = nullptr;
+    result = command->EnumSubCommands(&enumerator);
+    if (FAILED(result) || enumerator == nullptr)
+    {
+        return FAILED(result) ? result : E_FAIL;
+    }
+
+    IExplorerCommand* child = nullptr;
+    ULONG fetched = 0;
+    result = enumerator->Next(1, &child, &fetched);
+    enumerator->Release();
+    if (result != S_OK || fetched != 1 || child == nullptr)
+    {
+        if (child != nullptr)
+        {
+            child->Release();
+        }
+        return FAILED(result) ? result : E_FAIL;
+    }
+
+    LPWSTR childTitle = nullptr;
+    result = child->GetTitle(nullptr, &childTitle);
+    const bool childTitleValid = SUCCEEDED(result)
+        && childTitle != nullptr
+        && childTitle[0] != L'\0';
+    CoTaskMemFree(childTitle);
+    child->Release();
+    return childTitleValid ? S_OK : (FAILED(result) ? result : E_FAIL);
+}
 } // namespace
 
 int wmain(int argc, wchar_t* argv[])
 {
-    if (argc < 1 || argc > 2)
+    const bool directModuleMode = argc == 4 && std::wcscmp(argv[1], L"--module") == 0;
+    const bool packagedMode = argc == 1 || argc == 2;
+    if (!directModuleMode && !packagedMode)
     {
         return Fail(8, E_INVALIDARG);
     }
+
+    const wchar_t* inputPath = directModuleMode ? argv[3] : (argc == 2 ? argv[1] : nullptr);
 
     const HRESULT initialize = CoInitializeEx(nullptr, COINIT_APARTMENTTHREADED);
     if (FAILED(initialize))
@@ -237,83 +358,53 @@ int wmain(int argc, wchar_t* argv[])
     }
 
     IExplorerCommand* command = nullptr;
-    HRESULT result = CoCreateInstance(
-        kConvertyCommandClsid,
-        nullptr,
-        CLSCTX_INPROC_SERVER | CLSCTX_LOCAL_SERVER,
-        IID_IExplorerCommand,
-        reinterpret_cast<void**>(&command));
+    HMODULE loadedModule = nullptr;
+    HRESULT result = directModuleMode
+        ? CreateCommandFromModule(argv[2], &command, &loadedModule)
+        : CoCreateInstance(
+            kConvertyCommandClsid,
+            nullptr,
+            CLSCTX_INPROC_SERVER | CLSCTX_LOCAL_SERVER,
+            IID_IExplorerCommand,
+            reinterpret_cast<void**>(&command));
     if (FAILED(result) || command == nullptr)
     {
         CoUninitialize();
         return Fail(2, result);
     }
 
-    LPWSTR title = nullptr;
-    result = command->GetTitle(nullptr, &title);
-    if (FAILED(result) || title == nullptr || std::wcscmp(title, L"Converty") != 0)
+    result = ValidateRootCommand(command);
+    if (FAILED(result))
     {
-        CoTaskMemFree(title);
         command->Release();
+        if (loadedModule != nullptr)
+        {
+            FreeLibrary(loadedModule);
+        }
         CoUninitialize();
         return Fail(3, result);
     }
-    CoTaskMemFree(title);
 
-    EXPCMDFLAGS flags = ECF_DEFAULT;
-    result = command->GetFlags(&flags);
-    if (FAILED(result) || (flags & ECF_HASSUBCOMMANDS) == 0)
+    if (inputPath != nullptr)
     {
-        command->Release();
-        CoUninitialize();
-        return Fail(4, result);
-    }
-
-    IEnumExplorerCommand* enumerator = nullptr;
-    result = command->EnumSubCommands(&enumerator);
-    if (FAILED(result) || enumerator == nullptr)
-    {
-        command->Release();
-        CoUninitialize();
-        return Fail(5, result);
-    }
-
-    IExplorerCommand* child = nullptr;
-    ULONG fetched = 0;
-    result = enumerator->Next(1, &child, &fetched);
-    if (result != S_OK || fetched != 1 || child == nullptr)
-    {
-        enumerator->Release();
-        command->Release();
-        CoUninitialize();
-        return Fail(6, result);
-    }
-
-    LPWSTR childTitle = nullptr;
-    result = child->GetTitle(nullptr, &childTitle);
-    const bool childTitleValid = SUCCEEDED(result) && childTitle != nullptr && childTitle[0] != L'\0';
-    CoTaskMemFree(childTitle);
-    child->Release();
-    enumerator->Release();
-    if (!childTitleValid)
-    {
-        command->Release();
-        CoUninitialize();
-        return Fail(7, result);
-    }
-
-    if (argc == 2)
-    {
-        result = ExerciseInvoke(command, argv[1]);
+        result = ExerciseInvoke(command, inputPath);
         if (FAILED(result))
         {
             command->Release();
+            if (loadedModule != nullptr)
+            {
+                FreeLibrary(loadedModule);
+            }
             CoUninitialize();
             return Fail(9, result);
         }
     }
 
     command->Release();
+    if (loadedModule != nullptr)
+    {
+        FreeLibrary(loadedModule);
+    }
     CoUninitialize();
     return 0;
 }
