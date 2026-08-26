@@ -5,6 +5,7 @@
 
 #include <array>
 #include <atomic>
+#include <cstring>
 #include <cwchar>
 #include <new>
 #include <string>
@@ -608,7 +609,7 @@ public:
     }
 
 private:
-    ~ExplorerChildCommand() override
+    ~ExplorerChildCommand()
     {
         --g_objectCount;
     }
@@ -716,7 +717,7 @@ public:
     }
 
 private:
-    ~ExplorerCommandEnumerator() override
+    ~ExplorerCommandEnumerator()
     {
         --g_objectCount;
     }
@@ -842,7 +843,7 @@ public:
     }
 
 private:
-    ~ExplorerRootCommand() override
+    ~ExplorerRootCommand()
     {
         --g_objectCount;
     }
@@ -925,7 +926,7 @@ public:
     }
 
 private:
-    ~ExplorerCommandClassFactory() override
+    ~ExplorerCommandClassFactory()
     {
         --g_objectCount;
     }
@@ -934,7 +935,7 @@ private:
 };
 } // namespace
 
-extern "C" __declspec(dllexport) HRESULT STDMETHODCALLTYPE DllGetClassObject(
+STDAPI DllGetClassObject(
     REFCLSID classId,
     REFIID interfaceId,
     void** object)
@@ -959,7 +960,7 @@ extern "C" __declspec(dllexport) HRESULT STDMETHODCALLTYPE DllGetClassObject(
     return result;
 }
 
-extern "C" __declspec(dllexport) HRESULT STDMETHODCALLTYPE DllCanUnloadNow()
+STDAPI DllCanUnloadNow(void)
 {
     return g_objectCount.load() == 0 && g_serverLockCount.load() == 0 ? S_OK : S_FALSE;
 }
