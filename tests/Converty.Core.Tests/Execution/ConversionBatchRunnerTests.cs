@@ -8,7 +8,7 @@ namespace Converty.Core.Tests.Execution;
 public sealed class ConversionBatchRunnerTests
 {
     [Fact]
-    public async Task RunAsyncConvertsMultipleFilesAndUsesNumberedCollisionPolicy()
+    public async Task RunAsyncConvertsMultipleFilesThroughPrivateStagingAndUsesNumberedCollisionPolicy()
     {
         string root = CreateTempDirectory();
         try
@@ -35,15 +35,28 @@ public sealed class ConversionBatchRunnerTests
             Assert.Equal(2, result.Files.Count);
             Assert.Equal(Path.Combine(root, "a (1).mp3"), result.Files[0].OutputPath);
             Assert.Equal(Path.Combine(root, "b.mp3"), result.Files[1].OutputPath);
-            Assert.Equal([first, second], launcher.Inputs);
-            Assert.All(launcher.Outputs, temporaryPath =>
+
+            Assert.Equal(2, launcher.Inputs.Count);
+            Assert.Equal(2, launcher.Outputs.Count);
+            Assert.NotEqual(first, launcher.Inputs[0]);
+            Assert.NotEqual(second, launcher.Inputs[1]);
+            Assert.Equal([1], launcher.InputBytes[0]);
+            Assert.Equal([2], launcher.InputBytes[1]);
+            for (int index = 0; index < launcher.Inputs.Count; ++index)
             {
-                Assert.StartsWith(".converty-", Path.GetFileName(temporaryPath), StringComparison.Ordinal);
-                Assert.EndsWith(".partial.mp3", temporaryPath, StringComparison.OrdinalIgnoreCase);
-                Assert.False(File.Exists(temporaryPath));
-            });
+                Assert.Equal(
+                    Path.GetDirectoryName(launcher.Inputs[index]),
+                    Path.GetDirectoryName(launcher.Outputs[index]));
+                Assert.NotEqual(root, Path.GetDirectoryName(launcher.Inputs[index]));
+                Assert.EndsWith(".partial.mp3", launcher.Outputs[index], StringComparison.OrdinalIgnoreCase);
+            }
+
+            Assert.All(launcher.Inputs, stagedPath => Assert.False(File.Exists(stagedPath)));
+            Assert.All(launcher.Outputs, stagedPath => Assert.False(File.Exists(stagedPath)));
             Assert.True(File.Exists(first));
             Assert.True(File.Exists(second));
+            Assert.Equal([1], File.ReadAllBytes(first));
+            Assert.Equal([2], File.ReadAllBytes(second));
             Assert.Equal([9], File.ReadAllBytes(Path.Combine(root, "a.mp3")));
         }
         finally
@@ -189,6 +202,7 @@ public sealed class ConversionBatchRunnerTests
         Action<string, string>? afterWrite = null) : IFfmpegProcessLauncher
     {
         public List<string> Inputs { get; } = [];
+        public List<byte[]> InputBytes { get; } = [];
         public List<string> Outputs { get; } = [];
 
         public Task<FfmpegExecutionResult> ExecuteAsync(
@@ -201,6 +215,7 @@ public sealed class ConversionBatchRunnerTests
         {
             cancellationToken.ThrowIfCancellationRequested();
             Inputs.Add(inputPath);
+            InputBytes.Add(File.ReadAllBytes(inputPath));
             Outputs.Add(outputPath);
             if (writeOutput)
             {
