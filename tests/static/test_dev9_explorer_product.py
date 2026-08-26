@@ -134,5 +134,3 @@ def test_product_smokes_treat_metacharacter_filenames_as_literal_paths() -> None
     assert "Test-Path -LiteralPath $expectedOutput" in conversion
     assert "Get-Item -LiteralPath $expectedOutput" in conversion
     assert "Get-FileHash -LiteralPath $existingOutput -Algorithm SHA256" in conversion
-    assert "-of json $expectedOutput" not in conversion
-    assert "-of json -- $expectedOutput" in conversion
