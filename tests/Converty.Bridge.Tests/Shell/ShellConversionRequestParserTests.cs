@@ -52,7 +52,7 @@ public sealed class ShellConversionRequestParserTests
             ["--preset", "audio.mp3", "--", "relative.wav"]));
     }
 
-    public static TheoryData<string[]> InvalidArguments => new()
+    public static TheoryData<string[]> InvalidArguments { get; } = new()
     {
         Array.Empty<string>(),
         new[] { "--preset" },
