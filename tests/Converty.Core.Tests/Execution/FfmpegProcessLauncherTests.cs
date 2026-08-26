@@ -14,8 +14,7 @@ public sealed class FfmpegProcessLauncherTests
         const string input = @"C:\Media\odd & name; -x.mov";
         const string output = @"C:\Media\odd & name; -x.mp4";
 
-        var launcher = new FfmpegProcessLauncher();
-        System.Diagnostics.ProcessStartInfo startInfo = launcher.CreateStartInfo(ffmpeg, preset, input, output);
+        System.Diagnostics.ProcessStartInfo startInfo = FfmpegProcessLauncher.CreateStartInfo(ffmpeg, preset, input, output);
 
         Assert.Equal(ffmpeg, startInfo.FileName);
         Assert.False(startInfo.UseShellExecute);
@@ -35,8 +34,7 @@ public sealed class FfmpegProcessLauncherTests
         const string input = @"C:\Media\a & whoami | calc.exe ; ' quoted [].wav";
         const string output = @"C:\Media\a & whoami | calc.exe ; ' quoted [].flac";
 
-        var launcher = new FfmpegProcessLauncher();
-        System.Diagnostics.ProcessStartInfo startInfo = launcher.CreateStartInfo(
+        System.Diagnostics.ProcessStartInfo startInfo = FfmpegProcessLauncher.CreateStartInfo(
             @"C:\Converty\tools\ffmpeg\ffmpeg.exe",
             preset,
             input,
