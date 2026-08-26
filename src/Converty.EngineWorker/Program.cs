@@ -21,8 +21,7 @@ internal static class Program
             ValidateStagingPaths(request, preset);
 
             string ffmpegPath = TrustedFfmpegPath.ResolveFromApplicationBaseDirectory();
-            var launcher = new FfmpegProcessLauncher();
-            FfmpegExecutionResult result = await launcher.ExecuteAsync(
+            FfmpegExecutionResult result = await FfmpegProcessLauncher.ExecuteAsync(
                 ffmpegPath,
                 preset,
                 request.InputPath,

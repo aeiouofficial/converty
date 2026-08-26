@@ -82,9 +82,8 @@ public sealed class FfmpegProcessLauncherTests
     public async Task ExecuteRejectsInvalidTimeoutSeconds(int seconds)
     {
         ProductPresetDefinition preset = ProductPresetRegistry.Default.GetRequired(PresetId.Parse("audio.mp3"));
-        var launcher = new FfmpegProcessLauncher();
 
-        await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => launcher.ExecuteAsync(
+        await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => FfmpegProcessLauncher.ExecuteAsync(
             @"C:\Converty\tools\ffmpeg\ffmpeg.exe",
             preset,
             @"C:\Media\in.wav",

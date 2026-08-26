@@ -4,7 +4,7 @@ using Converty.Core.Presets;
 
 namespace Converty.Provider.FFmpeg;
 
-public sealed class FfmpegProcessLauncher
+public static class FfmpegProcessLauncher
 {
     public static readonly TimeSpan MaximumExecutionTimeout = TimeSpan.FromMinutes(30);
     public const int MaximumCapturedErrorCharacters = 64 * 1024;
@@ -55,7 +55,7 @@ public sealed class FfmpegProcessLauncher
         return startInfo;
     }
 
-    public async Task<FfmpegExecutionResult> ExecuteAsync(
+    public static async Task<FfmpegExecutionResult> ExecuteAsync(
         string ffmpegPath,
         ProductPresetDefinition preset,
         string inputPath,
