@@ -26,8 +26,12 @@ public sealed class BridgeClient : IBridgeRequestClient
     };
 
     private readonly TimeSpan _connectTimeout;
+    private readonly IConnectedServerIdentityVerifier _serverIdentityVerifier;
 
-    public BridgeClient(string pipeName, TimeSpan connectTimeout)
+    public BridgeClient(
+        string pipeName,
+        TimeSpan connectTimeout,
+        IConnectedServerIdentityVerifier serverIdentityVerifier)
     {
         if (string.IsNullOrWhiteSpace(pipeName))
         {
@@ -43,15 +47,18 @@ public sealed class BridgeClient : IBridgeRequestClient
 
         PipeName = pipeName;
         _connectTimeout = connectTimeout;
+        _serverIdentityVerifier = serverIdentityVerifier ?? throw new ArgumentNullException(nameof(serverIdentityVerifier));
     }
 
     public string PipeName { get; }
 
-    public static BridgeClient ForCurrentUser(TimeSpan connectTimeout)
+    public static BridgeClient ForCurrentUser(
+        TimeSpan connectTimeout,
+        IConnectedServerIdentityVerifier serverIdentityVerifier)
     {
         SecurityIdentifier userSid = WindowsIdentity.GetCurrent().User
             ?? throw new InvalidOperationException("Current Windows identity has no user SID.");
-        return new BridgeClient(PipeEndpointName.ForUser(userSid), connectTimeout);
+        return new BridgeClient(PipeEndpointName.ForUser(userSid), connectTimeout, serverIdentityVerifier);
     }
 
     public async Task<BridgeSubmissionResult> SubmitAsync(
@@ -80,6 +87,8 @@ public sealed class BridgeClient : IBridgeRequestClient
         {
             throw new BridgeHostUnavailableException("Converty Host pipe connection is unavailable.", error);
         }
+
+        _serverIdentityVerifier.VerifyConnectedServer(pipe);
 
         byte[] payload = Encoding.UTF8.GetBytes(ContractJson.Serialize(request));
         await ProtocolFrameCodec.WriteAsync(pipe, payload, cancellationToken);
