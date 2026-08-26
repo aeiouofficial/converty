@@ -9,7 +9,7 @@ public sealed class FfmpegProcessLauncher : IFfmpegProcessLauncher
     public static readonly TimeSpan MaximumExecutionTimeout = TimeSpan.FromMinutes(30);
     public const int MaximumCapturedErrorCharacters = 64 * 1024;
 
-    public ProcessStartInfo CreateStartInfo(
+    public static ProcessStartInfo CreateStartInfo(
         string ffmpegPath,
         ProductPresetDefinition preset,
         string inputPath,
