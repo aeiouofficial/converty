@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Text;
 
@@ -18,43 +19,83 @@ public sealed class WindowsWorkerProcessLauncher : IWorkerProcessLauncher
         Validate(request);
         cancellationToken.ThrowIfCancellationRequested();
 
-        ProcessStartInfo startInfo = CreateStartInfo(request);
-        using var process = new Process { StartInfo = startInfo };
-        if (!process.Start())
+        if (request.IsolationLevel == WorkerIsolationLevel.Strict)
         {
-            throw new InvalidOperationException("Converty worker process could not be started.");
+            throw new NotSupportedException(
+                "Strict worker isolation is not enabled until its no-network and staging-write policy is qualified.");
         }
 
-        Task<string> standardErrorTask = DrainAsync(
-            process.StandardError,
-            request.MaximumCapturedStandardErrorCharacters);
-        Task<string> standardOutputTask = DrainAsync(process.StandardOutput, maximumCharacters: 0);
-        using CancellationTokenSource timeoutCancellation =
-            CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
-        timeoutCancellation.CancelAfter(request.Timeout);
+        WindowsJobObject? job = null;
+        WindowsSuspendedProcess? worker = null;
+        Process? process = null;
+        Task<string>? standardErrorTask = null;
+        Task<string>? standardOutputTask = null;
 
         try
         {
-            await process.WaitForExitAsync(timeoutCancellation.Token).ConfigureAwait(false);
-        }
-        catch (OperationCanceledException) when (!cancellationToken.IsCancellationRequested)
-        {
-            KillProcessTree(process);
-            await IgnoreDrainFailuresAsync(standardErrorTask, standardOutputTask).ConfigureAwait(false);
-            throw new TimeoutException("Converty worker exceeded the configured execution timeout.");
-        }
-        catch (OperationCanceledException)
-        {
-            KillProcessTree(process);
-            await IgnoreDrainFailuresAsync(standardErrorTask, standardOutputTask).ConfigureAwait(false);
-            throw;
-        }
+            job = WindowsJobObject.Create(request.ResourceLimits);
+            worker = WindowsSuspendedProcess.Create(request);
+            try
+            {
+                job.AssignProcess(worker.ProcessHandle);
+            }
+            catch
+            {
+                worker.Terminate(exitCode: 1);
+                throw;
+            }
 
-        string standardError = await standardErrorTask.ConfigureAwait(false);
-        _ = await standardOutputTask.ConfigureAwait(false);
-        return new WorkerProcessResult(process.ExitCode, standardError);
+            process = Process.GetProcessById(checked((int)worker.ProcessId));
+            standardErrorTask = DrainAsync(
+                worker.StandardError,
+                request.MaximumCapturedStandardErrorCharacters);
+            standardOutputTask = DrainAsync(worker.StandardOutput, maximumCharacters: 0);
+
+            worker.Resume();
+            using CancellationTokenSource timeoutCancellation =
+                CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+            timeoutCancellation.CancelAfter(request.Timeout);
+
+            try
+            {
+                await process.WaitForExitAsync(timeoutCancellation.Token).ConfigureAwait(false);
+            }
+            catch (OperationCanceledException) when (!cancellationToken.IsCancellationRequested)
+            {
+                TerminateAndDisposeJob(job, exitCode: 124);
+                job = null;
+                await IgnoreDrainFailuresAsync(standardErrorTask, standardOutputTask).ConfigureAwait(false);
+                throw new TimeoutException("Converty worker exceeded the configured execution timeout.");
+            }
+            catch (OperationCanceledException)
+            {
+                TerminateAndDisposeJob(job, exitCode: 125);
+                job = null;
+                await IgnoreDrainFailuresAsync(standardErrorTask, standardOutputTask).ConfigureAwait(false);
+                throw;
+            }
+
+            int exitCode = process.ExitCode;
+
+            // Closing a kill-on-close job after the worker exits removes any descendant
+            // that attempted to outlive the single conversion worker.
+            job.Dispose();
+            job = null;
+
+            string standardError = await standardErrorTask.ConfigureAwait(false);
+            _ = await standardOutputTask.ConfigureAwait(false);
+            return new WorkerProcessResult(exitCode, standardError);
+        }
+        finally
+        {
+            job?.Dispose();
+            process?.Dispose();
+            worker?.Dispose();
+        }
     }
 
+    // Retained as a non-launching projection for structured-argument regression tests
+    // and repository guardrails. ExecuteAsync uses the suspended native launch path.
     public static ProcessStartInfo CreateStartInfo(WorkerProcessLaunchRequest request)
     {
         ArgumentNullException.ThrowIfNull(request);
@@ -101,6 +142,11 @@ public sealed class WindowsWorkerProcessLauncher : IWorkerProcessLauncher
                 throw new ArgumentException("Worker argument exceeds the bounded launch surface.", nameof(request));
             }
         }
+        if (!Enum.IsDefined(request.IsolationLevel))
+        {
+            throw new ArgumentOutOfRangeException(nameof(request));
+        }
+        ArgumentNullException.ThrowIfNull(request.ResourceLimits);
         if (request.Timeout <= TimeSpan.Zero || request.Timeout > MaximumExecutionTimeout)
         {
             throw new ArgumentOutOfRangeException(nameof(request));
@@ -133,17 +179,19 @@ public sealed class WindowsWorkerProcessLauncher : IWorkerProcessLauncher
         return captured.ToString();
     }
 
-    private static void KillProcessTree(Process process)
+    private static void TerminateAndDisposeJob(WindowsJobObject job, uint exitCode)
     {
         try
         {
-            if (!process.HasExited)
-            {
-                process.Kill(entireProcessTree: true);
-            }
+            job.Terminate(exitCode);
         }
-        catch (InvalidOperationException)
+        catch (Win32Exception)
         {
+            // JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE remains the fail-closed backstop.
+        }
+        finally
+        {
+            job.Dispose();
         }
     }
 

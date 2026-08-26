@@ -3,5 +3,6 @@
     <AssemblyName>Converty.Security</AssemblyName>
     <RootNamespace>Converty.Security</RootNamespace>
     <Description>Windows trust-boundary policy and IPC authorization primitives for Converty.</Description>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 </Project>

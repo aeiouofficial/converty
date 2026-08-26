@@ -59,6 +59,8 @@ internal sealed class EngineWorkerClient(
             _workerExecutablePath,
             workingDirectory,
             arguments,
+            WorkerIsolationLevel.Compatibility,
+            WorkerResourceLimits.ConversionDefault,
             timeout,
             MaximumCapturedErrorCharacters);
         WorkerProcessResult result = await _processLauncher.ExecuteAsync(request, cancellationToken).ConfigureAwait(false);
