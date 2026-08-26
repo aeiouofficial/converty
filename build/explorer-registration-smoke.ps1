@@ -5,6 +5,7 @@ $ErrorActionPreference = 'Stop'
 $root = Split-Path -Parent $PSScriptRoot
 $layout = Join-Path $root 'artifacts/dev-package-layout'
 $manifest = Join-Path $layout 'AppxManifest.xml'
+$shellDll = Join-Path $layout 'Converty.ShellExtension.dll'
 $nativeRoot = Join-Path $root 'artifacts/native-smoke'
 $smokeRoot = Join-Path $root 'artifacts/explorer-registration-smoke'
 $packageName = 'Converty.Dev'
@@ -14,6 +15,9 @@ if (-not $IsWindows) {
 }
 if (-not (Test-Path $manifest)) {
     throw 'Development package layout is missing. Stage it before registration smoke.'
+}
+if (-not (Test-Path $shellDll)) {
+    throw 'Staged Converty.ShellExtension.dll is missing.'
 }
 
 $smoke = Get-ChildItem -Path $nativeRoot -Recurse -Filter 'Converty.ExplorerRegistrationSmoke.exe' -File -ErrorAction SilentlyContinue | Select-Object -First 1
@@ -34,7 +38,7 @@ New-Item -ItemType Directory -Force $smokeRoot | Out-Null
 $input = Join-Path $smokeRoot 'Explorer invoke Hör & [x].wav'
 $output = [System.IO.Path]::ChangeExtension($input, '.mp3')
 
-# Generate a valid, tiny PCM source so the COM command's Invoke path can launch
+# Generate a valid, tiny PCM source so the shell command's Invoke path can launch
 # the staged Bridge and complete one real FFmpeg conversion.
 $sampleRate = 8000
 $sampleCount = 1600
@@ -66,6 +70,19 @@ try {
 finally {
     $writer.Dispose()
 }
+
+# First prove the exact staged DLL exports a usable COM class factory and that
+# IExplorerCommand::Invoke reaches the staged Bridge + FFmpeg, independent of
+# whether this hosted Windows image permits loose MSIX registration.
+& $smoke.FullName '--module' $shellDll $input
+if ($LASTEXITCODE -ne 0) {
+    throw "Direct staged shell DLL activation/invoke smoke failed with exit code $LASTEXITCODE."
+}
+if (-not (Test-Path $output) -or (Get-Item $output).Length -le 0) {
+    throw 'Direct staged shell DLL Invoke did not produce a non-empty conversion output.'
+}
+Write-Host 'Direct staged shell DLL class-factory + Invoke conversion smoke: PASS'
+Remove-Item -LiteralPath $output -Force
 
 try {
     Add-AppxPackage -Register $manifest -ForceApplicationShutdown
