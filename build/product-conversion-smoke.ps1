@@ -31,10 +31,10 @@ $input = Join-Path $smokeRoot 'Hör test & semi; -dash [x].wav'
 $existingOutput = [System.IO.Path]::ChangeExtension($input, '.mp3')
 $expectedOutput = Join-Path $smokeRoot 'Hör test & semi; -dash [x] (1).mp3'
 
-# Write a tiny mono PCM WAV without using another media tool. This makes the
-# Bridge-to-FFmpeg path the only conversion operation under test.
-$sampleRate = 8000
-$sampleCount = 1600
+# Write a small 44.1 kHz mono PCM WAV without using another media tool. 44.1 kHz
+# makes the 320 kbps MP3 MVP preset a valid MPEG-1 Layer III combination.
+$sampleRate = 44100
+$sampleCount = 8820
 $channels = 1
 $bitsPerSample = 16
 $bytesPerSample = $bitsPerSample / 8
