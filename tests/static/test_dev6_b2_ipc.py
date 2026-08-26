@@ -38,6 +38,7 @@ def test_dev6_b2_projects_remain_present_in_later_tranches() -> None:
 def test_ipc_framing_and_windows_pipe_security_are_bounded() -> None:
     limits = text("src/Converty.Ipc/Protocol/ProtocolLimits.cs")
     codec = text("src/Converty.Ipc/Protocol/ProtocolFrameCodec.cs")
+    bounded_io = text("src/Converty.Ipc/Protocol/BoundedProtocolFrameIo.cs")
     pipe_security = text("src/Converty.Security/Ipc/CurrentUserPipeSecurity.cs")
     server = text("src/Converty.Host/Ipc/HostPipeServer.cs")
     bridge = text("src/Converty.Bridge/Ipc/BridgeClient.cs")
@@ -45,11 +46,17 @@ def test_ipc_framing_and_windows_pipe_security_are_bounded() -> None:
     assert "MaxPayloadBytes = 1_048_576" in limits
     for token in ("BadMagic", "UnsupportedVersion", "InvalidLength", "FrameTooLarge", "TruncatedFrame", "checked("):
         assert token in codec
+    assert "MaximumTimeout = TimeSpan.FromSeconds(30)" in bounded_io
+    assert "ProtocolFrameCodec.ReadAsync" in bounded_io
+    assert "ProtocolFrameCodec.WriteAsync" in bounded_io
     assert "SetAccessRuleProtection(isProtected: true" in pipe_security
     assert "NamedPipeServerStreamAcl.Create" in server
-    assert server.index("_peerValidator.IsExpectedUser") < server.index("ProtocolFrameCodec.ReadAsync")
+    assert server.index("_peerValidator.IsExpectedUser") < server.index("BoundedProtocolFrameIo.ReadAsync")
+    assert "BoundedProtocolFrameIo.WriteAndFlushAsync" in server
     assert "MaximumConnectTimeout = TimeSpan.FromSeconds(30)" in bridge
     assert "ConnectAsync(_connectTimeout, cancellationToken)" in bridge
+    assert "BoundedProtocolFrameIo.WriteAndFlushAsync" in bridge
+    assert "BoundedProtocolFrameIo.ReadAsync" in bridge
 
 
 def test_host_single_instance_queue_and_fuzz_corpus_are_present() -> None:
