@@ -313,10 +313,10 @@ internal sealed class WindowsSuspendedProcess : IDisposable
                 ? _attributeList
                 : throw new ObjectDisposedException(nameof(ProcessThreadAttributeList));
 
-        internal static ProcessThreadAttributeList Create(IReadOnlyList<nint> inheritedHandles)
+        internal static ProcessThreadAttributeList Create(nint[] inheritedHandles)
         {
             ArgumentNullException.ThrowIfNull(inheritedHandles);
-            if (inheritedHandles.Count == 0)
+            if (inheritedHandles.Length == 0)
             {
                 throw new ArgumentException("At least one inherited worker handle is required.", nameof(inheritedHandles));
             }
@@ -345,9 +345,9 @@ internal sealed class WindowsSuspendedProcess : IDisposable
                     throw LastError("Converty could not initialize the worker process attribute list.");
                 }
 
-                int handleListBytes = checked(inheritedHandles.Count * nint.Size);
+                int handleListBytes = checked(inheritedHandles.Length * nint.Size);
                 handleList = Marshal.AllocHGlobal(handleListBytes);
-                for (int index = 0; index < inheritedHandles.Count; index++)
+                for (int index = 0; index < inheritedHandles.Length; index++)
                 {
                     Marshal.WriteIntPtr(handleList, checked(index * nint.Size), inheritedHandles[index]);
                 }
