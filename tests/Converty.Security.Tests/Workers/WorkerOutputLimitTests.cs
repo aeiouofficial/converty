@@ -1,0 +1,106 @@
+using Converty.Security.Workers;
+
+namespace Converty.Security.Tests.Workers;
+
+public sealed class WorkerOutputLimitTests
+{
+    [Fact]
+    public void ConversionDefaultHasFiniteOutputBudget()
+    {
+        Assert.InRange(
+            WorkerResourceLimits.ConversionDefault.MaximumOutputBytes,
+            64L * 1024 * 1024,
+            16L * 1024 * 1024 * 1024);
+    }
+
+    [Fact]
+    public void ConstructorRejectsZeroOutputBudget()
+    {
+        Assert.Throws<ArgumentOutOfRangeException>(() => new WorkerResourceLimits(
+            maximumActiveProcesses: 2,
+            maximumProcessMemoryBytes: 512L * 1024 * 1024,
+            maximumJobMemoryBytes: 768L * 1024 * 1024,
+            maximumOutputBytes: 0,
+            maximumCpuRatePercent: 80));
+    }
+
+    [Fact]
+    public async Task StrictWorkerIsTerminatedWhenStagingGrowthExceedsOutputBudget()
+    {
+        if (!OperatingSystem.IsWindows())
+        {
+            return;
+        }
+
+        CancellationToken testCancellation = TestContext.Current.CancellationToken;
+        string canaryExecutable = ResolveCanaryExecutable();
+        string appDirectory = Path.GetDirectoryName(canaryExecutable) ??
+            throw new InvalidOperationException("Canary executable requires an application directory.");
+        string stagingDirectory = Path.Combine(Path.GetTempPath(), $"ConvertyOutputLimit-{Guid.NewGuid():N}");
+        Directory.CreateDirectory(stagingDirectory);
+        string outputPath = Path.Combine(stagingDirectory, "growth.bin");
+
+        try
+        {
+            var request = new WorkerProcessLaunchRequest(
+                canaryExecutable,
+                appDirectory,
+                ["--write-slow-bytes", outputPath, (1024 * 1024).ToString(System.Globalization.CultureInfo.InvariantCulture)],
+                WorkerIsolationLevel.Strict,
+                new WorkerResourceLimits(
+                    maximumActiveProcesses: 2,
+                    maximumProcessMemoryBytes: 512L * 1024 * 1024,
+                    maximumJobMemoryBytes: 768L * 1024 * 1024,
+                    maximumOutputBytes: 64L * 1024,
+                    maximumCpuRatePercent: 100),
+                new WorkerFileSystemScope(stagingDirectory),
+                TimeSpan.FromSeconds(15),
+                MaximumCapturedStandardErrorCharacters: 4096);
+
+            var launcher = new WindowsWorkerProcessLauncher();
+            await Assert.ThrowsAsync<WorkerOutputLimitExceededException>(
+                async () => await launcher.ExecuteAsync(request, testCancellation));
+
+            Assert.True(File.Exists(outputPath));
+            Assert.InRange(new FileInfo(outputPath).Length, 64L * 1024 + 1, 512L * 1024);
+        }
+        finally
+        {
+            Directory.Delete(stagingDirectory, recursive: true);
+        }
+    }
+
+    private static string ResolveCanaryExecutable()
+    {
+        string repositoryRoot = ResolveRepositoryRoot();
+        DirectoryInfo frameworkDirectory = new(AppContext.BaseDirectory);
+        string configuration = frameworkDirectory.Parent?.Name ??
+            throw new InvalidOperationException("Test configuration directory could not be resolved.");
+        string path = Path.Combine(
+            repositoryRoot,
+            "tests",
+            "Converty.WorkerCanary",
+            "bin",
+            configuration,
+            "net10.0",
+            "Converty.WorkerCanary.exe");
+
+        Assert.True(File.Exists(path), $"Worker output canary executable is missing: {path}");
+        return path;
+    }
+
+    private static string ResolveRepositoryRoot()
+    {
+        DirectoryInfo? current = new(AppContext.BaseDirectory);
+        while (current is not null)
+        {
+            if (File.Exists(Path.Combine(current.FullName, "Converty.slnx")))
+            {
+                return current.FullName;
+            }
+            current = current.Parent;
+        }
+
+        throw new InvalidOperationException("Repository root could not be resolved from the test output directory.");
+    }
+}
