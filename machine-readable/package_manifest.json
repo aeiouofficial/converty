@@ -215,13 +215,13 @@
     },
     {
       "path": "docs/HANDOVER_NEXT_AGENT.md",
-      "bytes": 6369,
-      "sha256": "ff76f9d607497f68a6ee059a19dc7e2f9f763ca3512b7ad1d5efff9a4d94ec49"
+      "bytes": 7637,
+      "sha256": "b2e0903ee5f7f4dbc2e0ab373b5d91444b7f64ba53dbadf4ae978876eb4e765f"
     },
     {
       "path": "docs/HANDOVER_PROMPT.txt",
-      "bytes": 5052,
-      "sha256": "85e4067184d4623a7adcf8dd2aba3e8f4013d97188df92c983d21232dbfce19d"
+      "bytes": 6031,
+      "sha256": "fac2000fd6924df429d5a0874c569cab5ba51d248e3839e98df5a8628d4cfe8c"
     },
     {
       "path": "docs/REFERENCE_SOURCES.md",
@@ -345,8 +345,8 @@
     },
     {
       "path": "machine-readable/build_evidence.json",
-      "bytes": 6998,
-      "sha256": "d2ac83436ea197a5843f8c8ac6e162a02540a96571695c1fded3575bed9fee19"
+      "bytes": 10213,
+      "sha256": "9184270f8f79560dc875a6e7f774470c166b5e36b97b5d6d7ac8265aed89e448"
     },
     {
       "path": "machine-readable/ci_action_pins.json",
@@ -355,8 +355,8 @@
     },
     {
       "path": "machine-readable/handover_state.json",
-      "bytes": 5428,
-      "sha256": "1b25caade93f59a0b6a4fabb28b91c515afd364b9f834f471f851e0a376ee44b"
+      "bytes": 7028,
+      "sha256": "0009e20d392bcf7ae4681c458a5f82297714c2206cf22f22800993b4eff874da"
     },
     {
       "path": "machine-readable/release_policy.json",
@@ -460,8 +460,8 @@
     },
     {
       "path": "providers/Converty.Provider.FFmpeg/TrustedFfmpegPath.cs",
-      "bytes": 1873,
-      "sha256": "cd01a9d39a52639ee2352b6b65338aa53342768c3420143e051f6512b1459ce6"
+      "bytes": 2085,
+      "sha256": "ceb9059138eef84b9947f73f9bb1090462bc8a0d357597b2e3cd2b1a3fcf2d91"
     },
     {
       "path": "providers/Converty.Provider.Wic/MODULE.md",
@@ -1175,8 +1175,8 @@
     },
     {
       "path": "src/Converty.Security/Workers/WorkerFileSystemScope.cs",
-      "bytes": 901,
-      "sha256": "0a5ae8ec3a12049b662c5f5d23e5efcbf3b71cb34dd48028ec7dd6413ab75567"
+      "bytes": 1201,
+      "sha256": "37a63a6047db901af7d1eccb0ed1de30389a3201da80527cf79b3cc2816fcda5"
     },
     {
       "path": "src/Converty.Security/Workers/WorkerIsolationLevel.cs",
@@ -1335,8 +1335,8 @@
     },
     {
       "path": "tests/Converty.Core.Tests/Execution/FfmpegProcessLauncherTests.cs",
-      "bytes": 3768,
-      "sha256": "c432d6166f65f1db3e116996d137f6ccb3a3d66598248ddd48126391c697adf7"
+      "bytes": 4939,
+      "sha256": "9e3f9c1632d6d108c5d292b9cef58995adc2e1d5432c18d00fd08a8156ddc528"
     },
     {
       "path": "tests/Converty.Core.Tests/FakeProviderTests.cs",
@@ -1472,6 +1472,11 @@
       "path": "tests/Converty.Security.Tests/Workers/WindowsWorkerStrictIsolationCanaryTests.cs",
       "bytes": 5732,
       "sha256": "0eda931a5e4f4d7aa6142ff1bc5963ce4f1d95ddd5db35836a13a3926a4cab28"
+    },
+    {
+      "path": "tests/Converty.Security.Tests/Workers/WorkerFileSystemScopeTests.cs",
+      "bytes": 1088,
+      "sha256": "f23af3b1982edf2b08f853320832a7bfbc4d77445919318e46dfca392cd8ca1f"
     },
     {
       "path": "tests/Converty.Security.Tests/Workers/WorkerOutputLimitTests.cs",
