@@ -19,12 +19,9 @@ public sealed class WindowsWorkerProcessLauncher : IWorkerProcessLauncher
         Validate(request);
         cancellationToken.ThrowIfCancellationRequested();
 
-        if (request.IsolationLevel == WorkerIsolationLevel.Strict)
-        {
-            throw new NotSupportedException(
-                "Strict worker isolation is not enabled until its no-network and staging-write policy is qualified.");
-        }
-
+        WindowsAppContainerProfile? appContainer = null;
+        WindowsAclGrant? applicationGrant = null;
+        WindowsAclGrant? stagingGrant = null;
         WindowsJobObject? job = null;
         WindowsSuspendedProcess? worker = null;
         Process? process = null;
@@ -33,8 +30,19 @@ public sealed class WindowsWorkerProcessLauncher : IWorkerProcessLauncher
 
         try
         {
+            if (request.IsolationLevel == WorkerIsolationLevel.Strict)
+            {
+                appContainer = WindowsAppContainerProfile.Create();
+                string applicationDirectory = Path.GetDirectoryName(request.ExecutablePath) ??
+                    throw new InvalidOperationException("Strict worker executable requires an application directory.");
+                applicationGrant = WindowsAclGrant.GrantApplicationReadExecute(applicationDirectory, appContainer.Sid);
+                stagingGrant = WindowsAclGrant.GrantStagingReadWrite(
+                    request.FileSystemScope.WritableDirectory,
+                    appContainer.Sid);
+            }
+
             job = WindowsJobObject.Create(request.ResourceLimits);
-            worker = WindowsSuspendedProcess.Create(request);
+            worker = WindowsSuspendedProcess.Create(request, appContainer?.Sid ?? nint.Zero);
             try
             {
                 job.AssignProcess(worker.ProcessHandle);
@@ -91,6 +99,7 @@ public sealed class WindowsWorkerProcessLauncher : IWorkerProcessLauncher
             job?.Dispose();
             process?.Dispose();
             worker?.Dispose();
+            DisposeIsolation(stagingGrant, applicationGrant, appContainer);
         }
     }
 
@@ -147,6 +156,19 @@ public sealed class WindowsWorkerProcessLauncher : IWorkerProcessLauncher
             throw new ArgumentOutOfRangeException(nameof(request));
         }
         ArgumentNullException.ThrowIfNull(request.ResourceLimits);
+        ArgumentNullException.ThrowIfNull(request.FileSystemScope);
+        if (request.IsolationLevel == WorkerIsolationLevel.Strict)
+        {
+            string? executableDirectory = Path.GetDirectoryName(Path.GetFullPath(request.ExecutablePath));
+            string workingDirectory = Path.GetFullPath(request.WorkingDirectory);
+            if (executableDirectory is null ||
+                !string.Equals(executableDirectory, workingDirectory, StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(
+                    "Strict worker working directory must be the executable application directory.",
+                    nameof(request));
+            }
+        }
         if (request.Timeout <= TimeSpan.Zero || request.Timeout > MaximumExecutionTimeout)
         {
             throw new ArgumentOutOfRangeException(nameof(request));
@@ -192,6 +214,28 @@ public sealed class WindowsWorkerProcessLauncher : IWorkerProcessLauncher
         finally
         {
             job.Dispose();
+        }
+    }
+
+    private static void DisposeIsolation(
+        WindowsAclGrant? stagingGrant,
+        WindowsAclGrant? applicationGrant,
+        WindowsAppContainerProfile? appContainer)
+    {
+        try
+        {
+            stagingGrant?.Dispose();
+        }
+        finally
+        {
+            try
+            {
+                applicationGrant?.Dispose();
+            }
+            finally
+            {
+                appContainer?.Dispose();
+            }
         }
     }
 
