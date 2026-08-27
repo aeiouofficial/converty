@@ -1,0 +1,77 @@
+name: dev10-authority-blob-transfer
+
+on:
+  push:
+    branches:
+      - tmp/dev10-authority-blob-transfer-20260827
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  transfer:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download exact generated-authority artifact
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          curl -fsSL \
+            -H "Authorization: Bearer ${GITHUB_TOKEN}" \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            "https://api.github.com/repos/aeiouofficial/converty/actions/artifacts/9635177983/zip" \
+            -o authority.zip
+          test "$(wc -c < authority.zip)" -eq 130848
+          echo "5d4a53abdeed144cf69e4936c79c8ee23424cfc47798aa60421ce730cb5016b7  authority.zip" | sha256sum -c -
+          mkdir authority
+          unzip -q authority.zip -d authority
+          test "$(find authority -type f | wc -l)" -eq 4
+
+      - name: Create and verify exact Git blobs
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import base64
+          import hashlib
+          import json
+          import os
+          from pathlib import Path
+          from urllib.request import Request, urlopen
+
+          expected = {
+              "machine-readable/source_sbom.spdx.json": (11341, "8b6879db61de1ecc775e319b3f97fafea20090ab63cc413aa82e26a7c3c1d0c8", "11f30989c18a7f2797b364fbec1eb98a6bf2b87a"),
+              "machine-readable/release_sbom.spdx.json": (22991, "93d92ee00c6901cb35bc2c4fd369f48de6119894e49f337afd8f8797f18299c5", "9646575d5629a9c1082342bb3cc55ae29bbfdb4d"),
+              "machine-readable/package_manifest.json": (59171, "4bbad49a07a2c659406fa371752a59e6ba8af40c246d787a06d752597a3431d5", "6c5add11928ef82ca459ed875b43c89d843730f7"),
+              "SHA256SUMS.txt": (36697, "15749edce9b5c9732da6fdbe3fbe6927b483213e6f213ba53b9f96b12e2bb9ec", "c07c094aed613694bb0aee0b7ff1dacf81e0068f"),
+          }
+          token = os.environ["GITHUB_TOKEN"]
+          api = "https://api.github.com/repos/aeiouofficial/converty/git/blobs"
+
+          for rel, (size, sha256_expected, blob_expected) in expected.items():
+              data = (Path("authority") / rel).read_bytes()
+              assert len(data) == size, (rel, len(data), size)
+              sha256_actual = hashlib.sha256(data).hexdigest()
+              assert sha256_actual == sha256_expected, (rel, sha256_actual, sha256_expected)
+              blob_actual = hashlib.sha1(b"blob " + str(len(data)).encode("ascii") + b"\0" + data).hexdigest()
+              assert blob_actual == blob_expected, (rel, blob_actual, blob_expected)
+
+              payload = json.dumps({"content": base64.b64encode(data).decode("ascii"), "encoding": "base64"}).encode("utf-8")
+              req = Request(api, data=payload, method="POST", headers={
+                  "Authorization": f"Bearer {token}",
+                  "Accept": "application/vnd.github+json",
+                  "X-GitHub-Api-Version": "2022-11-28",
+                  "Content-Type": "application/json",
+              })
+              with urlopen(req) as response:
+                  result = json.load(response)
+              returned = result["sha"]
+              assert returned == blob_expected, (rel, returned, blob_expected)
+              print(f"TRANSFERRED {rel} bytes={size} sha256={sha256_actual} blob={returned}")
+          PY
