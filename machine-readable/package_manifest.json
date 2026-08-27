@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "workspaceVersion": "0.1.0-dev.9",
+  "workspaceVersion": "0.1.0-dev.10",
   "generatedDate": "2026-08-25",
   "excludedParts": [
     ".git",
@@ -95,8 +95,8 @@
     },
     {
       "path": "build/stage-dev-package.ps1",
-      "bytes": 2685,
-      "sha256": "e1643b2ecb37b692b086f32d2d52d1a974ff95ff8f78b7e6371535460fdec012"
+      "bytes": 3379,
+      "sha256": "4057231cffd46799354b6b72a6454ba2b881b23f6917193598db8a40a846a47d"
     },
     {
       "path": "build/test.ps1",
@@ -115,8 +115,8 @@
     },
     {
       "path": "CHANGELOG.md",
-      "bytes": 5067,
-      "sha256": "15f46ddc51fc82955b12c81ff0e199d33c0288544b78ef9638837aed392471c1"
+      "bytes": 7836,
+      "sha256": "4c327792deb9fb8b6cebe6b5e56a091e1d8835d7a8b0bc6c2e5e8afe93f14353"
     },
     {
       "path": "CMakeLists.txt",
@@ -130,8 +130,8 @@
     },
     {
       "path": "Converty.slnx",
-      "bytes": 1219,
-      "sha256": "b097b8cb9f05c8f14f3bc1017f7ba185c64b6e7ade6c58dcd7e7c2c6d1f567ea"
+      "bytes": 1509,
+      "sha256": "f6590699fede6019f3f13d93a591e2a6eb04088b205cfff65f542b2c93e7816e"
     },
     {
       "path": "Directory.Build.props",
@@ -195,8 +195,8 @@
     },
     {
       "path": "docs/development/IMPLEMENTATION_STATUS.md",
-      "bytes": 5107,
-      "sha256": "9da01c73e5c377e48675f19890f2e59b7944c60372c946eb9bc1835c29762d7d"
+      "bytes": 5285,
+      "sha256": "186d4120e499ea4054471d4c10f41877da914a9ac207ed7378993af8b8b3ac6c"
     },
     {
       "path": "docs/development/MODULE_BOUNDARIES.md",
@@ -215,13 +215,13 @@
     },
     {
       "path": "docs/HANDOVER_NEXT_AGENT.md",
-      "bytes": 5678,
-      "sha256": "8017eb380baf7b6031393b5e57543233f38da4171566513a5aa6d7366afc7f47"
+      "bytes": 5955,
+      "sha256": "b83d88aa6dbce198747ebbf2b9f7a536872d1ccc69df66449723ea69f9af400a"
     },
     {
       "path": "docs/HANDOVER_PROMPT.txt",
-      "bytes": 7281,
-      "sha256": "88a94ac816d0849c01d85e1f3a3dd503e793ae9abb8de306fd98a14a7181fab3"
+      "bytes": 5085,
+      "sha256": "61eea637882926f919fe812da4c81dd9d5a798c365cb1f1c3c22dd0369cf8d30"
     },
     {
       "path": "docs/REFERENCE_SOURCES.md",
@@ -235,8 +235,8 @@
     },
     {
       "path": "docs/SECURITY_THREAT_MODEL.md",
-      "bytes": 6056,
-      "sha256": "054d8d9cba4821a44a2f76c7b84c7a2f92a959d845695b6e9ae2fb843bdb76a4"
+      "bytes": 7383,
+      "sha256": "95d57aeddde07b7ed6777ea120ca7b50e68320ab7d3b830ac30fb8676205b48a"
     },
     {
       "path": "docs/superpowers/plans/2026-08-24-converty-rebrand.md",
@@ -289,6 +289,11 @@
       "sha256": "139d00f086f90a3df2d42312e0e8706c75da3de936c75e30355b96ee3f794659"
     },
     {
+      "path": "docs/superpowers/plans/2026-08-27-b4-dev10-worker-containment.md",
+      "bytes": 13486,
+      "sha256": "1c05336bc82765084bdef1fbb2bf27c609781c1882abf6cd7b835191dd46af3e"
+    },
+    {
       "path": "docs/superpowers/specs/2026-08-24-foundation-design.md",
       "bytes": 2051,
       "sha256": "c846b241280c63a34893b1e1fbac2e87e617bb65ff1b9f1c1e05d89edcd2ae95"
@@ -310,13 +315,13 @@
     },
     {
       "path": "docs/TASK_BACKLOG.md",
-      "bytes": 4923,
-      "sha256": "a3825645cb2aa3a9d4cc0cfa3ae7847e846d0fdfbda4c01cd5d20de4be0a97ab"
+      "bytes": 5315,
+      "sha256": "95d3e228dc71305f39857365f63ee88da61aa5ae51667c4eada96549691b4e05"
     },
     {
       "path": "docs/TEST_AND_RELEASE_GATES.md",
-      "bytes": 2521,
-      "sha256": "68dd44557bd312c2ed1f2d477f0dd5374cb488af0c237d4290d26681e5328e0b"
+      "bytes": 4639,
+      "sha256": "23fb17925cdc3aa1375bc4a3b89558901f5d4046637a7f456a0ca24666b51508"
     },
     {
       "path": "eng/ffmpeg-development.json",
@@ -330,8 +335,8 @@
     },
     {
       "path": "eng/toolchain.json",
-      "bytes": 1104,
-      "sha256": "bea67e24942eed6bfd2b0a6b154a090e0fa955347a3ce981c2731e904981bfea"
+      "bytes": 1244,
+      "sha256": "30badac44713e9b48bc826af6ac9a6053e5627e61b93568e2130a249834a3185"
     },
     {
       "path": "global.json",
@@ -340,33 +345,33 @@
     },
     {
       "path": "machine-readable/build_evidence.json",
-      "bytes": 4197,
-      "sha256": "4631d847c9b848f5a4442b2f367e9621a8fc7d27b26fecea85da1656ea601fa2"
+      "bytes": 5285,
+      "sha256": "65c80a389c6ea7d97dbc2e9dcacd03a4993b13d6d6e9036a6b16216253a6bdea"
     },
     {
       "path": "machine-readable/ci_action_pins.json",
-      "bytes": 1131,
-      "sha256": "3f04d26af35b23de7305c444718cdce3d456bbd6c5bbff941a9592241e6ca389"
+      "bytes": 1132,
+      "sha256": "2c2354f8477bbde4bfce0fd033d1ac653a2204f388d4a07de55de48a42392f29"
     },
     {
       "path": "machine-readable/handover_state.json",
-      "bytes": 4016,
-      "sha256": "7f461b9bb0153464856332f69a310abcc144d7e49456de83d453139c1a614ce1"
+      "bytes": 4634,
+      "sha256": "47cb2aceb6c91bf8136e8c444a1aa8ca08d6d37c12ecce8795e932ac39bb821e"
     },
     {
       "path": "machine-readable/release_policy.json",
-      "bytes": 1879,
-      "sha256": "fc1208fef802f84f44b02262e123cd64e92f49d6e6807f63289940133470d192"
+      "bytes": 1880,
+      "sha256": "dab1f6ef42f5c3b4e3062079f02578dd39bc71f6140828c2d86953644bfaffcd"
     },
     {
       "path": "machine-readable/release_sbom.spdx.json",
-      "bytes": 21145,
-      "sha256": "b0f582122e07c61b2c854e48c6ca81fb3354c1281902dce16ea67ad2ca4a88a3"
+      "bytes": 22991,
+      "sha256": "93d92ee00c6901cb35bc2c4fd369f48de6119894e49f337afd8f8797f18299c5"
     },
     {
       "path": "machine-readable/source_sbom.spdx.json",
-      "bytes": 9495,
-      "sha256": "5d29827a8960be4618fca87407dc0019365279f2de5c48ce0e0863d75ef1b826"
+      "bytes": 11341,
+      "sha256": "8b6879db61de1ecc775e319b3f97fafea20090ab63cc413aa82e26a7c3c1d0c8"
     },
     {
       "path": "native/cmake/Hardening.cmake",
@@ -429,9 +434,34 @@
       "sha256": "7cd78903fe586be9758b313e1ea18e1448fb6a501ff4562bd72aa3394bd9a3e2"
     },
     {
+      "path": "providers/Converty.Provider.FFmpeg/Converty.Provider.FFmpeg.csproj",
+      "bytes": 264,
+      "sha256": "90a227df15f4dbb38777e5f77a2801ecd6ce4e9081f10b4a0018815b03d5f242"
+    },
+    {
+      "path": "providers/Converty.Provider.FFmpeg/FfmpegExecutionResult.cs",
+      "bytes": 164,
+      "sha256": "72a22eee98bfc031e1fb3201da7f930fc495f7ebcdc4bf6d47617f7abeb760da"
+    },
+    {
+      "path": "providers/Converty.Provider.FFmpeg/FfmpegProcessLauncher.cs",
+      "bytes": 5518,
+      "sha256": "77d096ba189192b289c2df468a14ec1b2104b0342d650230769268b60a545815"
+    },
+    {
       "path": "providers/Converty.Provider.FFmpeg/MODULE.md",
-      "bytes": 465,
-      "sha256": "55f1f95dc7c1960d64bb0b93c7e0e96389b6a094006a8cc345eb0991747e1996"
+      "bytes": 828,
+      "sha256": "4eb03adacce9c6c95661def4a369135fadf8e87ddc456e02bbe29e88c404643e"
+    },
+    {
+      "path": "providers/Converty.Provider.FFmpeg/packages.lock.json",
+      "bytes": 272,
+      "sha256": "d6a91a5e8f7bda4ec358e019c417d9eadd8ebd56ab86dc130a1f9beecaf234eb"
+    },
+    {
+      "path": "providers/Converty.Provider.FFmpeg/TrustedFfmpegPath.cs",
+      "bytes": 1873,
+      "sha256": "cd01a9d39a52639ee2352b6b65338aa53342768c3420143e051f6512b1459ce6"
     },
     {
       "path": "providers/Converty.Provider.Wic/MODULE.md",
@@ -440,8 +470,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 4976,
-      "sha256": "11af34758b96149c5a3efe6ca6921579fce85bf3f8e7325a4a4a8792b5bf4ade"
+      "bytes": 5426,
+      "sha256": "e702c5eab1384491c9229d91dd0ce0bba807daa424b11cd61da086297837a5f2"
     },
     {
       "path": "reference-images/01_system_architecture.dot",
@@ -595,8 +625,8 @@
     },
     {
       "path": "scripts/verify_repository.py",
-      "bytes": 14161,
-      "sha256": "0de346774c7486c78d434f961cebb60b9a0046d6852098e890223d2c1bdb5ba5"
+      "bytes": 16045,
+      "sha256": "acc3e11bb81afcb57bd5afa5e3058cb08667c2a5ab2c475363d0737b5907956e"
     },
     {
       "path": "scripts/workspace_file_policy.py",
@@ -685,8 +715,8 @@
     },
     {
       "path": "src/Converty.Bridge/Program.cs",
-      "bytes": 2522,
-      "sha256": "7dc6a724d70e93f19d1fe74b2f0e373f5db858e2618a21627462cdf9e8553739"
+      "bytes": 2785,
+      "sha256": "ca30232c0d510b766a38a7384e34c65b2b9a43369159d49ef2e91d737b4ff473"
     },
     {
       "path": "src/Converty.Bridge/Shell/BridgeErrorDialog.cs",
@@ -727,6 +757,11 @@
       "path": "src/Converty.Bridge/Startup/TrustedHostPath.cs",
       "bytes": 1885,
       "sha256": "18b348dc71e97015c5860771369e0bb413ed08c93208826b270ea931e0da4cdd"
+    },
+    {
+      "path": "src/Converty.Bridge/Workers/EngineWorkerClient.cs",
+      "bytes": 5516,
+      "sha256": "dee1a228a69e5f7510e2fa6e7606e6f98f80789ce5a62a3e14b836260eb0cd31"
     },
     {
       "path": "src/Converty.Contracts/Conversion/CapabilityDescriptor.cs",
@@ -840,8 +875,8 @@
     },
     {
       "path": "src/Converty.Core/Execution/ConversionBatchRunner.cs",
-      "bytes": 7780,
-      "sha256": "b200f5082f7d747e78638a570c096d99f53d1c3b554db18e7861ab3cd70ebb1e"
+      "bytes": 5930,
+      "sha256": "e95b16e3d24e96123ad04ad101cab7e993a3ddc6b1f992f4592e3e5ebdc6e73d"
     },
     {
       "path": "src/Converty.Core/Execution/ConversionFailedException.cs",
@@ -849,24 +884,19 @@
       "sha256": "248bcd3411a37fb1c4e47b418d05f3ee1470b1c2a66acdf00a371cc13f34f69b"
     },
     {
-      "path": "src/Converty.Core/Execution/FfmpegExecutionResult.cs",
-      "bytes": 163,
-      "sha256": "6cc5bada0295de5e2dcc97c577bbdc54a687b81ce620eb1d435bec9c18c76d0d"
+      "path": "src/Converty.Core/Execution/ConversionStagingDirectory.cs",
+      "bytes": 2325,
+      "sha256": "f9a71debee4e91143f9d607513dc9ac2d1424fc34079d7377155fd9e8a6900a8"
     },
     {
-      "path": "src/Converty.Core/Execution/FfmpegProcessLauncher.cs",
-      "bytes": 5535,
-      "sha256": "1e579fc9866df76e3e82bd984ccadef9d3b66cf8d18879f7c0ac8184a592e6d3"
+      "path": "src/Converty.Core/Execution/ConversionWorkerResult.cs",
+      "bytes": 164,
+      "sha256": "6bdb2f81528eab12f5a381b29fb2ad56497af59dfb9f86ad97392b80bd523dd1"
     },
     {
-      "path": "src/Converty.Core/Execution/IFfmpegProcessLauncher.cs",
-      "bytes": 358,
-      "sha256": "b356ae9d650ab94402cd04bbe269d51b41c86d427d0f2fc8806da75104ae2f93"
-    },
-    {
-      "path": "src/Converty.Core/Execution/TrustedFfmpegPath.cs",
-      "bytes": 1872,
-      "sha256": "c2775cbb1fb52ee66f4d17d35dc55cdfa1f96044550e21228bfbd29c8b44e328"
+      "path": "src/Converty.Core/Execution/IConversionWorkerClient.cs",
+      "bytes": 341,
+      "sha256": "4a7bfe44d1a316d4af2158d45e5e996239b54a1d384e995d6649462057b1630b"
     },
     {
       "path": "src/Converty.Core/Output/OutputPathResolver.cs",
@@ -914,9 +944,24 @@
       "sha256": "514eacee8c999d8391997a44a8e4cc763d257a711f68850b53b8baeb5645e9a2"
     },
     {
+      "path": "src/Converty.EngineWorker/Converty.EngineWorker.csproj",
+      "bytes": 437,
+      "sha256": "d66840a4f736f6813e3f6a704bb166f78e18f91ed2927a1536460b4d2eadd445"
+    },
+    {
       "path": "src/Converty.EngineWorker/MODULE.md",
-      "bytes": 488,
-      "sha256": "fb7a81a67d896e0717d4fa479e2a751a7d38d6816987db602657b89f1a4a37e9"
+      "bytes": 931,
+      "sha256": "ca981b3b99e996c2757645366df606ce1d62bd0b66f70a9cf2b40219435fdfd2"
+    },
+    {
+      "path": "src/Converty.EngineWorker/packages.lock.json",
+      "bytes": 419,
+      "sha256": "56cba6fc2ac96d64338c141ca70e474f46d7e31e551f160b1ae31f6d5138a1e7"
+    },
+    {
+      "path": "src/Converty.EngineWorker/Program.cs",
+      "bytes": 5002,
+      "sha256": "dba0971d5588e71dc3a2100feaaf51aca67602a880f31242a234009a6430252e"
     },
     {
       "path": "src/Converty.FakeProviders/Converty.FakeProviders.csproj",
@@ -1060,8 +1105,8 @@
     },
     {
       "path": "src/Converty.Security/Converty.Security.csproj",
-      "bytes": 294,
-      "sha256": "b7a11dc91a0c300e663e1413a82d9240bf816ea07d1bb325d9a07492f18b2b07"
+      "bytes": 342,
+      "sha256": "d298f7509b318c8f8df0481ea78d5a82e3ec34966a639022cb1d4cb121c39512"
     },
     {
       "path": "src/Converty.Security/Ipc/ConnectedPeerValidator.cs",
@@ -1087,6 +1132,76 @@
       "path": "src/Converty.Security/packages.lock.json",
       "bytes": 61,
       "sha256": "03eeadc5ef377c17f787ab65f41fb4c8a9c936bb7f7f4171111fdeec8a81cb46"
+    },
+    {
+      "path": "src/Converty.Security/Workers/IWorkerProcessLauncher.cs",
+      "bytes": 226,
+      "sha256": "34c6b6ddc9492a50717b8a55111c21b96bfb04989decf502bacdf3ac364c12c0"
+    },
+    {
+      "path": "src/Converty.Security/Workers/SafeKernelHandle.cs",
+      "bytes": 369,
+      "sha256": "a745b1876c90155d712d8675e81fa27241bbb1f8f760914f8c0472af315d6ea9"
+    },
+    {
+      "path": "src/Converty.Security/Workers/WindowsAclGrant.cs",
+      "bytes": 5637,
+      "sha256": "452017dd5a6dc6f82c3e4ad7e9f6a82e491d9bd80552f5e5b087a78f94e23e7d"
+    },
+    {
+      "path": "src/Converty.Security/Workers/WindowsAppContainerProfile.cs",
+      "bytes": 2160,
+      "sha256": "bfe7c5fd1b071aa2689c0df1464c6b2337ce462fcef5d2b8774cb0f9861e35da"
+    },
+    {
+      "path": "src/Converty.Security/Workers/WindowsJobObject.cs",
+      "bytes": 6255,
+      "sha256": "d5f9775ea1b5027bc4fe41b1fdddd4fec2060fce8b47c5fb0887c745acb8d917"
+    },
+    {
+      "path": "src/Converty.Security/Workers/WindowsNativeMethods.cs",
+      "bytes": 8781,
+      "sha256": "517b6fe46689b0d727d3f32957bed98139097902c859d9088e49ce997af1c93a"
+    },
+    {
+      "path": "src/Converty.Security/Workers/WindowsSuspendedProcess.cs",
+      "bytes": 16185,
+      "sha256": "808264b2d75653b6318921adf5e490be0c332a5d5ecdb905f0f52c2e48e3fd07"
+    },
+    {
+      "path": "src/Converty.Security/Workers/WindowsWorkerProcessLauncher.cs",
+      "bytes": 13367,
+      "sha256": "ce8a1f4491758aa7db48bec1863510b15f78c97a9a9cb16e1aa75adf0a56b9e7"
+    },
+    {
+      "path": "src/Converty.Security/Workers/WorkerFileSystemScope.cs",
+      "bytes": 901,
+      "sha256": "0a5ae8ec3a12049b662c5f5d23e5efcbf3b71cb34dd48028ec7dd6413ab75567"
+    },
+    {
+      "path": "src/Converty.Security/Workers/WorkerIsolationLevel.cs",
+      "bytes": 114,
+      "sha256": "9648cc107b33843720d1c586b9ca9ea6137849daf995fddb4e985509fbfa00fb"
+    },
+    {
+      "path": "src/Converty.Security/Workers/WorkerOutputLimitExceededException.cs",
+      "bytes": 528,
+      "sha256": "6bb535c53b437b9544c92ab2f567a4f98aebaa47185cbf221bebcb3b34df77c0"
+    },
+    {
+      "path": "src/Converty.Security/Workers/WorkerProcessLaunchRequest.cs",
+      "bytes": 376,
+      "sha256": "673165626419013c530ee5677618ad66e6155bc1def0d9b8744594d18cb236ff"
+    },
+    {
+      "path": "src/Converty.Security/Workers/WorkerProcessResult.cs",
+      "bytes": 116,
+      "sha256": "6872c7fdbac9eca0d5f2a0ecd31bc51e9a60c634ca184bb21aece20f35b625eb"
+    },
+    {
+      "path": "src/Converty.Security/Workers/WorkerResourceLimits.cs",
+      "bytes": 2476,
+      "sha256": "8b8d910bf47e1b3083be861c731ec684c40b3353817d10b570ea5c96be0dfdd6"
     },
     {
       "path": "src/Converty.Serialization/ContractJson.cs",
@@ -1160,8 +1275,8 @@
     },
     {
       "path": "tests/Converty.Bridge.Tests/Startup/BridgeSubmissionCoordinatorTests.cs",
-      "bytes": 6135,
-      "sha256": "41488ecfa6f1d8d5264c5889baddbcf3b8914c018386f752ea0da615a0335a03"
+      "bytes": 6128,
+      "sha256": "d0280fcfa436ebf7efce32a52b082091e128bdcda9a8ef4909f84af2ab7342ad"
     },
     {
       "path": "tests/Converty.Bridge.Tests/Startup/TrustedHostStartupTests.cs",
@@ -1210,18 +1325,18 @@
     },
     {
       "path": "tests/Converty.Core.Tests/Converty.Core.Tests.csproj",
-      "bytes": 626,
-      "sha256": "55728965e4bbb61290496c6748126af9d9608e4e3f54021c21d070c328c02763"
+      "bytes": 734,
+      "sha256": "74ead8b8c28efe6ecc9d94cb366519ddb6f671d061002fe25518c1d21bc285ef"
     },
     {
       "path": "tests/Converty.Core.Tests/Execution/ConversionBatchRunnerTests.cs",
-      "bytes": 7772,
-      "sha256": "a38dab30501ab7fa21f7604a565e62d9bda7bb8357b90335409257777a229de7"
+      "bytes": 7973,
+      "sha256": "c6ff7b3bb6ccd52c56576b2352de9ae4a64da924ec12bdbf22e42050a38ba50a"
     },
     {
       "path": "tests/Converty.Core.Tests/Execution/FfmpegProcessLauncherTests.cs",
-      "bytes": 3841,
-      "sha256": "bca0ac87d355d1a8617eaa09c9eab91b1ce5728942469991c40133b2d4d51a80"
+      "bytes": 3768,
+      "sha256": "c432d6166f65f1db3e116996d137f6ccb3a3d66598248ddd48126391c697adf7"
     },
     {
       "path": "tests/Converty.Core.Tests/FakeProviderTests.cs",
@@ -1240,8 +1355,8 @@
     },
     {
       "path": "tests/Converty.Core.Tests/packages.lock.json",
-      "bytes": 5304,
-      "sha256": "628e019c52fe4cbb9ab9c41e6dc84b03609681b22e84edb0af9a69b4d417b29a"
+      "bytes": 4278,
+      "sha256": "50e66db460ee4ae1f2e58fa3a0f127d9f6e83e1ec33fa0eadbd1f3d8c8390d0a"
     },
     {
       "path": "tests/Converty.Core.Tests/Planning/ConversionPlannerTests.cs",
@@ -1349,6 +1464,26 @@
       "sha256": "a768de64f9d1c4b063a1c5c059a26dba7cbb304c32b199fd51913cb9e0eb032e"
     },
     {
+      "path": "tests/Converty.Security.Tests/Workers/WindowsWorkerProcessLauncherCanaryTests.cs",
+      "bytes": 4821,
+      "sha256": "584222e1da3b24f3bb05b234d2815ff20ba3c1c8d77e169e11a561e5593726f3"
+    },
+    {
+      "path": "tests/Converty.Security.Tests/Workers/WindowsWorkerStrictIsolationCanaryTests.cs",
+      "bytes": 5732,
+      "sha256": "0eda931a5e4f4d7aa6142ff1bc5963ce4f1d95ddd5db35836a13a3926a4cab28"
+    },
+    {
+      "path": "tests/Converty.Security.Tests/Workers/WorkerOutputLimitTests.cs",
+      "bytes": 3993,
+      "sha256": "2b9b38887c8b8f182d7be35a3ba9691316f81383353637f4e2f15eac4241c67d"
+    },
+    {
+      "path": "tests/Converty.Security.Tests/Workers/WorkerResourceLimitsTests.cs",
+      "bytes": 1520,
+      "sha256": "601b16a70a947b5807c5b9226e87aef30e2ae61053e4a3ae6b38b988e0febd84"
+    },
+    {
       "path": "tests/Converty.Serialization.Tests/AdversarialJsonTests.cs",
       "bytes": 4817,
       "sha256": "b620ad88d1f84ac94816abcef8bc8270ac35ea520cd770ca38d361fc3531d5b3"
@@ -1367,6 +1502,21 @@
       "path": "tests/Converty.Serialization.Tests/packages.lock.json",
       "bytes": 5163,
       "sha256": "bae52a8edddadd0fedabb87dec5e67477641b36a891029892764d0254047a318"
+    },
+    {
+      "path": "tests/Converty.WorkerCanary/Converty.WorkerCanary.csproj",
+      "bytes": 333,
+      "sha256": "a1d934ca125c532ebe6ca43f6227d0af1f38044ac8f1f3f33920558a7b243485"
+    },
+    {
+      "path": "tests/Converty.WorkerCanary/packages.lock.json",
+      "bytes": 62,
+      "sha256": "1624731bf151ec2ac6993023046a4abbac7c6ddc71ed2e242e8285bbc69d561e"
+    },
+    {
+      "path": "tests/Converty.WorkerCanary/Program.cs",
+      "bytes": 2992,
+      "sha256": "1c44a9e455548b4c3e26a52014db3a9e9c054d2be5bf5e02e1b6c1acc5929a12"
     },
     {
       "path": "tests/fixtures/dependency-audit/clean.json",
@@ -1397,6 +1547,26 @@
       "path": "tests/README.md",
       "bytes": 700,
       "sha256": "b6e96747755cda45e714bc2d797ad98eeb95c26f3f909d9ea5de0f49ba97f06b"
+    },
+    {
+      "path": "tests/static/test_dev10_b4_containment.py",
+      "bytes": 2237,
+      "sha256": "5e94d905882ad1304d9c3f9dc3a2243a27d4a50793c9bd206207ec5e33fa445c"
+    },
+    {
+      "path": "tests/static/test_dev10_b4_product_strict.py",
+      "bytes": 397,
+      "sha256": "45417d4c414221c7d546049193ae8d38fa8f0edb7b06810b489cbee932c5ff25"
+    },
+    {
+      "path": "tests/static/test_dev10_b4_strict_isolation.py",
+      "bytes": 2276,
+      "sha256": "845ea5461aff28feff838746bc0f3d022d72f3460f2aad73f8305f314a2cc7eb"
+    },
+    {
+      "path": "tests/static/test_dev10_b4_worker_boundary.py",
+      "bytes": 1003,
+      "sha256": "f4fc38c7bed88acd8a41910d33ca637b410769ee8a1f0dfb09c0035804a477b4"
     },
     {
       "path": "tests/static/test_dev4_ci_provenance.py",
@@ -1485,8 +1655,8 @@
     },
     {
       "path": "VERSION",
-      "bytes": 12,
-      "sha256": "d1c227cb627ca1a13cdafba857b3b9d27ef4b0691ca2a72b6e5cd4f0c1903e57"
+      "bytes": 13,
+      "sha256": "d5bbc87586a52224430e95f6e67a3c56263cc6ce8b50204cd151de20376e5afd"
     }
   ]
 }

@@ -8,9 +8,20 @@
     ]
   },
   "dataLicense": "CC0-1.0",
-  "documentNamespace": "https://converty.invalid/spdx/source/0.1.0-dev.9/91a7013b4fd011f1c96df33f1390ccf29b8d62130628a123734b268ca64f7260",
-  "name": "Converty-source-0.1.0-dev.9",
+  "documentNamespace": "https://converty.invalid/spdx/source/0.1.0-dev.10/290d238bd156afd582a477215f24c4ff3b09dafb73473c1ac88f5324b8b349c5",
+  "name": "Converty-source-0.1.0-dev.10",
   "packages": [
+    {
+      "SPDXID": "SPDXRef-Project-Converty.Provider.FFmpeg",
+      "comment": "First-party managed project: providers/Converty.Provider.FFmpeg/Converty.Provider.FFmpeg.csproj",
+      "copyrightText": "NOASSERTION",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "name": "Converty.Provider.FFmpeg",
+      "versionInfo": "0.1.0-dev.10"
+    },
     {
       "SPDXID": "SPDXRef-Project-Converty.Bridge",
       "comment": "First-party managed project: src/Converty.Bridge/Converty.Bridge.csproj",
@@ -20,7 +31,7 @@
       "licenseConcluded": "NOASSERTION",
       "licenseDeclared": "NOASSERTION",
       "name": "Converty.Bridge",
-      "versionInfo": "0.1.0-dev.9"
+      "versionInfo": "0.1.0-dev.10"
     },
     {
       "SPDXID": "SPDXRef-Project-Converty.Contracts",
@@ -31,7 +42,7 @@
       "licenseConcluded": "NOASSERTION",
       "licenseDeclared": "NOASSERTION",
       "name": "Converty.Contracts",
-      "versionInfo": "0.1.0-dev.9"
+      "versionInfo": "0.1.0-dev.10"
     },
     {
       "SPDXID": "SPDXRef-Project-Converty.Core",
@@ -42,7 +53,18 @@
       "licenseConcluded": "NOASSERTION",
       "licenseDeclared": "NOASSERTION",
       "name": "Converty.Core",
-      "versionInfo": "0.1.0-dev.9"
+      "versionInfo": "0.1.0-dev.10"
+    },
+    {
+      "SPDXID": "SPDXRef-Project-Converty.EngineWorker",
+      "comment": "First-party managed project: src/Converty.EngineWorker/Converty.EngineWorker.csproj",
+      "copyrightText": "NOASSERTION",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "name": "Converty.EngineWorker",
+      "versionInfo": "0.1.0-dev.10"
     },
     {
       "SPDXID": "SPDXRef-Project-Converty.FakeProviders",
@@ -53,7 +75,7 @@
       "licenseConcluded": "NOASSERTION",
       "licenseDeclared": "NOASSERTION",
       "name": "Converty.FakeProviders",
-      "versionInfo": "0.1.0-dev.9"
+      "versionInfo": "0.1.0-dev.10"
     },
     {
       "SPDXID": "SPDXRef-Project-Converty.Host",
@@ -64,7 +86,7 @@
       "licenseConcluded": "NOASSERTION",
       "licenseDeclared": "NOASSERTION",
       "name": "Converty.Host",
-      "versionInfo": "0.1.0-dev.9"
+      "versionInfo": "0.1.0-dev.10"
     },
     {
       "SPDXID": "SPDXRef-Project-Converty.Ipc",
@@ -75,7 +97,7 @@
       "licenseConcluded": "NOASSERTION",
       "licenseDeclared": "NOASSERTION",
       "name": "Converty.Ipc",
-      "versionInfo": "0.1.0-dev.9"
+      "versionInfo": "0.1.0-dev.10"
     },
     {
       "SPDXID": "SPDXRef-Project-Converty.Security",
@@ -86,7 +108,7 @@
       "licenseConcluded": "NOASSERTION",
       "licenseDeclared": "NOASSERTION",
       "name": "Converty.Security",
-      "versionInfo": "0.1.0-dev.9"
+      "versionInfo": "0.1.0-dev.10"
     },
     {
       "SPDXID": "SPDXRef-Project-Converty.Serialization",
@@ -97,7 +119,7 @@
       "licenseConcluded": "NOASSERTION",
       "licenseDeclared": "NOASSERTION",
       "name": "Converty.Serialization",
-      "versionInfo": "0.1.0-dev.9"
+      "versionInfo": "0.1.0-dev.10"
     },
     {
       "SPDXID": "SPDXRef-Project-Converty.Bridge.Tests",
@@ -108,7 +130,7 @@
       "licenseConcluded": "NOASSERTION",
       "licenseDeclared": "NOASSERTION",
       "name": "Converty.Bridge.Tests",
-      "versionInfo": "0.1.0-dev.9"
+      "versionInfo": "0.1.0-dev.10"
     },
     {
       "SPDXID": "SPDXRef-Project-Converty.Contracts.Tests",
@@ -119,7 +141,7 @@
       "licenseConcluded": "NOASSERTION",
       "licenseDeclared": "NOASSERTION",
       "name": "Converty.Contracts.Tests",
-      "versionInfo": "0.1.0-dev.9"
+      "versionInfo": "0.1.0-dev.10"
     },
     {
       "SPDXID": "SPDXRef-Project-Converty.Core.Tests",
@@ -130,7 +152,7 @@
       "licenseConcluded": "NOASSERTION",
       "licenseDeclared": "NOASSERTION",
       "name": "Converty.Core.Tests",
-      "versionInfo": "0.1.0-dev.9"
+      "versionInfo": "0.1.0-dev.10"
     },
     {
       "SPDXID": "SPDXRef-Project-Converty.Host.Tests",
@@ -141,7 +163,7 @@
       "licenseConcluded": "NOASSERTION",
       "licenseDeclared": "NOASSERTION",
       "name": "Converty.Host.Tests",
-      "versionInfo": "0.1.0-dev.9"
+      "versionInfo": "0.1.0-dev.10"
     },
     {
       "SPDXID": "SPDXRef-Project-Converty.Ipc.Tests",
@@ -152,7 +174,7 @@
       "licenseConcluded": "NOASSERTION",
       "licenseDeclared": "NOASSERTION",
       "name": "Converty.Ipc.Tests",
-      "versionInfo": "0.1.0-dev.9"
+      "versionInfo": "0.1.0-dev.10"
     },
     {
       "SPDXID": "SPDXRef-Project-Converty.Security.Tests",
@@ -163,7 +185,7 @@
       "licenseConcluded": "NOASSERTION",
       "licenseDeclared": "NOASSERTION",
       "name": "Converty.Security.Tests",
-      "versionInfo": "0.1.0-dev.9"
+      "versionInfo": "0.1.0-dev.10"
     },
     {
       "SPDXID": "SPDXRef-Project-Converty.Serialization.Tests",
@@ -174,10 +196,26 @@
       "licenseConcluded": "NOASSERTION",
       "licenseDeclared": "NOASSERTION",
       "name": "Converty.Serialization.Tests",
-      "versionInfo": "0.1.0-dev.9"
+      "versionInfo": "0.1.0-dev.10"
+    },
+    {
+      "SPDXID": "SPDXRef-Project-Converty.WorkerCanary",
+      "comment": "First-party managed project: tests/Converty.WorkerCanary/Converty.WorkerCanary.csproj",
+      "copyrightText": "NOASSERTION",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "name": "Converty.WorkerCanary",
+      "versionInfo": "0.1.0-dev.10"
     }
   ],
   "relationships": [
+    {
+      "relatedSpdxElement": "SPDXRef-Project-Converty.Provider.FFmpeg",
+      "relationshipType": "DESCRIBES",
+      "spdxElementId": "SPDXRef-DOCUMENT"
+    },
     {
       "relatedSpdxElement": "SPDXRef-Project-Converty.Bridge",
       "relationshipType": "DESCRIBES",
@@ -190,6 +228,11 @@
     },
     {
       "relatedSpdxElement": "SPDXRef-Project-Converty.Core",
+      "relationshipType": "DESCRIBES",
+      "spdxElementId": "SPDXRef-DOCUMENT"
+    },
+    {
+      "relatedSpdxElement": "SPDXRef-Project-Converty.EngineWorker",
       "relationshipType": "DESCRIBES",
       "spdxElementId": "SPDXRef-DOCUMENT"
     },
@@ -250,6 +293,11 @@
     },
     {
       "relatedSpdxElement": "SPDXRef-Project-Converty.Serialization.Tests",
+      "relationshipType": "DESCRIBES",
+      "spdxElementId": "SPDXRef-DOCUMENT"
+    },
+    {
+      "relatedSpdxElement": "SPDXRef-Project-Converty.WorkerCanary",
       "relationshipType": "DESCRIBES",
       "spdxElementId": "SPDXRef-DOCUMENT"
     }
