@@ -7,6 +7,7 @@ namespace Converty.Security.Workers;
 public sealed class WindowsWorkerProcessLauncher : IWorkerProcessLauncher
 {
     public static readonly TimeSpan MaximumExecutionTimeout = TimeSpan.FromMinutes(30);
+    private static readonly TimeSpan OutputPollInterval = TimeSpan.FromMilliseconds(25);
     public const int MaximumArgumentCount = 16;
     public const int MaximumArgumentCharacters = 32_767;
     public const int MaximumCapturedErrorCharacters = 64 * 1024;
@@ -19,6 +20,8 @@ public sealed class WindowsWorkerProcessLauncher : IWorkerProcessLauncher
         Validate(request);
         cancellationToken.ThrowIfCancellationRequested();
 
+        IReadOnlyDictionary<string, long> stagingBaseline =
+            CaptureFileLengths(request.FileSystemScope.WritableDirectory);
         WindowsAppContainerProfile? appContainer = null;
         WindowsAclGrant? applicationGrant = null;
         WindowsAclGrant? stagingGrant = null;
@@ -66,7 +69,27 @@ public sealed class WindowsWorkerProcessLauncher : IWorkerProcessLauncher
 
             try
             {
-                await process.WaitForExitAsync(timeoutCancellation.Token).ConfigureAwait(false);
+                Task processExitTask = process.WaitForExitAsync(timeoutCancellation.Token);
+                while (!processExitTask.IsCompleted)
+                {
+                    Task completed = await Task.WhenAny(
+                        processExitTask,
+                        Task.Delay(OutputPollInterval)).ConfigureAwait(false);
+                    if (completed != processExitTask)
+                    {
+                        ThrowIfOutputBudgetExceeded(request, stagingBaseline);
+                    }
+                }
+
+                await processExitTask.ConfigureAwait(false);
+                ThrowIfOutputBudgetExceeded(request, stagingBaseline);
+            }
+            catch (WorkerOutputLimitExceededException)
+            {
+                TerminateAndDisposeJob(job, exitCode: 126);
+                job = null;
+                await IgnoreDrainFailuresAsync(standardErrorTask, standardOutputTask).ConfigureAwait(false);
+                throw;
             }
             catch (OperationCanceledException) when (!cancellationToken.IsCancellationRequested)
             {
@@ -199,6 +222,92 @@ public sealed class WindowsWorkerProcessLauncher : IWorkerProcessLauncher
         }
 
         return captured.ToString();
+    }
+
+    private static IReadOnlyDictionary<string, long> CaptureFileLengths(string root)
+    {
+        var result = new Dictionary<string, long>(StringComparer.OrdinalIgnoreCase);
+        var pendingDirectories = new Stack<string>();
+        pendingDirectories.Push(Path.GetFullPath(root));
+
+        while (pendingDirectories.Count > 0)
+        {
+            string directory = pendingDirectories.Pop();
+            IEnumerable<string> entries;
+            try
+            {
+                entries = Directory.EnumerateFileSystemEntries(directory).ToArray();
+            }
+            catch (DirectoryNotFoundException)
+            {
+                continue;
+            }
+
+            foreach (string entry in entries)
+            {
+                FileAttributes attributes;
+                try
+                {
+                    attributes = File.GetAttributes(entry);
+                }
+                catch (FileNotFoundException)
+                {
+                    continue;
+                }
+                catch (DirectoryNotFoundException)
+                {
+                    continue;
+                }
+
+                if ((attributes & FileAttributes.ReparsePoint) != 0)
+                {
+                    throw new IOException("Worker staging output monitor must not cross a reparse point.");
+                }
+                if ((attributes & FileAttributes.Directory) != 0)
+                {
+                    pendingDirectories.Push(entry);
+                    continue;
+                }
+
+                try
+                {
+                    result[Path.GetFullPath(entry)] = new FileInfo(entry).Length;
+                }
+                catch (FileNotFoundException)
+                {
+                    // The worker removed the file between enumeration and length sampling.
+                }
+            }
+        }
+
+        return result;
+    }
+
+    private static void ThrowIfOutputBudgetExceeded(
+        WorkerProcessLaunchRequest request,
+        IReadOnlyDictionary<string, long> stagingBaseline)
+    {
+        IReadOnlyDictionary<string, long> current =
+            CaptureFileLengths(request.FileSystemScope.WritableDirectory);
+        long growth = 0;
+        foreach ((string path, long currentLength) in current)
+        {
+            long baselineLength = stagingBaseline.TryGetValue(path, out long initialLength)
+                ? initialLength
+                : 0;
+            if (currentLength <= baselineLength)
+            {
+                continue;
+            }
+
+            growth = checked(growth + (currentLength - baselineLength));
+            if (growth > request.ResourceLimits.MaximumOutputBytes)
+            {
+                throw new WorkerOutputLimitExceededException(
+                    request.ResourceLimits.MaximumOutputBytes,
+                    growth);
+            }
+        }
     }
 
     private static void TerminateAndDisposeJob(WindowsJobObject job, uint exitCode)
