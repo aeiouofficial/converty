@@ -12,6 +12,7 @@ Managed job: `98375493893`
 Static job: `98375494099`
 
 B4 BEHAVIOR IS QUALIFIED; DEV.10 DELIVERY AUTHORITY IS NOT YET FROZEN.
+Next development tranche after successful dev.10 authority closure: `0.1.0-dev.11`.
 
 Behavior evidence on Windows Server 2025 / windows-2025-vs2026 / .NET SDK 10.0.400:
 - 18/18 locked restore PASS

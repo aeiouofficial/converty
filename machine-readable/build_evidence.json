@@ -30,6 +30,7 @@
         "skipped": 0
       },
       "nativeExplorerReleaseBuild": "PASS",
+      "nativeTopologySmoke": "PASS",
       "developmentFfmpegPinHashAndExecution": "PASS",
       "makeAppxUnsignedDevelopmentPackage": "PASS",
       "directShellDllClassFactoryInvoke": "PASS",

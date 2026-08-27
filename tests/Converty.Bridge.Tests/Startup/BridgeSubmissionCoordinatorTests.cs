@@ -72,7 +72,7 @@ public sealed class BridgeSubmissionCoordinatorTests
         var coordinator = new BridgeSubmissionCoordinator(
             client,
             launcher,
-            startupTimeout: TimeSpan.FromMilliseconds(100),
+            startupTimeout: TimeSpan.FromSeconds(1),
             retryDelay: TimeSpan.FromMilliseconds(10));
 
         await Assert.ThrowsAsync<TimeoutException>(
