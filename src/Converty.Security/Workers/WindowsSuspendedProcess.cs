@@ -33,7 +33,7 @@ internal sealed class WindowsSuspendedProcess : IDisposable
     internal SafeKernelHandle ProcessHandle =>
         _processHandle ?? throw new ObjectDisposedException(nameof(WindowsSuspendedProcess));
 
-    internal static WindowsSuspendedProcess Create(WorkerProcessLaunchRequest request)
+    internal static WindowsSuspendedProcess Create(WorkerProcessLaunchRequest request, nint appContainerSid = default)
     {
         ArgumentNullException.ThrowIfNull(request);
 
@@ -58,7 +58,7 @@ internal sealed class WindowsSuspendedProcess : IDisposable
                 childStandardError.DangerousGetHandle(),
             ];
 
-            using var attributes = ProcessThreadAttributeList.Create(inheritedHandles);
+            using var attributes = ProcessThreadAttributeList.Create(inheritedHandles, appContainerSid);
             var startupInfo = new WindowsNativeMethods.StartupInfoEx
             {
                 StartupInfo = new WindowsNativeMethods.StartupInfo
@@ -301,11 +301,13 @@ internal sealed class WindowsSuspendedProcess : IDisposable
     {
         private nint _attributeList;
         private nint _handleList;
+        private nint _securityCapabilities;
 
-        private ProcessThreadAttributeList(nint attributeList, nint handleList)
+        private ProcessThreadAttributeList(nint attributeList, nint handleList, nint securityCapabilities)
         {
             _attributeList = attributeList;
             _handleList = handleList;
+            _securityCapabilities = securityCapabilities;
         }
 
         internal nint Handle =>
@@ -313,7 +315,7 @@ internal sealed class WindowsSuspendedProcess : IDisposable
                 ? _attributeList
                 : throw new ObjectDisposedException(nameof(ProcessThreadAttributeList));
 
-        internal static ProcessThreadAttributeList Create(nint[] inheritedHandles)
+        internal static ProcessThreadAttributeList Create(nint[] inheritedHandles, nint appContainerSid)
         {
             ArgumentNullException.ThrowIfNull(inheritedHandles);
             if (inheritedHandles.Length == 0)
@@ -321,10 +323,11 @@ internal sealed class WindowsSuspendedProcess : IDisposable
                 throw new ArgumentException("At least one inherited worker handle is required.", nameof(inheritedHandles));
             }
 
+            int attributeCount = appContainerSid == nint.Zero ? 1 : 2;
             nuint requiredBytes = 0;
             _ = WindowsNativeMethods.InitializeProcThreadAttributeList(
                 nint.Zero,
-                attributeCount: 1,
+                attributeCount,
                 flags: 0,
                 ref requiredBytes);
             if (requiredBytes == 0 || requiredBytes > int.MaxValue)
@@ -334,11 +337,12 @@ internal sealed class WindowsSuspendedProcess : IDisposable
 
             nint attributeList = Marshal.AllocHGlobal(checked((int)requiredBytes));
             nint handleList = nint.Zero;
+            nint securityCapabilities = nint.Zero;
             try
             {
                 if (!WindowsNativeMethods.InitializeProcThreadAttributeList(
                         attributeList,
-                        attributeCount: 1,
+                        attributeCount,
                         flags: 0,
                         ref requiredBytes))
                 {
@@ -364,7 +368,33 @@ internal sealed class WindowsSuspendedProcess : IDisposable
                     throw LastError("Converty could not restrict worker inherited handles.");
                 }
 
-                return new ProcessThreadAttributeList(attributeList, handleList);
+                if (appContainerSid != nint.Zero)
+                {
+                    var capabilities = new WindowsNativeMethods.SecurityCapabilities
+                    {
+                        AppContainerSid = appContainerSid,
+                        Capabilities = nint.Zero,
+                        CapabilityCount = 0,
+                        Reserved = 0,
+                    };
+                    int capabilityBytes = Marshal.SizeOf<WindowsNativeMethods.SecurityCapabilities>();
+                    securityCapabilities = Marshal.AllocHGlobal(capabilityBytes);
+                    Marshal.StructureToPtr(capabilities, securityCapabilities, fDeleteOld: false);
+
+                    if (!WindowsNativeMethods.UpdateProcThreadAttribute(
+                            attributeList,
+                            flags: 0,
+                            WindowsNativeMethods.PROC_THREAD_ATTRIBUTE_SECURITY_CAPABILITIES,
+                            securityCapabilities,
+                            checked((nuint)capabilityBytes),
+                            nint.Zero,
+                            nint.Zero))
+                    {
+                        throw LastError("Converty could not apply strict worker security capabilities.");
+                    }
+                }
+
+                return new ProcessThreadAttributeList(attributeList, handleList, securityCapabilities);
             }
             catch
             {
@@ -376,6 +406,10 @@ internal sealed class WindowsSuspendedProcess : IDisposable
                 if (handleList != nint.Zero)
                 {
                     Marshal.FreeHGlobal(handleList);
+                }
+                if (securityCapabilities != nint.Zero)
+                {
+                    Marshal.FreeHGlobal(securityCapabilities);
                 }
                 throw;
             }
@@ -393,6 +427,11 @@ internal sealed class WindowsSuspendedProcess : IDisposable
             {
                 Marshal.FreeHGlobal(_handleList);
                 _handleList = nint.Zero;
+            }
+            if (_securityCapabilities != nint.Zero)
+            {
+                Marshal.FreeHGlobal(_securityCapabilities);
+                _securityCapabilities = nint.Zero;
             }
         }
     }
