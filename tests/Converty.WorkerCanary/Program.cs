@@ -53,7 +53,8 @@ if (args.Length == 2 && string.Equals(args[0], "--connect-loopback", StringCompa
     try
     {
         using var client = new TcpClient();
-        await client.ConnectAsync("127.0.0.1", port).ConfigureAwait(false);
+        using var connectTimeout = new CancellationTokenSource(TimeSpan.FromSeconds(2));
+        await client.ConnectAsync("127.0.0.1", port, connectTimeout.Token).ConfigureAwait(false);
         return 0;
     }
     catch (SocketException)
@@ -61,6 +62,10 @@ if (args.Length == 2 && string.Equals(args[0], "--connect-loopback", StringCompa
         return 13;
     }
     catch (UnauthorizedAccessException)
+    {
+        return 13;
+    }
+    catch (OperationCanceledException)
     {
         return 13;
     }
