@@ -38,6 +38,7 @@ public sealed class WindowsWorkerProcessLauncherCanaryTests
                     maximumProcessMemoryBytes: 512L * 1024 * 1024,
                     maximumJobMemoryBytes: 768L * 1024 * 1024,
                     maximumCpuRatePercent: 100),
+                new WorkerFileSystemScope(temporaryDirectory),
                 TimeSpan.FromSeconds(15),
                 MaximumCapturedStandardErrorCharacters: 4096);
 
