@@ -98,8 +98,67 @@
     "trustedHostStartup": "IMPLEMENTED_AND_TESTED",
     "bridgeServerAuthentication": "FINAL_SHIPPING_ACCEPTANCE_STILL_OPEN"
   },
+  "postAuthoritySecurityHardening": {
+    "status": "BEHAVIOR_QUALIFIED_GENERATED_AUTHORITY_REGEN_PENDING",
+    "headSha": "b0ec6445abe7d7d2b53329ba7b4f2a07c51b7eed",
+    "workflowRunId": 33044395097,
+    "managedJobId": 98424925818,
+    "staticJobId": 98424926101,
+    "runner": {
+      "os": "Windows Server 2025",
+      "image": "windows-2025-vs2026",
+      "imageVersion": "20260818.207.1",
+      "dotnetSdk": "10.0.400"
+    },
+    "changes": [
+      "WorkerFileSystemScope rejects any reparse point in the writable staging directory ancestry.",
+      "TrustedFfmpegPath rejects a reparse-point tools directory between the trusted application root and fixed tools/ffmpeg/ffmpeg.exe."
+    ],
+    "redEvidence": {
+      "stagingAncestry": {
+        "headSha": "ee6362532db6fe2dfbd8b29306660b936a6ff597",
+        "workflowRunId": 33043835266,
+        "managedJobId": 98423183994,
+        "staticJobId": 98423183716,
+        "result": "EXPECTED RED; 191 total, 190 succeeded, 1 failed, 0 skipped; new ancestry test observed no exception before fix"
+      },
+      "ffmpegToolsAncestry": {
+        "headSha": "0cb5ca28107c9905e944cf9104c661060766dec9",
+        "workflowRunId": 33044109667,
+        "managedJobId": 98424034894,
+        "staticJobId": 98424035106,
+        "result": "EXPECTED RED; 192 total, 191 succeeded, 1 failed, 0 skipped; intermediate tools reparse test observed no exception before fix"
+      }
+    },
+    "qualification": {
+      "lockedRestore": "PASS; 18/18 projects",
+      "dependencyAudit": "PASS; 18 projects; 18 frameworks; 0 vulnerable-result packages",
+      "releaseBuild": "PASS; 0 warnings; 0 errors",
+      "nativeExplorer": "PASS",
+      "developmentFfmpeg": "PASS; 9.0.1; development qualification only",
+      "makeAppx": "PASS",
+      "directExplorerInvoke": "PASS",
+      "packagedComInvoke": "PASS",
+      "strictProductConversion": "PASS; source/base destination preserved; numbered MP3; 320000 bit/s",
+      "managedTests": "192/192 PASS; 0 skipped",
+      "staticTests": "66/66 PASS",
+      "contractVectors": "5/5 PASS",
+      "repositoryVerifier": "PASS",
+      "stagingAncestryRegression": "PASS",
+      "ffmpegToolsAncestryRegression": "PASS",
+      "generatedAuthorityDiff": "STALE_AFTER_SECURITY_HARDENING_AS_EXPECTED"
+    },
+    "deterministicWorkspacePackageBeforeAuthorityRegen": {
+      "sha256": "ec89921565e89d092a63dc3a7e6d0768ae580ee72805f6a67837571bda3551ed",
+      "bytes": 378809,
+      "files": 329,
+      "doubleBuild": "PASS",
+      "finalEmbeddedManifestVerification": "BLOCKED_ONLY_BY_STALE_TRACKED_GENERATED_AUTHORITY_AFTER_SECURITY_FIXES",
+      "verifiedDeliveryUpload": "SKIPPED_AFTER_EXPECTED_STALE_AUTHORITY_FAILURE"
+    }
+  },
   "authorityClosure": {
-    "status": "FIRST_GENERATED_AUTHORITY_QUALIFIED_EVIDENCE_FREEZE_PENDING_FINAL_REGEN",
+    "status": "POST_AUDIT_SECURITY_HARDENING_QUALIFIED_REGENERATION_PENDING",
     "firstGeneratedAuthorityQualification": {
       "qualifiedHeadSha": "529216b3676b97e7a9e0b78333c2229ed3396794",
       "qualifiedTreeSha": "af16e15820985e787e54fb0c659cf6005bd4df89",
@@ -143,15 +202,23 @@
         "sha256": "f761f6148e7e60c8a64eb41a87592e0f107f872ff813487bc17844da49d6a313"
       }
     },
+    "supersededPreAuditFinalAuthority": {
+      "headSha": "c57e0188d24adf7bd81e15e7860648aa9fc9035c",
+      "workflowRunId": 33036173795,
+      "managedJobId": 98399227323,
+      "staticJobId": 98399227175,
+      "status": "SUPERSEDED_BY_POST_QUALIFICATION_REPARSE_HARDENING"
+    },
     "finalQualifiedHeadSha": null,
     "finalWorkflowRunId": null,
     "finalManagedJobId": null,
     "finalStaticJobId": null,
-    "finalGeneratedAuthorityDiff": "PENDING_AFTER_EVIDENCE_FREEZE_REGENERATION",
-    "note": "The first generated-authority tree is fully green. This file now records that prior run. Because this evidence freeze changes repository bytes, package/hash authority must be regenerated and independently requalified before dev.10 authority is final."
+    "finalGeneratedAuthorityDiff": "PENDING_AFTER_POST_AUDIT_EVIDENCE_REGENERATION",
+    "note": "The pre-audit dev.10 authority was green but was superseded when the merge audit proved two reparse-ancestry gaps and fixed them test-first. Post-audit behavior is qualified at b0ec6445; this evidence update changes repository bytes, so generated authority must be regenerated and exact-head CI must independently pass again before dev.10 authority is frozen."
   },
   "unverifiedClaimsExplicitlyForbidden": [
     "Converty is shipped or production-ready",
+    "Current post-audit dev.10 generated/release authority is frozen before final regeneration and exact-head requalification",
     "Headed Windows 11 modern Explorer menu acceptance is complete",
     "Explorer crash/hang/failure headed matrix is complete",
     "B2 is fully closed",

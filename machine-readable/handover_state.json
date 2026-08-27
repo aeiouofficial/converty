@@ -3,10 +3,10 @@
   "project": "Converty",
   "workspaceVersion": "0.1.0-dev.10",
   "baselineDate": "2026-08-27",
-  "implementationStatus": "B4_BEHAVIOR_AND_FIRST_GENERATED_AUTHORITY_QUALIFIED_FINAL_EVIDENCE_REGEN_PENDING",
+  "implementationStatus": "B4_QUALIFIED_PREAUDIT_AUTHORITY_SUPERSEDED_POST_AUDIT_SECURITY_REGEN_PENDING",
   "batchesTouched": ["B0", "B1", "B2", "B3", "B4", "B5"],
   "nextWorkspaceVersion": "0.1.0-dev.11",
-  "nextBatch": "FINAL_DEV10_AUTHORITY_REGEN_THEN_HEADED_EXPLORER_AND_REMAINING_SHIPPING_GATES",
+  "nextBatch": "FINAL_POST_AUDIT_DEV10_AUTHORITY_REGEN_THEN_HEADED_EXPLORER_AND_REMAINING_SHIPPING_GATES",
   "targetOs": "Windows 11 x64",
   "toolchain": {
     "dotnetSdk": "10.0.400",
@@ -34,6 +34,27 @@
     "strictBridgeWorkerFfmpegMp3320k": "PASS",
     "strictOutputLimitCanary": "PASS"
   },
+  "postAuthoritySecurityHardening": {
+    "headSha": "b0ec6445abe7d7d2b53329ba7b4f2a07c51b7eed",
+    "workflowRunId": 33044395097,
+    "managedJobId": 98424925818,
+    "staticJobId": 98424926101,
+    "managedTests": "192/192 PASS; 0 skipped",
+    "staticTests": "66/66 PASS",
+    "contractVectors": "5/5 PASS",
+    "releaseBuild": "PASS; 0 warnings; 0 errors",
+    "dependencyAudit": "PASS; 18 projects; 18 frameworks; 0 vulnerable-result packages",
+    "nativeExplorerBuild": "PASS",
+    "makeAppx": "PASS",
+    "directExplorerInvoke": "PASS",
+    "packagedComInvoke": "PASS",
+    "strictBridgeWorkerFfmpegMp3320k": "PASS",
+    "stagingReparseAncestryRegression": "PASS",
+    "ffmpegToolsReparseAncestryRegression": "PASS",
+    "deterministicZipDoubleBuild": "PASS; ec89921565e89d092a63dc3a7e6d0768ae580ee72805f6a67837571bda3551ed; 378809 bytes; 329 files",
+    "generatedAuthority": "STALE_AFTER_SECURITY_HARDENING; FINAL REGENERATION REQUIRED",
+    "status": "PASS_BEHAVIOR_AUTHORITY_REGEN_PENDING"
+  },
   "firstGeneratedAuthorityQualification": {
     "headSha": "529216b3676b97e7a9e0b78333c2229ed3396794",
     "treeSha": "af16e15820985e787e54fb0c659cf6005bd4df89",
@@ -53,7 +74,14 @@
     "verifiedDeliveryArtifactSha256": "23de3e391ddb76ef8ddbf70c05f22a3fcc307a621692dc9759001c80741ad119",
     "generatedAuthorityArtifactId": 9631932538,
     "generatedAuthorityArtifactSha256": "f761f6148e7e60c8a64eb41a87592e0f107f872ff813487bc17844da49d6a313",
-    "status": "PASS"
+    "status": "PASS_PRE_AUDIT"
+  },
+  "supersededPreAuditFinalAuthority": {
+    "headSha": "c57e0188d24adf7bd81e15e7860648aa9fc9035c",
+    "workflowRunId": 33036173795,
+    "managedJobId": 98399227323,
+    "staticJobId": 98399227175,
+    "status": "SUPERSEDED_BY_POST_QUALIFICATION_SECURITY_HARDENING"
   },
   "b4IsolationEvidence": {
     "directCanaryWorkflowRunId": 33027104465,
@@ -73,7 +101,8 @@
     "Suspended Windows worker launch, explicit inherited handle list and Job Object assignment before resume",
     "Finite active-process, process/job-memory, CPU, wall-clock, stderr and output-growth limits",
     "Unique zero-capability AppContainer Strict profile with application read/execute and staging read/write ACLs",
-    "Reparse-point rejection plus filesystem/network/descendant/output-limit executable canaries",
+    "Writable staging scope rejects reparse points throughout its existing directory ancestry",
+    "Fixed app-local FFmpeg resolver rejects an intermediate tools reparse point as well as root/engine/executable reparse points",
     "Explicit Strict/Compatibility profiles; product requests Strict and never silently falls back",
     "Pinned development FFmpeg/ffprobe 9.0.1 qualification; production redistribution remains unapproved"
   ],
@@ -86,8 +115,9 @@
     "Final security/fuzz/chaos/release gates"
   ],
   "nextActions": [
-    "Regenerate generated authority after this evidence-freeze source commit and run final exact-head qualification",
-    "Only after reviewed fully-green final dev.10 authority consider merge/fast-forward to main",
+    "Regenerate generated authority after this post-audit evidence synchronization and run final exact-head qualification",
+    "Require generated-authority zero diff plus 192/192 managed tests, 66/66 static tests, deterministic ZIP/CRC/manifests/exclusions and verified delivery upload",
+    "Only after reviewed fully-green post-audit dev.10 authority consider merge/fast-forward to main",
     "Perform real headed Windows 11 Explorer acceptance when an interactive Windows 11 environment is available",
     "Finish remaining B2, production FFmpeg supply-chain/signing, clean-VM and final release gates"
   ],
