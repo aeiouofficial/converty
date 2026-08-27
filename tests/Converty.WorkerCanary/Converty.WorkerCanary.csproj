@@ -1,0 +1,8 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <AssemblyName>Converty.WorkerCanary</AssemblyName>
+    <RootNamespace>Converty.WorkerCanary</RootNamespace>
+    <Description>Test-only process-tree canary used to qualify Converty worker containment.</Description>
+  </PropertyGroup>
+</Project>

@@ -21,5 +21,6 @@
     <Project Path="tests/Converty.Ipc.Tests/Converty.Ipc.Tests.csproj" />
     <Project Path="tests/Converty.Security.Tests/Converty.Security.Tests.csproj" />
     <Project Path="tests/Converty.Serialization.Tests/Converty.Serialization.Tests.csproj" />
+    <Project Path="tests/Converty.WorkerCanary/Converty.WorkerCanary.csproj" />
   </Folder>
 </Solution>
