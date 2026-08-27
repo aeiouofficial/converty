@@ -6,5 +6,6 @@ public sealed record WorkerProcessLaunchRequest(
     IReadOnlyList<string> Arguments,
     WorkerIsolationLevel IsolationLevel,
     WorkerResourceLimits ResourceLimits,
+    WorkerFileSystemScope FileSystemScope,
     TimeSpan Timeout,
     int MaximumCapturedStandardErrorCharacters);
