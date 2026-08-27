@@ -67,7 +67,7 @@ internal sealed class EngineWorkerClient(
             _workerExecutablePath,
             workingDirectory,
             arguments,
-            WorkerIsolationLevel.Compatibility,
+            WorkerIsolationLevel.Strict,
             WorkerResourceLimits.ConversionDefault,
             new WorkerFileSystemScope(stagingDirectory),
             timeout,
