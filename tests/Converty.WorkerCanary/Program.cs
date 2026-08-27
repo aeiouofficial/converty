@@ -47,6 +47,30 @@ if (args.Length == 2 && string.Equals(args[0], "--write-file", StringComparison.
     }
 }
 
+if (args.Length == 3 && string.Equals(args[0], "--write-slow-bytes", StringComparison.Ordinal))
+{
+    string outputPath = Path.GetFullPath(args[1]);
+    long requestedBytes = long.Parse(args[2], NumberStyles.None, CultureInfo.InvariantCulture);
+    byte[] buffer = new byte[4096];
+    await using var output = new FileStream(
+        outputPath,
+        FileMode.CreateNew,
+        FileAccess.Write,
+        FileShare.Read,
+        bufferSize: buffer.Length,
+        useAsync: true);
+    long written = 0;
+    while (written < requestedBytes)
+    {
+        int count = checked((int)Math.Min(buffer.Length, requestedBytes - written));
+        await output.WriteAsync(buffer.AsMemory(0, count)).ConfigureAwait(false);
+        await output.FlushAsync().ConfigureAwait(false);
+        written += count;
+        await Task.Delay(TimeSpan.FromMilliseconds(5)).ConfigureAwait(false);
+    }
+    return 0;
+}
+
 if (args.Length == 2 && string.Equals(args[0], "--connect-loopback", StringComparison.Ordinal))
 {
     int port = int.Parse(args[1], NumberStyles.None, CultureInfo.InvariantCulture);
