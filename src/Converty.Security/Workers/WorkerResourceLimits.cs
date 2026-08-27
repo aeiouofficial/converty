@@ -16,22 +16,13 @@ public sealed record WorkerResourceLimits
         long maximumJobMemoryBytes,
         uint maximumCpuRatePercent)
     {
-        if (maximumActiveProcesses is 0 or > 8)
-        {
-            throw new ArgumentOutOfRangeException(nameof(maximumActiveProcesses));
-        }
-        if (maximumProcessMemoryBytes <= 0)
-        {
-            throw new ArgumentOutOfRangeException(nameof(maximumProcessMemoryBytes));
-        }
-        if (maximumJobMemoryBytes <= 0 || maximumJobMemoryBytes < maximumProcessMemoryBytes)
-        {
-            throw new ArgumentOutOfRangeException(nameof(maximumJobMemoryBytes));
-        }
-        if (maximumCpuRatePercent is 0 or > 100)
-        {
-            throw new ArgumentOutOfRangeException(nameof(maximumCpuRatePercent));
-        }
+        ArgumentOutOfRangeException.ThrowIfZero(maximumActiveProcesses);
+        ArgumentOutOfRangeException.ThrowIfGreaterThan(maximumActiveProcesses, 8u);
+        ArgumentOutOfRangeException.ThrowIfNegativeOrZero(maximumProcessMemoryBytes);
+        ArgumentOutOfRangeException.ThrowIfNegativeOrZero(maximumJobMemoryBytes);
+        ArgumentOutOfRangeException.ThrowIfLessThan(maximumJobMemoryBytes, maximumProcessMemoryBytes);
+        ArgumentOutOfRangeException.ThrowIfZero(maximumCpuRatePercent);
+        ArgumentOutOfRangeException.ThrowIfGreaterThan(maximumCpuRatePercent, 100u);
 
         MaximumActiveProcesses = maximumActiveProcesses;
         MaximumProcessMemoryBytes = maximumProcessMemoryBytes;
