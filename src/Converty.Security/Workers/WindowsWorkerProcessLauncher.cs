@@ -74,7 +74,7 @@ public sealed class WindowsWorkerProcessLauncher : IWorkerProcessLauncher
                 {
                     Task completed = await Task.WhenAny(
                         processExitTask,
-                        Task.Delay(OutputPollInterval)).ConfigureAwait(false);
+                        Task.Delay(OutputPollInterval, CancellationToken.None)).ConfigureAwait(false);
                     if (completed != processExitTask)
                     {
                         ThrowIfOutputBudgetExceeded(request, stagingBaseline);
@@ -224,7 +224,7 @@ public sealed class WindowsWorkerProcessLauncher : IWorkerProcessLauncher
         return captured.ToString();
     }
 
-    private static IReadOnlyDictionary<string, long> CaptureFileLengths(string root)
+    private static Dictionary<string, long> CaptureFileLengths(string root)
     {
         var result = new Dictionary<string, long>(StringComparer.OrdinalIgnoreCase);
         var pendingDirectories = new Stack<string>();
