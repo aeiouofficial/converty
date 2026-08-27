@@ -10,7 +10,21 @@ internal static partial class WindowsNativeMethods
     internal const uint STARTF_USESTDHANDLES = 0x00000100;
     internal const uint HANDLE_FLAG_INHERIT = 0x00000001;
     internal const nuint PROC_THREAD_ATTRIBUTE_HANDLE_LIST = 0x00020002;
+    internal const nuint PROC_THREAD_ATTRIBUTE_SECURITY_CAPABILITIES = 0x00020009;
     internal const uint STILL_ACTIVE = 259;
+
+    internal const uint SE_FILE_OBJECT = 1;
+    internal const uint DACL_SECURITY_INFORMATION = 0x00000004;
+    internal const uint FILE_GENERIC_READ = 0x00120089;
+    internal const uint FILE_GENERIC_WRITE = 0x00120116;
+    internal const uint FILE_GENERIC_EXECUTE = 0x001200A0;
+    internal const uint OBJECT_INHERIT_ACE = 0x00000001;
+    internal const uint CONTAINER_INHERIT_ACE = 0x00000002;
+    internal const uint GRANT_ACCESS = 1;
+    internal const uint REVOKE_ACCESS = 4;
+    internal const uint TRUSTEE_IS_SID = 0;
+    internal const uint TRUSTEE_IS_UNKNOWN = 0;
+    internal const int ERROR_ALREADY_EXISTS_HRESULT = unchecked((int)0x800700B7);
 
     [StructLayout(LayoutKind.Sequential)]
     internal struct SecurityAttributes
@@ -57,6 +71,34 @@ internal static partial class WindowsNativeMethods
         internal nint ThreadHandle;
         internal uint ProcessId;
         internal uint ThreadId;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct SecurityCapabilities
+    {
+        internal nint AppContainerSid;
+        internal nint Capabilities;
+        internal uint CapabilityCount;
+        internal uint Reserved;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct Trustee
+    {
+        internal nint MultipleTrustee;
+        internal int MultipleTrusteeOperation;
+        internal int TrusteeForm;
+        internal int TrusteeType;
+        internal nint Name;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct ExplicitAccess
+    {
+        internal uint AccessPermissions;
+        internal uint AccessMode;
+        internal uint Inheritance;
+        internal Trustee Trustee;
     }
 
     [LibraryImport("kernel32.dll", EntryPoint = "CloseHandle", SetLastError = true)]
@@ -136,4 +178,55 @@ internal static partial class WindowsNativeMethods
     [LibraryImport("kernel32.dll", EntryPoint = "TerminateJobObject", SetLastError = true)]
     [return: MarshalAs(UnmanagedType.Bool)]
     internal static partial bool TerminateJobObject(nint jobHandle, uint exitCode);
+
+    [LibraryImport("kernel32.dll", EntryPoint = "LocalFree")]
+    internal static partial nint LocalFree(nint memory);
+
+    [LibraryImport("advapi32.dll", EntryPoint = "FreeSid")]
+    internal static partial nint FreeSid(nint sid);
+
+    [LibraryImport("userenv.dll", EntryPoint = "CreateAppContainerProfile", StringMarshalling = StringMarshalling.Utf16)]
+    internal static partial int CreateAppContainerProfile(
+        string appContainerName,
+        string displayName,
+        string description,
+        nint capabilities,
+        uint capabilityCount,
+        out nint appContainerSid);
+
+    [LibraryImport("userenv.dll", EntryPoint = "DeriveAppContainerSidFromAppContainerName", StringMarshalling = StringMarshalling.Utf16)]
+    internal static partial int DeriveAppContainerSidFromAppContainerName(
+        string appContainerName,
+        out nint appContainerSid);
+
+    [LibraryImport("userenv.dll", EntryPoint = "DeleteAppContainerProfile", StringMarshalling = StringMarshalling.Utf16)]
+    internal static partial int DeleteAppContainerProfile(string appContainerName);
+
+    [LibraryImport("advapi32.dll", EntryPoint = "GetNamedSecurityInfoW", StringMarshalling = StringMarshalling.Utf16)]
+    internal static partial uint GetNamedSecurityInfoW(
+        string objectName,
+        uint objectType,
+        uint securityInfo,
+        out nint owner,
+        out nint group,
+        out nint dacl,
+        out nint sacl,
+        out nint securityDescriptor);
+
+    [LibraryImport("advapi32.dll", EntryPoint = "SetEntriesInAclW")]
+    internal static partial uint SetEntriesInAclW(
+        uint countOfExplicitEntries,
+        ref ExplicitAccess explicitEntry,
+        nint oldAcl,
+        out nint newAcl);
+
+    [LibraryImport("advapi32.dll", EntryPoint = "SetNamedSecurityInfoW", StringMarshalling = StringMarshalling.Utf16)]
+    internal static partial uint SetNamedSecurityInfoW(
+        string objectName,
+        uint objectType,
+        uint securityInfo,
+        nint owner,
+        nint group,
+        nint dacl,
+        nint sacl);
 }
