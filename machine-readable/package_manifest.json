@@ -195,8 +195,8 @@
     },
     {
       "path": "docs/development/IMPLEMENTATION_STATUS.md",
-      "bytes": 5285,
-      "sha256": "186d4120e499ea4054471d4c10f41877da914a9ac207ed7378993af8b8b3ac6c"
+      "bytes": 5305,
+      "sha256": "d002a51c0f99df59411b0bbb36dc1a5eeaf19dbc8b25bfb34fc2a5fa02cf0b81"
     },
     {
       "path": "docs/development/MODULE_BOUNDARIES.md",
@@ -215,13 +215,13 @@
     },
     {
       "path": "docs/HANDOVER_NEXT_AGENT.md",
-      "bytes": 5955,
-      "sha256": "b83d88aa6dbce198747ebbf2b9f7a536872d1ccc69df66449723ea69f9af400a"
+      "bytes": 6369,
+      "sha256": "ff76f9d607497f68a6ee059a19dc7e2f9f763ca3512b7ad1d5efff9a4d94ec49"
     },
     {
       "path": "docs/HANDOVER_PROMPT.txt",
-      "bytes": 5085,
-      "sha256": "61eea637882926f919fe812da4c81dd9d5a798c365cb1f1c3c22dd0369cf8d30"
+      "bytes": 5052,
+      "sha256": "85e4067184d4623a7adcf8dd2aba3e8f4013d97188df92c983d21232dbfce19d"
     },
     {
       "path": "docs/REFERENCE_SOURCES.md",
@@ -345,8 +345,8 @@
     },
     {
       "path": "machine-readable/build_evidence.json",
-      "bytes": 5285,
-      "sha256": "65c80a389c6ea7d97dbc2e9dcacd03a4993b13d6d6e9036a6b16216253a6bdea"
+      "bytes": 6998,
+      "sha256": "d2ac83436ea197a5843f8c8ac6e162a02540a96571695c1fded3575bed9fee19"
     },
     {
       "path": "machine-readable/ci_action_pins.json",
@@ -355,8 +355,8 @@
     },
     {
       "path": "machine-readable/handover_state.json",
-      "bytes": 4634,
-      "sha256": "47cb2aceb6c91bf8136e8c444a1aa8ca08d6d37c12ecce8795e932ac39bb821e"
+      "bytes": 5428,
+      "sha256": "1b25caade93f59a0b6a4fabb28b91c515afd364b9f834f471f851e0a376ee44b"
     },
     {
       "path": "machine-readable/release_policy.json",
@@ -470,8 +470,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 5426,
-      "sha256": "e702c5eab1384491c9229d91dd0ce0bba807daa424b11cd61da086297837a5f2"
+      "bytes": 5175,
+      "sha256": "8183c72b18ef4f6a72a1fc900ba2d9238c9cb195c5098509f3de787bd3f7635e"
     },
     {
       "path": "reference-images/01_system_architecture.dot",
