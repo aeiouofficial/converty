@@ -19,7 +19,13 @@ public static class TrustedFfmpegPath
 
         RejectReparsePoint(root, "Converty application directory");
 
-        string engineDirectory = Path.Combine(root, "tools", "ffmpeg");
+        string toolsDirectory = Path.Combine(root, "tools");
+        if (Directory.Exists(toolsDirectory))
+        {
+            RejectReparsePoint(toolsDirectory, "Bundled Converty tools directory");
+        }
+
+        string engineDirectory = Path.Combine(toolsDirectory, "ffmpeg");
         if (!Directory.Exists(engineDirectory))
         {
             throw new FileNotFoundException(
