@@ -40,6 +40,14 @@ internal sealed class EngineWorkerClient(
             throw new ArgumentException("Staged output path must be fully qualified.", nameof(stagedOutputPath));
         }
 
+        string? stagingDirectory = Path.GetDirectoryName(Path.GetFullPath(stagedInputPath));
+        string? outputDirectory = Path.GetDirectoryName(Path.GetFullPath(stagedOutputPath));
+        if (stagingDirectory is null || outputDirectory is null ||
+            !string.Equals(stagingDirectory, outputDirectory, StringComparison.OrdinalIgnoreCase))
+        {
+            throw new ArgumentException("Staged worker input and output must share one private staging directory.");
+        }
+
         string? workingDirectory = Path.GetDirectoryName(_workerExecutablePath);
         if (string.IsNullOrWhiteSpace(workingDirectory))
         {
@@ -61,6 +69,7 @@ internal sealed class EngineWorkerClient(
             arguments,
             WorkerIsolationLevel.Compatibility,
             WorkerResourceLimits.ConversionDefault,
+            new WorkerFileSystemScope(stagingDirectory),
             timeout,
             MaximumCapturedErrorCharacters);
         WorkerProcessResult result = await _processLauncher.ExecuteAsync(request, cancellationToken).ConfigureAwait(false);
