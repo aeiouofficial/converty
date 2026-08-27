@@ -14,6 +14,7 @@ public sealed class WindowsWorkerProcessLauncherCanaryTests
             return;
         }
 
+        CancellationToken testCancellation = TestContext.Current.CancellationToken;
         string canaryExecutable = ResolveCanaryExecutable();
         string canaryWorkingDirectory = Path.GetDirectoryName(canaryExecutable) ??
             throw new InvalidOperationException("Canary executable requires a working directory.");
@@ -38,14 +39,14 @@ public sealed class WindowsWorkerProcessLauncherCanaryTests
                     maximumJobMemoryBytes: 768L * 1024 * 1024,
                     maximumCpuRatePercent: 100),
                 TimeSpan.FromSeconds(15),
-                maximumCapturedStandardErrorCharacters: 4096);
+                MaximumCapturedStandardErrorCharacters: 4096);
 
-            WorkerProcessResult result = await launcher.ExecuteAsync(request);
+            WorkerProcessResult result = await launcher.ExecuteAsync(request, testCancellation);
 
             Assert.Equal(0, result.ExitCode);
             Assert.True(File.Exists(childPidPath), "Canary root process did not publish its child PID.");
             childPid = int.Parse(File.ReadAllText(childPidPath), CultureInfo.InvariantCulture);
-            await AssertProcessExitedAsync(childPid.Value);
+            await AssertProcessExitedAsync(childPid.Value, testCancellation);
         }
         finally
         {
@@ -91,12 +92,13 @@ public sealed class WindowsWorkerProcessLauncherCanaryTests
         throw new InvalidOperationException("Repository root could not be resolved from the test output directory.");
     }
 
-    private static async Task AssertProcessExitedAsync(int processId)
+    private static async Task AssertProcessExitedAsync(int processId, CancellationToken testCancellation)
     {
         try
         {
             using Process process = Process.GetProcessById(processId);
-            using var timeout = new CancellationTokenSource(TimeSpan.FromSeconds(5));
+            using var timeout = CancellationTokenSource.CreateLinkedTokenSource(testCancellation);
+            timeout.CancelAfter(TimeSpan.FromSeconds(5));
             await process.WaitForExitAsync(timeout.Token);
             Assert.True(process.HasExited, $"Canary descendant process {processId} survived Job Object close.");
         }
