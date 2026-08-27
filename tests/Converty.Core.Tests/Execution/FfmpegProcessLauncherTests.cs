@@ -61,6 +61,42 @@ public sealed class FfmpegProcessLauncherTests
     }
 
     [Fact]
+    public void TrustedResolverRejectsIntermediateReparsePoint()
+    {
+        if (!OperatingSystem.IsWindows())
+        {
+            return;
+        }
+
+        string baseDirectory = Path.Combine(Path.GetTempPath(), "converty-ffmpeg-reparse-" + Guid.NewGuid().ToString("N"));
+        string root = Path.Combine(baseDirectory, "app");
+        string externalTools = Path.Combine(baseDirectory, "external-tools");
+        string link = Path.Combine(root, "tools");
+        string ffmpeg = Path.Combine(externalTools, "ffmpeg", "ffmpeg.exe");
+        Directory.CreateDirectory(root);
+        Directory.CreateDirectory(Path.GetDirectoryName(ffmpeg)!);
+        File.WriteAllBytes(ffmpeg, []);
+
+        try
+        {
+            Directory.CreateSymbolicLink(link, externalTools);
+
+            Assert.Throws<IOException>(() => TrustedFfmpegPath.Resolve(root));
+        }
+        finally
+        {
+            if (Directory.Exists(link))
+            {
+                Directory.Delete(link);
+            }
+            if (Directory.Exists(baseDirectory))
+            {
+                Directory.Delete(baseDirectory, recursive: true);
+            }
+        }
+    }
+
+    [Fact]
     public void TrustedResolverFailsWhenBundledFfmpegIsMissing()
     {
         string root = Path.Combine(Path.GetTempPath(), "converty-ffmpeg-test-" + Guid.NewGuid().ToString("N"));
