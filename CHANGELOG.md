@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.1.0-dev.10 — 2026-08-27
+- Moved conversion execution out of the dev.9 Core/Bridge spike into fixed app-local `Converty.EngineWorker` and `Converty.Provider.FFmpeg`; Core now coordinates only a typed worker-client contract.
+- Added unique private per-job staging so workers receive staged input/output paths rather than source/final publication destinations; validated output is published using the existing race-safe numbered no-overwrite transaction and owned staging is cleaned in `finally`.
+- Added explicit `Strict` and `Compatibility` worker profiles with no automatic fallback. The product Bridge now requests `Strict`.
+- Added suspended native worker creation with an explicit inherited-handle list and Job Object assignment before resume, including kill-on-close, active-process, process/job-memory, CPU and wall-clock limits plus bounded stderr.
+- Added zero-capability per-launch AppContainer isolation, application read/execute and private-staging read/write ACL grants, reparse-point rejection, and cleanup of temporary isolation authority.
+- Qualified strict executable canaries for staging write allowed, sibling/outside-scope write denied, loopback network denied, and descendant termination/resource containment.
+- Added a finite output-growth ceiling: 8 GiB conversion default, 16 GiB hard configuration maximum, 25 ms staging-growth monitoring, final post-exit check, fail-closed reparse handling, and typed `WorkerOutputLimitExceededException`. A Windows strict canary proves termination after crossing a 64 KiB budget.
+- Fixed two analyzer findings in the output monitor without changing containment semantics: explicit `CancellationToken.None` for the intentional polling delay and concrete `Dictionary` return type for the file-length snapshot helper.
+- Behavior-qualified at `f221563c790057344a94b4e60c309d4512a77c38`, GitHub Actions run `33028554361` (managed `98375493893`, static `98375494099`): 18/18 locked restore, zero-vulnerability audit, Release 0 warnings/errors, native/package/direct+packaged COM smokes PASS, strict Bridge→EngineWorker→FFmpeg product smoke PASS, MP3 exactly 320000 bit/s, 190/190 managed tests, 66/66 static tests, 5/5 contract vectors.
+- The behavior run produced byte-identical workspace ZIPs (`a0edd6e15a63d71cc2ef493ef33f6bb6e3f0b16ee0d8f484ebc981b800f749de`, 369035 bytes, 328 files) but final embedded-manifest verification intentionally remained blocked by stale tracked generated authority. dev.10 is not frozen until authority regeneration and exact-head requalification complete.
+- Headed Windows 11 Explorer acceptance, remaining B2 final acceptance, production FFmpeg redistribution/signature/notices approval, signed production MSIX, clean-VM lifecycle, and final release audit remain open.
+
 ## 0.1.0-dev.9 — 2026-08-26
 - Delivered the first automated functional Windows product path: modern packaged `IExplorerCommand` shell DLL → fixed app-local `Converty.Bridge.exe` → typed preset → fixed app-local FFmpeg → same-folder output.
 - Added real C++20/MSVC `IExplorerCommand` root/subcommands, fixed Bridge launch, Release-native hardening, package COM server/context-menu registration, MakeAppx validation, loose registration, direct class-factory activation, and packaged COM activation/invocation smokes.

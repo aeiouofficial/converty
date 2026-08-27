@@ -1,57 +1,50 @@
-# Implementation status — 0.1.0-dev.9
+# Implementation status — 0.1.0-dev.10
 
 ## Tranche result
-`0.1.0-dev.9` delivers the first automated functional Converty product path under the explicitly approved ADR-013 product-first exception:
+`0.1.0-dev.10` behavior-qualifies B4 disposable-worker containment while preserving the functional Explorer product introduced by ADR-013:
 
-`IExplorerCommand → fixed app-local Bridge → typed preset → fixed app-local FFmpeg → transactional numbered output`
+`IExplorerCommand → fixed Bridge → Strict EngineWorker → typed preset/provider → fixed app-local FFmpeg → private staging → validated numbered publication`
 
-This is a development qualification milestone. It does not claim final worker containment, signed release packaging, production FFmpeg redistribution approval, or headed Windows 11 UI acceptance.
+The B4 behavior head is frozen separately from this authority synchronization. dev.10 is not a frozen delivery until generated SBOM/package/hash authority and exact-head package verification are green.
 
 ## Behavior qualification
-Immutable functional behavior head: `b71aa06fb024afe85f64707b05d996e86c37d8c8`.
-Permanent GitHub Actions run: `33001019450`; managed job `98282574626`; static job `98282574403`.
-Runner: Windows Server 2025 (`windows-2025-vs2026`) with .NET SDK exactly `10.0.400`.
+Immutable dev.10 B4 behavior head: `f221563c790057344a94b4e60c309d4512a77c38`.
+GitHub Actions run: `33028554361`; managed job `98375493893`; static job `98375494099`.
+Runner: Windows Server 2025 (`windows-2025-vs2026`, image version `20260824.214.3`) with .NET SDK exactly `10.0.400`.
 
 Executed results:
-- 15/15 managed projects locked restore PASS.
-- NuGet vulnerability audit PASS; 0 vulnerable-result packages.
+- 18/18 managed projects locked restore PASS.
+- NuGet vulnerability audit PASS; 18 projects / 18 frameworks / 0 vulnerable-result packages.
 - Release managed build PASS; 0 warnings, 0 errors.
 - Native C++20/MSVC Explorer Release build PASS.
 - Development FFmpeg/ffprobe 9.0.1 archive SHA-256 verification PASS; both executables execute successfully.
-- MakeAppx unsigned development-package schema/layout validation PASS.
-- Direct staged shell DLL class factory + `IExplorerCommand::Invoke` conversion PASS.
-- Loose package registration + packaged COM activation + `IExplorerCommand::Invoke` conversion PASS.
-- Direct Bridge→FFmpeg product smoke PASS with Unicode/metacharacter path, source preservation, collision preservation, numbered output, no partial-file leak, MP3 codec and exactly 320000 bit/s verified by ffprobe.
-- Microsoft Testing Platform/xUnit: 176 total, 176 succeeded, 0 failed, 0 skipped.
-- Static/repository gates at behavior head after in-job generation: 54/54 PASS; contract vectors 5/5 PASS.
-- Deterministic workspace ZIP double build produced matching bytes/hash at the behavior head; final embedded-manifest verification was intentionally blocked by stale tracked generated authority and is closed by the subsequent authority-synchronization cycle.
+- MakeAppx unsigned development package schema/layout validation PASS.
+- Direct staged shell DLL class factory + `IExplorerCommand::Invoke` PASS.
+- Loose package registration + packaged COM activation + `IExplorerCommand::Invoke` PASS.
+- Real strict Bridge→EngineWorker→FFmpeg product smoke PASS with Unicode/metacharacter path, source preservation, pre-existing base destination preservation, numbered output, and ffprobe MP3 exactly 320000 bit/s.
+- Microsoft Testing Platform/xUnit: 190 total, 190 succeeded, 0 failed, 0 skipped.
+- Contract vectors 5/5 PASS; repository verifier PASS; Python/static tests 66/66 PASS.
+- Workspace ZIP double build produced identical bytes: SHA-256 `a0edd6e15a63d71cc2ef493ef33f6bb6e3f0b16ee0d8f484ebc981b800f749de`, 369035 bytes, 328 files.
+- Final ZIP embedded-manifest verification failed only because tracked generated authority was intentionally stale before this dev.10 synchronization (`build/stage-dev-package.ps1` package-manifest assertion). Delivery upload therefore correctly did not occur in the behavior run.
 
-## Implemented product slice
-- Native root `IExplorerCommand` with fixed product subcommands and cheap extension-based visibility.
-- Fixed app-local `Converty.Bridge.exe` launch from the shell DLL using Win32 process creation, no shell execution.
-- Development Bridge mode validates a fixed typed preset ID and selected absolute files, then invokes the dedicated Core conversion runner.
-- `ProductPresetRegistry` provides fixed audio/video/image conversions; Explorer never receives raw FFmpeg arguments.
-- `audio.mp3` is the original 320 kbps Audio MVP.
-- `TrustedFfmpegPath` resolves only `tools/ffmpeg/ffmpeg.exe` beneath the application directory and rejects reparse points.
-- `FfmpegProcessLauncher` uses `ProcessStartInfo.ArgumentList`, no shell, hidden process, bounded stderr and finite timeout.
-- `ConversionBatchRunner` validates supported inputs and converts through an owned partial output followed by no-overwrite numbered publication.
-- Development package identity registers the shell class through `windows.comServer`/SurrogateServer and the modern context-menu verb through `windows.fileExplorerContextMenus`.
-- Native/package/product smokes use real Unicode/metacharacter filenames and real FFmpeg conversion.
-
-## Important corrections made during qualification
-- FFmpeg/ffprobe version probes now capture process exit before truncating log output.
-- Explorer context-menu verb ID changed from schema-invalid `Converty.Convert` to `ConvertyConvert`.
-- PowerShell smoke validation uses literal-path semantics for filenames containing `[ ]`.
-- Product smoke explicitly waits for the `WinExe` Bridge process and reads its process-object exit code.
+## B4 containment implemented and qualified
+- Each source item is copied into a unique Converty-owned private job directory; the worker receives staged paths only and Core publishes the validated output with race-safe `File.Move(..., overwrite: false)` numbered semantics.
+- Core owns only `IConversionWorkerClient`; FFmpeg path trust and process execution are isolated in the FFmpeg provider behind the disposable EngineWorker.
+- EngineWorker accepts a fixed typed CLI surface (`--preset`, `--input`, `--output`) and reconstructs FFmpeg arguments from `ProductPresetRegistry`; no raw FFmpeg vector is forwarded from Explorer/user/IPC.
+- Windows worker creation is suspended, uses an explicit inherited-handle list, is assigned to a Job Object before resume, and runs without shell execution.
+- Job Object/resource policy includes kill-on-close, finite process count, process/job memory, CPU hard cap, wall-clock timeout/cancellation, bounded stderr and finite output growth.
+- Strict isolation creates a unique zero-capability AppContainer, grants application read/execute plus private-staging read/write, rejects reparse-point scope substitution, and cleans the ACL/profile authority afterward.
+- Direct strict canaries prove staging write allowed, outside/sibling write denied, loopback connection denied, and descendants are killed with the job.
+- Product Bridge explicitly requests `WorkerIsolationLevel.Strict`; no Compatibility fallback exists on strict failure.
+- Output growth is sampled every 25 ms relative to a pre-resume baseline. Positive per-path growth is charged, shrinking/deleting staged input gives no refund, new files count in full, a final post-exit check prevents fast-exit bypass, and reparse points fail closed.
+- `ConversionDefault.MaximumOutputBytes` is 8 GiB with a 16 GiB hard configuration maximum. The executable Windows canary uses a 64 KiB budget and proves the worker is terminated with `WorkerOutputLimitExceededException` after exceeding it.
 
 ## Remaining shipping gates
-1. Headed Windows 11 Explorer acceptance: visually prove Converty appears in the modern right-click menu, enumerate the expected submenu, invoke a real conversion through Explorer UI, and capture current-version screenshots/evidence.
-2. B4 containment: private staging, restricted disposable workers, Job Object/resources, no-network and outside-scope-write canaries, no silent isolation downgrade.
-3. Move FFmpeg execution from the dev.9 Core/Bridge product spike to the final worker/provider architecture without regressing Explorer UX/output behavior.
-4. Finish B2 connected-server anti-squatting/final status-wire/replay-session acceptance.
-5. Production FFmpeg licensing/redistribution/signature/hash/notices decision; dev Gyan payload is qualification-only.
-6. Signed production MSIX and clean Windows 11 VM install/update/uninstall acceptance.
-7. Final security/fuzz/chaos/release audit and end-user shipping acceptance.
+1. Real headed Windows 11 Explorer acceptance and current-build screenshots, plus Explorer crash/hang/failure headed matrix.
+2. Remaining B2 connected-server anti-squatting/authentication, final status/cancel wire decision, and replay/disconnect/session acceptance.
+3. Production FFmpeg redistribution/license/notices/signature/hash approval; the current Gyan 9.0.1 payload is development qualification only.
+4. Signed production MSIX and clean Windows 11 VM install/update/uninstall acceptance.
+5. Final security/fuzz/chaos/release audit and end-user shipping acceptance.
 
 ## Boundary status
-Contracts and Serialization remain engine-independent. Host remains non-executing and does not parse hostile media. Explorer remains trigger-only. Dev.9 temporarily permits conversion execution in the dedicated Core launcher invoked by Bridge under ADR-013; this development exception must be removed by migrating engine execution into the restricted worker/provider boundary before release.
+Explorer remains trigger-only. Host remains media/process neutral. Core coordinates typed presets, staging and publication but no longer launches FFmpeg. Production media parsing/conversion occurs in a disposable strict worker/provider process. Strict local conversion has no network capability. Original inputs and externally created destinations are never overwritten.

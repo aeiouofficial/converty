@@ -1,68 +1,71 @@
-# Converty 0.1.0-dev.9 — Next-Agent Handover
+# Converty 0.1.0-dev.10 — Next-Agent Handover
 
-## Current authority
-- Delivered workspace: `0.1.0-dev.9`.
+## Exact current authority state
 - Repository: `https://github.com/aeiouofficial/converty`.
-- Shipping target: Windows 11 x64 modern Explorer context-menu converter.
-- Next workspace: `0.1.0-dev.10`.
-- Resolve the current `main` HEAD before changing source; the final frozen authority SHA may be later than the immutable dev.9 behavior head because generated authority is synchronized after behavior qualification.
-- Immutable dev.9 behavior head: `b71aa06fb024afe85f64707b05d996e86c37d8c8`.
-- Read `machine-readable/handover_state.json` and `machine-readable/build_evidence.json` before changing source.
+- Working branch: `dev/0.1.0-dev.10-b4`.
+- Frozen main before dev.10: `13ed46bcb5cb02f33965dace4adc5a3fb25e87fd`.
+- Immutable dev.10 B4 behavior head: `f221563c790057344a94b4e60c309d4512a77c38`.
+- Behavior qualification run: `33028554361`; managed job `98375493893`; static job `98375494099`.
+- Workspace version authority is now `0.1.0-dev.10`, but generated SBOM/package/hash authority is intentionally not frozen until regenerated from this synchronized tree and exact-head CI is fully green.
 
-## What dev.9 proved
-Permanent GitHub Actions run `33001019450` on Windows Server 2025 / .NET SDK `10.0.400` proved:
-- 15/15 locked restore; NuGet audit PASS with zero vulnerable-result packages;
-- Release build PASS, zero warnings/errors;
-- native MSVC Explorer DLL build PASS;
-- pinned development FFmpeg/ffprobe 9.0.1 hash/execution PASS;
-- MakeAppx unsigned development package PASS;
-- direct staged DLL class-factory + `IExplorerCommand::Invoke` conversion PASS;
-- loose package registration + packaged COM activation + `Invoke` conversion PASS;
-- Bridge→FFmpeg product smoke PASS with Unicode/metacharacters, numbered collision handling, source/base-destination preservation, no partial leak, ffprobe MP3/320000 bit/s;
-- 176/176 managed tests PASS;
-- 54/54 static tests PASS after in-job authority generation.
+## What B4 behavior proved
+On Windows Server 2025 / `windows-2025-vs2026` / .NET SDK `10.0.400`:
+- 18/18 locked restore PASS; vulnerability audit 18 projects/18 frameworks/0 vulnerable-result packages.
+- Release build PASS, 0 warnings, 0 errors.
+- native Explorer, pinned dev FFmpeg/ffprobe 9.0.1, MakeAppx unsigned package, direct DLL Invoke, loose package registration + COM activation/Invoke all PASS.
+- actual `Bridge → Strict EngineWorker → FFmpeg` product smoke PASS with Unicode/metacharacter filename, source preservation, pre-existing destination preservation, numbered output, MP3 exactly 320000 bit/s.
+- 190/190 managed tests PASS, 0 skipped; static tests 66/66 PASS; contract vectors 5/5 PASS.
+- private staging, worker/provider split, suspended launch, explicit handle list, Job Object kill-on-close, process/memory/CPU/time/output ceilings, zero-capability AppContainer, constrained ACLs, no-network/outside-write canaries and no Strict→Compatibility fallback are implemented.
+- output-growth canary proves a strict worker is terminated after exceeding a 64 KiB budget. Conversion default is 8 GiB; hard configured maximum is 16 GiB.
+- direct strict-canary run `33027104465` (managed `98370929641`, static `98370929814`) proves staging write allowed, sibling/outside denied, loopback connection denied and descendant/resource containment.
 
-This means the automated minimum product path exists. Do not revert it to an infrastructure-only prototype.
+The behavior run built two byte-identical workspace ZIPs: SHA-256 `a0edd6e15a63d71cc2ef493ef33f6bb6e3f0b16ee0d8f484ebc981b800f749de`, 369035 bytes, 328 files. It then failed exactly on stale tracked `machine-readable/package_manifest.json`, so delivery upload was correctly skipped.
 
-## Product-first decision
-ADR-013 is authoritative: dev.9 was allowed to qualify a fixed development `Explorer → Bridge/Core → app-local FFmpeg` path before final B2/B4 closure. This is a **development exception**, not a production architecture waiver. Final shipping still requires worker containment and the other release gates.
+## Single highest-priority next task
+Finish **dev.10 generated-authority closure** without changing the frozen B4 behavior:
+1. let CI regenerate source/release SBOM, package manifest and SHA256SUMS from the synchronized dev.10 authority tree;
+2. commit exactly those generated files as a separate generated-authority commit;
+3. require generated-authority zero diff;
+4. run exact-head CI and require all behavior gates plus deterministic ZIP twice, ZIP reopen/CRC, package-manifest bytes/hashes, SHA256SUMS, exclusions and verified delivery upload;
+5. record the fully-green authority qualification in machine-readable/handover evidence using the established non-self-referential evidence-freeze pattern, regenerate authority again if that evidence update changes generated manifests, and independently requalify the final tree;
+6. only after fully-green reviewed authority consider merging/fast-forwarding dev.10 to main.
 
-## Immediate next task — highest priority
-Perform **real headed Windows 11 Explorer acceptance** for the exact current development package:
-1. use an interactive Windows 11 x64 environment, not Windows Server/headless COM-only evidence;
-2. build/stage/register or install the current dev package using the repository scripts;
-3. right-click a supported WAV in Explorer and prove `Converty` appears in the Windows 11 modern context menu, with the expected fixed submenu entries;
-4. invoke `Convert to MP3` through the real Explorer UI;
-5. prove the source remains, a pre-existing base MP3 is not overwritten, numbered output is created, output is non-empty and MP3/320k;
-6. capture current-version screenshots/evidence of the menu and resulting files; do not reuse old screenshots;
-7. add an executable/headed acceptance record to the repository without weakening automated CI.
+## Remaining shipping blockers after dev.10 authority closure
+- real headed Windows 11 modern Explorer menu visibility/usability and fresh exact-build screenshots;
+- Explorer crash/hang/failure headed matrix;
+- remaining B2 connected-server anti-squatting/authentication, final status/cancel wire decision, replay/disconnect/session acceptance;
+- production FFmpeg redistribution/license/notices/signature/hash approval; Gyan FFmpeg is development input only;
+- signed production MSIX;
+- clean Windows 11 VM install/update/uninstall;
+- final security/fuzz/chaos/release audit and end-user shipping acceptance.
 
-If the current environment cannot provide headed Windows 11 Explorer, do not fake this gate. Continue the next code-bearing shipping task below and leave headed acceptance explicitly open.
+## Explicitly unverified / forbidden claims
+Do not claim Converty is shipped/production-ready, headed Windows 11 Explorer acceptance is complete, B2 is fully closed, production FFmpeg redistribution is approved, Windows artifacts are production-signed, or clean-VM lifecycle acceptance is complete.
 
-## Next code-bearing shipping work after/alongside headed acceptance
-Prioritize **B4 containment and migration of the dev.9 conversion spike into the final worker boundary**:
-- private per-job staging;
-- disposable restricted worker launcher;
-- Job Object kill-on-close and memory/CPU/process/output/time limits;
-- no-network canary;
-- outside-scope file-write canary;
-- strict-vs-compatibility profile with no silent downgrade;
-- move FFmpeg process execution out of the Core/Bridge spike into the worker/provider architecture while preserving typed presets, numbered transactional output, Unicode paths and current Explorer UX.
+## Non-negotiable product/security boundaries
+- Explorer is trigger-only, cheap and bounded; it never parses media or loads codecs/plugins.
+- Host never parses hostile media or loads codec/plugin code.
+- Production media parsing/conversion occurs in disposable restricted workers.
+- Strict local conversion has no network capability.
+- No raw command strings or pass-through FFmpeg argument vectors from Explorer/user/IPC.
+- FFmpeg arguments come only from checked-in typed presets; no shell execution.
+- Worker and FFmpeg paths are fixed app-local trusted paths; unsafe reparse-point substitution is rejected.
+- Worker receives private staging, never final publication destination.
+- Never overwrite input or externally created destination; numbered no-overwrite publication remains race-safe default.
+- Strict and Compatibility are explicit; never silently retry Compatibility after Strict failure.
+- Signing private keys never enter repository/workspace.
+- Report only gates actually executed.
+- Gyan FFmpeg remains development qualification input, not production redistribution approval.
 
-Then finish the remaining B2 connected-server anti-squatting/status-wire/replay-session acceptance, qualify production FFmpeg licensing/redistribution/signature/hash/notices, create the signed production MSIX, perform clean Windows 11 VM install/update/uninstall, and run final security/fuzz/chaos/release gates.
+## Mandatory recursive handover rule
+At the end of your work — whether complete, partial, or blocked — you MUST produce a new full-context copy-paste handover prompt for the NEXT agent/new chat. It must contain:
+- exact repository and working branch/main HEAD SHA;
+- exact immutable qualification SHA and GitHub Actions run/job IDs;
+- what you changed and why;
+- tests and acceptance gates actually executed with exact results;
+- remaining shipping blockers and explicit unverified claims;
+- the single highest-priority next task;
+- all non-negotiable product/security constraints;
+- and this exact recursive rule requiring that next agent to hand over again.
 
-## Non-negotiable boundaries
-- Explorer remains trigger-only: no media parsing, FFmpeg loading, network or long-running conversion in Explorer.
-- Host never parses hostile media and never loads codec/plugin code.
-- Production media probing/conversion belongs in disposable restricted workers.
-- Standard local conversion requires no network; strict worker profile denies it.
-- Presets/IPC never expose arbitrary executable command text or pass-through argument vectors.
-- Numbered copy remains the safe default; never overwrite source or an externally created destination.
-- Strict isolation never silently downgrades.
-- Production signing private keys never enter the repository/workspace.
-- The Gyan FFmpeg development payload is not production redistribution approval.
-
-## Required recursive handover rule
-**At the end of your work, whether the next shipping milestone succeeds, partially succeeds, or is blocked, you MUST prepare a new complete copy-paste handover prompt for the following agent/new chat.** The new prompt must include the exact repository, branch/main HEAD SHA, immutable qualification SHA/run/job IDs, what changed, tests/gates actually executed, remaining blockers, the single highest-priority next task, shipping caveats, and this same recursive handover requirement. Continue this chain on every handoff until Converty is actually shipped.
-
-Never claim a gate that was not executed. Never call an unsigned/dev-only package production-ready. At each tranche end synchronize version/docs/machine-readable authority, regenerate SBOM/package/hash authority, require zero generated diff, deterministically build/reopen/verify the workspace ZIP, update GitHub, and provide the next handover prompt.
+Repeat that handover chain at every tranche until Converty is actually shipped.

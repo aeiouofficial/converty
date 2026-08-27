@@ -1,41 +1,41 @@
 # Converty
 <img width="1536" height="1024" alt="Converty Architecture Blueprint" src="https://github.com/user-attachments/assets/985f38c5-5c04-4b45-b69f-5deb0cdcc374" />
 
-Windows 11 modern-context-menu file conversion platform. Converty is being built as a modular right-click converter for Audio, Images, Video, and future file families while keeping the final shipping architecture explicit about Explorer, coordinator, worker, and media-engine trust boundaries.
+Windows 11 modern-context-menu file conversion platform. Converty is being built as a modular right-click converter for Audio, Images, Video, and future file families while keeping Explorer, coordinator, worker, media-engine, staging, and publication trust boundaries explicit.
 
 ## Workspace version
-**0.1.0-dev.9** — first automated functional Explorer → Bridge → FFmpeg product qualification, 2026-08-26.
+**0.1.0-dev.10** — B4 disposable-worker containment and worker/provider migration behavior-qualified on 2026-08-27; generated/release authority closure is the next repository step.
 
 ## Current evidence-backed state
-The dev.9 behavior head `b71aa06fb024afe85f64707b05d996e86c37d8c8` was exercised by permanent GitHub Actions run `33001019450` on Windows Server 2025 / .NET SDK `10.0.400`:
-- 15/15 managed projects restored from committed lock files.
-- Restored-graph NuGet audit: PASS, zero vulnerable-result packages.
-- Release build: PASS, zero warnings and zero errors.
-- Native C++20/MSVC Explorer DLL and registration smoke executable: PASS.
-- Pinned development FFmpeg/ffprobe 9.0.1 archive hash verification and executable probes: PASS.
-- MakeAppx validation of the unsigned development package: PASS.
-- Direct staged `Converty.ShellExtension.dll` class-factory + `IExplorerCommand::Invoke`: PASS.
-- Loose package registration plus packaged COM activation + `IExplorerCommand::Invoke`: PASS.
-- Product Bridge → FFmpeg smoke: PASS with Unicode/metacharacter filename, source preservation, pre-existing destination preservation, numbered-copy publication, no leftover partial output, and ffprobe verification of MP3 at 320000 bit/s.
-- Microsoft Testing Platform/xUnit: **176/176 PASS**, 0 failed, 0 skipped.
-- Python/static repository gates: **54/54 PASS** at the behavior head after in-job authority regeneration.
+The dev.10 B4 behavior head is `f221563c790057344a94b4e60c309d4512a77c38`. Permanent GitHub Actions run `33028554361` on Windows Server 2025 / `windows-2025-vs2026` / .NET SDK `10.0.400` exercised the contained product path:
 
-Dev.9 also implements transactional development output publication: FFmpeg writes a Converty-owned same-directory partial file, successful non-empty output is published with no-overwrite semantics to a freshly resolved numbered destination, and failure cleanup only removes the owned partial path.
+`IExplorerCommand → fixed Converty.Bridge.exe → Strict Converty.EngineWorker.exe → typed preset/provider → fixed app-local ffmpeg.exe → private staging → validated no-overwrite numbered publication`
 
-## What dev.9 does not claim
-Dev.9 is a development product qualification, not a shipping release. These gates remain open:
-- real headed Windows 11 Explorer modern-menu acceptance with screenshots/evidence;
-- Explorer crash/hang/failure acceptance matrix;
-- B2 connected-server anti-squatting/final wire/session hardening;
-- B4 worker containment, Job Object/resource limits, no-network and outside-scope write canaries;
-- migration of the development FFmpeg execution spike into the final restricted worker/provider architecture;
-- production FFmpeg redistribution/license/notices/signature decision;
-- signed production MSIX, clean-VM install/update/uninstall, release signing and final release audit.
+Observed behavior qualification:
+- 18/18 managed projects restored from committed lock files.
+- NuGet vulnerability audit: PASS, zero vulnerable-result packages.
+- Release build: PASS, 0 warnings, 0 errors.
+- Native C++20/MSVC Explorer DLL: PASS.
+- Pinned development FFmpeg/ffprobe 9.0.1 hash/execution: PASS.
+- MakeAppx unsigned development package: PASS.
+- Direct staged shell DLL class-factory + `IExplorerCommand::Invoke`: PASS.
+- Loose package registration + packaged COM activation + `IExplorerCommand::Invoke`: PASS.
+- Strict product Bridge → EngineWorker → FFmpeg conversion: PASS with Unicode/metacharacter paths, source preservation, pre-existing destination preservation, numbered publication, and ffprobe verification of MP3 at exactly 320000 bit/s.
+- Microsoft Testing Platform/xUnit: **190/190 PASS**, 0 failed, 0 skipped.
+- Repository/static gates: **66/66 PASS**; contract vectors **5/5 PASS**.
 
-The unsigned development MSIX and the Gyan FFmpeg 9.0.1 payload are qualification inputs only. They are not production redistribution/signing approval.
+B4 now includes private per-job staging; FFmpeg execution isolated in `Converty.EngineWorker`/`Converty.Provider.FFmpeg`; suspended native worker creation; explicit inherited-handle list; Job Object kill-on-close, active-process, process/job-memory, CPU, wall-clock and output-growth ceilings; unique zero-capability AppContainer strict launches; application read/execute and staging read/write ACLs; reparse-point rejection; outside-scope-write and loopback-network denial canaries; explicit Strict/Compatibility profiles with no silent downgrade. `WorkerResourceLimits.ConversionDefault` has an 8 GiB output ceiling and a 16 GiB hard configuration maximum. The executable output-limit canary proves a strict worker is terminated after crossing a 64 KiB staging-growth budget.
 
-## Product-first architecture decision
-`docs/adr/ADR-013-dev9-functional-product-spike.md` records the approved exception that allowed dev.9 to qualify the minimum functional product before all earlier infrastructure gates were closed. It does **not** waive the shipping gates. Do not revert the working Explorer → Bridge/Core → fixed app-local FFmpeg path merely to restore the older infrastructure-first ordering.
+The behavior run built the workspace ZIP twice with identical bytes (`a0edd6e15a63d71cc2ef493ef33f6bb6e3f0b16ee0d8f484ebc981b800f749de`, 369035 bytes, 328 files) and then failed exactly at embedded package-manifest verification because tracked generated authority was still dev.9/stale. That expected authority-sync failure is why this branch is not yet a frozen dev.10 delivery.
+
+## What dev.10 still does not claim
+Dev.10 B4 behavior is not a shipping release. These gates remain open:
+- real headed Windows 11 modern Explorer context-menu visibility/usability and exact-build screenshots;
+- Explorer crash/hang/failure headed matrix;
+- remaining B2 connected-server anti-squatting, final status/cancel wire decision, and replay/disconnect/session acceptance;
+- production FFmpeg redistribution/license/notices/signature/hash approval; the Gyan payload is development qualification input only;
+- signed production MSIX and clean Windows 11 VM install/update/uninstall;
+- final security/fuzz/chaos/release audit and end-user shipping acceptance.
 
 ## Start here
 1. `docs/HANDOVER_NEXT_AGENT.md`

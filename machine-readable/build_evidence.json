@@ -1,46 +1,49 @@
 {
   "schemaVersion": 1,
-  "workspaceVersion": "0.1.0-dev.9",
-  "evidenceDate": "2026-08-26",
+  "workspaceVersion": "0.1.0-dev.10",
+  "evidenceDate": "2026-08-27",
   "behaviorQualification": {
-    "headSha": "b71aa06fb024afe85f64707b05d996e86c37d8c8",
-    "workflowRunId": 33001019450,
-    "managedJobId": 98282574626,
-    "staticJobId": 98282574403,
+    "headSha": "f221563c790057344a94b4e60c309d4512a77c38",
+    "workflowRunId": 33028554361,
+    "managedJobId": 98375493893,
+    "staticJobId": 98375494099,
     "runner": {
       "os": "Windows Server 2025",
       "image": "windows-2025-vs2026",
+      "imageVersion": "20260824.214.3",
       "dotnetSdk": "10.0.400"
     },
     "managed": {
       "lockedRestore": "PASS",
-      "managedProjects": 15,
+      "managedProjects": 18,
       "dependencyAudit": "PASS",
+      "auditProjects": 18,
+      "auditFrameworks": 18,
       "vulnerablePackages": 0,
       "releaseBuild": "PASS",
       "warnings": 0,
       "errors": 0,
       "tests": {
-        "total": 176,
-        "succeeded": 176,
+        "total": 190,
+        "succeeded": 190,
         "failed": 0,
         "skipped": 0
       },
-      "nativeTopologySmoke": "PASS",
       "nativeExplorerReleaseBuild": "PASS",
       "developmentFfmpegPinHashAndExecution": "PASS",
       "makeAppxUnsignedDevelopmentPackage": "PASS",
       "directShellDllClassFactoryInvoke": "PASS",
       "loosePackageRegistrationComActivationInvoke": "PASS",
-      "productBridgeToFfmpegSmoke": "PASS",
+      "productBridgeToStrictWorkerFfmpegSmoke": "PASS",
       "audioMp3CodecBitrate": "mp3 / 320000 bit/s PASS",
       "transactionalNumberedCollision": "PASS",
       "sourceAndExistingDestinationPreserved": "PASS",
-      "deterministicWorkspacePackageBytes": "MATCH_AT_BEHAVIOR_HEAD",
+      "strictOutputLimitExecutableCanary": "PASS; Windows suite had 0 skipped tests",
+      "deterministicWorkspacePackageBytes": "PASS_AT_BEHAVIOR_HEAD",
       "verifiedDeliveryUpload": "PENDING_AUTHORITY_SYNC"
     },
     "static": {
-      "tests": "54/54 PASS after in-job generated authority",
+      "tests": "66/66 PASS",
       "contractVectors": "5/5 PASS",
       "repositoryVerifier": "PASS",
       "immutableActionPins": "PASS",
@@ -48,22 +51,40 @@
       "releaseSbomRegeneration": "PASS",
       "packageManifestRegeneration": "PASS",
       "sha256ManifestRegeneration": "PASS",
-      "generatedAuthorityDiff": "STALE_BEFORE_DEV9_CLOSURE"
+      "generatedAuthorityDiff": "STALE_BEFORE_DEV10_CLOSURE"
     }
+  },
+  "b4IsolationEvidence": {
+    "workflowRunId": 33027104465,
+    "managedJobId": 98370929641,
+    "staticJobId": 98370929814,
+    "strictStagingWrite": "PASS",
+    "strictOutsideScopeWriteDenied": "PASS",
+    "strictLoopbackNetworkDenied": "PASS",
+    "jobObjectDescendantKillAndResources": "PASS",
+    "strictCompatibilityFallback": "ABSENT_BY_POLICY_AND_PRODUCT_REGRESSION"
+  },
+  "b4OutputPolicy": {
+    "conversionDefaultMaximumOutputBytes": 8589934592,
+    "hardMaximumOutputBytes": 17179869184,
+    "monitorPollMilliseconds": 25,
+    "canaryBudgetBytes": 65536,
+    "overBudgetResult": "WorkerOutputLimitExceededException + Job Object termination PASS"
   },
   "productEvidence": {
     "explorerCommandDll": "IMPLEMENTED_MSVC_RELEASE_AND_DIRECT_INVOKE_TESTED",
     "packageManifest": "MAKEAPPX_ACCEPTED_LOOSE_REGISTERED_AND_COM_ACTIVATED",
     "modernContextMenuRegistration": "AUTOMATED_REGISTRATION_AND_COM_INVOKE_PASS; HEADED_WINDOWS_11_UI_ACCEPTANCE_OPEN",
-    "bridgeHandoff": "FIXED_APP_LOCAL_NO_SHELL",
+    "bridgeHandoff": "FIXED_APP_LOCAL_NO_SHELL_STRICT_WORKER_CLIENT",
+    "workerBoundary": "DISPOSABLE_ENGINEWORKER_PLUS_FFMPEG_PROVIDER_PRIVATE_STAGING",
     "developmentFfmpeg": {
       "version": "9.0.1",
       "archiveSha256": "fec81ae03971d9dd4be3ebe02e263bd2ec1d789483f931bdba5f5715e65da2e9",
       "purpose": "development-qualification-only",
       "productionRedistributionApproval": false
     },
-    "audioMvp": "WAV_TO_MP3_320K_REAL_CONVERSION_PASS",
-    "outputPublication": "OWNED_PARTIAL_VALIDATE_NO_OVERWRITE_NUMBERED_PUBLISH"
+    "audioMvp": "WAV_TO_MP3_320K_REAL_STRICT_WORKER_CONVERSION_PASS",
+    "outputPublication": "PRIVATE_STAGING_VALIDATE_NO_OVERWRITE_NUMBERED_PUBLISH"
   },
   "b2Evidence": {
     "protocolFrameMaxPayloadBytes": 1048576,
@@ -77,23 +98,27 @@
     "bridgeServerAuthentication": "FINAL_SHIPPING_ACCEPTANCE_STILL_OPEN"
   },
   "authorityClosure": {
-    "status": "PASS",
-    "qualifiedHeadSha": "b646e21ee9115772299a87ec23033209cd03d190",
-    "workflowRunId": 33006097943,
-    "managedJobId": 98300110836,
-    "staticJobId": 98300110228,
-    "permanentGates": "PASS",
-    "generatedAuthorityDiff": "CLEAN",
-    "deterministicDoubleWorkspaceZip": "PASS",
-    "crcManifestHashAndExclusionVerification": "PASS",
-    "note": "This records the fully green permanent exact-head qualification immediately preceding the evidence freeze. The evidence-frozen tree is regenerated and independently requalified; no self-referential archive hash is embedded in this file."
+    "status": "IN_PROGRESS",
+    "behaviorHeadDeterministicZip": {
+      "sha256": "a0edd6e15a63d71cc2ef493ef33f6bb6e3f0b16ee0d8f484ebc981b800f749de",
+      "bytes": 369035,
+      "files": 328,
+      "doubleBuild": "PASS",
+      "finalEmbeddedManifestVerification": "BLOCKED_ONLY_BY_STALE_TRACKED_PACKAGE_MANIFEST",
+      "verifiedDeliveryUpload": "NOT_RUN_AFTER_EXPECTED_STALE_AUTHORITY_FAILURE"
+    },
+    "qualifiedHeadSha": null,
+    "workflowRunId": null,
+    "managedJobId": null,
+    "staticJobId": null,
+    "generatedAuthorityDiff": "PENDING_DEV10_REGENERATION",
+    "note": "B4 behavior is frozen separately. Authority closure will record a fully-green permanent exact-head qualification immediately preceding any evidence freeze to avoid self-referential archive evidence."
   },
   "unverifiedClaimsExplicitlyForbidden": [
     "Converty is shipped or production-ready",
     "Headed Windows 11 modern Explorer menu acceptance is complete",
-    "Explorer crash/hang/failure matrix is complete",
+    "Explorer crash/hang/failure headed matrix is complete",
     "B2 is fully closed",
-    "B4 worker containment is qualified",
     "FFmpeg production redistribution/license/signature approval is complete",
     "Windows artifacts are production-signed",
     "Clean Windows 11 VM install/update/uninstall acceptance is complete"

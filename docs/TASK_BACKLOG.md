@@ -1,6 +1,6 @@
 # Converty Implementation Backlog
 
-Check a box only when the stated deliverable has matching evidence. Dev.9 follows the product-first exception recorded in ADR-013; this changes implementation order, not final shipping requirements.
+Check a box only when the stated deliverable has matching evidence. ADR-013 changes development ordering only; it does not waive final shipping requirements.
 
 ## B0 Repository/bootstrap
 - [x] Create solution/repository topology.
@@ -8,7 +8,7 @@ Check a box only when the stated deliverable has matching evidence. Dev.9 follow
 - [x] Native CMake/C++20 topology and hardening policy.
 - [ ] Full qualified Windows x64 Debug/Release production matrix — Release managed/native product path is green; Debug/final signed-production matrix remains open.
 - [x] Nullable, warnings-as-errors/analyzers policy.
-- [x] Dependency locking — 15 current managed projects carry committed `packages.lock.json` files and locked restore passes.
+- [x] Dependency locking — 18 current managed projects carry committed `packages.lock.json` files and locked restore passes.
 - [x] Immutable CI Action provenance and read-only permanent workflow containment.
 - [x] Dependency vulnerability audit — zero vulnerable-result packages at configured all/low gate.
 - [ ] Final release dependency/license/notices review.
@@ -37,32 +37,34 @@ Check a box only when the stated deliverable has matching evidence. Dev.9 follow
 - [ ] Final status/cancel wire-surface decision/qualification.
 - [ ] Final replay/disconnect/reconnect/session acceptance matrix.
 
-ADR-013 explicitly allowed the functional Explorer/FFmpeg spike before final B2 closure. Do not infer that the remaining B2 release gates are waived.
+ADR-013 allowed the functional Explorer/FFmpeg product path before final B2 closure. The remaining B2 release gates are not waived.
 
 ## B3 Explorer
 - [x] Real native `IExplorerCommand` DLL compiled under MSVC Release with hardening.
 - [x] Package manifest COM/context-menu registration accepted by MakeAppx and exercised through loose package registration.
 - [x] Fixed typed/pinned product subcommands with no raw FFmpeg command surface in Explorer.
-- [ ] **Headed Windows 11 modern-menu acceptance** — must use real interactive Explorer/right-click UI and capture evidence.
-- [ ] Explorer crash/hang/failure matrix.
+- [ ] **Headed Windows 11 modern-menu acceptance** — real interactive Explorer/right-click UI with exact-build screenshots/evidence is still required.
+- [ ] Explorer crash/hang/failure headed matrix.
 
-**Automated dev.9 evidence:** direct staged DLL class-factory + `Invoke` PASS; loose package registration + packaged COM activation/`Invoke` PASS on Windows Server 2025.
+Automated dev.10 evidence retains direct staged DLL class-factory/Invoke and loose-package COM activation/Invoke PASS on Windows Server 2025; this is not headed Windows 11 UI evidence.
 
-## B4 Containment — required before production shipping
-- [ ] Private worker staging.
-- [ ] Restricted worker launcher.
-- [ ] Job Object kill-on-close.
-- [ ] Memory/CPU/process/output/time ceilings.
-- [ ] AppContainer/restricted-token qualification.
-- [ ] No-network canary.
-- [ ] Outside-scope file-write canary.
-- [ ] Strict vs compatibility profile with no silent downgrade.
-- [ ] Move the dev.9 FFmpeg execution spike from Core/Bridge into the final restricted worker/provider architecture.
+## B4 Containment — behavior-qualified in dev.10
+- [x] Private per-job worker staging.
+- [x] Restricted worker launcher.
+- [x] Job Object kill-on-close and descendant cleanup.
+- [x] Memory/CPU/process/output/time ceilings.
+- [x] Zero-capability AppContainer strict-launch qualification.
+- [x] No-network strict canary.
+- [x] Outside-scope file-write strict canary.
+- [x] Explicit Strict vs Compatibility profile with no silent downgrade.
+- [x] Move FFmpeg execution from the dev.9 Core/Bridge spike into fixed EngineWorker/provider architecture.
+
+Behavior authority: `f221563c790057344a94b4e60c309d4512a77c38`, run `33028554361`. The executable Windows suite includes the 64 KiB output-growth termination canary; the earlier direct strict-canary run `33027104465` proves staging-only filesystem access, loopback-network denial, and descendant/resource containment.
 
 ## B5–B8 Providers
 - [ ] Production FFmpeg/ffprobe provider pin/signature/hash/licensing/redistribution qualification — **development archive hash/execution verification is PASS only**.
-- [x] Development functional Audio MVP: WAV→MP3 320k through real Bridge→FFmpeg path, ffprobe-verified.
-- [ ] Final worker-contained Audio matrix/presets.
+- [x] Development strict-worker Audio MVP: WAV→MP3 320k through real Bridge→EngineWorker→FFmpeg path, ffprobe-verified.
+- [ ] Final worker-contained Audio matrix/presets beyond the MVP.
 - [ ] Image provider/matrix/security limits.
 - [ ] Video provider/remux/transcode matrix.
 - [ ] Provider-specific malformed/fuzz corpora.

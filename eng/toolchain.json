@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "workspaceVersion": "0.1.0-dev.9",
+  "workspaceVersion": "0.1.0-dev.10",
   "targetOs": "Windows 11",
   "dotnetSdk": "10.0.400",
   "targetFramework": "net10.0",
@@ -9,11 +9,11 @@
   "nativeBuild": "CMake + MSVC",
   "architecture": "x64-first",
   "notes": [
-    "Dev.9 behavior qualification ran on GitHub Actions Windows Server 2025 with .NET SDK 10.0.400 and MSVC Release native Explorer targets.",
-    "All 15 managed projects restore from committed lock files; NuGet vulnerability audit reports zero vulnerable-result packages.",
-    "Release build completed with zero warnings/errors; Microsoft Testing Platform executed 176 tests with 176 successes.",
-    "Native Explorer DLL build, MakeAppx, direct IExplorerCommand Invoke, package COM registration/Invoke and Bridge-to-FFmpeg MP3/320k smoke pass.",
-    "The FFmpeg/ffprobe 9.0.1 payload is development qualification only; headed Windows 11 acceptance, B4 containment, production engine redistribution/signing and signed release packaging remain open."
+    "Dev.10 B4 behavior qualification ran at f221563c790057344a94b4e60c309d4512a77c38 on GitHub Actions Windows Server 2025 with .NET SDK 10.0.400 and MSVC Release Explorer targets.",
+    "All 18 managed projects restore from committed lock files; NuGet vulnerability audit reports zero vulnerable-result packages.",
+    "Release build completed with zero warnings/errors; Microsoft Testing Platform executed 190 tests with 190 successes and zero skipped.",
+    "Native Explorer DLL, MakeAppx, direct IExplorerCommand Invoke, package COM registration/Invoke and strict Bridge-to-EngineWorker-to-FFmpeg MP3/320k smoke pass.",
+    "B4 strict AppContainer/private-staging/Job Object/resource/output/network/filesystem canaries are behavior-qualified; headed Windows 11 acceptance, final B2 acceptance, production FFmpeg redistribution/signing and signed clean-VM release packaging remain open."
   ],
   "testRunner": "Microsoft.Testing.Platform",
   "xunitMtpV2": "4.0.0"
