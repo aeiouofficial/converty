@@ -1,76 +1,77 @@
 # CONVERTY — CONTINUATION HANDOVER
-# PRODUCT-FIRST ROADMAP — FINISH 0.1.0-dev.10 AUTHORITY CLOSURE
+# PRODUCT-FIRST ROADMAP — FINALIZE 0.1.0-dev.10 AUTHORITY
 
 Continue development directly in:
 https://github.com/aeiouofficial/converty
 
-Repository branch: `dev/0.1.0-dev.10-b4`
+Working branch: `dev/0.1.0-dev.10-b4`
 Frozen pre-dev.10 main: `13ed46bcb5cb02f33965dace4adc5a3fb25e87fd`
-Immutable dev.10 B4 behavior head: `f221563c790057344a94b4e60c309d4512a77c38`
-Behavior run: `33028554361`
-Managed job: `98375493893`
-Static job: `98375494099`
+Immutable B4 behavior head: `f221563c790057344a94b4e60c309d4512a77c38`
+Behavior run `33028554361`; managed `98375493893`; static `98375494099`.
+First fully-green generated-authority qualifier: `529216b3676b97e7a9e0b78333c2229ed3396794`, tree `af16e15820985e787e54fb0c659cf6005bd4df89`.
+First authority run `33035768679`; managed `98397998679`; static `98397998510`.
+Workspace `0.1.0-dev.10`; next development workspace `0.1.0-dev.11`.
 
-B4 BEHAVIOR IS QUALIFIED; DEV.10 DELIVERY AUTHORITY IS NOT YET FROZEN.
-Next development tranche after successful dev.10 authority closure: `0.1.0-dev.11`.
+B4 behavior is frozen and qualified. Do not redesign or weaken it.
 
-Behavior evidence on Windows Server 2025 / windows-2025-vs2026 / .NET SDK 10.0.400:
-- 18/18 locked restore PASS
-- vulnerability audit PASS; 0 vulnerable-result packages
-- Release build PASS; 0 warnings; 0 errors
+The first generated-authority qualification is also fully green:
+- generated authority current / zero diff PASS
+- 18/18 locked restore
+- vulnerability audit: 18 projects / 18 frameworks / 0 vulnerable-result packages
+- Release build 0 warnings / 0 errors
 - native Explorer PASS
-- pinned dev FFmpeg/ffprobe 9.0.1 PASS
-- unsigned MakeAppx package PASS
-- direct DLL Invoke PASS
-- package registration + COM activation/Invoke PASS
-- actual Bridge → Strict EngineWorker → FFmpeg product smoke PASS
-- Unicode/metacharacter input, source/external destination preservation, numbered output PASS
-- ffprobe MP3 exactly 320000 bit/s PASS
+- dev FFmpeg/ffprobe 9.0.1 PASS
+- unsigned MakeAppx PASS
+- direct DLL and packaged COM Invoke PASS
+- actual Strict Bridge→EngineWorker→FFmpeg product conversion PASS
+- source and existing destination preserved; numbered output; MP3 exactly 320000 bit/s
 - managed tests 190/190 PASS, 0 skipped
-- static tests 66/66 PASS
-- contract vectors 5/5 PASS
-- strict output-growth termination canary PASS
+- static tests 66/66 PASS; vectors 5/5 PASS
+- deterministic double workspace ZIP PASS
+- ZIP SHA-256 `ed2fd33e376eef060f9342a77a48cdff40a9e2c95e0c6dc2d0ef98c557197241`
+- ZIP 377093 bytes / 328 files
+- package manifest 326 entries; SHA manifest 327 entries
+- ZIP CRC PASS; exclusions PASS
+- verified delivery artifact `9631969967`, digest `23de3e391ddb76ef8ddbf70c05f22a3fcc307a621692dc9759001c80741ad119`, 388508 bytes
+- generated authority artifact `9631932538`, digest `f761f6148e7e60c8a64eb41a87592e0f107f872ff813487bc17844da49d6a313`.
 
-B4 includes private staging, worker/provider migration, suspended native launch, explicit inherited handles, Job Object kill-on-close and finite process/memory/CPU/time/output ceilings, zero-capability AppContainer strict isolation, application read/execute + staging read/write ACLs, reparse rejection, outside-scope-write denial, loopback-network denial, descendant cleanup, and explicit Strict/Compatibility with no silent fallback. Conversion output default is 8 GiB; hard configured max is 16 GiB.
-
-Direct strict-canary evidence: run `33027104465`, managed `98370929641`, static `98370929814`.
-
-The behavior run built two byte-identical ZIPs:
-SHA-256 `a0edd6e15a63d71cc2ef493ef33f6bb6e3f0b16ee0d8f484ebc981b800f749de`
-369035 bytes
-328 files
-It then failed only because tracked generated package/SBOM/hash authority was stale. That is expected before authority closure.
+This source evidence freeze records that prior run and therefore changes repository bytes. Authority is intentionally not final until generated files are regenerated from this evidence-frozen tree and a final exact-head qualification passes again.
 
 FIRST TASK:
-Finish dev.10 authority closure. Regenerate source/release SBOM, package manifest and SHA256SUMS from the synchronized dev.10 tree; commit generated authority separately; require zero generated diff and exact-head CI proving all behavior gates plus deterministic ZIP twice, CRC, embedded package-manifest bytes/hashes, SHA256SUMS, exclusion policy and verified delivery upload. Record the fully-green authority qualification using the repository's non-self-referential evidence-freeze pattern, regenerate/requalify if the evidence update changes manifests, then consider merging reviewed dev.10 authority to main.
+1. Regenerate only source/release SBOM, package manifest and SHA256SUMS from the evidence-frozen source head.
+2. Commit those four generated files separately.
+3. Trigger permanent CI on a tree-identical qualifier commit if needed so generated bytes do not change.
+4. Require full static freshness + managed product/test/package/delivery GREEN.
+5. Capture final exact SHA, run/job IDs, ZIP hash/size/counts and delivery artifact.
+6. Only after reviewed fully-green final authority consider merging/fast-forwarding dev.10 to main.
 
-DO NOT CHANGE THE FROZEN B4 BEHAVIOR UNLESS AN EVIDENCE-BACKED FAILURE REQUIRES IT.
+DO NOT CLAIM headed Windows 11 acceptance: no interactive Windows 11 Explorer environment has been available. Automated Windows Server COM invocation is not a substitute.
 
-REMAINING SHIPPING BLOCKERS AFTER AUTHORITY CLOSURE:
-- real headed Windows 11 modern Explorer context-menu acceptance/screenshots
+REMAINING SHIPPING BLOCKERS AFTER DEV.10 CLOSURE:
+- real headed Windows 11 modern Explorer menu/conversion acceptance and fresh screenshots
 - Explorer crash/hang/failure headed matrix
 - remaining B2 connected-server anti-squatting/authentication
 - final status/cancel wire decision
 - replay/disconnect/session acceptance
-- production FFmpeg redistribution/license/notices/signature/hash
+- production FFmpeg redistribution/license/notices/signature/hash approval
 - signed production MSIX
 - clean Windows 11 VM install/update/uninstall
-- final security/fuzz/chaos/release audit
+- final security/fuzz/chaos/release audit and end-user acceptance
 
 NON-NEGOTIABLES:
-- Explorer trigger-only and cheap/bounded; no media parsing/network/codec/plugin execution in Explorer.
+- Explorer trigger-only, cheap/bounded; no media parsing/network/codecs/plugins.
 - Host never parses hostile media or loads codec/plugin code.
 - Production media parsing/conversion only in disposable restricted workers.
 - Strict local conversion has no network.
-- No raw commands/pass-through FFmpeg args from Explorer/user/IPC; typed checked-in presets only.
+- No raw commands/pass-through FFmpeg args; typed checked-in presets only.
 - No shell.
-- Fixed app-local worker and FFmpeg paths; reject unsafe reparse-point substitution.
-- Worker gets private staging, not final publication destination.
-- Never overwrite input/external destination; numbered no-overwrite publication remains transactional/race-safe.
+- Fixed app-local worker and FFmpeg paths; reject unsafe reparse substitution.
+- Worker receives private staging, never final publication destination.
+- Never overwrite input or externally created destination; numbered transactional no-overwrite publication remains default.
 - Explicit Strict/Compatibility only; never silently fall back from Strict.
-- Signing private keys never enter repo/workspace.
-- Report only executed gates.
-- Gyan FFmpeg is development qualification input only, not production redistribution approval.
+- Signing private keys never enter repository/workspace.
+- Report only gates actually executed.
+- Gyan FFmpeg remains development qualification input only, not production redistribution approval.
 
 MANDATORY RECURSIVE HANDOVER RULE:
 At the end of your work — whether complete, partial, or blocked — you MUST produce a new full-context copy-paste handover prompt for the NEXT agent/new chat. It must contain:

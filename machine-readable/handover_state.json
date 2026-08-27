@@ -3,10 +3,10 @@
   "project": "Converty",
   "workspaceVersion": "0.1.0-dev.10",
   "baselineDate": "2026-08-27",
-  "implementationStatus": "B4_WORKER_CONTAINMENT_BEHAVIOR_QUALIFIED_AUTHORITY_CLOSURE_IN_PROGRESS",
+  "implementationStatus": "B4_BEHAVIOR_AND_FIRST_GENERATED_AUTHORITY_QUALIFIED_FINAL_EVIDENCE_REGEN_PENDING",
   "batchesTouched": ["B0", "B1", "B2", "B3", "B4", "B5"],
   "nextWorkspaceVersion": "0.1.0-dev.11",
-  "nextBatch": "DEV10_AUTHORITY_CLOSURE_THEN_HEADED_EXPLORER_AND_REMAINING_SHIPPING_GATES",
+  "nextBatch": "FINAL_DEV10_AUTHORITY_REGEN_THEN_HEADED_EXPLORER_AND_REMAINING_SHIPPING_GATES",
   "targetOs": "Windows 11 x64",
   "toolchain": {
     "dotnetSdk": "10.0.400",
@@ -22,7 +22,7 @@
     "staticJobId": 98375494099,
     "behaviorHeadSha": "f221563c790057344a94b4e60c309d4512a77c38",
     "managedTests": "190/190 PASS; 0 skipped",
-    "staticTests": "66/66 PASS before tracked generated-authority freshness check",
+    "staticTests": "66/66 PASS",
     "contractVectors": "5/5 PASS",
     "releaseBuild": "PASS; 0 warnings; 0 errors",
     "dependencyAudit": "PASS; 18 projects; 18 frameworks; 0 vulnerable-result packages",
@@ -32,8 +32,28 @@
     "directExplorerInvoke": "PASS",
     "packagedComInvoke": "PASS",
     "strictBridgeWorkerFfmpegMp3320k": "PASS",
-    "strictOutputLimitCanary": "PASS",
-    "deterministicDoubleWorkspaceZip": "PASS_AT_BEHAVIOR_HEAD; FINAL_EMBEDDED_MANIFEST_VERIFICATION_BLOCKED_BY_STALE_GENERATED_AUTHORITY"
+    "strictOutputLimitCanary": "PASS"
+  },
+  "firstGeneratedAuthorityQualification": {
+    "headSha": "529216b3676b97e7a9e0b78333c2229ed3396794",
+    "treeSha": "af16e15820985e787e54fb0c659cf6005bd4df89",
+    "workflowRunId": 33035768679,
+    "managedJobId": 98397998679,
+    "staticJobId": 98397998510,
+    "generatedAuthorityDiff": "CLEAN",
+    "workspaceZipSha256": "ed2fd33e376eef060f9342a77a48cdff40a9e2c95e0c6dc2d0ef98c557197241",
+    "workspaceZipBytes": 377093,
+    "workspaceZipFiles": 328,
+    "packageManifestEntries": 326,
+    "shaManifestEntries": 327,
+    "crc": "PASS",
+    "deterministicDoubleBuild": "PASS",
+    "exclusionPolicy": "PASS",
+    "verifiedDeliveryArtifactId": 9631969967,
+    "verifiedDeliveryArtifactSha256": "23de3e391ddb76ef8ddbf70c05f22a3fcc307a621692dc9759001c80741ad119",
+    "generatedAuthorityArtifactId": 9631932538,
+    "generatedAuthorityArtifactSha256": "f761f6148e7e60c8a64eb41a87592e0f107f872ff813487bc17844da49d6a313",
+    "status": "PASS"
   },
   "b4IsolationEvidence": {
     "directCanaryWorkflowRunId": 33027104465,
@@ -66,8 +86,8 @@
     "Final security/fuzz/chaos/release gates"
   ],
   "nextActions": [
-    "Finish dev.10 generated-authority closure and exact-head deterministic delivery qualification",
-    "Only after reviewed fully-green dev.10 authority consider merge/fast-forward to main",
+    "Regenerate generated authority after this evidence-freeze source commit and run final exact-head qualification",
+    "Only after reviewed fully-green final dev.10 authority consider merge/fast-forward to main",
     "Perform real headed Windows 11 Explorer acceptance when an interactive Windows 11 environment is available",
     "Finish remaining B2, production FFmpeg supply-chain/signing, clean-VM and final release gates"
   ],

@@ -5,46 +5,60 @@
 
 `IExplorerCommand → fixed Bridge → Strict EngineWorker → typed preset/provider → fixed app-local FFmpeg → private staging → validated numbered publication`
 
-The B4 behavior head is frozen separately from this authority synchronization. dev.10 is not a frozen delivery until generated SBOM/package/hash authority and exact-head package verification are green.
+The immutable B4 behavior head remains `f221563c790057344a94b4e60c309d4512a77c38`. The first generated-authority tree has also passed full permanent CI; this source evidence-freeze records that prior run. A final generated-authority regeneration/requalification is still required because this evidence update changes repository bytes.
 
 ## Behavior qualification
 Immutable dev.10 B4 behavior head: `f221563c790057344a94b4e60c309d4512a77c38`.
 GitHub Actions run: `33028554361`; managed job `98375493893`; static job `98375494099`.
-Runner: Windows Server 2025 (`windows-2025-vs2026`, image version `20260824.214.3`) with .NET SDK exactly `10.0.400`.
 
-Executed results:
+Executed behavior results:
 - 18/18 managed projects locked restore PASS.
 - NuGet vulnerability audit PASS; 18 projects / 18 frameworks / 0 vulnerable-result packages.
-- Release managed build PASS; 0 warnings, 0 errors.
-- Native C++20/MSVC Explorer Release build PASS.
-- Development FFmpeg/ffprobe 9.0.1 archive SHA-256 verification PASS; both executables execute successfully.
-- MakeAppx unsigned development package schema/layout validation PASS.
-- Direct staged shell DLL class factory + `IExplorerCommand::Invoke` PASS.
-- Loose package registration + packaged COM activation + `IExplorerCommand::Invoke` PASS.
-- Real strict Bridge→EngineWorker→FFmpeg product smoke PASS with Unicode/metacharacter path, source preservation, pre-existing base destination preservation, numbered output, and ffprobe MP3 exactly 320000 bit/s.
-- Microsoft Testing Platform/xUnit: 190 total, 190 succeeded, 0 failed, 0 skipped.
-- Contract vectors 5/5 PASS; repository verifier PASS; Python/static tests 66/66 PASS.
-- Workspace ZIP double build produced identical bytes: SHA-256 `a0edd6e15a63d71cc2ef493ef33f6bb6e3f0b16ee0d8f484ebc981b800f749de`, 369035 bytes, 328 files.
-- Final ZIP embedded-manifest verification failed only because tracked generated authority was intentionally stale before this dev.10 synchronization (`build/stage-dev-package.ps1` package-manifest assertion). Delivery upload therefore correctly did not occur in the behavior run.
+- Release build PASS; 0 warnings, 0 errors.
+- Native Explorer, development FFmpeg/ffprobe 9.0.1, unsigned MakeAppx package, direct DLL Invoke and packaged COM activation/Invoke: PASS.
+- Real strict Bridge→EngineWorker→FFmpeg product smoke PASS with Unicode/metacharacter path, source preservation, pre-existing base destination preservation, numbered output and MP3 exactly 320000 bit/s.
+- Microsoft Testing Platform/xUnit: 190/190 PASS, 0 skipped.
+- Contract vectors 5/5 PASS; repository verifier PASS; static tests 66/66 PASS.
+- Direct strict canary run `33027104465` proves private staging write, outside-scope write denial, loopback-network denial and Job Object descendant/resource containment.
+- Output-growth canary PASS; default ceiling 8 GiB, hard configuration maximum 16 GiB.
+
+## First generated-authority qualification
+Generated authority tree: `af16e15820985e787e54fb0c659cf6005bd4df89`.
+Qualifier commit: `529216b3676b97e7a9e0b78333c2229ed3396794`.
+Permanent run: `33035768679`; managed `98397998679`; static `98397998510`.
+
+Executed closure results:
+- generated source/release SBOM, package manifest and SHA256SUMS regeneration PASS;
+- tracked generated authority current / zero diff PASS;
+- 18/18 locked restore and zero-vulnerability audit PASS;
+- Release build PASS, 0 warnings, 0 errors;
+- native/package/COM/strict product smokes PASS;
+- managed tests 190/190 PASS, 0 skipped;
+- static tests 66/66 PASS; vectors 5/5 PASS;
+- deterministic workspace ZIP built twice with identical bytes;
+- `Converty_0.1.0-dev.10_full_workspace.zip` SHA-256 `ed2fd33e376eef060f9342a77a48cdff40a9e2c95e0c6dc2d0ef98c557197241`, 377093 bytes, 328 files;
+- 326 package-manifest entries and 327 SHA256SUMS entries verified;
+- ZIP reopen/CRC PASS; exclusion policy PASS;
+- verified delivery artifact upload PASS: artifact `9631969967`, digest `23de3e391ddb76ef8ddbf70c05f22a3fcc307a621692dc9759001c80741ad119`, 388508 bytes.
 
 ## B4 containment implemented and qualified
-- Each source item is copied into a unique Converty-owned private job directory; the worker receives staged paths only and Core publishes the validated output with race-safe `File.Move(..., overwrite: false)` numbered semantics.
-- Core owns only `IConversionWorkerClient`; FFmpeg path trust and process execution are isolated in the FFmpeg provider behind the disposable EngineWorker.
-- EngineWorker accepts a fixed typed CLI surface (`--preset`, `--input`, `--output`) and reconstructs FFmpeg arguments from `ProductPresetRegistry`; no raw FFmpeg vector is forwarded from Explorer/user/IPC.
-- Windows worker creation is suspended, uses an explicit inherited-handle list, is assigned to a Job Object before resume, and runs without shell execution.
-- Job Object/resource policy includes kill-on-close, finite process count, process/job memory, CPU hard cap, wall-clock timeout/cancellation, bounded stderr and finite output growth.
-- Strict isolation creates a unique zero-capability AppContainer, grants application read/execute plus private-staging read/write, rejects reparse-point scope substitution, and cleans the ACL/profile authority afterward.
-- Direct strict canaries prove staging write allowed, outside/sibling write denied, loopback connection denied, and descendants are killed with the job.
-- Product Bridge explicitly requests `WorkerIsolationLevel.Strict`; no Compatibility fallback exists on strict failure.
-- Output growth is sampled every 25 ms relative to a pre-resume baseline. Positive per-path growth is charged, shrinking/deleting staged input gives no refund, new files count in full, a final post-exit check prevents fast-exit bypass, and reparse points fail closed.
-- `ConversionDefault.MaximumOutputBytes` is 8 GiB with a 16 GiB hard configuration maximum. The executable Windows canary uses a 64 KiB budget and proves the worker is terminated with `WorkerOutputLimitExceededException` after exceeding it.
+- Unique Converty-owned private staging; worker never receives final publication destination.
+- Core owns only the worker-client boundary; FFmpeg execution is isolated in EngineWorker/provider.
+- Typed worker CLI and checked-in presets only; no raw FFmpeg argument surface and no shell.
+- Suspended native launch, explicit inherited handles, Job Object assignment before resume, kill-on-close and finite process/memory/CPU/time/output bounds.
+- Zero-capability AppContainer Strict profile with application read/execute and staging read/write ACLs; reparse-point rejection and cleanup.
+- No-network and outside-scope-write canaries PASS; no silent Strict→Compatibility fallback.
+- Transactional/race-safe numbered publication preserves original and externally created destinations.
+
+## Authority closure state
+The first generated-authority qualification is green and retained as non-self-referential evidence. This evidence-freeze changes repository bytes, therefore generated package/hash authority must now be regenerated from the evidence-frozen tree and one final exact-head permanent run must again prove clean generated authority, behavior gates, deterministic ZIP verification and delivery upload. Only after that reviewed green result should dev.10 be considered for merge/fast-forward to `main`.
 
 ## Remaining shipping gates
 1. Real headed Windows 11 Explorer acceptance and current-build screenshots, plus Explorer crash/hang/failure headed matrix.
 2. Remaining B2 connected-server anti-squatting/authentication, final status/cancel wire decision, and replay/disconnect/session acceptance.
-3. Production FFmpeg redistribution/license/notices/signature/hash approval; the current Gyan 9.0.1 payload is development qualification only.
+3. Production FFmpeg redistribution/license/notices/signature/hash approval; Gyan 9.0.1 remains development qualification only.
 4. Signed production MSIX and clean Windows 11 VM install/update/uninstall acceptance.
 5. Final security/fuzz/chaos/release audit and end-user shipping acceptance.
 
 ## Boundary status
-Explorer remains trigger-only. Host remains media/process neutral. Core coordinates typed presets, staging and publication but no longer launches FFmpeg. Production media parsing/conversion occurs in a disposable strict worker/provider process. Strict local conversion has no network capability. Original inputs and externally created destinations are never overwritten.
+Explorer remains trigger-only. Host remains media/process neutral. Core coordinates typed presets, staging and publication but does not launch FFmpeg. Media parsing/conversion occurs in a disposable strict worker/provider process. Strict local conversion has no network capability. Original inputs and externally created destinations are never overwritten.

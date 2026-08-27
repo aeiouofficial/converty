@@ -41,7 +41,7 @@
       "sourceAndExistingDestinationPreserved": "PASS",
       "strictOutputLimitExecutableCanary": "PASS; Windows suite had 0 skipped tests",
       "deterministicWorkspacePackageBytes": "PASS_AT_BEHAVIOR_HEAD",
-      "verifiedDeliveryUpload": "PENDING_AUTHORITY_SYNC"
+      "verifiedDeliveryUpload": "PENDING_AUTHORITY_SYNC_AT_BEHAVIOR_HEAD"
     },
     "static": {
       "tests": "66/66 PASS",
@@ -99,21 +99,56 @@
     "bridgeServerAuthentication": "FINAL_SHIPPING_ACCEPTANCE_STILL_OPEN"
   },
   "authorityClosure": {
-    "status": "IN_PROGRESS",
-    "behaviorHeadDeterministicZip": {
-      "sha256": "a0edd6e15a63d71cc2ef493ef33f6bb6e3f0b16ee0d8f484ebc981b800f749de",
-      "bytes": 369035,
-      "files": 328,
-      "doubleBuild": "PASS",
-      "finalEmbeddedManifestVerification": "BLOCKED_ONLY_BY_STALE_TRACKED_PACKAGE_MANIFEST",
-      "verifiedDeliveryUpload": "NOT_RUN_AFTER_EXPECTED_STALE_AUTHORITY_FAILURE"
+    "status": "FIRST_GENERATED_AUTHORITY_QUALIFIED_EVIDENCE_FREEZE_PENDING_FINAL_REGEN",
+    "firstGeneratedAuthorityQualification": {
+      "qualifiedHeadSha": "529216b3676b97e7a9e0b78333c2229ed3396794",
+      "qualifiedTreeSha": "af16e15820985e787e54fb0c659cf6005bd4df89",
+      "workflowRunId": 33035768679,
+      "managedJobId": 98397998679,
+      "staticJobId": 98397998510,
+      "lockedRestore": "PASS; 18/18 projects",
+      "dependencyAudit": "PASS; 18 projects; 18 frameworks; 0 vulnerable-result packages",
+      "releaseBuild": "PASS; 0 warnings; 0 errors",
+      "nativeExplorer": "PASS",
+      "developmentFfmpeg": "PASS; 9.0.1; development qualification only",
+      "makeAppx": "PASS",
+      "directExplorerInvoke": "PASS",
+      "packagedComInvoke": "PASS",
+      "strictProductConversion": "PASS; source/base destination preserved; numbered MP3; 320000 bit/s",
+      "managedTests": "190/190 PASS; 0 skipped",
+      "staticTests": "66/66 PASS",
+      "contractVectors": "5/5 PASS",
+      "generatedAuthorityDiff": "CLEAN",
+      "workspaceZip": {
+        "archive": "Converty_0.1.0-dev.10_full_workspace.zip",
+        "sha256": "ed2fd33e376eef060f9342a77a48cdff40a9e2c95e0c6dc2d0ef98c557197241",
+        "bytes": 377093,
+        "files": 328,
+        "packageManifestEntries": 326,
+        "shaManifestEntries": 327,
+        "crc": "PASS",
+        "deterministicDoubleBuild": "PASS",
+        "exclusionPolicy": "PASS"
+      },
+      "verifiedDeliveryArtifact": {
+        "artifactId": 9631969967,
+        "name": "converty-verified-delivery-529216b3676b97e7a9e0b78333c2229ed3396794",
+        "bytes": 388508,
+        "sha256": "23de3e391ddb76ef8ddbf70c05f22a3fcc307a621692dc9759001c80741ad119"
+      },
+      "generatedAuthorityArtifact": {
+        "artifactId": 9631932538,
+        "name": "converty-generated-authority-529216b3676b97e7a9e0b78333c2229ed3396794",
+        "bytes": 130510,
+        "sha256": "f761f6148e7e60c8a64eb41a87592e0f107f872ff813487bc17844da49d6a313"
+      }
     },
-    "qualifiedHeadSha": null,
-    "workflowRunId": null,
-    "managedJobId": null,
-    "staticJobId": null,
-    "generatedAuthorityDiff": "PENDING_DEV10_REGENERATION",
-    "note": "B4 behavior is frozen separately. Authority closure will record a fully-green permanent exact-head qualification immediately preceding any evidence freeze to avoid self-referential archive evidence."
+    "finalQualifiedHeadSha": null,
+    "finalWorkflowRunId": null,
+    "finalManagedJobId": null,
+    "finalStaticJobId": null,
+    "finalGeneratedAuthorityDiff": "PENDING_AFTER_EVIDENCE_FREEZE_REGENERATION",
+    "note": "The first generated-authority tree is fully green. This file now records that prior run. Because this evidence freeze changes repository bytes, package/hash authority must be regenerated and independently requalified before dev.10 authority is final."
   },
   "unverifiedClaimsExplicitlyForbidden": [
     "Converty is shipped or production-ready",

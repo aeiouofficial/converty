@@ -4,32 +4,33 @@
 Windows 11 modern-context-menu file conversion platform. Converty is being built as a modular right-click converter for Audio, Images, Video, and future file families while keeping Explorer, coordinator, worker, media-engine, staging, and publication trust boundaries explicit.
 
 ## Workspace version
-**0.1.0-dev.10** — B4 disposable-worker containment and worker/provider migration behavior-qualified on 2026-08-27; generated/release authority closure is the next repository step.
+**0.1.0-dev.10** — B4 disposable-worker containment behavior is qualified. The first generated-authority tree is also fully qualified; one final regeneration/requalification is required because recording that qualification changes repository bytes.
 
 ## Current evidence-backed state
-The dev.10 B4 behavior head is `f221563c790057344a94b4e60c309d4512a77c38`. Permanent GitHub Actions run `33028554361` on Windows Server 2025 / `windows-2025-vs2026` / .NET SDK `10.0.400` exercised the contained product path:
+The immutable dev.10 B4 behavior head is `f221563c790057344a94b4e60c309d4512a77c38`, qualified by GitHub Actions run `33028554361` (managed `98375493893`, static `98375494099`). The contained product path is:
 
 `IExplorerCommand → fixed Converty.Bridge.exe → Strict Converty.EngineWorker.exe → typed preset/provider → fixed app-local ffmpeg.exe → private staging → validated no-overwrite numbered publication`
 
-Observed behavior qualification:
-- 18/18 managed projects restored from committed lock files.
-- NuGet vulnerability audit: PASS, zero vulnerable-result packages.
-- Release build: PASS, 0 warnings, 0 errors.
-- Native C++20/MSVC Explorer DLL: PASS.
-- Pinned development FFmpeg/ffprobe 9.0.1 hash/execution: PASS.
-- MakeAppx unsigned development package: PASS.
-- Direct staged shell DLL class-factory + `IExplorerCommand::Invoke`: PASS.
-- Loose package registration + packaged COM activation + `IExplorerCommand::Invoke`: PASS.
-- Strict product Bridge → EngineWorker → FFmpeg conversion: PASS with Unicode/metacharacter paths, source preservation, pre-existing destination preservation, numbered publication, and ffprobe verification of MP3 at exactly 320000 bit/s.
-- Microsoft Testing Platform/xUnit: **190/190 PASS**, 0 failed, 0 skipped.
-- Repository/static gates: **66/66 PASS**; contract vectors **5/5 PASS**.
+Behavior evidence includes 18/18 locked restore, zero vulnerable-result packages, Release build with 0 warnings/errors, native Explorer, development FFmpeg/ffprobe 9.0.1, MakeAppx, direct/package COM invocation, strict Bridge→worker→FFmpeg conversion, Unicode/metacharacter paths, source/external-destination preservation, numbered publication, MP3 exactly 320000 bit/s, 190/190 managed tests, 66/66 static tests, 5/5 vectors, strict filesystem/network canaries, Job Object containment, and the output-growth ceiling canary.
 
-B4 now includes private per-job staging; FFmpeg execution isolated in `Converty.EngineWorker`/`Converty.Provider.FFmpeg`; suspended native worker creation; explicit inherited-handle list; Job Object kill-on-close, active-process, process/job-memory, CPU, wall-clock and output-growth ceilings; unique zero-capability AppContainer strict launches; application read/execute and staging read/write ACLs; reparse-point rejection; outside-scope-write and loopback-network denial canaries; explicit Strict/Compatibility profiles with no silent downgrade. `WorkerResourceLimits.ConversionDefault` has an 8 GiB output ceiling and a 16 GiB hard configuration maximum. The executable output-limit canary proves a strict worker is terminated after crossing a 64 KiB staging-growth budget.
+## First generated-authority qualification
+Generated authority was frozen on tree `af16e15820985e787e54fb0c659cf6005bd4df89` and qualified at commit `529216b3676b97e7a9e0b78333c2229ed3396794`, run `33035768679`, managed job `98397998679`, static job `98397998510`.
 
-The behavior run built the workspace ZIP twice with identical bytes (`a0edd6e15a63d71cc2ef493ef33f6bb6e3f0b16ee0d8f484ebc981b800f749de`, 369035 bytes, 328 files) and then failed exactly at embedded package-manifest verification because tracked generated authority was still dev.9/stale. That expected authority-sync failure is why this branch is not yet a frozen dev.10 delivery.
+That run was fully green:
+- generated source/release SBOM, package manifest and SHA256SUMS regeneration: PASS;
+- tracked generated-authority diff: CLEAN;
+- Release/product/test gates: PASS; managed tests **190/190**, static tests **66/66**;
+- deterministic workspace ZIP double build: PASS;
+- `Converty_0.1.0-dev.10_full_workspace.zip`: SHA-256 `ed2fd33e376eef060f9342a77a48cdff40a9e2c95e0c6dc2d0ef98c557197241`, 377093 bytes, 328 files;
+- 326 package-manifest entries and 327 SHA256SUMS entries verified;
+- ZIP reopen/CRC: PASS;
+- exclusion policy: PASS;
+- verified delivery artifact upload: PASS, artifact `9631969967`, digest `23de3e391ddb76ef8ddbf70c05f22a3fcc307a621692dc9759001c80741ad119`.
+
+This evidence is now being recorded in source authority. Because that recording changes repository bytes, dev.10 is not yet final: generated package/hash authority must be regenerated from the evidence-frozen tree and the resulting exact tree independently requalified once more.
 
 ## What dev.10 still does not claim
-Dev.10 B4 behavior is not a shipping release. These gates remain open:
+Converty is not shipped or production-ready. These gates remain open:
 - real headed Windows 11 modern Explorer context-menu visibility/usability and exact-build screenshots;
 - Explorer crash/hang/failure headed matrix;
 - remaining B2 connected-server anti-squatting, final status/cancel wire decision, and replay/disconnect/session acceptance;
