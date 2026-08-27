@@ -53,5 +53,10 @@ def test_strict_launcher_grants_only_explicit_app_read_execute_and_staging_write
 def test_strict_path_has_no_compatibility_retry() -> None:
     launcher = (WORKERS / "WindowsWorkerProcessLauncher.cs").read_text(encoding="utf-8")
     assert "WorkerIsolationLevel.Strict" in launcher
-    assert "WorkerIsolationLevel.Compatibility" in launcher
-    assert "Strict" not in launcher or "Compatibility" not in launcher or "retry" not in launcher.lower()
+    forbidden_rewrites = [
+        "request with { IsolationLevel = WorkerIsolationLevel.Compatibility }",
+        "request with {IsolationLevel = WorkerIsolationLevel.Compatibility}",
+        "IsolationLevel = WorkerIsolationLevel.Compatibility",
+    ]
+    assert not [token for token in forbidden_rewrites if token in launcher]
+    assert "retry compatibility" not in launcher.lower()
