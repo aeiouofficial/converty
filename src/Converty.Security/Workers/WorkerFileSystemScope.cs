@@ -14,13 +14,24 @@ public sealed class WorkerFileSystemScope
         {
             throw new DirectoryNotFoundException("Worker writable directory does not exist.");
         }
-        if ((File.GetAttributes(fullPath) & FileAttributes.ReparsePoint) != 0)
-        {
-            throw new IOException("Worker writable directory must not be a reparse point.");
-        }
 
+        RejectReparsePointAncestry(fullPath);
         WritableDirectory = fullPath;
     }
 
     public string WritableDirectory { get; }
+
+    private static void RejectReparsePointAncestry(string path)
+    {
+        DirectoryInfo? current = new(path);
+        while (current is not null)
+        {
+            if ((File.GetAttributes(current.FullName) & FileAttributes.ReparsePoint) != 0)
+            {
+                throw new IOException("Worker writable directory ancestry must not contain a reparse point.");
+            }
+
+            current = current.Parent;
+        }
+    }
 }
