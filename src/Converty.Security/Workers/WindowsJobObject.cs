@@ -12,8 +12,8 @@ internal sealed class WindowsJobObject : IDisposable
     internal const uint JOB_OBJECT_CPU_RATE_CONTROL_ENABLE = 0x00000001;
     internal const uint JOB_OBJECT_CPU_RATE_CONTROL_HARD_CAP = 0x00000004;
 
-    private const int JobObjectExtendedLimitInformation = 9;
-    private const int JOBOBJECT_CPU_RATE_CONTROL_INFORMATION = 15;
+    private const int JobObjectExtendedLimitInformationClass = 9;
+    private const int JOBOBJECT_CPU_RATE_CONTROL_INFORMATION_CLASS = 15;
 
     private SafeKernelHandle? _handle;
 
@@ -97,7 +97,7 @@ internal sealed class WindowsJobObject : IDisposable
             JobMemoryLimit = checked((nuint)limits.MaximumJobMemoryBytes),
         };
 
-        SetInformation(handle, JobObjectExtendedLimitInformation, information);
+        SetInformation(handle, JobObjectExtendedLimitInformationClass, information);
     }
 
     private static void ConfigureCpuLimit(SafeKernelHandle handle, uint maximumCpuRatePercent)
@@ -108,7 +108,7 @@ internal sealed class WindowsJobObject : IDisposable
             CpuRate = checked(maximumCpuRatePercent * 100),
         };
 
-        SetInformation(handle, JOBOBJECT_CPU_RATE_CONTROL_INFORMATION, information);
+        SetInformation(handle, JOBOBJECT_CPU_RATE_CONTROL_INFORMATION_CLASS, information);
     }
 
     private static void SetInformation<T>(SafeKernelHandle handle, int informationClass, T information)
