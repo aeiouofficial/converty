@@ -1,0 +1,52 @@
+name: b2-package-identity-diagnostic
+
+on:
+  push:
+    branches:
+      - dev/0.1.0-dev.11-b2-auth
+
+permissions:
+  contents: read
+
+env:
+  DOTNET_CLI_TELEMETRY_OPTOUT: '1'
+  DOTNET_NOLOGO: '1'
+  TESTINGPLATFORM_TELEMETRY_OPTOUT: '1'
+
+jobs:
+  parent-child-package-identity:
+    runs-on: windows-2025
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Normalize worktree to committed bytes
+        shell: pwsh
+        run: |
+          git config core.autocrlf false
+          git reset --hard HEAD
+      - uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v6.0.0
+        with:
+          dotnet-version: 10.0.400
+      - name: Verify product lock files and restore
+        shell: pwsh
+        run: ./build/bootstrap.ps1
+      - name: Build product
+        shell: pwsh
+        run: ./build/build.ps1 -Configuration Release
+      - name: Restore diagnostic canary
+        shell: pwsh
+        run: dotnet restore tests/Converty.PackageIdentityCanary/Converty.PackageIdentityCanary.csproj --locked-mode
+      - name: Build diagnostic canary
+        shell: pwsh
+        run: dotnet build tests/Converty.PackageIdentityCanary/Converty.PackageIdentityCanary.csproj --configuration Release --no-restore
+      - name: Native Explorer smoke
+        shell: pwsh
+        run: ./build/native-smoke.ps1
+      - name: Stage product development package
+        shell: pwsh
+        run: ./build/stage-dev-package.ps1 -Configuration Release
+      - name: Measure package-identified parent to direct Host child identity
+        shell: pwsh
+        run: ./build/b2-package-identity-parent-child-diagnostic.ps1 -Configuration Release
