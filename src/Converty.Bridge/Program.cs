@@ -1,4 +1,5 @@
 using System.Runtime.Versioning;
+using Converty.Bridge.Diagnostics;
 using Converty.Bridge.Shell;
 using Converty.Bridge.Workers;
 using Converty.Core.Execution;
@@ -23,6 +24,7 @@ internal static class Program
         try
         {
             ShellConversionRequest request = ShellConversionRequestParser.Parse(args);
+            BridgePackageIdentityDiagnostic.TryWriteEvidence(request.InputPaths);
             var runner = new ConversionBatchRunner(
                 ProductPresetRegistry.Default,
                 new OutputPathResolver(),
