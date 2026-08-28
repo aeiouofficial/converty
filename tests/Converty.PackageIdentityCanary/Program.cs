@@ -9,6 +9,7 @@ internal static class Program
 {
     private const int ErrorInsufficientBuffer = 122;
     private const int AppModelErrorNoPackage = 15700;
+    private static readonly JsonSerializerOptions EvidenceJsonOptions = new() { WriteIndented = true };
 
     public static int Main(string[] args)
     {
@@ -101,7 +102,7 @@ internal static class Program
 
         File.WriteAllText(
             evidencePath,
-            JsonSerializer.Serialize(evidence, new JsonSerializerOptions { WriteIndented = true }) + Environment.NewLine,
+            JsonSerializer.Serialize(evidence, EvidenceJsonOptions) + Environment.NewLine,
             Encoding.UTF8);
 
         return failure is null ? 0 : 4;
@@ -143,6 +144,7 @@ internal static class Program
         return error == 0 ? buffer.ToString() : null;
     }
 
+#pragma warning disable CA1838 // Temporary diagnostic P/Invoke mirrors the production package-family probe shape.
     [DllImport("kernel32.dll", CharSet = CharSet.Unicode)]
     private static extern int GetCurrentPackageFamilyName(
         ref uint packageFamilyNameLength,
@@ -153,4 +155,5 @@ internal static class Program
         IntPtr process,
         ref uint packageFamilyNameLength,
         [Out] StringBuilder? packageFamilyName);
+#pragma warning restore CA1838
 }
