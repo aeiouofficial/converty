@@ -63,19 +63,6 @@
         </desktop4:Extension>
       </Extensions>
     </Application>
-
-    <!-- Temporary dev.11 diagnostic application. Remove after parent->child package-identity measurement. -->
-    <Application
-      Id="B2IdentityCanary"
-      Executable="Converty.PackageIdentityCanary.exe"
-      EntryPoint="Windows.FullTrustApplication">
-      <uap:VisualElements
-        DisplayName="Converty B2 Identity Canary"
-        Description="Temporary package identity diagnostic."
-        BackgroundColor="transparent"
-        Square150x150Logo="Assets\Square150x150Logo.png"
-        Square44x44Logo="Assets\Square44x44Logo.png" />
-    </Application>
   </Applications>
 
   <Capabilities>

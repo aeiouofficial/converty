@@ -1,9 +1,0 @@
-<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <OutputType>WinExe</OutputType>
-    <AssemblyName>Converty.PackageIdentityCanary</AssemblyName>
-    <RootNamespace>Converty.PackageIdentityCanary</RootNamespace>
-    <Description>Temporary dev.11 diagnostic for package-identity inheritance across direct child process launch.</Description>
-    <IsPackable>false</IsPackable>
-  </PropertyGroup>
-</Project>
