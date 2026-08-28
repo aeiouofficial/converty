@@ -9,6 +9,7 @@ $root = Split-Path -Parent $PSScriptRoot
 $layout = Join-Path $root 'artifacts/dev-package-layout'
 $manifest = Join-Path $layout 'AppxManifest.xml'
 $hostPath = Join-Path $layout 'Converty.Host.exe'
+$securityAssembly = Join-Path $layout 'Converty.Security.dll'
 $bridgeAssembly = Join-Path $layout 'Converty.Bridge.dll'
 $packageName = 'Converty.Dev'
 
@@ -20,6 +21,9 @@ if (-not (Test-Path -LiteralPath $manifest)) {
 }
 if (-not (Test-Path -LiteralPath $hostPath)) {
     throw 'B2 RED: staged development package is missing Converty.Host.exe.'
+}
+if (-not (Test-Path -LiteralPath $securityAssembly)) {
+    throw 'Staged Converty.Security.dll is missing.'
 }
 if (-not (Test-Path -LiteralPath $bridgeAssembly)) {
     throw 'Staged Converty.Bridge.dll is missing.'
@@ -44,6 +48,7 @@ try {
         throw 'Registered development package has no PackageFamilyName.'
     }
 
+    [void][System.Reflection.Assembly]::LoadFrom($securityAssembly)
     [void][System.Reflection.Assembly]::LoadFrom($bridgeAssembly)
 
     $hostProcess = Start-Process -FilePath $hostPath -WorkingDirectory $layout -PassThru -WindowStyle Hidden
