@@ -9,6 +9,7 @@ $ErrorActionPreference = 'Stop'
 $root = Split-Path -Parent $PSScriptRoot
 $layout = Join-Path $root 'artifacts/dev-package-layout'
 $bridgeOutput = Join-Path $root "src/Converty.Bridge/bin/$Configuration/net10.0"
+$hostOutput = Join-Path $root "src/Converty.Host/bin/$Configuration/net10.0"
 $workerOutput = Join-Path $root "src/Converty.EngineWorker/bin/$Configuration/net10.0"
 $manifest = Join-Path $root 'packaging/Converty.Package/AppxManifest.xml'
 $assets = Join-Path $root 'packaging/Converty.Package/Assets'
@@ -22,6 +23,12 @@ if (-not (Test-Path $bridgeOutput)) {
 }
 if (-not (Test-Path (Join-Path $bridgeOutput 'Converty.Bridge.exe'))) {
     throw 'Converty.Bridge.exe is missing from the managed build output.'
+}
+if (-not (Test-Path $hostOutput)) {
+    throw "Host output is missing. Build Converty first: $hostOutput"
+}
+if (-not (Test-Path (Join-Path $hostOutput 'Converty.Host.exe'))) {
+    throw 'Converty.Host.exe is missing from the managed build output.'
 }
 if (-not (Test-Path $workerOutput)) {
     throw "Engine worker output is missing. Build Converty first: $workerOutput"
@@ -50,6 +57,7 @@ if (Test-Path $layout) {
 New-Item -ItemType Directory -Force $layout | Out-Null
 
 Copy-Item -Path (Join-Path $bridgeOutput '*') -Destination $layout -Recurse -Force
+Copy-Item -Path (Join-Path $hostOutput '*') -Destination $layout -Recurse -Force
 Copy-Item -Path (Join-Path $workerOutput '*') -Destination $layout -Recurse -Force
 Copy-Item -Path $manifest -Destination (Join-Path $layout 'AppxManifest.xml') -Force
 Copy-Item -Path $assets -Destination (Join-Path $layout 'Assets') -Recurse -Force
@@ -68,6 +76,7 @@ if ($FfmpegPath) {
 
 Write-Host "Development package layout: $layout"
 Write-Host "Bridge: $(Join-Path $layout 'Converty.Bridge.exe')"
+Write-Host "Host: $(Join-Path $layout 'Converty.Host.exe')"
 Write-Host "Engine worker: $(Join-Path $layout 'Converty.EngineWorker.exe')"
 Write-Host "Explorer DLL: $(Join-Path $layout 'Converty.ShellExtension.dll')"
 if (-not $FfmpegPath) {
