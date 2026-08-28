@@ -124,6 +124,20 @@ try {
     Write-Host "B2_BRIDGE_PACKAGE_FAMILY_RESULT=$($identity.PackageFamilyResult)"
     Write-Host "B2_BRIDGE_PACKAGE_FAMILY=$($identity.PackageFamilyName)"
     Write-Host 'B2_BRIDGE_PACKAGE_IDENTITY_RESULT=PRESERVED'
+
+    if ($identity.HostSubmissionAccepted -ne $true) {
+        throw 'B2 HOST AUTH RED: shell-launched packaged Bridge did not complete an authenticated Host submission.'
+    }
+    $hostJobId = [Guid]::Empty
+    if (-not [Guid]::TryParse([string]$identity.HostJobId, [ref]$hostJobId) -or $hostJobId -eq [Guid]::Empty) {
+        throw "Authenticated Host submission returned no valid job ID: '$($identity.HostJobId)'."
+    }
+    if (-not [string]::IsNullOrWhiteSpace([string]$identity.HostSubmissionReason)) {
+        throw "Authenticated Host submission unexpectedly returned a rejection reason: '$($identity.HostSubmissionReason)'."
+    }
+
+    Write-Host 'B2_PACKAGED_BRIDGE_HOST_AUTH_RESULT=ACCEPTED'
+    Write-Host "B2_PACKAGED_BRIDGE_HOST_JOB_ID=$hostJobId"
 }
 finally {
     $registered = @(Get-AppxPackage -Name $packageName -ErrorAction SilentlyContinue)
