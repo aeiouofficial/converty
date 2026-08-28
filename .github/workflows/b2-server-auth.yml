@@ -13,9 +13,9 @@ env:
   TESTINGPLATFORM_TELEMETRY_OPTOUT: '1'
 
 jobs:
-  packaged-host-identity:
+  shell-launched-bridge-identity:
     runs-on: windows-2025
-    timeout-minutes: 15
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -37,9 +37,12 @@ jobs:
       - name: Native Explorer smoke
         shell: pwsh
         run: ./build/native-smoke.ps1
+      - name: Prepare pinned development FFmpeg
+        shell: pwsh
+        run: ./build/prepare-dev-ffmpeg.ps1
       - name: Stage development package
         shell: pwsh
-        run: ./build/stage-dev-package.ps1 -Configuration Release
-      - name: B2 packaged Host server identity canary
+        run: ./build/stage-dev-package.ps1 -Configuration Release -FfmpegPath ./artifacts/dev-ffmpeg/ffmpeg.exe
+      - name: B2 shell-launched Bridge package identity diagnostic
         shell: pwsh
-        run: ./build/b2-server-auth-smoke.ps1 -Configuration Release
+        run: ./build/b2-bridge-package-identity-diagnostic.ps1 -Configuration Release
