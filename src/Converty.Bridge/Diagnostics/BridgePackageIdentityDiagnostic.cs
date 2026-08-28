@@ -1,6 +1,10 @@
 using System.Runtime.InteropServices;
 using System.Runtime.Versioning;
 using System.Text.Json;
+using Converty.Bridge.Ipc;
+using Converty.Bridge.Startup;
+using Converty.Contracts;
+using Converty.Contracts.Conversion;
 
 namespace Converty.Bridge.Diagnostics;
 
@@ -16,11 +20,12 @@ internal static class BridgePackageIdentityDiagnostic
         WriteIndented = true,
     };
 
-    public static void TryWriteEvidence(IEnumerable<string> inputPaths)
+    public static async Task TryWriteEvidenceAndAuthenticateHostAsync(IEnumerable<string> inputPaths)
     {
         ArgumentNullException.ThrowIfNull(inputPaths);
 
-        string? probePath = inputPaths.FirstOrDefault(path =>
+        string[] paths = inputPaths.ToArray();
+        string? probePath = paths.FirstOrDefault(path =>
             Path.GetFileName(path).Contains(ProbeMarker, StringComparison.Ordinal));
         if (probePath is null)
         {
@@ -31,16 +36,34 @@ internal static class BridgePackageIdentityDiagnostic
         string imagePath = Environment.ProcessPath
             ?? throw new InvalidOperationException("Unable to resolve the current Bridge executable image path.");
 
+        BridgeSubmissionCoordinator coordinator = PackagedBridgeRuntimeFactory.CreateForCurrentUser(
+            TimeSpan.FromSeconds(2),
+            TimeSpan.FromSeconds(10),
+            TimeSpan.FromMilliseconds(100));
+        var hostRequest = new ConversionRequest(
+            SchemaVersions.Current,
+            Guid.NewGuid(),
+            ConversionAction.ConvertUsingDefault,
+            paths,
+            targetFormat: null,
+            presetId: null);
+        BridgeSubmissionResult submission = await coordinator.SubmitAsync(hostRequest).ConfigureAwait(false);
+
         var evidence = new
         {
             ProcessId = Environment.ProcessId,
             ImagePath = Path.GetFullPath(imagePath),
             PackageFamilyResult = result,
             PackageFamilyName = packageFamilyName,
+            HostSubmissionAccepted = submission.Accepted,
+            HostJobId = submission.JobId,
+            HostSubmissionReason = submission.Reason,
         };
 
         string evidencePath = probePath + ".bridge-identity.json";
-        File.WriteAllText(evidencePath, JsonSerializer.Serialize(evidence, JsonOptions));
+        await File.WriteAllTextAsync(
+            evidencePath,
+            JsonSerializer.Serialize(evidence, JsonOptions)).ConfigureAwait(false);
     }
 
     private static (int Result, string? PackageFamilyName) ReadCurrentPackageFamilyName()

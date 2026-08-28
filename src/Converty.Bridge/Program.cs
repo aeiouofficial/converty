@@ -24,7 +24,8 @@ internal static class Program
         try
         {
             ShellConversionRequest request = ShellConversionRequestParser.Parse(args);
-            BridgePackageIdentityDiagnostic.TryWriteEvidence(request.InputPaths);
+            await BridgePackageIdentityDiagnostic.TryWriteEvidenceAndAuthenticateHostAsync(request.InputPaths)
+                .ConfigureAwait(false);
             var runner = new ConversionBatchRunner(
                 ProductPresetRegistry.Default,
                 new OutputPathResolver(),
