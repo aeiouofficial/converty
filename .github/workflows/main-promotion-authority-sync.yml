@@ -17,19 +17,19 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
-          fetch-depth: 6
+          fetch-depth: 8
 
-      - name: Normalize and prove parent tree authority
+      - name: Normalize and prove source tree authority
         shell: pwsh
         run: |
           git config core.autocrlf false
           git reset --hard HEAD
-          git diff --exit-code d01c8ba707b38c7bf35770f743e846437308fc57 HEAD^ --
-          if ($LASTEXITCODE -ne 0) { throw 'Parent tree is not the promotion metadata authority tree.' }
+          git diff --exit-code d01c8ba707b38c7bf35770f743e846437308fc57 HEAD~2 --
+          if ($LASTEXITCODE -ne 0) { throw 'Underlying parent tree is not the promotion metadata authority tree.' }
           $dirty = @(git status --porcelain)
           if ($dirty.Count -ne 0) { throw "Dirty normalized worktree: $($dirty -join '; ')" }
 
-      - name: Download and verify exact generated authority
+      - name: Download and verify exact generated authority outside checkout
         shell: pwsh
         env:
           GH_TOKEN: ${{ github.token }}
@@ -39,10 +39,13 @@ jobs:
             Accept = 'application/vnd.github+json'
             'X-GitHub-Api-Version' = '2022-11-28'
           }
-          Invoke-WebRequest -Headers $headers -Uri 'https://api.github.com/repos/aeiouofficial/converty/actions/artifacts/9718737873/zip' -OutFile authority.zip
-          $zipHash = (Get-FileHash authority.zip -Algorithm SHA256).Hash.ToLowerInvariant()
+          $zip = Join-Path $env:RUNNER_TEMP 'converty-authority.zip'
+          $extract = Join-Path $env:RUNNER_TEMP 'converty-authority'
+          if (Test-Path -LiteralPath $extract) { Remove-Item -LiteralPath $extract -Recurse -Force }
+          Invoke-WebRequest -Headers $headers -Uri 'https://api.github.com/repos/aeiouofficial/converty/actions/artifacts/9718737873/zip' -OutFile $zip
+          $zipHash = (Get-FileHash -LiteralPath $zip -Algorithm SHA256).Hash.ToLowerInvariant()
           if ($zipHash -ne '5d0cda3715906782afe6c7989c267296085677f0e0db2de7ac7435c81584f31e') { throw "Authority ZIP hash mismatch: $zipHash" }
-          Expand-Archive authority.zip authority
+          Expand-Archive -LiteralPath $zip -DestinationPath $extract
           $expected = @{
             'machine-readable/source_sbom.spdx.json' = 'edd4ba2c4bc96e3561dbae056f1a07fb0385d3dfb8dbccd9c35a36ace6e5173b'
             'machine-readable/release_sbom.spdx.json' = 'e195879a77276b8074c7bf01b8bf529d8f47138113f08774799ee41afee1ab46'
@@ -50,7 +53,7 @@ jobs:
             'SHA256SUMS.txt' = '93bebb79bdab4279c731c97a7bb9e2526cfe2bc3ed5637473652cc542e023480'
           }
           foreach ($entry in $expected.GetEnumerator()) {
-            $path = Join-Path authority $entry.Key
+            $path = Join-Path $extract $entry.Key
             if (-not (Test-Path -LiteralPath $path)) { throw "Missing authority file: $($entry.Key)" }
             $hash = (Get-FileHash -LiteralPath $path -Algorithm SHA256).Hash.ToLowerInvariant()
             if ($hash -ne $entry.Value) { throw "Hash mismatch for $($entry.Key): $hash" }
@@ -59,10 +62,11 @@ jobs:
       - name: Stage one verified transaction
         shell: pwsh
         run: |
-          Copy-Item -LiteralPath 'authority/machine-readable/source_sbom.spdx.json' -Destination 'machine-readable/source_sbom.spdx.json' -Force
-          Copy-Item -LiteralPath 'authority/machine-readable/release_sbom.spdx.json' -Destination 'machine-readable/release_sbom.spdx.json' -Force
-          Copy-Item -LiteralPath 'authority/machine-readable/package_manifest.json' -Destination 'machine-readable/package_manifest.json' -Force
-          Copy-Item -LiteralPath 'authority/SHA256SUMS.txt' -Destination 'SHA256SUMS.txt' -Force
+          $extract = Join-Path $env:RUNNER_TEMP 'converty-authority'
+          Copy-Item -LiteralPath (Join-Path $extract 'machine-readable/source_sbom.spdx.json') -Destination 'machine-readable/source_sbom.spdx.json' -Force
+          Copy-Item -LiteralPath (Join-Path $extract 'machine-readable/release_sbom.spdx.json') -Destination 'machine-readable/release_sbom.spdx.json' -Force
+          Copy-Item -LiteralPath (Join-Path $extract 'machine-readable/package_manifest.json') -Destination 'machine-readable/package_manifest.json' -Force
+          Copy-Item -LiteralPath (Join-Path $extract 'SHA256SUMS.txt') -Destination 'SHA256SUMS.txt' -Force
           git rm -f -- '.github/workflows/main-promotion-authority-sync.yml'
 
           $packageHash = (Get-FileHash 'machine-readable/package_manifest.json' -Algorithm SHA256).Hash.ToLowerInvariant()
