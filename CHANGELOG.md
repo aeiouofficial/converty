@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.1.0-dev.11 — 2026-08-29
+- Closed development B2 connected-server identity/authentication without rerouting normal conversion through Host.
+- Development package staging now includes exact sibling `Converty.Host.exe`.
+- Proved real registered package COM shell `CreateProcessW` gives exact Bridge PFN `Converty.Dev_yr4ybytcyx7nj` (run `33218030168`, job `99005949641`).
+- Proved package-identified parent→exact Host `Process.Start` preserves PFN (run `33211928010`, job `98986920905`).
+- Proved packaged Bridge authenticates connected Host PID/path/PFN/stable PID before first application frame; Host accepted job `5bd48925-8c88-48d2-bbd7-a62c2ba03e3e` (run `33218498644`, job `99007347897`).
+- Removed temporary diagnostics/invalid unpackaged-PowerShell positive smoke while retaining immutable Actions evidence.
+- Pre-version exact tree `0d37afdba33abcd9ca31f3e59d0d6dc8a1bb7e5d` passed run `33260905467`: 192/192 managed, 66/66 static, 5/5 vectors, product/package/COM smokes, zero-diff authority, deterministic workspace and verified delivery.
+- Source/version authority now identifies dev.11; generated dev.11 SBOM/package/hash authority regeneration and exact-head freeze remain next.
+
 ## 0.1.0-dev.10 — 2026-08-27
 - Moved conversion execution out of the dev.9 Core/Bridge spike into fixed app-local `Converty.EngineWorker` and `Converty.Provider.FFmpeg`; Core now coordinates only a typed worker-client contract.
 - Added unique private per-job staging so workers receive staged input/output paths rather than source/final publication destinations; validated output is published using the existing race-safe numbered no-overwrite transaction and owned staging is cleaned in `finally`.

@@ -4,39 +4,24 @@
 Windows 11 modern-context-menu file conversion platform. Converty is being built as a modular right-click converter for Audio, Images, Video, and future file families while keeping Explorer, coordinator, worker, media-engine, staging, and publication trust boundaries explicit.
 
 ## Workspace version
-**0.1.0-dev.10** — B4 disposable-worker containment behavior is qualified. The first generated-authority tree is also fully qualified; one final regeneration/requalification is required because recording that qualification changes repository bytes.
+**0.1.0-dev.11** — development B2 connected-server identity/authentication is qualified; generated dev.11 authority regeneration and exact-head freeze are the current repository step.
 
 ## Current evidence-backed state
-The immutable dev.10 B4 behavior head is `f221563c790057344a94b4e60c309d4512a77c38`, qualified by GitHub Actions run `33028554361` (managed `98375493893`, static `98375494099`). The contained product path is:
+The product path remains:
 
 `IExplorerCommand → fixed Converty.Bridge.exe → Strict Converty.EngineWorker.exe → typed preset/provider → fixed app-local ffmpeg.exe → private staging → validated no-overwrite numbered publication`
 
-Behavior evidence includes 18/18 locked restore, zero vulnerable-result packages, Release build with 0 warnings/errors, native Explorer, development FFmpeg/ffprobe 9.0.1, MakeAppx, direct/package COM invocation, strict Bridge→worker→FFmpeg conversion, Unicode/metacharacter paths, source/external-destination preservation, numbered publication, MP3 exactly 320000 bit/s, 190/190 managed tests, 66/66 static tests, 5/5 vectors, strict filesystem/network canaries, Job Object containment, and the output-growth ceiling canary.
+Dev.11 adds no Host routing to normal conversion. The development package stages exact sibling `Converty.Host.exe` for dormant B2 infrastructure. Real registered package COM invocation proved the shell-launched exact Bridge receives PFN `Converty.Dev_yr4ybytcyx7nj`; package-identified parent→Host preserves it; and a real packaged Bridge→Host session authenticates connected server PID, exact image, PFN and stable PID before the first application frame. Positive acceptance: run `33218498644`, job `99007347897`.
 
-## First generated-authority qualification
-Generated authority was frozen on tree `af16e15820985e787e54fb0c659cf6005bd4df89` and qualified at commit `529216b3676b97e7a9e0b78333c2229ed3396794`, run `33035768679`, managed job `98397998679`, static job `98397998510`.
+The pre-version exact tree `0d37afdba33abcd9ca31f3e59d0d6dc8a1bb7e5d` passed run `33260905467`: 18/18 locked restore, zero vulnerable-result packages, Release 0 warnings/errors, native Explorer, unsigned MakeAppx including Host, direct and packaged COM Invoke, Bridge→Strict Worker→FFmpeg conversion, Unicode/metacharacter paths, source/existing-destination preservation, numbered publication, MP3 exactly 320000 bit/s, 192/192 managed, 66/66 static, 5/5 vectors, zero-diff authority, deterministic double workspace and verified delivery.
 
-That run was fully green:
-- generated source/release SBOM, package manifest and SHA256SUMS regeneration: PASS;
-- tracked generated-authority diff: CLEAN;
-- Release/product/test gates: PASS; managed tests **190/190**, static tests **66/66**;
-- deterministic workspace ZIP double build: PASS;
-- `Converty_0.1.0-dev.10_full_workspace.zip`: SHA-256 `ed2fd33e376eef060f9342a77a48cdff40a9e2c95e0c6dc2d0ef98c557197241`, 377093 bytes, 328 files;
-- 326 package-manifest entries and 327 SHA256SUMS entries verified;
-- ZIP reopen/CRC: PASS;
-- exclusion policy: PASS;
-- verified delivery artifact upload: PASS, artifact `9631969967`, digest `23de3e391ddb76ef8ddbf70c05f22a3fcc307a621692dc9759001c80741ad119`.
-
-This evidence is now being recorded in source authority. Because that recording changes repository bytes, dev.10 is not yet final: generated package/hash authority must be regenerated from the evidence-frozen tree and the resulting exact tree independently requalified once more.
-
-## What dev.10 still does not claim
-Converty is not shipped or production-ready. These gates remain open:
-- real headed Windows 11 modern Explorer context-menu visibility/usability and exact-build screenshots;
-- Explorer crash/hang/failure headed matrix;
-- remaining B2 connected-server anti-squatting, final status/cancel wire decision, and replay/disconnect/session acceptance;
-- production FFmpeg redistribution/license/notices/signature/hash approval; the Gyan payload is development qualification input only;
-- signed production MSIX and clean Windows 11 VM install/update/uninstall;
-- final security/fuzz/chaos/release audit and end-user shipping acceptance.
+## What dev.11 still does not claim
+- headed Windows 11 modern Explorer UI acceptance, exact-build screenshots or crash/hang/failure matrix;
+- production signed-package B2 requalification;
+- status/cancel and replay/disconnect/reconnect/session acceptance;
+- production FFmpeg redistribution/license/notices/signature/hash approval;
+- signed production MSIX and clean Windows 11 VM lifecycle;
+- final security/fuzz/chaos/release audit or end-user acceptance.
 
 ## Start here
 1. `docs/HANDOVER_NEXT_AGENT.md`

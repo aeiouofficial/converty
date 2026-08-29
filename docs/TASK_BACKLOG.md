@@ -1,5 +1,11 @@
 # Converty Implementation Backlog
 
+## Dev.11 current priority — 2026-08-29
+- Development B2 Explorer→Bridge package identity: QUALIFIED.
+- Development B2 Bridge→Host connected-server authentication: QUALIFIED.
+- CURRENT: regenerate/freeze dev.11 generated authority after source/version synchronization.
+- OPEN: headed Win11 UI, production signed-package B2 requalification, status/cancel + session acceptance, FFmpeg redistribution approval, signed MSIX/clean-VM lifecycle, final release audit.
+
 Check a box only when the stated deliverable has matching evidence. ADR-013 changes development ordering only; it does not waive final shipping requirements.
 
 ## B0 Repository/bootstrap

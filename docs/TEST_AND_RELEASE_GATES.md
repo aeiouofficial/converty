@@ -1,5 +1,8 @@
 # Test and Release Gates
 
+## Dev.11 development qualification — 2026-08-29
+Development B2 positive acceptance is PASS in run `33218498644` / job `99007347897`; pre-version whole-tree qualification is PASS in run `33260905467` with 192/192 managed, 66/66 static, 5/5 vectors and zero-diff generated authority. Final dev.11 authority still requires regenerated dev.11 SBOM/package/hash files and exact-head green delivery. Headed Windows 11 and production signed-package acceptance remain open.
+
 ## Gate rule
 A release gate is binary. “Mostly works” is failure. Evidence must be retained with the build artifact. Automated Windows Server COM/product evidence does not substitute for headed Windows 11 Explorer evidence.
 

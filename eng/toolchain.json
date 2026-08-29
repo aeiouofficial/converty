@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "workspaceVersion": "0.1.0-dev.10",
+  "workspaceVersion": "0.1.0-dev.11",
   "targetOs": "Windows 11",
   "dotnetSdk": "10.0.400",
   "targetFramework": "net10.0",
@@ -9,11 +9,11 @@
   "nativeBuild": "CMake + MSVC",
   "architecture": "x64-first",
   "notes": [
-    "Dev.10 B4 behavior qualification ran at f221563c790057344a94b4e60c309d4512a77c38 on GitHub Actions Windows Server 2025 with .NET SDK 10.0.400 and MSVC Release Explorer targets.",
-    "All 18 managed projects restore from committed lock files; NuGet vulnerability audit reports zero vulnerable-result packages.",
-    "Release build completed with zero warnings/errors; Microsoft Testing Platform executed 190 tests with 190 successes and zero skipped.",
-    "Native Explorer DLL, MakeAppx, direct IExplorerCommand Invoke, package COM registration/Invoke and strict Bridge-to-EngineWorker-to-FFmpeg MP3/320k smoke pass.",
-    "B4 strict AppContainer/private-staging/Job Object/resource/output/network/filesystem canaries are behavior-qualified; headed Windows 11 acceptance, final B2 acceptance, production FFmpeg redistribution/signing and signed clean-VM release packaging remain open."
+    "Dev.11 closes development B2 connected-server identity/authentication without routing normal conversion through Host.",
+    "Pre-version exact-tree run 33260905467 at 0d37afdba33abcd9ca31f3e59d0d6dc8a1bb7e5d passed 192/192 managed, 66/66 static, 5/5 vectors, zero-vulnerability audit, Release 0 warnings/errors, native/package/COM/product smokes, deterministic workspace and verified delivery.",
+    "Registered package COM shell launch gives exact Bridge PFN Converty.Dev_yr4ybytcyx7nj; the exact Host child preserves it and BridgeClient authenticates Host PID/path/PFN before the first application frame.",
+    "Host staging is part of the development package; Bridge/Host remain media/process neutral and FFmpeg execution remains worker/provider-only.",
+    "Headed Win11, production signed-package B2 requalification, production FFmpeg redistribution, signed MSIX/clean-VM lifecycle and final release audit remain open."
   ],
   "testRunner": "Microsoft.Testing.Platform",
   "xunitMtpV2": "4.0.0"

@@ -1,15 +1,23 @@
 {
   "schemaVersion": 1,
-  "workspaceVersion": "0.1.0-dev.10",
+  "workspaceVersion": "0.1.0-dev.11",
   "hashAlgorithm": "SHA-256",
-  "forbiddenHashAlgorithms": ["MD5", "SHA-1"],
+  "forbiddenHashAlgorithms": [
+    "MD5",
+    "SHA-1"
+  ],
   "ciProvenance": {
     "externalActionsPinnedToFullSha": true,
     "pinAuthority": "machine-readable/ci_action_pins.json",
     "verifier": "scripts/verify_ci_actions.py",
     "checkoutPersistCredentials": false,
-    "workflowPermissions": {"contents": "read"},
-    "jobTimeoutMinutes": {"managed": 30, "supply-chain-static": 15}
+    "workflowPermissions": {
+      "contents": "read"
+    },
+    "jobTimeoutMinutes": {
+      "managed": 30,
+      "supply-chain-static": 15
+    }
   },
   "dependencyAudit": {
     "enabled": true,
@@ -30,8 +38,15 @@
     "keyCustody": "external release infrastructure only"
   },
   "workspacePackaging": {
-    "forbiddenSuffixes": [".pfx", ".p12", ".key", ".pem"],
-    "forbiddenNames": [".env"],
+    "forbiddenSuffixes": [
+      ".pfx",
+      ".p12",
+      ".key",
+      ".pem"
+    ],
+    "forbiddenNames": [
+      ".env"
+    ],
     "note": "Public certificates may use .cer/.crt; private-key-bearing formats are excluded."
   },
   "releasePrerequisites": [

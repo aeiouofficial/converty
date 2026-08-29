@@ -1,229 +1,80 @@
 {
   "schemaVersion": 1,
-  "workspaceVersion": "0.1.0-dev.10",
-  "evidenceDate": "2026-08-27",
-  "behaviorQualification": {
-    "headSha": "f221563c790057344a94b4e60c309d4512a77c38",
-    "workflowRunId": 33028554361,
+  "workspaceVersion": "0.1.0-dev.11",
+  "evidenceDate": "2026-08-29",
+  "frozenDev10": {
+    "headSha": "358d5d1faf293f217402af6ad1ae7e53f33f8183",
+    "behaviorHeadSha": "f221563c790057344a94b4e60c309d4512a77c38",
+    "qualificationRunId": 33028554361,
     "managedJobId": 98375493893,
     "staticJobId": 98375494099,
-    "runner": {
-      "os": "Windows Server 2025",
-      "image": "windows-2025-vs2026",
-      "imageVersion": "20260824.214.3",
-      "dotnetSdk": "10.0.400"
-    },
-    "managed": {
-      "lockedRestore": "PASS",
-      "managedProjects": 18,
-      "dependencyAudit": "PASS",
-      "auditProjects": 18,
-      "auditFrameworks": 18,
-      "vulnerablePackages": 0,
-      "releaseBuild": "PASS",
-      "warnings": 0,
-      "errors": 0,
-      "tests": {
-        "total": 190,
-        "succeeded": 190,
-        "failed": 0,
-        "skipped": 0
-      },
-      "nativeExplorerReleaseBuild": "PASS",
-      "nativeTopologySmoke": "PASS",
-      "developmentFfmpegPinHashAndExecution": "PASS",
-      "makeAppxUnsignedDevelopmentPackage": "PASS",
-      "directShellDllClassFactoryInvoke": "PASS",
-      "loosePackageRegistrationComActivationInvoke": "PASS",
-      "productBridgeToStrictWorkerFfmpegSmoke": "PASS",
-      "audioMp3CodecBitrate": "mp3 / 320000 bit/s PASS",
-      "transactionalNumberedCollision": "PASS",
-      "sourceAndExistingDestinationPreserved": "PASS",
-      "strictOutputLimitExecutableCanary": "PASS; Windows suite had 0 skipped tests",
-      "deterministicWorkspacePackageBytes": "PASS_AT_BEHAVIOR_HEAD",
-      "verifiedDeliveryUpload": "PENDING_AUTHORITY_SYNC_AT_BEHAVIOR_HEAD"
-    },
-    "static": {
-      "tests": "66/66 PASS",
-      "contractVectors": "5/5 PASS",
-      "repositoryVerifier": "PASS",
-      "immutableActionPins": "PASS",
-      "sourceSbomRegeneration": "PASS",
-      "releaseSbomRegeneration": "PASS",
-      "packageManifestRegeneration": "PASS",
-      "sha256ManifestRegeneration": "PASS",
-      "generatedAuthorityDiff": "STALE_BEFORE_DEV10_CLOSURE"
-    }
+    "postAuditQualificationRunId": 33044395097
   },
-  "b4IsolationEvidence": {
-    "workflowRunId": 33027104465,
-    "managedJobId": 98370929641,
-    "staticJobId": 98370929814,
-    "strictStagingWrite": "PASS",
-    "strictOutsideScopeWriteDenied": "PASS",
-    "strictLoopbackNetworkDenied": "PASS",
-    "jobObjectDescendantKillAndResources": "PASS",
-    "strictCompatibilityFallback": "ABSENT_BY_POLICY_AND_PRODUCT_REGRESSION"
+  "dev11B2Qualification": {
+    "sourceAuthorityHeadSha": "1d4c22733c43f4eee4a4a4cd6751608e60359561",
+    "hostStagingRedRunId": 33202365348,
+    "hostStagingRedJobId": 98954716457,
+    "parentChildIdentityRunId": 33211928010,
+    "parentChildIdentityJobId": 98986920905,
+    "explorerBridgeIdentityRunId": 33218030168,
+    "explorerBridgeIdentityJobId": 99005949641,
+    "packagedBridgeHostAuthRunId": 33218498644,
+    "packagedBridgeHostAuthJobId": 99007347897,
+    "developmentPackageFamilyName": "Converty.Dev_yr4ybytcyx7nj",
+    "result": "PASS_DEVELOPMENT_FULL_PACKAGE_MODEL",
+    "normalProductPathRoutedThroughHost": false
   },
-  "b4OutputPolicy": {
-    "conversionDefaultMaximumOutputBytes": 8589934592,
-    "hardMaximumOutputBytes": 17179869184,
-    "monitorPollMilliseconds": 25,
-    "canaryBudgetBytes": 65536,
-    "overBudgetResult": "WorkerOutputLimitExceededException + Job Object termination PASS"
-  },
-  "productEvidence": {
-    "explorerCommandDll": "IMPLEMENTED_MSVC_RELEASE_AND_DIRECT_INVOKE_TESTED",
-    "packageManifest": "MAKEAPPX_ACCEPTED_LOOSE_REGISTERED_AND_COM_ACTIVATED",
-    "modernContextMenuRegistration": "AUTOMATED_REGISTRATION_AND_COM_INVOKE_PASS; HEADED_WINDOWS_11_UI_ACCEPTANCE_OPEN",
-    "bridgeHandoff": "FIXED_APP_LOCAL_NO_SHELL_STRICT_WORKER_CLIENT",
-    "workerBoundary": "DISPOSABLE_ENGINEWORKER_PLUS_FFMPEG_PROVIDER_PRIVATE_STAGING",
-    "developmentFfmpeg": {
-      "version": "9.0.1",
-      "archiveSha256": "fec81ae03971d9dd4be3ebe02e263bd2ec1d789483f931bdba5f5715e65da2e9",
-      "purpose": "development-qualification-only",
-      "productionRedistributionApproval": false
+  "preVersionExactHeadQualification": {
+    "headSha": "0d37afdba33abcd9ca31f3e59d0d6dc8a1bb7e5d",
+    "treeSha": "7560366cb059c1ff90c539f497903e84df1b2141",
+    "workflowRunId": 33260905467,
+    "managedJobId": 99122561963,
+    "staticJobId": 99122562067,
+    "lockedRestore": "18/18 PASS",
+    "dependencyAudit": "PASS; 18 projects; 18 frameworks; 0 vulnerable-result packages",
+    "releaseBuild": "PASS; 0 warnings; 0 errors",
+    "nativeExplorer": "PASS",
+    "developmentPackageAndMakeAppx": "PASS; Host staged",
+    "directAndPackagedComInvoke": "PASS",
+    "productBridgeStrictWorkerFfmpeg": "PASS; mp3 / 320000 bit/s; Unicode/metacharacter path; source and existing destination preserved; numbered publication",
+    "managedTests": {
+      "total": 192,
+      "succeeded": 192,
+      "failed": 0,
+      "skipped": 0
     },
-    "audioMvp": "WAV_TO_MP3_320K_REAL_STRICT_WORKER_CONVERSION_PASS",
-    "outputPublication": "PRIVATE_STAGING_VALIDATE_NO_OVERWRITE_NUMBERED_PUBLISH"
-  },
-  "b2Evidence": {
-    "protocolFrameMaxPayloadBytes": 1048576,
-    "bridgeMaximumConnectTimeoutSeconds": 30,
-    "bridgeMaximumStartupTimeoutSeconds": 30,
-    "bridgeMaximumRetryDelaySeconds": 1,
-    "explicitPipeDacl": "IMPLEMENTED_AND_TESTED",
-    "connectedPeerSidValidation": "IMPLEMENTED_AND_TESTED_BEFORE_APPLICATION_FRAME_READ",
-    "hostQueueJournalSingleInstance": "IMPLEMENTED_AND_TESTED",
-    "trustedHostStartup": "IMPLEMENTED_AND_TESTED",
-    "bridgeServerAuthentication": "FINAL_SHIPPING_ACCEPTANCE_STILL_OPEN"
-  },
-  "postAuthoritySecurityHardening": {
-    "status": "BEHAVIOR_QUALIFIED_GENERATED_AUTHORITY_REGEN_PENDING",
-    "headSha": "b0ec6445abe7d7d2b53329ba7b4f2a07c51b7eed",
-    "workflowRunId": 33044395097,
-    "managedJobId": 98424925818,
-    "staticJobId": 98424926101,
-    "runner": {
-      "os": "Windows Server 2025",
-      "image": "windows-2025-vs2026",
-      "imageVersion": "20260818.207.1",
-      "dotnetSdk": "10.0.400"
-    },
-    "changes": [
-      "WorkerFileSystemScope rejects any reparse point in the writable staging directory ancestry.",
-      "TrustedFfmpegPath rejects a reparse-point tools directory between the trusted application root and fixed tools/ffmpeg/ffmpeg.exe."
-    ],
-    "redEvidence": {
-      "stagingAncestry": {
-        "headSha": "ee6362532db6fe2dfbd8b29306660b936a6ff597",
-        "workflowRunId": 33043835266,
-        "managedJobId": 98423183994,
-        "staticJobId": 98423183716,
-        "result": "EXPECTED RED; 191 total, 190 succeeded, 1 failed, 0 skipped; new ancestry test observed no exception before fix"
-      },
-      "ffmpegToolsAncestry": {
-        "headSha": "0cb5ca28107c9905e944cf9104c661060766dec9",
-        "workflowRunId": 33044109667,
-        "managedJobId": 98424034894,
-        "staticJobId": 98424035106,
-        "result": "EXPECTED RED; 192 total, 191 succeeded, 1 failed, 0 skipped; intermediate tools reparse test observed no exception before fix"
-      }
-    },
-    "qualification": {
-      "lockedRestore": "PASS; 18/18 projects",
-      "dependencyAudit": "PASS; 18 projects; 18 frameworks; 0 vulnerable-result packages",
-      "releaseBuild": "PASS; 0 warnings; 0 errors",
-      "nativeExplorer": "PASS",
-      "developmentFfmpeg": "PASS; 9.0.1; development qualification only",
-      "makeAppx": "PASS",
-      "directExplorerInvoke": "PASS",
-      "packagedComInvoke": "PASS",
-      "strictProductConversion": "PASS; source/base destination preserved; numbered MP3; 320000 bit/s",
-      "managedTests": "192/192 PASS; 0 skipped",
-      "staticTests": "66/66 PASS",
-      "contractVectors": "5/5 PASS",
-      "repositoryVerifier": "PASS",
-      "stagingAncestryRegression": "PASS",
-      "ffmpegToolsAncestryRegression": "PASS",
-      "generatedAuthorityDiff": "STALE_AFTER_SECURITY_HARDENING_AS_EXPECTED"
-    },
-    "deterministicWorkspacePackageBeforeAuthorityRegen": {
-      "sha256": "ec89921565e89d092a63dc3a7e6d0768ae580ee72805f6a67837571bda3551ed",
-      "bytes": 378809,
+    "staticTests": "66/66 PASS",
+    "contractVectors": "5/5 PASS",
+    "generatedAuthorityDiff": "CLEAN",
+    "workspace": {
+      "name": "Converty_0.1.0-dev.10_full_workspace.zip",
+      "sha256": "de6b43a9343591fc451b488b65e73049f60759a9be0072be11495c24604946ab",
+      "bytes": 382689,
       "files": 329,
-      "doubleBuild": "PASS",
-      "finalEmbeddedManifestVerification": "BLOCKED_ONLY_BY_STALE_TRACKED_GENERATED_AUTHORITY_AFTER_SECURITY_FIXES",
-      "verifiedDeliveryUpload": "SKIPPED_AFTER_EXPECTED_STALE_AUTHORITY_FAILURE"
+      "packageManifestEntries": 327,
+      "shaManifestEntries": 328,
+      "crc": "PASS",
+      "deterministicDoubleBuild": "PASS",
+      "exclusionPolicy": "PASS"
+    },
+    "generatedAuthorityArtifact": {
+      "id": 9717218608,
+      "digest": "sha256:27dca1681ea4837c8523efe8b88a49f8ca783008abfdf29d77596b5c7a5159f4"
+    },
+    "verifiedDeliveryArtifact": {
+      "id": 9717244755,
+      "digest": "sha256:50d6cfc6443356bc70210f6b465ccddea47733b1a3e0a31d3fe19c0e3ea80c09"
     }
   },
-  "authorityClosure": {
-    "status": "POST_AUDIT_SECURITY_HARDENING_QUALIFIED_REGENERATION_PENDING",
-    "firstGeneratedAuthorityQualification": {
-      "qualifiedHeadSha": "529216b3676b97e7a9e0b78333c2229ed3396794",
-      "qualifiedTreeSha": "af16e15820985e787e54fb0c659cf6005bd4df89",
-      "workflowRunId": 33035768679,
-      "managedJobId": 98397998679,
-      "staticJobId": 98397998510,
-      "lockedRestore": "PASS; 18/18 projects",
-      "dependencyAudit": "PASS; 18 projects; 18 frameworks; 0 vulnerable-result packages",
-      "releaseBuild": "PASS; 0 warnings; 0 errors",
-      "nativeExplorer": "PASS",
-      "developmentFfmpeg": "PASS; 9.0.1; development qualification only",
-      "makeAppx": "PASS",
-      "directExplorerInvoke": "PASS",
-      "packagedComInvoke": "PASS",
-      "strictProductConversion": "PASS; source/base destination preserved; numbered MP3; 320000 bit/s",
-      "managedTests": "190/190 PASS; 0 skipped",
-      "staticTests": "66/66 PASS",
-      "contractVectors": "5/5 PASS",
-      "generatedAuthorityDiff": "CLEAN",
-      "workspaceZip": {
-        "archive": "Converty_0.1.0-dev.10_full_workspace.zip",
-        "sha256": "ed2fd33e376eef060f9342a77a48cdff40a9e2c95e0c6dc2d0ef98c557197241",
-        "bytes": 377093,
-        "files": 328,
-        "packageManifestEntries": 326,
-        "shaManifestEntries": 327,
-        "crc": "PASS",
-        "deterministicDoubleBuild": "PASS",
-        "exclusionPolicy": "PASS"
-      },
-      "verifiedDeliveryArtifact": {
-        "artifactId": 9631969967,
-        "name": "converty-verified-delivery-529216b3676b97e7a9e0b78333c2229ed3396794",
-        "bytes": 388508,
-        "sha256": "23de3e391ddb76ef8ddbf70c05f22a3fcc307a621692dc9759001c80741ad119"
-      },
-      "generatedAuthorityArtifact": {
-        "artifactId": 9631932538,
-        "name": "converty-generated-authority-529216b3676b97e7a9e0b78333c2229ed3396794",
-        "bytes": 130510,
-        "sha256": "f761f6148e7e60c8a64eb41a87592e0f107f872ff813487bc17844da49d6a313"
-      }
-    },
-    "supersededPreAuditFinalAuthority": {
-      "headSha": "c57e0188d24adf7bd81e15e7860648aa9fc9035c",
-      "workflowRunId": 33036173795,
-      "managedJobId": 98399227323,
-      "staticJobId": 98399227175,
-      "status": "SUPERSEDED_BY_POST_QUALIFICATION_REPARSE_HARDENING"
-    },
-    "finalQualifiedHeadSha": null,
-    "finalWorkflowRunId": null,
-    "finalManagedJobId": null,
-    "finalStaticJobId": null,
-    "finalGeneratedAuthorityDiff": "PENDING_AFTER_POST_AUDIT_EVIDENCE_REGENERATION",
-    "note": "The pre-audit dev.10 authority was green but was superseded when the merge audit proved two reparse-ancestry gaps and fixed them test-first. Post-audit behavior is qualified at b0ec6445; this evidence update changes repository bytes, so generated authority must be regenerated and exact-head CI must independently pass again before dev.10 authority is frozen."
+  "knownHistoricalIntermittent": {
+    "test": "StrictWorkerIsTerminatedWhenStagingGrowthExceedsOutputBudget",
+    "historicalRunId": 33044741340,
+    "dev11PreVersionInitialManagedJobId": 99007945036,
+    "observed": "191/192 once; unchanged-head reruns later passed 192/192",
+    "status": "OPEN_FLAKE_HISTORY_NOT_ERASED"
   },
-  "unverifiedClaimsExplicitlyForbidden": [
-    "Converty is shipped or production-ready",
-    "Current post-audit dev.10 generated/release authority is frozen before final regeneration and exact-head requalification",
-    "Headed Windows 11 modern Explorer menu acceptance is complete",
-    "Explorer crash/hang/failure headed matrix is complete",
-    "B2 is fully closed",
-    "FFmpeg production redistribution/license/signature approval is complete",
-    "Windows artifacts are production-signed",
-    "Clean Windows 11 VM install/update/uninstall acceptance is complete"
-  ]
+  "currentAuthorityState": "DEV11_SOURCE_VERSION_AUTHORITY_SYNCHRONIZED; GENERATED_SBOM_PACKAGE_HASH_AUTHORITY_REGENERATION_REQUIRED",
+  "headedWindows11Acceptance": "OPEN",
+  "productionSignedPackageB2Requalification": "OPEN",
+  "productionFfmpegRedistributionApproval": "OPEN"
 }

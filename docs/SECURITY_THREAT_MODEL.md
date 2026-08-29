@@ -1,5 +1,8 @@
 # Converty Security Threat Model and Hardening Checklist
 
+## Dev.11 B2 connected-server authentication status — 2026-08-29
+Development full-package B2 identity/authentication is qualified: actual registered package COM shell invocation gives exact Bridge PFN `Converty.Dev_yr4ybytcyx7nj`; exact Host child preserves it; `BridgeClient` validates actual connected server PID, exact Host image, PFN and stable PID before the first request frame. Production signed-package PFN/publisher requalification remains mandatory. Normal conversion remains Bridge→Strict EngineWorker→FFmpeg.
+
 **Status:** B4 disposable-worker containment implemented and behavior-qualified in `0.1.0-dev.10`; final release hardening/acceptance remains open.
 **Security objective:** treat file contents and conversion engines as potentially hostile, minimize authority, contain compromise, fail closed, and preserve original data.
 
