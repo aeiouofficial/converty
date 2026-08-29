@@ -50,6 +50,54 @@ public sealed class WindowsWorkerStrictIsolationCanaryTests
     }
 
     [Fact]
+    public async Task ConcurrentStrictWorkersKeepIndependentApplicationAclGrants()
+    {
+        if (!OperatingSystem.IsWindows())
+        {
+            return;
+        }
+
+        CancellationToken testCancellation = TestContext.Current.CancellationToken;
+        string canaryExecutable = ResolveCanaryExecutable();
+        string appDirectory = Path.GetDirectoryName(canaryExecutable) ??
+            throw new InvalidOperationException("Canary executable requires an application directory.");
+        string root = Path.Combine(Path.GetTempPath(), $"ConvertyStrictConcurrent-{Guid.NewGuid():N}");
+        Directory.CreateDirectory(root);
+        const int workerCount = 12;
+
+        try
+        {
+            Task<WorkerProcessResult>[] workers = Enumerable.Range(0, workerCount)
+                .Select(index => Task.Run(async () =>
+                {
+                    string stagingDirectory = Path.Combine(root, $"staging-{index}");
+                    Directory.CreateDirectory(stagingDirectory);
+                    string outputPath = Path.Combine(stagingDirectory, "inside.txt");
+                    var launcher = new WindowsWorkerProcessLauncher();
+                    WorkerProcessResult result = await launcher.ExecuteAsync(
+                        CreateStrictRequest(
+                            canaryExecutable,
+                            appDirectory,
+                            stagingDirectory,
+                            ["--write-file", outputPath]),
+                        testCancellation);
+                    Assert.Equal(0, result.ExitCode);
+                    Assert.True(
+                        File.Exists(outputPath),
+                        $"Concurrent strict worker {index} lost access to its executable or staging scope. stderr={result.StandardError}");
+                    return result;
+                }, testCancellation))
+                .ToArray();
+
+            await Task.WhenAll(workers);
+        }
+        finally
+        {
+            Directory.Delete(root, recursive: true);
+        }
+    }
+
+    [Fact]
     public async Task StrictWorkerCannotOpenLoopbackNetworkConnection()
     {
         if (!OperatingSystem.IsWindows())
