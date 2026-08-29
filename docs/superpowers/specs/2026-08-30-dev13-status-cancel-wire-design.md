@@ -25,7 +25,7 @@ Nothing in dev.13 may reroute normal Explorer conversion through a new transport
 3. Reuse the existing current-user named-pipe endpoint and connected-server identity verification.
 4. Preserve the existing conversion-admission request and response shape unchanged.
 5. Preserve strict JSON parsing, bounded frames, strict UTF-8, duplicate-member rejection, exact schema-version checks, and current-user peer authorization.
-6. Provide deterministic, typed failure semantics for unknown jobs, non-cancellable jobs, and cancellation persistence failures.
+6. Provide deterministic typed failure semantics for unknown jobs, non-cancellable jobs, and cancellation persistence failures.
 7. Add test-first coverage proving the new wire behavior and proving that Bridge still authenticates the connected Host before writing any application frame.
 
 ## Non-goals
@@ -70,116 +70,139 @@ Current cancellation semantics are retained:
 
 The wire layer must classify these outcomes without changing queue behavior.
 
+## Typed control contracts
+
+Add small engine-independent contracts under `Converty.Contracts.Jobs`:
+
+- `JobControlOperation`: `Status`, `Cancel`;
+- `JobControlFailureReason`: `JobNotFound`, `NotCancellable`, `PersistenceFailure`;
+- `JobControlRequest`;
+- `JobControlResponse`.
+
+`JobControlRequest` contains:
+
+- current `schemaVersion`;
+- one defined operation;
+- one non-empty `jobId`.
+
+`JobControlResponse` contains:
+
+- current `schemaVersion`;
+- echoed operation;
+- echoed non-empty `jobId`;
+- `succeeded`;
+- optional `JobStatusSnapshot`;
+- optional `JobControlFailureReason`.
+
+Cross-field invariants are enforced by the domain contract, not left to callers:
+
+- success requires a status, forbids a failure reason, and requires `status.JobId == jobId`;
+- failure requires a failure reason;
+- `JobNotFound` requires no status;
+- `NotCancellable` and `PersistenceFailure` require a current status whose `JobId` matches `jobId`.
+
+Operation-specific legality is checked at the Host/Bridge boundary: status may fail only with `JobNotFound`; cancel may fail with `JobNotFound`, `NotCancellable`, or `PersistenceFailure`.
+
 ## Wire request
 
-Add one strict typed request contract for job management:
+Canonical request examples:
 
 ```json
-{
-  "schemaVersion": 1,
-  "operation": "status",
-  "jobId": "00000000-0000-0000-0000-000000000001"
-}
+{"schemaVersion":1,"operation":"status","jobId":"00000000-0000-0000-0000-000000000001"}
 ```
 
-or:
-
 ```json
-{
-  "schemaVersion": 1,
-  "operation": "cancel",
-  "jobId": "00000000-0000-0000-0000-000000000001"
-}
+{"schemaVersion":1,"operation":"cancel","jobId":"00000000-0000-0000-0000-000000000001"}
 ```
 
 Requirements:
 
 - `schemaVersion` must equal `SchemaVersions.Current`;
-- `operation` is exactly `status` or `cancel`, lowercase wire text;
-- `jobId` must be an exact non-empty UUID value accepted by the existing contract GUID rules;
+- `operation` is exactly lowercase `status` or `cancel` on the wire;
+- serializers emit `jobId` in canonical `D` format;
+- the control parser accepts only canonical `D`-format non-empty job IDs;
 - unknown, duplicate, missing, case-variant, or extra members are rejected;
 - trailing commas/comments remain rejected;
 - normal conversion requests keep their current JSON shape and serializer unchanged.
 
-A domain enum such as `JobControlOperation` may represent the operation internally; wire text remains explicit and stable.
+The stricter canonical GUID rule applies only to the new control wire and must not silently change existing conversion contract parsing.
 
 ## Request dispatch
 
 `HostRequestHandler` remains the one application request dispatcher on the existing pipe.
 
-After current peer authorization, byte-bound checks, and strict UTF-8 decoding, it will inspect the top-level JSON object only far enough to determine whether the explicit `operation` member is present.
+After current peer authorization, byte-bound checks, and strict UTF-8 decoding, it inspects the top-level JSON object only far enough to determine whether the explicit `operation` member is present.
 
 Routing rule:
 
 - top-level `operation` present -> parse strictly as `JobControlRequest`;
 - top-level `operation` absent -> parse strictly using the existing `ConversionRequest` path.
 
-This preserves backward compatibility without replacing conversion admission with a new envelope.
-
 A hybrid object containing `operation` plus conversion-admission members is routed to the control parser and rejected because the control contract disallows unknown members. A conversion object with unknown members continues to be rejected by the existing conversion parser.
 
-Malformed JSON that cannot be classified is rejected as `invalidRequest`; no attempt is made to guess an operation from damaged input.
+Malformed JSON that cannot be classified is rejected as `invalidRequest`; no attempt is made to infer an operation from damaged input.
 
 ## Wire response
 
-The existing conversion admission response remains byte-for-byte schema-compatible:
+The existing conversion admission response remains schema-compatible and unchanged:
 
 - `schemaVersion`;
 - `accepted`;
 - optional `jobId`;
 - optional `reason`.
 
-Job-control operations use a separate strict response shape so the legacy admission surface is not changed:
+Job-control operations use the separate strict `JobControlResponse` shape.
+
+Status success example:
 
 ```json
 {
-  "schemaVersion": 1,
-  "operation": "status",
-  "succeeded": true,
-  "jobId": "00000000-0000-0000-0000-000000000001",
-  "status": {
-    "schemaVersion": 1,
-    "jobId": "00000000-0000-0000-0000-000000000001",
-    "requestId": "00000000-0000-0000-0000-000000000002",
-    "state": "queued",
-    "progress": null,
-    "message": null
+  "schemaVersion":1,
+  "operation":"status",
+  "succeeded":true,
+  "jobId":"00000000-0000-0000-0000-000000000001",
+  "status":{
+    "schemaVersion":1,
+    "jobId":"00000000-0000-0000-0000-000000000001",
+    "requestId":"00000000-0000-0000-0000-000000000002",
+    "state":"queued"
   }
 }
 ```
 
-Failure example:
+Cancel failure example:
 
 ```json
 {
-  "schemaVersion": 1,
-  "operation": "cancel",
-  "succeeded": false,
-  "jobId": "00000000-0000-0000-0000-000000000001",
-  "reason": "notCancellable",
-  "status": {
-    "schemaVersion": 1,
-    "jobId": "00000000-0000-0000-0000-000000000001",
-    "requestId": "00000000-0000-0000-0000-000000000002",
-    "state": "converting",
-    "progress": 0.5,
-    "message": null
+  "schemaVersion":1,
+  "operation":"cancel",
+  "succeeded":false,
+  "jobId":"00000000-0000-0000-0000-000000000001",
+  "reason":"notCancellable",
+  "status":{
+    "schemaVersion":1,
+    "jobId":"00000000-0000-0000-0000-000000000001",
+    "requestId":"00000000-0000-0000-0000-000000000002",
+    "state":"converting",
+    "progress":0.5
   }
 }
 ```
+
+Null optional members follow the existing `ContractJson` rule and are omitted rather than serialized as JSON `null`.
 
 Response invariants:
 
 - `schemaVersion` must be current;
 - `operation` must echo the requested operation;
 - `jobId` must echo the requested non-empty job ID;
-- successful responses contain exactly one valid `status` and no `reason`;
+- successful responses contain one valid status and no reason;
 - returned `status.JobId` must equal the echoed/requested `jobId`;
-- failed responses contain one bounded reason and either the current status when one exists or no status for an unknown job;
-- duplicate, unknown, case-variant, contradictory, or extra response members are rejected by Bridge;
+- failed responses contain one defined reason and either the current status when required by that reason or no status for `jobNotFound`;
+- duplicate, unknown, case-variant, contradictory, or extra response members are rejected;
 - Bridge verifies operation and job-ID correlation, preventing a valid response for one request from being accepted for another.
 
-The nested status object uses the existing `ContractJson` job-status wire representation rather than a duplicate status schema.
+The nested status object is the existing `JobStatusSnapshot` wire representation, not a duplicate status schema.
 
 ## Operation semantics
 
@@ -187,14 +210,14 @@ The nested status object uses the existing `ContractJson` job-status wire repres
 
 Host calls `HostJobQueue.TryGet(jobId, out status)`.
 
-- found -> `succeeded: true`, status included;
-- not found -> `succeeded: false`, reason `jobNotFound`, no status.
+- found -> success with current status;
+- not found -> failure `jobNotFound`, no status.
 
 ### `cancel`
 
 Host calls `HostJobQueue.TryCancel(jobId, out status)`.
 
-- returns `true` -> `succeeded: true`, returned status must be `Cancelled`;
+- returns `true` -> success; returned status must be `Cancelled`;
 - returns `false`, `status == null` -> `jobNotFound`;
 - returns `false`, current status exists and state is not `Queued` -> `notCancellable`, current status included;
 - returns `false`, current status exists and state is `Queued` -> `persistenceFailure`, unchanged queued status included.
@@ -215,34 +238,24 @@ The Bridge sequence is mandatory:
 
 If server identity verification fails, zero application request bytes may be written.
 
-The Host continues to enforce expected-user peer authorization before accepting application semantics.
-
-No status/cancel method may bypass either side of this authentication model.
+The Host continues to enforce expected-user peer authorization before accepting application semantics. No status/cancel method may bypass either side of this authentication model.
 
 ## Bridge API shape
 
-Keep `IBridgeRequestClient.SubmitAsync` and its existing callers unchanged.
+Keep `IBridgeRequestClient.SubmitAsync` and all existing callers unchanged.
 
-Add an independently testable job-control surface rather than overloading submission semantics. The concrete `BridgeClient` may implement both surfaces if that best matches the existing project structure.
+Add an independently testable job-control interface implemented by the existing concrete `BridgeClient`, with one-shot methods equivalent to:
 
-Required one-shot operations:
+- `GetStatusAsync(Guid jobId, CancellationToken)`;
+- `CancelAsync(Guid jobId, CancellationToken)`.
 
-- status lookup by non-empty `jobId`;
-- cancel by non-empty `jobId`.
-
-The returned Bridge result must expose:
-
-- requested operation;
-- job ID;
-- success/failure;
-- optional `JobStatusSnapshot`;
-- optional typed/bounded failure reason.
+Both return the typed `JobControlResponse` after verifying that its operation and job ID match the request that was sent.
 
 No retry loop or background polling is added in this tranche.
 
 ## Serialization
 
-Extend `Converty.Serialization.ContractJson` using the same current strictness rules already used by conversion and status contracts:
+Extend `Converty.Serialization.ContractJson` with strict serialization/deserialization for both `JobControlRequest` and `JobControlResponse`, using the same global rules already used by conversion and status contracts:
 
 - camel-case wire names;
 - case-sensitive property names;
@@ -251,44 +264,45 @@ Extend `Converty.Serialization.ContractJson` using the same current strictness r
 - no comments/trailing commas;
 - bounded max depth;
 - exact schema dispatch;
-- domain validation mapped to `JsonException`.
+- domain validation mapped to `JsonException`;
+- null optional members omitted.
 
-Add only the new job-control request serialization/deserialization needed by this tranche. Reuse existing job-status serialization/deserialization for nested status data.
-
-Do not weaken global serializer options to accommodate the new protocol.
+Add V1 wire DTOs and explicit enum-to-wire mappings for control operations/failure reasons. Reuse the existing `JobStatusSnapshot` mapping for nested status data; do not create a second status representation or weaken global serializer options.
 
 ## Error handling
 
 - Authorization failure remains fail-closed and is not used to reveal job existence.
 - Oversized/empty/invalid UTF-8/malformed requests remain `invalidRequest` at the Host boundary.
+- If malformed input cannot be reliably classified as control versus legacy admission, Host may use the existing generic invalid-request rejection; authenticated Bridge-generated control requests are always classifiable, so Bridge treats a non-control response to a control request as a protocol error.
 - Bridge treats malformed, oversized, schema-mismatched, operation-mismatched, job-ID-mismatched, duplicate-member, or internally contradictory control responses as protocol errors rather than fabricating a status.
 - Transport connect/read/write timeouts remain bounded by the existing 30-second maxima.
 - Cancellation persistence failure must not mutate the in-memory job to `Cancelled`.
-- Unexpected internal exceptions are not translated into a successful control result.
+- Unexpected internal exceptions are not translated into successful control results.
 
 ## Test-first implementation requirements
 
 Add RED tests before production changes for at least:
 
-1. strict job-control request round trip for `status` and `cancel`;
-2. request rejection for missing/unknown/duplicate/case-variant members, unsupported operation, empty/invalid job ID, and unsupported schema;
-3. Host status success;
-4. Host status unknown -> `jobNotFound`;
-5. Host queued cancellation success -> persisted `Cancelled` snapshot;
-6. Host cancel unknown -> `jobNotFound`;
-7. Host cancel existing non-queued -> `notCancellable` with current status;
-8. Host cancel journal failure -> `persistenceFailure` with unchanged queued status;
-9. Bridge strict response parsing, including operation/job-ID correlation and nested status validation;
-10. Bridge server-identity verification occurs before any status application frame is written;
-11. Bridge server-identity verification occurs before any cancel application frame is written;
-12. existing conversion `SubmitAsync` admission tests remain unchanged and green;
-13. existing product conversion, package/COM activation, strict-worker isolation, FFmpeg, collision, Unicode/metacharacter, source-preservation, and static/security gates remain green.
+1. strict request round trip for `status` and `cancel`;
+2. strict response round trip for success and each defined failure;
+3. request rejection for missing/unknown/duplicate/case-variant members, unsupported operation, empty/non-canonical/invalid job ID, and unsupported schema;
+4. response rejection for malformed cross-field combinations, operation mismatch, job-ID mismatch, duplicate/unknown members, and invalid nested status;
+5. Host status success;
+6. Host status unknown -> `jobNotFound`;
+7. Host queued cancellation success -> persisted `Cancelled` snapshot;
+8. Host cancel unknown -> `jobNotFound`;
+9. Host cancel existing non-queued -> `notCancellable` with current status;
+10. Host cancel journal failure -> `persistenceFailure` with unchanged queued status;
+11. Bridge server-identity verification occurs before any status application frame is written;
+12. Bridge server-identity verification occurs before any cancel application frame is written;
+13. existing conversion `SubmitAsync` admission behavior remains unchanged and green;
+14. existing product conversion, package/COM activation, strict-worker isolation, FFmpeg, collision, Unicode/metacharacter, source-preservation, and static/security gates remain green.
 
-Where the repository already has fuzz/static contract corpora covering wire contracts, add the new request/response grammar without relaxing existing vectors.
+Where the repository already has fuzz/static contract corpora covering wire contracts, add the new grammar without relaxing existing vectors.
 
 ## Versioning and qualification
 
-The tranche becomes `0.1.0-dev.13` only as part of the actual status/cancel implementation. The design-only commit does not claim dev.13 runtime qualification.
+The tranche becomes `0.1.0-dev.13` only as part of the actual status/cancel implementation. The design-only commits do not claim dev.13 runtime qualification.
 
 Qualification sequence:
 
