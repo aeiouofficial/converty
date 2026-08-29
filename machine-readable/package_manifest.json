@@ -40,13 +40,18 @@
     },
     {
       "path": ".github/workflows/ci.yml",
-      "bytes": 8192,
-      "sha256": "c56cd73964e139578fec1bf6c7826e8fe07e439a00e931577767a292c9c97229"
+      "bytes": 8815,
+      "sha256": "75566d7efa10c6099b0fe934598d8c7aa96f2bed9151cfab546178742f447980"
     },
     {
       "path": ".gitignore",
       "bytes": 204,
       "sha256": "8a46ed81b103972ef4cb4c3365f66ac59ef1438ccf080f9d3bcc7980a305351f"
+    },
+    {
+      "path": "AGENTS.md",
+      "bytes": 2275,
+      "sha256": "482f348459735eff9e2ef54c3ddbaab3bcf6149e4826e686bfcd2ccc219d3006"
     },
     {
       "path": "build/bootstrap.ps1",
@@ -294,9 +299,19 @@
       "sha256": "1c05336bc82765084bdef1fbb2bf27c609781c1882abf6cd7b835191dd46af3e"
     },
     {
+      "path": "docs/superpowers/plans/2026-08-29-main-authority-continuity.md",
+      "bytes": 7637,
+      "sha256": "acc75d430078048b2a177ddd8f6f3f7e75bea0b318734c2607e8ada5f8b28f37"
+    },
+    {
       "path": "docs/superpowers/specs/2026-08-24-foundation-design.md",
       "bytes": 2051,
       "sha256": "c846b241280c63a34893b1e1fbac2e87e617bb65ff1b9f1c1e05d89edcd2ae95"
+    },
+    {
+      "path": "docs/superpowers/specs/2026-08-29-main-authority-continuity-design.md",
+      "bytes": 3199,
+      "sha256": "20a60a6e5480a8e7b107fc01aa7aa7434a608cadcf482c30e2c1e34d4f1ae64c"
     },
     {
       "path": "docs/supply-chain/CI_PROVENANCE_POLICY.md",
@@ -360,8 +375,8 @@
     },
     {
       "path": "machine-readable/release_policy.json",
-      "bytes": 1964,
-      "sha256": "463067b84d56a2bc32006b569966e5032291067da41b49e7bdd661b668b64332"
+      "bytes": 2002,
+      "sha256": "cc5f9c4e3ecfc84ab2e74a425964e9ccac4438793d9b7d9cf5ebd64c0ffa6a08"
     },
     {
       "path": "machine-readable/release_sbom.spdx.json",
@@ -619,14 +634,19 @@
       "sha256": "9dd658a32539df93013e1e2866a85e1daa4657dbf5e669c33d6141eeab5d9197"
     },
     {
+      "path": "scripts/verify_main_continuity.py",
+      "bytes": 2292,
+      "sha256": "c9c452e58e3fce75b52f97346f20ac60aa0308feb8f5b3ba642c3f2ce050e2cd"
+    },
+    {
       "path": "scripts/verify_release_inputs.py",
       "bytes": 2670,
       "sha256": "2ca8e5b6ffdd2ac5ccf554682f99f3a09e17be68504f040c0aa12ad4ffa6968e"
     },
     {
       "path": "scripts/verify_repository.py",
-      "bytes": 16045,
-      "sha256": "acc3e11bb81afcb57bd5afa5e3058cb08667c2a5ab2c475363d0737b5907956e"
+      "bytes": 16108,
+      "sha256": "6dc7df36fce1fdb59206073138a5a0e90b4071b6aab6850496d5de46d552028d"
     },
     {
       "path": "scripts/workspace_file_policy.py",
@@ -1575,8 +1595,8 @@
     },
     {
       "path": "tests/static/test_dev4_ci_provenance.py",
-      "bytes": 5256,
-      "sha256": "1b31f0ae9708705131b58e6fe55ccb0965caab204530d339e4b72e71fc1dd602"
+      "bytes": 5363,
+      "sha256": "162af7fb33e0ebe1c3ca403ae99383959d16694eaf7b6c925c96c2bccc9244c7"
     },
     {
       "path": "tests/static/test_dev5_converty_rebrand.py",
@@ -1612,6 +1632,11 @@
       "path": "tests/static/test_dev9_server_identity_composition.py",
       "bytes": 1602,
       "sha256": "88ed706ef10371ccc317836956659ca77bc963a891693f860f5b1783e4c8d23a"
+    },
+    {
+      "path": "tests/static/test_main_authority_continuity.py",
+      "bytes": 3011,
+      "sha256": "33f8919d710bda17ccf00ede562a572a1dbce1df3d6968f7af6d588ae53a37af"
     },
     {
       "path": "tests/static/test_package_workspace.py",
