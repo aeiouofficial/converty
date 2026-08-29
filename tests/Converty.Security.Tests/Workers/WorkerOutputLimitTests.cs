@@ -59,9 +59,25 @@ public sealed class WorkerOutputLimitTests
                 MaximumCapturedStandardErrorCharacters: 4096);
 
             var launcher = new WindowsWorkerProcessLauncher();
-            WorkerOutputLimitExceededException failure =
-                await Assert.ThrowsAsync<WorkerOutputLimitExceededException>(
-                    async () => await launcher.ExecuteAsync(request, testCancellation));
+            WorkerOutputLimitExceededException? failure = null;
+            WorkerProcessResult? unexpectedResult = null;
+            try
+            {
+                unexpectedResult = await launcher.ExecuteAsync(request, testCancellation);
+            }
+            catch (WorkerOutputLimitExceededException ex)
+            {
+                failure = ex;
+            }
+
+            if (failure is null)
+            {
+                long stagedBytes = File.Exists(outputPath) ? new FileInfo(outputPath).Length : -1;
+                Assert.Fail(
+                    $"Expected output-budget termination, but worker returned exit code " +
+                    $"{unexpectedResult?.ExitCode.ToString() ?? "<none>"}; stagedBytes={stagedBytes}; " +
+                    $"stderr={unexpectedResult?.StandardError ?? "<none>"}");
+            }
 
             Assert.Equal(maximumOutputBytes, failure.MaximumOutputBytes);
             Assert.True(failure.ObservedOutputGrowthBytes > failure.MaximumOutputBytes);
