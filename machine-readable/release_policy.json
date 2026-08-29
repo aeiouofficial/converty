@@ -15,6 +15,7 @@
       "contents": "read"
     },
     "jobTimeoutMinutes": {
+      "main-authority-continuity": 5,
       "managed": 30,
       "supply-chain-static": 15
     }
