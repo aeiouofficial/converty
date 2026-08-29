@@ -2,14 +2,14 @@ name: dev12-source-authority-sync
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
 
 permissions:
   contents: write
 
 jobs:
   sync:
-    if: github.event.head_commit.message == 'chore: stage dev12 source authority sync'
     runs-on: ubuntu-24.04
     timeout-minutes: 5
     steps:
@@ -21,7 +21,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          test "$(git rev-parse HEAD^:VERSION)" = "0.1.0-dev.11"
+          test "$(git log -1 --format=%s)" = "fix: rerun dev12 source authority sync"
           git merge-base --is-ancestor f4c241b0895d06d2e44d72f31e07f141cdc74577 HEAD
           python .github/dev12_source_authority_sync.py
           allowed='^(VERSION|README.md|CHANGELOG.md|eng/toolchain.json|machine-readable/(release_policy.json|ci_action_pins.json|handover_state.json|build_evidence.json)|docs/(HANDOVER_NEXT_AGENT.md|HANDOVER_PROMPT.txt|TASK_BACKLOG.md|TEST_AND_RELEASE_GATES.md|development/IMPLEMENTATION_STATUS.md)|\.github/dev12_source_authority_sync.py|\.github/workflows/dev12-source-authority-sync.yml)$'
