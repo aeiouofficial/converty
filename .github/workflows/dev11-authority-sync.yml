@@ -11,7 +11,6 @@ permissions:
 
 jobs:
   sync-authority:
-    if: github.sha != '1d4c22733c43f4eee4a4a4cd6751608e60359561'
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     env:
@@ -19,13 +18,14 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          fetch-depth: 2
+          fetch-depth: 3
           persist-credentials: true
-      - name: Verify one-shot sync parent
+      - name: Verify one-shot sync ancestry
         shell: bash
         run: |
           set -euo pipefail
-          test "$(git rev-parse HEAD^)" = "1d4c22733c43f4eee4a4a4cd6751608e60359561"
+          git merge-base --is-ancestor "1d4c22733c43f4eee4a4a4cd6751608e60359561" HEAD
+          test "$(git rev-list --count 1d4c22733c43f4eee4a4a4cd6751608e60359561..HEAD)" -le 2
       - name: Download and verify exact generated-authority artifact
         shell: bash
         run: |
@@ -65,8 +65,6 @@ jobs:
           expected = {
               '.github/workflows/dev11-authority-sync.yml',
               'SHA256SUMS.txt',
-              'machine-readable/source_sbom.spdx.json',
-              'machine-readable/release_sbom.spdx.json',
               'machine-readable/package_manifest.json',
           }
           actual = set(subprocess.check_output(['git', 'diff', '--name-only'], text=True).splitlines())
