@@ -39,30 +39,34 @@ public sealed class WorkerOutputLimitTests
         string stagingDirectory = Path.Combine(Path.GetTempPath(), $"ConvertyOutputLimit-{Guid.NewGuid():N}");
         Directory.CreateDirectory(stagingDirectory);
         string outputPath = Path.Combine(stagingDirectory, "growth.bin");
+        const long maximumOutputBytes = 64L * 1024;
 
         try
         {
             var request = new WorkerProcessLaunchRequest(
                 canaryExecutable,
                 appDirectory,
-                ["--write-slow-bytes", outputPath, (1024 * 1024).ToString(System.Globalization.CultureInfo.InvariantCulture)],
+                ["--write-slow-unbounded", outputPath],
                 WorkerIsolationLevel.Strict,
                 new WorkerResourceLimits(
                     maximumActiveProcesses: 2,
                     maximumProcessMemoryBytes: 512L * 1024 * 1024,
                     maximumJobMemoryBytes: 768L * 1024 * 1024,
-                    maximumOutputBytes: 64L * 1024,
+                    maximumOutputBytes: maximumOutputBytes,
                     maximumCpuRatePercent: 100),
                 new WorkerFileSystemScope(stagingDirectory),
                 TimeSpan.FromSeconds(15),
                 MaximumCapturedStandardErrorCharacters: 4096);
 
             var launcher = new WindowsWorkerProcessLauncher();
-            await Assert.ThrowsAsync<WorkerOutputLimitExceededException>(
-                async () => await launcher.ExecuteAsync(request, testCancellation));
+            WorkerOutputLimitExceededException failure =
+                await Assert.ThrowsAsync<WorkerOutputLimitExceededException>(
+                    async () => await launcher.ExecuteAsync(request, testCancellation));
 
+            Assert.Equal(maximumOutputBytes, failure.MaximumOutputBytes);
+            Assert.True(failure.ObservedOutputGrowthBytes > failure.MaximumOutputBytes);
             Assert.True(File.Exists(outputPath));
-            Assert.InRange(new FileInfo(outputPath).Length, 64L * 1024 + 1, 512L * 1024);
+            Assert.True(new FileInfo(outputPath).Length > maximumOutputBytes);
         }
         finally
         {
