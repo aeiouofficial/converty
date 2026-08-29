@@ -3,10 +3,10 @@
   "workspaceVersion": "0.1.0-dev.11",
   "evidenceDate": "2026-08-29",
   "behaviorQualification": {
-    "headSha": "0d37afdba33abcd9ca31f3e59d0d6dc8a1bb7e5d",
-    "workflowRunId": 33260905467,
-    "managedJobId": 99122561963,
-    "staticJobId": 99122562067,
+    "headSha": "c1b87a022dbc63d5aeb7d8df7bd00e8fb17df572",
+    "workflowRunId": 33261600579,
+    "managedJobId": 99124604102,
+    "staticJobId": 99124604583,
     "runner": {
       "os": "Windows Server 2025",
       "image": "windows-2025-vs2026",
@@ -63,7 +63,7 @@
     "postAuditQualificationRunId": 33044395097
   },
   "dev11B2Qualification": {
-    "sourceAuthorityHeadSha": "1d4c22733c43f4eee4a4a4cd6751608e60359561",
+    "sourceAuthorityHeadSha": "1d4c22733c43f4eee4a4cd6751608e60359561",
     "hostStagingRedRunId": 33202365348,
     "hostStagingRedJobId": 98954716457,
     "parentChildIdentityRunId": 33211928010,
@@ -118,14 +118,76 @@
       "digest": "sha256:50d6cfc6443356bc70210f6b465ccddea47733b1a3e0a31d3fe19c0e3ea80c09"
     }
   },
+  "finalDev11Qualification": {
+    "qualifiedHeadSha": "c1b87a022dbc63d5aeb7d8df7bd00e8fb17df572",
+    "qualifiedTreeSha": "a667071ae917f1d6757a82cf0c2de40de099dd60",
+    "workflowRunId": 33261600579,
+    "initialManagedJobId": 99124384946,
+    "successfulManagedRerunJobId": 99124604102,
+    "staticJobId": 99124604583,
+    "initialManagedAttempt": {
+      "managedTests": "191/192 PASS; 1 failed; 0 skipped",
+      "failedTest": "Converty.Security.Tests.Workers.WorkerOutputLimitTests.StrictWorkerIsTerminatedWhenStagingGrowthExceedsOutputBudget",
+      "observedStagingBytes": 610304,
+      "testMaximumBytes": 524288,
+      "classification": "KNOWN_TIMING_SENSITIVE_OUTPUT_BUDGET_TEST_INTERMITTENT"
+    },
+    "successfulUnchangedHeadRerun": {
+      "lockedRestore": "18/18 PASS",
+      "dependencyAudit": "PASS; 18 projects; 18 frameworks; 0 vulnerable-result packages",
+      "releaseBuild": "PASS; 0 warnings; 0 errors",
+      "nativeExplorer": "PASS",
+      "developmentFfmpeg": "PASS",
+      "developmentPackageAndMakeAppx": "PASS; Host staged",
+      "directAndPackagedComInvoke": "PASS",
+      "productBridgeStrictWorkerFfmpeg": "PASS; mp3 / 320000 bit/s; Unicode/metacharacter path; source and existing destination preserved; numbered publication",
+      "managedTests": {
+        "total": 192,
+        "succeeded": 192,
+        "failed": 0,
+        "skipped": 0
+      },
+      "staticTests": "66/66 PASS",
+      "contractVectors": "5/5 PASS",
+      "generatedAuthorityDiff": "CLEAN"
+    },
+    "workspace": {
+      "name": "Converty_0.1.0-dev.11_full_workspace.zip",
+      "sha256": "6321eef281f900505abe2fae024d1f285118066b756ac54ad38cc8065b655393",
+      "bytes": 376919,
+      "files": 329,
+      "packageManifestEntries": 327,
+      "shaManifestEntries": 328,
+      "crc": "PASS",
+      "deterministicDoubleBuild": "PASS",
+      "exclusionPolicy": "PASS"
+    },
+    "generatedAuthorityArtifact": {
+      "id": 9717406467,
+      "digest": "sha256:66e161daefd465fa4ade2a80e7d76a6a7f9dc3371f8fa96f29bf829a07289f1e"
+    },
+    "verifiedDeliveryArtifact": {
+      "id": 9717455816,
+      "digest": "sha256:0da0d51ea812fcf66d93868912fbcf0e046255a32d656345414b6818ea2769f8"
+    },
+    "mainPromotion": {
+      "historicalMainSha": "13ed46bcb5cb02f33965dace4adc5a3fb25e87fd",
+      "promotedQualifiedBaselineSha": "c1b87a022dbc63d5aeb7d8df7bd00e8fb17df572",
+      "method": "clean fast-forward",
+      "aheadBy": 76,
+      "behindBy": 0
+    }
+  },
   "knownHistoricalIntermittent": {
     "test": "StrictWorkerIsTerminatedWhenStagingGrowthExceedsOutputBudget",
     "historicalRunId": 33044741340,
     "dev11PreVersionInitialManagedJobId": 99007945036,
-    "observed": "191/192 once; unchanged-head reruns later passed 192/192",
+    "dev11FinalInitialManagedJobId": 99124384946,
+    "dev11FinalSuccessfulRerunJobId": 99124604102,
+    "observed": "Repeated timing-sensitive staging overshoot can produce 191/192; unchanged-head reruns passed 192/192",
     "status": "OPEN_FLAKE_HISTORY_NOT_ERASED"
   },
-  "currentAuthorityState": "DEV11_SOURCE_VERSION_AUTHORITY_SYNCHRONIZED; GENERATED_SBOM_PACKAGE_HASH_AUTHORITY_REGENERATION_REQUIRED",
+  "currentAuthorityState": "DEV11_EXACT_HEAD_QUALIFIED_AND_PROMOTED_TO_MAIN",
   "headedWindows11Acceptance": "OPEN",
   "productionSignedPackageB2Requalification": "OPEN",
   "productionFfmpegRedistributionApproval": "OPEN"

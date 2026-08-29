@@ -3,7 +3,7 @@
   "project": "Converty",
   "workspaceVersion": "0.1.0-dev.11",
   "baselineDate": "2026-08-29",
-  "implementationStatus": "DEV11_B2_DEVELOPMENT_AUTH_QUALIFIED_SOURCE_AUTHORITY_SYNCED_GENERATED_AUTHORITY_REGEN_PENDING",
+  "implementationStatus": "DEV11_EXACT_HEAD_QUALIFIED_AND_PROMOTED_TO_MAIN",
   "batchesTouched": [
     "B0",
     "B1",
@@ -13,7 +13,7 @@
     "B5"
   ],
   "nextWorkspaceVersion": "0.1.0-dev.12",
-  "nextBatch": "DEV11_GENERATED_AUTHORITY_REGEN_AND_EXACT_HEAD_FREEZE",
+  "nextBatch": "DEV12_OUTPUT_BUDGET_FLAKE_DETERMINISM",
   "targetOs": "Windows 11 x64",
   "toolchain": {
     "dotnetSdk": "10.0.400",
@@ -24,13 +24,13 @@
     "native": "C++20 / CMake 3.28+ / MSVC"
   },
   "frozenPriorAuthority": {
-    "mainSha": "13ed46bcb5cb02f33965dace4adc5a3fb25e87fd",
+    "historicalMainShaBeforeDev11Promotion": "13ed46bcb5cb02f33965dace4adc5a3fb25e87fd",
     "dev10HeadSha": "358d5d1faf293f217402af6ad1ae7e53f33f8183",
     "dev10BehaviorHeadSha": "f221563c790057344a94b4e60c309d4512a77c38",
     "dev10QualificationRunId": 33028554361
   },
   "dev11B2Evidence": {
-    "sourceAuthorityHeadSha": "1d4c22733c43f4eee4a4a4cd6751608e60359561",
+    "sourceAuthorityHeadSha": "1d4c22733c43f4eee4a4cd6751608e60359561",
     "hostStagingRedRunId": 33202365348,
     "hostStagingRedJobId": 98954716457,
     "parentChildIdentityRunId": 33211928010,
@@ -43,26 +43,55 @@
     "packagedBridgeHostJobId": "5bd48925-8c88-48d2-bbd7-a62c2ba03e3e",
     "status": "PASS_DEVELOPMENT_FULL_PACKAGE_MODEL"
   },
-  "preVersionAuthorityQualification": {
-    "headSha": "0d37afdba33abcd9ca31f3e59d0d6dc8a1bb7e5d",
-    "treeSha": "7560366cb059c1ff90c539f497903e84df1b2141",
-    "workflowRunId": 33260905467,
-    "managedJobId": 99122561963,
-    "staticJobId": 99122562067,
-    "managedTests": "192/192 PASS; 0 skipped",
+  "dev11FinalAuthority": {
+    "qualifiedHeadSha": "c1b87a022dbc63d5aeb7d8df7bd00e8fb17df572",
+    "qualifiedTreeSha": "a667071ae917f1d6757a82cf0c2de40de099dd60",
+    "workflowRunId": 33261600579,
+    "initialManagedJobId": 99124384946,
+    "successfulManagedRerunJobId": 99124604102,
+    "staticJobId": 99124604583,
+    "managedTests": "192/192 PASS on unchanged-head rerun; 0 skipped",
     "staticTests": "66/66 PASS",
     "contractVectors": "5/5 PASS",
     "dependencyAudit": "PASS; 18 projects; 18 frameworks; 0 vulnerable-result packages",
     "releaseBuild": "PASS; 0 warnings; 0 errors",
-    "generatedAuthorityDiff": "CLEAN_AT_PRE_VERSION_TREE",
-    "workspaceZip": {
-      "name": "Converty_0.1.0-dev.10_full_workspace.zip",
-      "sha256": "de6b43a9343591fc451b488b65e73049f60759a9be0072be11495c24604946ab",
-      "bytes": 382689,
-      "files": 329
+    "generatedAuthorityDiff": "CLEAN",
+    "generatedAuthorityArtifact": {
+      "id": 9717406467,
+      "digest": "sha256:66e161daefd465fa4ade2a80e7d76a6a7f9dc3371f8fa96f29bf829a07289f1e"
     },
-    "verifiedDeliveryArtifactId": 9717244755,
-    "verifiedDeliveryArtifactDigest": "sha256:50d6cfc6443356bc70210f6b465ccddea47733b1a3e0a31d3fe19c0e3ea80c09"
+    "verifiedDeliveryArtifact": {
+      "id": 9717455816,
+      "digest": "sha256:0da0d51ea812fcf66d93868912fbcf0e046255a32d656345414b6818ea2769f8"
+    },
+    "workspaceZip": {
+      "name": "Converty_0.1.0-dev.11_full_workspace.zip",
+      "sha256": "6321eef281f900505abe2fae024d1f285118066b756ac54ad38cc8065b655393",
+      "bytes": 376919,
+      "files": 329,
+      "packageManifestEntries": 327,
+      "shaManifestEntries": 328,
+      "crc": "PASS",
+      "deterministicDoubleBuild": "PASS",
+      "exclusionPolicy": "PASS"
+    },
+    "mainPromotion": {
+      "method": "clean fast-forward",
+      "fromSha": "13ed46bcb5cb02f33965dace4adc5a3fb25e87fd",
+      "toQualifiedBaselineSha": "c1b87a022dbc63d5aeb7d8df7bd00e8fb17df572",
+      "aheadBy": 76,
+      "behindBy": 0
+    }
+  },
+  "knownHistoricalIntermittent": {
+    "test": "StrictWorkerIsTerminatedWhenStagingGrowthExceedsOutputBudget",
+    "historicalRunId": 33044741340,
+    "dev11PreVersionInitialManagedJobId": 99007945036,
+    "dev11FinalInitialManagedJobId": 99124384946,
+    "dev11FinalSuccessfulRerunJobId": 99124604102,
+    "finalObservedOvershootBytes": 610304,
+    "finalTestMaximumBytes": 524288,
+    "status": "OPEN_TIMING_FLAKE_HISTORY_NOT_ERASED"
   },
   "implementedSource": [
     "Native C++20 IExplorerCommand and exact app-local Bridge handoff",
@@ -82,13 +111,12 @@
     "Final security/fuzz/chaos/release audit and end-user acceptance"
   ],
   "nextActions": [
-    "Regenerate dev.11 source/release SBOM, package manifest and SHA256SUMS from this source-authority tree",
-    "Commit exact runner-generated authority bytes only",
-    "Require exact-head zero-diff authority plus all managed/static/product/package gates and verified dev.11 delivery",
-    "Do not merge/promote merely because CI is green"
+    "Start 0.1.0-dev.12 from live main",
+    "Reproduce and make StrictWorkerIsTerminatedWhenStagingGrowthExceedsOutputBudget deterministic without weakening production output enforcement",
+    "Require locked restore, audit, Release build, native/package/COM/product, 192/192 managed, 66/66 static, 5/5 vectors and generated-authority zero diff after the narrow fix"
   ],
   "recursiveHandoverRequired": true,
-  "recursiveHandoverRule": "Every agent must end its tranche with a new full-context copy-paste handover containing exact repository/branch/main/current SHA/tree, immutable qualification evidence, all run/job/artifact IDs, exact changes and reasons, RED/GREEN history, executed test/build/security outcomes, workspace hashes, unresolved blockers, explicitly unverified claims, ONE precise next task, all non-negotiables, and this same recursive rule until Converty is shipped.",
+  "recursiveHandoverRule": "Every agent must end its tranche with a new full-context copy-paste handover containing exact repository/default branch/live SHA/tree, immutable qualification evidence, all run/job/artifact IDs, exact changes and reasons, RED/GREEN history, executed test/build/security outcomes, workspace hashes, unresolved blockers, explicitly unverified claims, ONE precise next task, all non-negotiables, and this same recursive rule until Converty is shipped.",
   "authorityFiles": [
     "docs/HANDOVER_NEXT_AGENT.md",
     "docs/HANDOVER_PROMPT.txt",
