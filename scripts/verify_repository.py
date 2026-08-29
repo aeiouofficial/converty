@@ -82,7 +82,7 @@ REQUIRED_SOURCE_TOKENS = {
     "src/Converty.Security/Workers/WindowsWorkerProcessLauncher.cs": [
         "UseShellExecute = false",
         "ArgumentList.Add",
-        "CreateNoWindow = true",
+        "CreateNoWindow = true,
         "WaitForExitAsync",
     ],
     "providers/Converty.Provider.FFmpeg/FfmpegProcessLauncher.cs": [
@@ -195,7 +195,11 @@ def main() -> int:
         fail("release policy must forbid persisted checkout credentials")
     if ci_policy.get("workflowPermissions") != {"contents": "read"}:
         fail("release policy must keep permanent CI workflow permissions at contents: read")
-    if ci_policy.get("jobTimeoutMinutes") != {"managed": 30, "supply-chain-static": 15}:
+    if ci_policy.get("jobTimeoutMinutes") != {
+        "main-authority-continuity": 5,
+        "managed": 30,
+        "supply-chain-static": 15,
+    }:
         fail("release policy must encode reviewed CI job timeout ceilings")
 
     audit = release_policy.get("dependencyAudit", {})
