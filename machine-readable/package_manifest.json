@@ -95,8 +95,8 @@
     },
     {
       "path": "build/stage-dev-package.ps1",
-      "bytes": 3379,
-      "sha256": "4057231cffd46799354b6b72a6454ba2b881b23f6917193598db8a40a846a47d"
+      "bytes": 3847,
+      "sha256": "dff2f9eccdf8a51f70bd2014bdc2a615003eba1e6e09089430da4ac1beef5410"
     },
     {
       "path": "build/test.ps1",
@@ -230,8 +230,8 @@
     },
     {
       "path": "docs/security/B2_SERVER_AUTH_GATE.md",
-      "bytes": 832,
-      "sha256": "931427ccf91436b26153036929b54651bea824facb9274c7c8bd27492764a1e0"
+      "bytes": 4389,
+      "sha256": "1632d635d101fd3b2d3c6774fb11a071d8ebbbfc29a01bb3e322edd972965cf9"
     },
     {
       "path": "docs/SECURITY_THREAT_MODEL.md",
