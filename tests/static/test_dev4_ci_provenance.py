@@ -112,7 +112,8 @@ def test_handover_and_release_authority_are_current() -> None:
 
 def test_ci_checkout_does_not_persist_credentials_and_jobs_have_timeouts() -> None:
     workflow = (ROOT / ".github/workflows/ci.yml").read_text(encoding="utf-8")
-    assert workflow.count("persist-credentials: false") == 2
+    assert workflow.count("persist-credentials: false") == 3
+    assert "timeout-minutes: 5" in workflow
     assert "timeout-minutes: 15" in workflow
     assert "timeout-minutes: 30" in workflow
 
@@ -122,4 +123,8 @@ def test_release_policy_encodes_ci_credential_and_timeout_bounds() -> None:
     ci = policy["ciProvenance"]
     assert ci["checkoutPersistCredentials"] is False
     assert ci["workflowPermissions"] == {"contents": "read"}
-    assert ci["jobTimeoutMinutes"] == {"managed": 30, "supply-chain-static": 15}
+    assert ci["jobTimeoutMinutes"] == {
+        "main-authority-continuity": 5,
+        "managed": 30,
+        "supply-chain-static": 15,
+    }
