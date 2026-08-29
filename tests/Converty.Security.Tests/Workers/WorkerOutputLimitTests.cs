@@ -1,3 +1,4 @@
+using System.Globalization;
 using Converty.Security.Workers;
 
 namespace Converty.Security.Tests.Workers;
@@ -73,9 +74,12 @@ public sealed class WorkerOutputLimitTests
             if (failure is null)
             {
                 long stagedBytes = File.Exists(outputPath) ? new FileInfo(outputPath).Length : -1;
+                string exitCode = unexpectedResult is null
+                    ? "<none>"
+                    : unexpectedResult.ExitCode.ToString(CultureInfo.InvariantCulture);
                 Assert.Fail(
                     $"Expected output-budget termination, but worker returned exit code " +
-                    $"{unexpectedResult?.ExitCode.ToString() ?? "<none>"}; stagedBytes={stagedBytes}; " +
+                    $"{exitCode}; stagedBytes={stagedBytes}; " +
                     $"stderr={unexpectedResult?.StandardError ?? "<none>"}");
             }
 
