@@ -1,106 +1,51 @@
 {
   "schemaVersion": 1,
   "project": "Converty",
-  "workspaceVersion": "0.1.0-dev.11",
+  "workspaceVersion": "0.1.0-dev.12",
   "baselineDate": "2026-08-29",
-  "implementationStatus": "DEV11_EXACT_HEAD_QUALIFIED_AND_PROMOTED_TO_MAIN",
-  "batchesTouched": [
-    "B0",
-    "B1",
-    "B2",
-    "B3",
-    "B4",
-    "B5"
-  ],
-  "nextWorkspaceVersion": "0.1.0-dev.12",
-  "nextBatch": "DEV12_OUTPUT_BUDGET_FLAKE_DETERMINISM",
+  "implementationStatus": "DEV12_OUTPUT_BUDGET_TEST_DETERMINISM_BEHAVIOR_QUALIFIED_GENERATED_AUTHORITY_REGEN_PENDING",
+  "defaultBranch": "main",
+  "liveSourceAuthorityHeadSha": "f4c241b0895d06d2e44d72f31e07f141cdc74577",
+  "liveSourceAuthorityTreeSha": "30ef2ff8ebfb7f89c8f91b3c18c08432c4fdfbd1",
+  "nextWorkspaceVersion": "0.1.0-dev.13",
+  "nextBatch": "DEV13_STATUS_CANCEL_WIRE_DECISION_AND_MINIMAL_PROTOCOL_SLICE",
   "targetOs": "Windows 11 x64",
-  "toolchain": {
-    "dotnetSdk": "10.0.400",
-    "targetFramework": "net10.0",
-    "csharp": "14.0",
-    "dotnetTestRunner": "Microsoft.Testing.Platform",
-    "xunit": "xunit.v3.mtp-v2 4.0.0",
-    "native": "C++20 / CMake 3.28+ / MSVC"
+  "priorAuthority": {
+    "headSha": "ac475b5a51e19c7618a424ca689657cdf75edcaa",
+    "treeSha": "a0d81da9a4d593c9ba7ec23dd59073eb0e501dc9",
+    "workflowRunId": 33268569169,
+    "managedJobId": 99142859488,
+    "staticJobId": 99142859587,
+    "continuityJobId": 99142859660
   },
-  "frozenPriorAuthority": {
-    "historicalMainShaBeforeDev11Promotion": "13ed46bcb5cb02f33965dace4adc5a3fb25e87fd",
-    "dev10HeadSha": "358d5d1faf293f217402af6ad1ae7e53f33f8183",
-    "dev10BehaviorHeadSha": "f221563c790057344a94b4e60c309d4512a77c38",
-    "dev10QualificationRunId": 33028554361
-  },
-  "dev11B2Evidence": {
-    "sourceAuthorityHeadSha": "1d4c22733c43f4eee4a4cd6751608e60359561",
-    "hostStagingRedRunId": 33202365348,
-    "hostStagingRedJobId": 98954716457,
-    "parentChildIdentityRunId": 33211928010,
-    "parentChildIdentityJobId": 98986920905,
-    "explorerBridgeIdentityRunId": 33218030168,
-    "explorerBridgeIdentityJobId": 99005949641,
-    "packagedBridgeHostAuthRunId": 33218498644,
-    "packagedBridgeHostAuthJobId": 99007347897,
-    "developmentPackageFamilyName": "Converty.Dev_yr4ybytcyx7nj",
-    "packagedBridgeHostJobId": "5bd48925-8c88-48d2-bbd7-a62c2ba03e3e",
-    "status": "PASS_DEVELOPMENT_FULL_PACKAGE_MODEL"
-  },
-  "dev11FinalAuthority": {
-    "qualifiedHeadSha": "c1b87a022dbc63d5aeb7d8df7bd00e8fb17df572",
-    "qualifiedTreeSha": "a667071ae917f1d6757a82cf0c2de40de099dd60",
-    "workflowRunId": 33261600579,
-    "initialManagedJobId": 99124384946,
-    "successfulManagedRerunJobId": 99124604102,
-    "staticJobId": 99124604583,
-    "managedTests": "192/192 PASS on unchanged-head rerun; 0 skipped",
-    "staticTests": "66/66 PASS",
+  "dev12OutputBudgetDeterminism": {
+    "planCommitSha": "e2d50ca1279631a1dd1a51ab35fb170ef5357a02",
+    "redHeadSha": "ad223384400be1c5749e0b09e301f7ddd5565eda",
+    "redRunId": 33271012596,
+    "redManagedJobId": 99149375331,
+    "firstGreenExperimentHeadSha": "8ae59ddb87411f64c647a66a0a7f941b13d37a78",
+    "firstGreenExperimentRunId": 33271120406,
+    "diagnosticHeadSha": "5dfaabebaacacde1d6b99a8146d8302b7845ad6e",
+    "diagnosticRunId": 33271235790,
+    "diagnosticCultureFixHeadSha": "139c1058bb560756fb6139b01c87f4b277bd28f2",
+    "diagnosticCultureFixRunId": 33271302074,
+    "behaviorHeadSha": "f4c241b0895d06d2e44d72f31e07f141cdc74577",
+    "behaviorTreeSha": "30ef2ff8ebfb7f89c8f91b3c18c08432c4fdfbd1",
+    "qualificationRunId": 33271379504,
+    "managedJobId": 99150338647,
+    "staticJobId": 99150338472,
+    "continuityJobId": 99150338602,
+    "managedTests": "192/192 PASS; 0 skipped",
+    "staticTests": "72/72 PASS before generated-authority zero-diff check",
     "contractVectors": "5/5 PASS",
-    "dependencyAudit": "PASS; 18 projects; 18 frameworks; 0 vulnerable-result packages",
     "releaseBuild": "PASS; 0 warnings; 0 errors",
-    "generatedAuthorityDiff": "CLEAN",
-    "generatedAuthorityArtifact": {
-      "id": 9717406467,
-      "digest": "sha256:66e161daefd465fa4ade2a80e7d76a6a7f9dc3371f8fa96f29bf829a07289f1e"
-    },
-    "verifiedDeliveryArtifact": {
-      "id": 9717455816,
-      "digest": "sha256:0da0d51ea812fcf66d93868912fbcf0e046255a32d656345414b6818ea2769f8"
-    },
-    "workspaceZip": {
-      "name": "Converty_0.1.0-dev.11_full_workspace.zip",
-      "sha256": "6321eef281f900505abe2fae024d1f285118066b756ac54ad38cc8065b655393",
-      "bytes": 376919,
-      "files": 329,
-      "packageManifestEntries": 327,
-      "shaManifestEntries": 328,
-      "crc": "PASS",
-      "deterministicDoubleBuild": "PASS",
-      "exclusionPolicy": "PASS"
-    },
-    "mainPromotion": {
-      "method": "clean fast-forward",
-      "fromSha": "13ed46bcb5cb02f33965dace4adc5a3fb25e87fd",
-      "toQualifiedBaselineSha": "c1b87a022dbc63d5aeb7d8df7bd00e8fb17df572",
-      "aheadBy": 76,
-      "behindBy": 0
-    }
+    "dependencyAudit": "PASS; 18 projects; 18 frameworks; 0 vulnerable-result packages",
+    "productPath": "PASS; native Explorer; package/MakeAppx; direct and registered COM Invoke; Bridge→Strict Worker→FFmpeg; mp3 320000 bit/s",
+    "productionWorkerLimitChanged": false,
+    "productionContainmentChanged": false,
+    "rootCause": "The historical 512 KiB post-kill file-size ceiling was a test-only scheduler assumption. A correct budget exception had already been thrown in the historical 610304-byte failure. Dev.12 bounds the canary itself to maximum+4096 and holds it alive so detection/termination is deterministic.",
+    "generatedAuthorityState": "REGEN_REQUIRED_AFTER_SOURCE_AUTHORITY_SYNC"
   },
-  "knownHistoricalIntermittent": {
-    "test": "StrictWorkerIsTerminatedWhenStagingGrowthExceedsOutputBudget",
-    "historicalRunId": 33044741340,
-    "dev11PreVersionInitialManagedJobId": 99007945036,
-    "dev11FinalInitialManagedJobId": 99124384946,
-    "dev11FinalSuccessfulRerunJobId": 99124604102,
-    "finalObservedOvershootBytes": 610304,
-    "finalTestMaximumBytes": 524288,
-    "status": "OPEN_TIMING_FLAKE_HISTORY_NOT_ERASED"
-  },
-  "implementedSource": [
-    "Native C++20 IExplorerCommand and exact app-local Bridge handoff",
-    "Strict disposable EngineWorker/provider FFmpeg conversion with private staging and transactional numbered publication",
-    "Development package stages exact Converty.Host.exe beside Bridge",
-    "Connected-server probe verifies actual pipe server PID, exact Host image, exact PFN and stable PID",
-    "BridgeClient authenticates the connected Host before writing the first application request frame",
-    "Actual packaged COM shell→Bridge CreateProcessW and packaged parent→Host Process.Start preserve package identity"
-  ],
   "shippingOpen": [
     "Headed Windows 11 modern Explorer acceptance and exact-build screenshots",
     "Explorer crash/hang/failure headed matrix",
@@ -111,23 +56,11 @@
     "Final security/fuzz/chaos/release audit and end-user acceptance"
   ],
   "nextActions": [
-    "Start 0.1.0-dev.12 from live main",
-    "Reproduce and make StrictWorkerIsTerminatedWhenStagingGrowthExceedsOutputBudget deterministic without weakening production output enforcement",
-    "Require locked restore, audit, Release build, native/package/COM/product, 192/192 managed, 66/66 static, 5/5 vectors and generated-authority zero diff after the narrow fix"
+    "Regenerate dev.12 source/release SBOM, package manifest and SHA256SUMS from this source-authority tree.",
+    "Commit exact runner-generated authority bytes only.",
+    "Require exact-main zero-diff authority plus all managed/static/product/package gates and deterministic verified dev.12 delivery.",
+    "Then begin dev.13 status/cancel wire decision without changing the normal Bridge→Worker→FFmpeg product path unnecessarily."
   ],
   "recursiveHandoverRequired": true,
-  "recursiveHandoverRule": "Every agent must end its tranche with a new full-context copy-paste handover containing exact repository/default branch/live SHA/tree, immutable qualification evidence, all run/job/artifact IDs, exact changes and reasons, RED/GREEN history, executed test/build/security outcomes, workspace hashes, unresolved blockers, explicitly unverified claims, ONE precise next task, all non-negotiables, and this same recursive rule until Converty is shipped.",
-  "authorityFiles": [
-    "docs/HANDOVER_NEXT_AGENT.md",
-    "docs/HANDOVER_PROMPT.txt",
-    "docs/Converty_Master_Build_Plan.md",
-    "docs/adr/ADR-013-dev9-functional-product-spike.md",
-    "docs/SECURITY_THREAT_MODEL.md",
-    "docs/TEST_AND_RELEASE_GATES.md",
-    "docs/TASK_BACKLOG.md",
-    "docs/development/IMPLEMENTATION_STATUS.md",
-    "docs/security/B2_SERVER_AUTH_GATE.md",
-    "machine-readable/build_evidence.json",
-    "machine-readable/release_policy.json"
-  ]
+  "recursiveHandoverRule": "Every completed tranche must end with a full copy-paste handover containing repository/default branch/live SHA/tree, prior authority, all commits, RED/GREEN history, run/job/artifact IDs, exact changes/reasons, executed tests/build/security outcomes, workspace hashes/counts, blockers, explicitly unverified claims, ONE precise next task, invariants, headed limitation, production signing/FFmpeg limitation, and this same recursive rule."
 }

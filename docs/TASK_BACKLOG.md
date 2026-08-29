@@ -1,5 +1,12 @@
 # Converty Implementation Backlog
 
+## Dev.12 closure / dev.13 next
+- [x] Replace scheduler-dependent output-budget overshoot assertion with bounded write-and-hold canary.
+- [x] Preserve production output limit and strict containment unchanged.
+- [x] Behavior qualification at `f4c241b0895d06d2e44d72f31e07f141cdc74577`: 192/192 managed, 72/72 static, 5/5 vectors, product/package/COM gates PASS.
+- [ ] Regenerate/synchronize dev.12 generated authority and require exact-main zero-diff CI + deterministic verified delivery.
+- [ ] Dev.13: status/cancel wire decision and smallest protocol slice.
+
 ## Dev.11 current priority — 2026-08-29
 - Development B2 Explorer→Bridge package identity: QUALIFIED.
 - Development B2 Bridge→Host connected-server authentication: QUALIFIED.

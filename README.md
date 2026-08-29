@@ -4,18 +4,18 @@
 Windows 11 modern-context-menu file conversion platform. Converty is being built as a modular right-click converter for Audio, Images, Video, and future file families while keeping Explorer, coordinator, worker, media-engine, staging, and publication trust boundaries explicit.
 
 ## Workspace version
-**0.1.0-dev.11** — development B2 connected-server identity/authentication is qualified; generated dev.11 authority regeneration and exact-head freeze are the current repository step.
+**0.1.0-dev.12** — output-budget containment verification is deterministic without weakening production limits or containment.
 
 ## Current evidence-backed state
 The product path remains:
 
 `IExplorerCommand → fixed Converty.Bridge.exe → Strict Converty.EngineWorker.exe → typed preset/provider → fixed app-local ffmpeg.exe → private staging → validated no-overwrite numbered publication`
 
-Dev.11 adds no Host routing to normal conversion. The development package stages exact sibling `Converty.Host.exe` for dormant B2 infrastructure. Real registered package COM invocation proved the shell-launched exact Bridge receives PFN `Converty.Dev_yr4ybytcyx7nj`; package-identified parent→Host preserves it; and a real packaged Bridge→Host session authenticates connected server PID, exact image, PFN and stable PID before the first application frame. Positive acceptance: run `33218498644`, job `99007347897`.
+Dev.12 fixes the historical output-budget test intermittent at the harness boundary. The canary now writes exactly 64 KiB + 4 KiB and then holds, so the existing strict launcher must detect a bounded breach and terminate the worker. `WindowsWorkerProcessLauncher`, production `WorkerResourceLimits`, AppContainer/Job Object containment, poll interval, and normal conversion routing are unchanged.
 
-The pre-version exact tree `0d37afdba33abcd9ca31f3e59d0d6dc8a1bb7e5d` passed run `33260905467`: 18/18 locked restore, zero vulnerable-result packages, Release 0 warnings/errors, native Explorer, unsigned MakeAppx including Host, direct and packaged COM Invoke, Bridge→Strict Worker→FFmpeg conversion, Unicode/metacharacter paths, source/existing-destination preservation, numbered publication, MP3 exactly 320000 bit/s, 192/192 managed, 66/66 static, 5/5 vectors, zero-diff authority, deterministic double workspace and verified delivery.
+Behavior head `f4c241b0895d06d2e44d72f31e07f141cdc74577` run `33271379504` passed 18/18 locked restore, zero vulnerable-result packages, Release 0 warnings/errors, native Explorer, unsigned MakeAppx, direct and registered COM Invoke, Bridge→Strict Worker→FFmpeg conversion, Unicode/metacharacter paths, source/existing-destination preservation, numbered publication, MP3 exactly 320000 bit/s, 192/192 managed, 72/72 static and 5/5 vectors. The run stopped only at tracked generated-authority/workspace-integrity freshness because the source bytes had changed; dev.12 generated authority regeneration is the current closure step.
 
-## What dev.11 still does not claim
+## What dev.12 still does not claim
 - headed Windows 11 modern Explorer UI acceptance, exact-build screenshots or crash/hang/failure matrix;
 - production signed-package B2 requalification;
 - status/cancel and replay/disconnect/reconnect/session acceptance;

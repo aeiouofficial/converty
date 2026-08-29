@@ -1,92 +1,28 @@
 {
   "schemaVersion": 1,
-  "workspaceVersion": "0.1.0-dev.11",
+  "workspaceVersion": "0.1.0-dev.12",
   "evidenceDate": "2026-08-29",
-  "behaviorQualification": {
-    "headSha": "c1b87a022dbc63d5aeb7d8df7bd00e8fb17df572",
-    "workflowRunId": 33261600579,
-    "managedJobId": 99124604102,
-    "staticJobId": 99124604583,
-    "runner": {
-      "os": "Windows Server 2025",
-      "image": "windows-2025-vs2026",
-      "imageVersion": "20260824.214.3",
-      "dotnetSdk": "10.0.400"
-    },
-    "managed": {
-      "lockedRestore": "PASS",
-      "managedProjects": 18,
-      "dependencyAudit": "PASS",
-      "auditProjects": 18,
-      "auditFrameworks": 18,
-      "vulnerablePackages": 0,
-      "releaseBuild": "PASS",
-      "warnings": 0,
-      "errors": 0,
-      "tests": {
-        "total": 192,
-        "succeeded": 192,
-        "failed": 0,
-        "skipped": 0
-      },
-      "nativeExplorerReleaseBuild": "PASS",
-      "nativeTopologySmoke": "PASS",
-      "developmentFfmpegPinHashAndExecution": "PASS",
-      "makeAppxUnsignedDevelopmentPackage": "PASS",
-      "directShellDllClassFactoryInvoke": "PASS",
-      "loosePackageRegistrationComActivationInvoke": "PASS",
-      "productBridgeToStrictWorkerFfmpegSmoke": "PASS",
-      "audioMp3CodecBitrate": "mp3 / 320000 bit/s PASS",
-      "transactionalNumberedCollision": "PASS",
-      "sourceAndExistingDestinationPreserved": "PASS",
-      "deterministicWorkspacePackageBytes": "PASS",
-      "verifiedDeliveryUpload": "PASS"
-    },
-    "static": {
-      "tests": "66/66 PASS",
-      "contractVectors": "5/5 PASS",
-      "repositoryVerifier": "PASS",
-      "immutableActionPins": "PASS",
-      "sourceSbomRegeneration": "PASS",
-      "releaseSbomRegeneration": "PASS",
-      "packageManifestRegeneration": "PASS",
-      "sha256ManifestRegeneration": "PASS",
-      "generatedAuthorityDiff": "CLEAN"
-    }
+  "priorFinalMain": {
+    "headSha": "ac475b5a51e19c7618a424ca689657cdf75edcaa",
+    "treeSha": "a0d81da9a4d593c9ba7ec23dd59073eb0e501dc9",
+    "workflowRunId": 33268569169,
+    "managedJobId": 99142859488,
+    "staticJobId": 99142859587,
+    "continuityJobId": 99142859660,
+    "workspaceSha256": "8270fdf0598f73881a674fbc7dddfe5e4727ff09884aedd68d41cfffae9ae395"
   },
-  "frozenDev10": {
-    "headSha": "358d5d1faf293f217402af6ad1ae7e53f33f8183",
-    "behaviorHeadSha": "f221563c790057344a94b4e60c309d4512a77c38",
-    "qualificationRunId": 33028554361,
-    "managedJobId": 98375493893,
-    "staticJobId": 98375494099,
-    "postAuditQualificationRunId": 33044395097
-  },
-  "dev11B2Qualification": {
-    "sourceAuthorityHeadSha": "1d4c22733c43f4eee4a4cd6751608e60359561",
-    "hostStagingRedRunId": 33202365348,
-    "hostStagingRedJobId": 98954716457,
-    "parentChildIdentityRunId": 33211928010,
-    "parentChildIdentityJobId": 98986920905,
-    "explorerBridgeIdentityRunId": 33218030168,
-    "explorerBridgeIdentityJobId": 99005949641,
-    "packagedBridgeHostAuthRunId": 33218498644,
-    "packagedBridgeHostAuthJobId": 99007347897,
-    "developmentPackageFamilyName": "Converty.Dev_yr4ybytcyx7nj",
-    "result": "PASS_DEVELOPMENT_FULL_PACKAGE_MODEL",
-    "normalProductPathRoutedThroughHost": false
-  },
-  "preVersionExactHeadQualification": {
-    "headSha": "0d37afdba33abcd9ca31f3e59d0d6dc8a1bb7e5d",
-    "treeSha": "7560366cb059c1ff90c539f497903e84df1b2141",
-    "workflowRunId": 33260905467,
-    "managedJobId": 99122561963,
-    "staticJobId": 99122562067,
+  "dev12BehaviorQualification": {
+    "headSha": "f4c241b0895d06d2e44d72f31e07f141cdc74577",
+    "treeSha": "30ef2ff8ebfb7f89c8f91b3c18c08432c4fdfbd1",
+    "workflowRunId": 33271379504,
+    "managedJobId": 99150338647,
+    "staticJobId": 99150338472,
+    "continuityJobId": 99150338602,
     "lockedRestore": "18/18 PASS",
     "dependencyAudit": "PASS; 18 projects; 18 frameworks; 0 vulnerable-result packages",
     "releaseBuild": "PASS; 0 warnings; 0 errors",
     "nativeExplorer": "PASS",
-    "developmentPackageAndMakeAppx": "PASS; Host staged",
+    "developmentPackageAndMakeAppx": "PASS; 33 files",
     "directAndPackagedComInvoke": "PASS",
     "productBridgeStrictWorkerFfmpeg": "PASS; mp3 / 320000 bit/s; Unicode/metacharacter path; source and existing destination preserved; numbered publication",
     "managedTests": {
@@ -95,99 +31,55 @@
       "failed": 0,
       "skipped": 0
     },
-    "staticTests": "66/66 PASS",
+    "staticTests": "72/72 PASS",
     "contractVectors": "5/5 PASS",
-    "generatedAuthorityDiff": "CLEAN",
-    "workspace": {
-      "name": "Converty_0.1.0-dev.10_full_workspace.zip",
-      "sha256": "de6b43a9343591fc451b488b65e73049f60759a9be0072be11495c24604946ab",
-      "bytes": 382689,
-      "files": 329,
-      "packageManifestEntries": 327,
-      "shaManifestEntries": 328,
-      "crc": "PASS",
-      "deterministicDoubleBuild": "PASS",
-      "exclusionPolicy": "PASS"
+    "workspaceDoubleBuild": {
+      "sha256": "2d441ab980035dd63a4101ffb0548a3c47f6adc3049f88055bc4dd6f41b8326e",
+      "bytes": 391329,
+      "files": 335,
+      "byteIdentical": true,
+      "integrityCheck": "EXPECTED_FAIL_STALE_PACKAGE_MANIFEST"
     },
-    "generatedAuthorityArtifact": {
-      "id": 9717218608,
-      "digest": "sha256:27dca1681ea4837c8523efe8b88a49f8ca783008abfdf29d77596b5c7a5159f4"
+    "generatedAuthorityDiff": "EXPECTED_STALE_AFTER_SOURCE_CHANGE"
+  },
+  "dev12TddHistory": {
+    "red": {
+      "headSha": "ad223384400be1c5749e0b09e301f7ddd5565eda",
+      "runId": 33271012596,
+      "managedJobId": 99149375331,
+      "result": "191/192; target failed because requested canary mode did not exist"
     },
-    "verifiedDeliveryArtifact": {
-      "id": 9717244755,
-      "digest": "sha256:50d6cfc6443356bc70210f6b465ccddea47733b1a3e0a31d3fe19c0e3ea80c09"
+    "failedUnboundedExperiment": {
+      "headSha": "8ae59ddb87411f64c647a66a0a7f941b13d37a78",
+      "runId": 33271120406,
+      "result": "191/192; abandoned"
+    },
+    "diagnosticAnalyzerFailure": {
+      "headSha": "5dfaabebaacacde1d6b99a8146d8302b7845ad6e",
+      "runId": 33271235790,
+      "result": "Release analyzer CA1305 RED before tests"
+    },
+    "diagnosticCultureFix": {
+      "headSha": "139c1058bb560756fb6139b01c87f4b277bd28f2",
+      "runId": 33271302074
+    },
+    "greenBehavior": {
+      "headSha": "f4c241b0895d06d2e44d72f31e07f141cdc74577",
+      "runId": 33271379504,
+      "managedJobId": 99150338647,
+      "result": "192/192; product path PASS; only generated-authority/workspace-manifest freshness remained RED"
     }
   },
-  "finalDev11Qualification": {
-    "qualifiedHeadSha": "c1b87a022dbc63d5aeb7d8df7bd00e8fb17df572",
-    "qualifiedTreeSha": "a667071ae917f1d6757a82cf0c2de40de099dd60",
-    "workflowRunId": 33261600579,
-    "initialManagedJobId": 99124384946,
-    "successfulManagedRerunJobId": 99124604102,
-    "staticJobId": 99124604583,
-    "initialManagedAttempt": {
-      "managedTests": "191/192 PASS; 1 failed; 0 skipped",
-      "failedTest": "Converty.Security.Tests.Workers.WorkerOutputLimitTests.StrictWorkerIsTerminatedWhenStagingGrowthExceedsOutputBudget",
-      "observedStagingBytes": 610304,
-      "testMaximumBytes": 524288,
-      "classification": "KNOWN_TIMING_SENSITIVE_OUTPUT_BUDGET_TEST_INTERMITTENT"
-    },
-    "successfulUnchangedHeadRerun": {
-      "lockedRestore": "18/18 PASS",
-      "dependencyAudit": "PASS; 18 projects; 18 frameworks; 0 vulnerable-result packages",
-      "releaseBuild": "PASS; 0 warnings; 0 errors",
-      "nativeExplorer": "PASS",
-      "developmentFfmpeg": "PASS",
-      "developmentPackageAndMakeAppx": "PASS; Host staged",
-      "directAndPackagedComInvoke": "PASS",
-      "productBridgeStrictWorkerFfmpeg": "PASS; mp3 / 320000 bit/s; Unicode/metacharacter path; source and existing destination preserved; numbered publication",
-      "managedTests": {
-        "total": 192,
-        "succeeded": 192,
-        "failed": 0,
-        "skipped": 0
-      },
-      "staticTests": "66/66 PASS",
-      "contractVectors": "5/5 PASS",
-      "generatedAuthorityDiff": "CLEAN"
-    },
-    "workspace": {
-      "name": "Converty_0.1.0-dev.11_full_workspace.zip",
-      "sha256": "6321eef281f900505abe2fae024d1f285118066b756ac54ad38cc8065b655393",
-      "bytes": 376919,
-      "files": 329,
-      "packageManifestEntries": 327,
-      "shaManifestEntries": 328,
-      "crc": "PASS",
-      "deterministicDoubleBuild": "PASS",
-      "exclusionPolicy": "PASS"
-    },
-    "generatedAuthorityArtifact": {
-      "id": 9717406467,
-      "digest": "sha256:66e161daefd465fa4ade2a80e7d76a6a7f9dc3371f8fa96f29bf829a07289f1e"
-    },
-    "verifiedDeliveryArtifact": {
-      "id": 9717455816,
-      "digest": "sha256:0da0d51ea812fcf66d93868912fbcf0e046255a32d656345414b6818ea2769f8"
-    },
-    "mainPromotion": {
-      "historicalMainSha": "13ed46bcb5cb02f33965dace4adc5a3fb25e87fd",
-      "promotedQualifiedBaselineSha": "c1b87a022dbc63d5aeb7d8df7bd00e8fb17df572",
-      "method": "clean fast-forward",
-      "aheadBy": 76,
-      "behindBy": 0
-    }
-  },
-  "knownHistoricalIntermittent": {
+  "historicalIntermittent": {
     "test": "StrictWorkerIsTerminatedWhenStagingGrowthExceedsOutputBudget",
-    "historicalRunId": 33044741340,
+    "dev10RunId": 33044741340,
     "dev11PreVersionInitialManagedJobId": 99007945036,
     "dev11FinalInitialManagedJobId": 99124384946,
-    "dev11FinalSuccessfulRerunJobId": 99124604102,
-    "observed": "Repeated timing-sensitive staging overshoot can produce 191/192; unchanged-head reruns passed 192/192",
-    "status": "OPEN_FLAKE_HISTORY_NOT_ERASED"
+    "historicalObservedBytes": 610304,
+    "historicalTestOnlyCeilingBytes": 524288,
+    "status": "ROOT_CAUSE_ELIMINATED_IN_TEST_HARNESS; PRODUCTION LIMIT/CONTAINMENT UNCHANGED"
   },
-  "currentAuthorityState": "DEV11_EXACT_HEAD_QUALIFIED_AND_PROMOTED_TO_MAIN",
+  "currentAuthorityState": "DEV12_SOURCE_VERSION_AUTHORITY_SYNCHRONIZED; GENERATED_SBOM_PACKAGE_HASH_AUTHORITY_REGENERATION_REQUIRED",
   "headedWindows11Acceptance": "OPEN",
   "productionSignedPackageB2Requalification": "OPEN",
   "productionFfmpegRedistributionApproval": "OPEN"

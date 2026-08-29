@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.0-dev.12 — 2026-08-29
+- Eliminated the historical `StrictWorkerIsTerminatedWhenStagingGrowthExceedsOutputBudget` scheduler-dependent test assumption without changing production output limits or containment.
+- Replaced the arbitrary 512 KiB post-kill ceiling with a canary that writes exactly 64 KiB + 4 KiB and then holds until the existing launcher detects the breach and terminates the Job Object.
+- Preserved RED evidence at `ad223384400be1c5749e0b09e301f7ddd5565eda` / run `33271012596` and failed intermediate experiments rather than rewriting history.
+- Behavior head `f4c241b0895d06d2e44d72f31e07f141cdc74577` / run `33271379504` passed 192/192 managed tests, 72/72 static tests, 5/5 vectors, Release 0 warnings/errors, native/package/COM/product conversion gates; only generated-authority freshness remained intentionally open.
+- Production `WindowsWorkerProcessLauncher`, resource limits, AppContainer/Job Object isolation, output polling and normal Bridge→Worker→FFmpeg path are unchanged.
+
 ## 0.1.0-dev.11 — 2026-08-29
 - Closed development B2 connected-server identity/authentication without rerouting normal conversion through Host.
 - Development package staging now includes exact sibling `Converty.Host.exe`.

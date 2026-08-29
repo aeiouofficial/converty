@@ -1,5 +1,12 @@
 # Implementation status — 0.1.0-dev.11
 
+## Dev.12 output-budget determinism — 2026-08-29
+- Behavior head `f4c241b0895d06d2e44d72f31e07f141cdc74577` / run `33271379504` passed the full product path and 192/192 managed tests.
+- Historical 512 KiB post-kill ceiling was a test-only scheduler assumption; historical 610304-byte failure had already thrown the correct output-limit exception.
+- Canary now writes exactly 64 KiB + 4 KiB then holds, making breach detection/termination deterministic.
+- Production launcher/resource limits/AppContainer/Job Object/poll interval are unchanged.
+- Generated dev.12 SBOM/package/hash authority and final exact-main delivery remain the closure step.
+
 ## Tranche result
 Development B2 connected-server identity/authentication is executable-qualified while the normal product remains `IExplorerCommand → fixed Bridge → Strict EngineWorker → typed preset/provider → fixed FFmpeg → private staging → numbered publication`. Host is staged for dormant IPC/security infrastructure only.
 

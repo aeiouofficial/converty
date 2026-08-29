@@ -1,5 +1,8 @@
 # Test and Release Gates
 
+## Dev.12 output-budget determinism gate
+Behavior head `f4c241b0895d06d2e44d72f31e07f141cdc74577` / run `33271379504` proves the strict worker output-growth gate with a bounded test producer: configured maximum 65536 bytes, producer target 69632 bytes then hold, required `WorkerOutputLimitExceededException`, exact max metadata, and observed/final growth constrained to 65537–69632 bytes. Production limits and containment are unchanged. Final dev.12 still requires generated-authority zero diff and deterministic exact-main delivery.
+
 ## Dev.11 development qualification — 2026-08-29
 Development B2 positive acceptance is PASS in run `33218498644` / job `99007347897`; pre-version whole-tree qualification is PASS in run `33260905467` with 192/192 managed, 66/66 static, 5/5 vectors and zero-diff generated authority. Final dev.11 authority still requires regenerated dev.11 SBOM/package/hash files and exact-head green delivery. Headed Windows 11 and production signed-package acceptance remain open.
 

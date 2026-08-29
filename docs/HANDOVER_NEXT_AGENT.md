@@ -1,89 +1,73 @@
-# Converty 0.1.0-dev.11 — Next-Agent Handover
+# CONVERTY — CONTINUATION HANDOVER
+# PRODUCT-FIRST ROADMAP — 0.1.0-dev.12 OUTPUT-BUDGET DETERMINISM
 
-## Exact current authority
-- Repository: `https://github.com/aeiouofficial/converty`.
-- Default branch: `main`.
-- Dev.11 qualified/promotion baseline: `c1b87a022dbc63d5aeb7d8df7bd00e8fb17df572`.
-- Qualified tree: `a667071ae917f1d6757a82cf0c2de40de099dd60`.
-- Historical pre-promotion main: `13ed46bcb5cb02f33965dace4adc5a3fb25e87fd`.
-- Archival dev branch: `dev/0.1.0-dev.11-b2-auth`, also at the qualified baseline when promoted.
-- Frozen dev.10 final HEAD: `358d5d1faf293f217402af6ad1ae7e53f33f8183`.
-- Workspace version authority: `0.1.0-dev.11`.
-- Next workspace version: `0.1.0-dev.12`.
-- Resolve live `main` before changing anything; promotion metadata/derived-authority commits may be descendants of the qualified baseline.
+Continue development directly in:
 
-## Dev.11 B2 result
-- Host is staged beside Bridge in the development package.
-- Registered package COM `IExplorerCommand::Invoke` → production shell `CreateProcessW` gives exact Bridge PFN `Converty.Dev_yr4ybytcyx7nj`.
-- Package-identified parent→existing exact-path Host launch preserves the PFN.
-- Existing `BridgeClient` authenticates actual connected server PID, exact Host image, exact PFN and stable PID before first application request write.
-- Real packaged Bridge→Host acceptance: run `33218498644`, job `99007347897`, Host job `5bd48925-8c88-48d2-bbd7-a62c2ba03e3e`.
-- Normal conversion remains Explorer→Bridge→Strict EngineWorker→FFmpeg. Do not route it through Host.
+https://github.com/aeiouofficial/converty
 
-## Final dev.11 exact-head qualification
-Run `33261600579` qualified `c1b87a022dbc63d5aeb7d8df7bd00e8fb17df572` / tree `a667071ae917f1d6757a82cf0c2de40de099dd60`.
+Default branch: `main`.
 
-Static/supply job `99124604583` PASS:
-- deterministic source/release SBOM regeneration;
-- package manifest and SHA256SUMS regeneration;
-- 5/5 raw contract vectors;
-- 66/66 static tests;
-- tracked generated authority zero diff.
+Repository `main` is the only durable authority. Never treat local files, chat state, or side-branch-only work as completed authority. Re-fetch live `main` before every write and again before every completion claim.
 
-Managed first attempt `99124384946` reached all product/package/COM smokes, then reproduced the known timing-sensitive `StrictWorkerIsTerminatedWhenStagingGrowthExceedsOutputBudget` intermittent at 191/192. Preserve this failure as evidence.
+## CURRENT SOURCE AUTHORITY
 
-Unchanged-head managed rerun `99124604102` PASS:
-- 18/18 locked restore;
-- dependency audit PASS, 18 projects / 18 frameworks / 0 vulnerable-result packages;
-- Release build PASS, 0 warnings / 0 errors;
-- native Explorer PASS;
-- pinned development FFmpeg PASS;
-- development package + MakeAppx PASS with Host staged;
-- direct shell class-factory/Invoke PASS;
-- registered package COM activation/Invoke PASS;
-- product Bridge→Strict Worker→FFmpeg PASS;
-- Unicode/metacharacter filename PASS;
-- source and existing destination preserved;
-- numbered `(1)` publication PASS;
-- MP3 exactly 320000 bit/s;
-- 192/192 managed tests PASS, 0 skipped;
-- deterministic double workspace build PASS;
-- verified delivery upload PASS.
+Version: `0.1.0-dev.12`
+Source behavior head before generated-authority regeneration: `f4c241b0895d06d2e44d72f31e07f141cdc74577`
+Tree: `30ef2ff8ebfb7f89c8f91b3c18c08432c4fdfbd1`
+Prior final main: `ac475b5a51e19c7618a424ca689657cdf75edcaa` / tree `a0d81da9a4d593c9ba7ec23dd59073eb0e501dc9`
 
-## Final dev.11 artifacts
-Generated-authority artifact:
-- ID `9717406467`
-- digest `sha256:66e161daefd465fa4ade2a80e7d76a6a7f9dc3371f8fa96f29bf829a07289f1e`
+## DEV.12 ROOT CAUSE AND FIX
 
-Verified-delivery artifact:
-- ID `9717455816`
-- digest `sha256:0da0d51ea812fcf66d93868912fbcf0e046255a32d656345414b6818ea2769f8`
+Historical failures of `StrictWorkerIsTerminatedWhenStagingGrowthExceedsOutputBudget` had already received the expected `WorkerOutputLimitExceededException`; one recorded 610304 staged bytes while the test imposed an unrelated 524288-byte ceiling. The product security contract requires finite output growth, termination and no publication, not a 512 KiB scheduler-dependent overshoot ceiling.
 
-Workspace:
-- `Converty_0.1.0-dev.11_full_workspace.zip`
-- SHA-256 `6321eef281f900505abe2fae024d1f285118066b756ac54ad38cc8065b655393`
-- 376919 bytes
-- 329 ZIP entries
-- 327 package-manifest entries
-- 328 SHA-manifest entries
-- CRC PASS
-- deterministicDoubleBuild PASS
-- exclusionPolicy PASS
+Dev.12 changes only the test harness. The canary writes exactly 69632 bytes (64 KiB configured test budget + one 4096-byte block), flushes incrementally, then holds for two minutes. The existing strict launcher must observe 65537–69632 bytes and terminate it. Production worker limits, AppContainer/Job Object containment, poll interval and launcher code are unchanged.
 
-## Main promotion
-The qualified dev.11 history was a clean fast-forward from historical main `13ed46bcb5cb02f33965dace4adc5a3fb25e87fd`: dev.11 was 76 commits ahead and 0 behind. `main` was advanced to qualified baseline `c1b87a022dbc63d5aeb7d8df7bd00e8fb17df572` so the repository default branch now exposes the actual current product work.
+TDD history:
+- plan: `e2d50ca1279631a1dd1a51ab35fb170ef5357a02`
+- RED: `ad223384400be1c5749e0b09e301f7ddd5565eda`, run `33271012596`, managed `99149375331` — 191/192 because the new canary mode intentionally did not exist.
+- failed unbounded experiment: `8ae59ddb87411f64c647a66a0a7f941b13d37a78`, run `33271120406` — preserved.
+- diagnostic analyzer RED: `5dfaabebaacacde1d6b99a8146d8302b7845ad6e`, run `33271235790` — CA1305 before tests; preserved.
+- diagnostic culture fix: `139c1058bb560756fb6139b01c87f4b277bd28f2`, run `33271302074`.
+- bounded write-and-hold behavior head: `f4c241b0895d06d2e44d72f31e07f141cdc74577`, run `33271379504`.
 
-## Known intermittent
-`Converty.Security.Tests.Workers.WorkerOutputLimitTests.StrictWorkerIsTerminatedWhenStagingGrowthExceedsOutputBudget` remains an open timing-sensitive test flake. Do not claim it is permanently fixed. Final dev.11 first managed attempt failed with staging size 610304 bytes versus test max 524288; unchanged-head rerun passed 192/192.
+Behavior-head evidence:
+- continuity job `99150338602` PASS
+- managed job `99150338647`: 18/18 restore PASS; dependency audit 18 projects/18 frameworks/0 vulnerable-result packages; Release 0 warnings/0 errors; native Explorer PASS; development package/MakeAppx PASS; direct and registered COM Invoke PASS; product Bridge→Strict Worker→FFmpeg PASS; MP3 320000 bit/s; Unicode/metacharacter path; source and existing destination preserved; numbered collision publication; 192/192 managed PASS.
+- static job `99150338472`: 72/72 static and 5/5 vectors PASS before expected generated-authority zero-diff failure.
+- deterministic package A/B were byte-identical at SHA `2d441ab980035dd63a4101ffb0548a3c47f6adc3049f88055bc4dd6f41b8326e`; integrity check then correctly rejected the stale package manifest for the modified test file.
 
-## Single highest-priority next task
-Start `0.1.0-dev.12` from the live `main` and make the output-budget termination test deterministic **without weakening the production worker output limit or containment behavior**. Use TDD: reproduce the timing overshoot, distinguish enforcement correctness from polling/assertion timing, fix the narrowest cause, and require unchanged product-path qualification afterward.
+## HARD PRODUCT / SECURITY INVARIANTS
 
-## Open shipping gates
-Headed Win11 UI/screenshots; Explorer failure matrix; production signed-package B2 requalification; status/cancel and session acceptance; FFmpeg redistribution approval; signed MSIX/clean-VM lifecycle; final security/fuzz/chaos/release audit and end-user acceptance.
+Preserve Explorer → native `IExplorerCommand` → fixed app-local Bridge → strict disposable EngineWorker/provider → fixed app-local FFmpeg → private staging → transactional numbered publication.
 
-## Non-negotiables
-RIGHT CLICK → CONVERSION MENU → FFmpeg → OUTPUT FILE. No source/external-destination overwrite; deterministic numbering; no shell/raw FFmpeg passthrough/user-selected converter/PATH lookup/network requirement; no silent Strict→Compatibility fallback; Explorer never parses hostile media; Host/Bridge stay media/process neutral; codecs/parsers/plugins stay disposable worker/provider-side; signing keys stay outside repo; Gyan FFmpeg is development-only; no headed-Win11 claims without a real headed Win11 environment.
+Preserve Unicode/metacharacter filenames; source preservation; existing-destination preservation; deterministic collisions; no shell command construction; no raw FFmpeg passthrough; no user-selected converter; no PATH lookup; no network dependency; no silent Strict→Compatibility fallback; no hostile media parsing in Explorer; Bridge/Host media/process neutrality; worker/provider-only parsers/codecs/plugins; no signing private keys in repo.
 
-## Recursive handover rule
-End every tranche with a complete copy-paste continuation handover containing exact repo/default branch/live SHA/tree, immutable evidence, run/job/artifact IDs, exact changes/reasons, RED/GREEN history, executed test/build/security outcomes, workspace hashes, blockers, unverified claims, ONE precise next task, all invariants, and this same rule.
+Gyan FFmpeg is development qualification input only and is NOT production redistribution approval.
+
+Do not redesign the direct shell Bridge launch or direct Host launcher. Development B2 package identity/authentication remains qualified; production signed-package B2 must still be requalified.
+
+## HEADED WINDOWS 11 LIMITATION
+
+There is no real headed Windows 11 Explorer environment here. Do not claim modern submenu visual acceptance, mouse-driven acceptance, screenshots, headed Explorer failure matrix or end-user UI acceptance.
+
+## OPEN SHIPPING BLOCKERS
+
+1. headed Windows 11 modern Explorer acceptance
+2. exact-build screenshots
+3. Explorer crash/hang/failure headed matrix
+4. production signed-package B2 requalification
+5. status/cancel wire decision
+6. replay/disconnect/reconnect/session acceptance
+7. production FFmpeg redistribution/license/notices/signature/hash approval
+8. signed production MSIX
+9. clean Windows 11 VM install/update/uninstall
+10. final security/fuzz/chaos/release audit
+11. end-user acceptance
+
+## ONE PRECISE NEXT TASK
+
+After dev.12 generated authority and exact-main delivery are frozen, start `0.1.0-dev.13` with the status/cancel wire decision and the smallest protocol slice needed to expose real job status/cancellation semantics without rerouting normal conversion through Host unnecessarily. Work test-first and keep durable commits directly on GitHub `main` under `AGENTS.md`.
+
+## RECURSIVE HANDOVER RULE
+
+Every completed tranche must end with a new full copy-paste handover containing repo/default branch/live SHA/tree, prior authority, all commits, RED/GREEN history, run/job/artifact IDs, exact changes/reasons, executed tests/build/security outcomes, workspace hashes/counts, blockers, explicitly unverified claims, ONE precise next task, invariants, headed limitation, production signing/FFmpeg limitation, and this same recursive rule.
