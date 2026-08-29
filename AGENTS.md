@@ -2,7 +2,7 @@
 
 ## Main-first authority
 
-`main` is the repository authority.
+main is the repository authority.
 
 Durable product, source, test, documentation, build, packaging, or security work must not exist only in a local workspace, chat handover, or unmerged development branch. Push durable commits immediately to GitHub.
 
