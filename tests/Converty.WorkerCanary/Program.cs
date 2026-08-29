@@ -47,6 +47,26 @@ if (args.Length == 2 && string.Equals(args[0], "--write-file", StringComparison.
     }
 }
 
+if (args.Length == 2 && string.Equals(args[0], "--write-slow-unbounded", StringComparison.Ordinal))
+{
+    string outputPath = Path.GetFullPath(args[1]);
+    byte[] buffer = new byte[4096];
+    await using var output = new FileStream(
+        outputPath,
+        FileMode.CreateNew,
+        FileAccess.Write,
+        FileShare.Read,
+        bufferSize: buffer.Length,
+        useAsync: true);
+
+    while (true)
+    {
+        await output.WriteAsync(buffer.AsMemory()).ConfigureAwait(false);
+        await output.FlushAsync().ConfigureAwait(false);
+        await Task.Delay(TimeSpan.FromMilliseconds(5)).ConfigureAwait(false);
+    }
+}
+
 if (args.Length == 3 && string.Equals(args[0], "--write-slow-bytes", StringComparison.Ordinal))
 {
     string outputPath = Path.GetFullPath(args[1]);
