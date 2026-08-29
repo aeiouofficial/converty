@@ -47,27 +47,9 @@ if (args.Length == 2 && string.Equals(args[0], "--write-file", StringComparison.
     }
 }
 
-if (args.Length == 2 && string.Equals(args[0], "--write-slow-unbounded", StringComparison.Ordinal))
-{
-    string outputPath = Path.GetFullPath(args[1]);
-    byte[] buffer = new byte[4096];
-    await using var output = new FileStream(
-        outputPath,
-        FileMode.CreateNew,
-        FileAccess.Write,
-        FileShare.Read,
-        bufferSize: buffer.Length,
-        useAsync: true);
-
-    while (true)
-    {
-        await output.WriteAsync(buffer.AsMemory()).ConfigureAwait(false);
-        await output.FlushAsync().ConfigureAwait(false);
-        await Task.Delay(TimeSpan.FromMilliseconds(5)).ConfigureAwait(false);
-    }
-}
-
-if (args.Length == 3 && string.Equals(args[0], "--write-slow-bytes", StringComparison.Ordinal))
+if (args.Length == 3 &&
+    (string.Equals(args[0], "--write-slow-bytes", StringComparison.Ordinal) ||
+     string.Equals(args[0], "--write-slow-bytes-and-hold", StringComparison.Ordinal)))
 {
     string outputPath = Path.GetFullPath(args[1]);
     long requestedBytes = long.Parse(args[2], NumberStyles.None, CultureInfo.InvariantCulture);
@@ -88,6 +70,12 @@ if (args.Length == 3 && string.Equals(args[0], "--write-slow-bytes", StringCompa
         written += count;
         await Task.Delay(TimeSpan.FromMilliseconds(5)).ConfigureAwait(false);
     }
+
+    if (string.Equals(args[0], "--write-slow-bytes-and-hold", StringComparison.Ordinal))
+    {
+        await Task.Delay(TimeSpan.FromMinutes(2)).ConfigureAwait(false);
+    }
+
     return 0;
 }
 

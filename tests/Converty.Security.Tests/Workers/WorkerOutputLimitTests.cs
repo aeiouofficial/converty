@@ -41,13 +41,18 @@ public sealed class WorkerOutputLimitTests
         Directory.CreateDirectory(stagingDirectory);
         string outputPath = Path.Combine(stagingDirectory, "growth.bin");
         const long maximumOutputBytes = 64L * 1024;
+        const long targetOutputBytes = maximumOutputBytes + 4096;
 
         try
         {
             var request = new WorkerProcessLaunchRequest(
                 canaryExecutable,
                 appDirectory,
-                ["--write-slow-unbounded", outputPath],
+                [
+                    "--write-slow-bytes-and-hold",
+                    outputPath,
+                    targetOutputBytes.ToString(CultureInfo.InvariantCulture),
+                ],
                 WorkerIsolationLevel.Strict,
                 new WorkerResourceLimits(
                     maximumActiveProcesses: 2,
@@ -84,9 +89,9 @@ public sealed class WorkerOutputLimitTests
             }
 
             Assert.Equal(maximumOutputBytes, failure.MaximumOutputBytes);
-            Assert.True(failure.ObservedOutputGrowthBytes > failure.MaximumOutputBytes);
+            Assert.InRange(failure.ObservedOutputGrowthBytes, maximumOutputBytes + 1, targetOutputBytes);
             Assert.True(File.Exists(outputPath));
-            Assert.True(new FileInfo(outputPath).Length > maximumOutputBytes);
+            Assert.InRange(new FileInfo(outputPath).Length, maximumOutputBytes + 1, targetOutputBytes);
         }
         finally
         {
