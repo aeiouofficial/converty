@@ -17,15 +17,20 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
-          fetch-depth: 3
+          fetch-depth: 4
 
-      - name: Normalize Git bytes and verify source ancestor
+      - name: Normalize committed bytes and verify source ancestor
         shell: pwsh
         run: |
           git config core.autocrlf false
-          $source = (git rev-parse HEAD~2).Trim()
+          git reset --hard HEAD
+          $source = (git rev-parse HEAD~3).Trim()
           if ($source -ne 'd01c8ba707b38c7bf35770f743e846437308fc57') {
             throw "Unexpected source ancestor: $source"
+          }
+          $dirty = @(git status --porcelain)
+          if ($dirty.Count -ne 0) {
+            throw "Worktree is dirty after byte normalization: $($dirty -join '; ')"
           }
 
       - name: Download and verify generated authority
@@ -64,7 +69,7 @@ jobs:
           Copy-Item -LiteralPath 'authority/machine-readable/release_sbom.spdx.json' -Destination 'machine-readable/release_sbom.spdx.json' -Force
           Copy-Item -LiteralPath 'authority/machine-readable/package_manifest.json' -Destination 'machine-readable/package_manifest.json' -Force
           Copy-Item -LiteralPath 'authority/SHA256SUMS.txt' -Destination 'SHA256SUMS.txt' -Force
-          git rm -- '.github/workflows/main-promotion-authority-sync.yml'
+          git rm -f -- '.github/workflows/main-promotion-authority-sync.yml'
           $changed = @(git diff HEAD --name-only)
           $allowed = @(
             '.github/workflows/main-promotion-authority-sync.yml',
