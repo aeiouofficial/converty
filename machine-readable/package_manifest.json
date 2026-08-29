@@ -215,13 +215,13 @@
     },
     {
       "path": "docs/HANDOVER_NEXT_AGENT.md",
-      "bytes": 3713,
-      "sha256": "704dc42d16c786bfc55cac7d610bd4a0cdd367fc62b32b7019ef3c344a9cec77"
+      "bytes": 5737,
+      "sha256": "8acb9cfec08e93c64c7d1d794e70a6fdda2e7f6a1a8851dd37607bd24678d25a"
     },
     {
       "path": "docs/HANDOVER_PROMPT.txt",
-      "bytes": 3750,
-      "sha256": "a850660d589a0575170ef9a7b06fb7b24d718906ffde8d219456c8c817879f41"
+      "bytes": 5791,
+      "sha256": "7fe3dbfd03077770bd0fbff2c47c61058228e0411176dbf3ba79b9f23cdc6f3a"
     },
     {
       "path": "docs/REFERENCE_SOURCES.md",
@@ -345,8 +345,8 @@
     },
     {
       "path": "machine-readable/build_evidence.json",
-      "bytes": 4996,
-      "sha256": "4c868b124a96e9d41a4cbd2d720e91654628080f9e0d479dd1517abb1b05e3c5"
+      "bytes": 7540,
+      "sha256": "00cb5c50eb33e8f89b89ff4500e160fd6cfdf52e87a08e364d649e8b2473111d"
     },
     {
       "path": "machine-readable/ci_action_pins.json",
@@ -355,8 +355,8 @@
     },
     {
       "path": "machine-readable/handover_state.json",
-      "bytes": 5105,
-      "sha256": "1c42ed12779450b5b063c2ae1705e8c4e3db9157c440d49ef2cb88235a846c04"
+      "bytes": 6166,
+      "sha256": "a1557c9489b43f163c8bf7a7f382bd2a14bbb9b3d49b3f710886f3d85d4e92cb"
     },
     {
       "path": "machine-readable/release_policy.json",
