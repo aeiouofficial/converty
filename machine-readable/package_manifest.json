@@ -1170,8 +1170,8 @@
     },
     {
       "path": "src/Converty.Security/Workers/WindowsAclGrant.cs",
-      "bytes": 5637,
-      "sha256": "452017dd5a6dc6f82c3e4ad7e9f6a82e491d9bd80552f5e5b087a78f94e23e7d"
+      "bytes": 7010,
+      "sha256": "e0001084492053f0c278a74fee999b1080c22788cfa0e37c06ae0296cd42637b"
     },
     {
       "path": "src/Converty.Security/Workers/WindowsAppContainerProfile.cs",
@@ -1495,8 +1495,8 @@
     },
     {
       "path": "tests/Converty.Security.Tests/Workers/WindowsWorkerStrictIsolationCanaryTests.cs",
-      "bytes": 5732,
-      "sha256": "0eda931a5e4f4d7aa6142ff1bc5963ce4f1d95ddd5db35836a13a3926a4cab28"
+      "bytes": 7789,
+      "sha256": "4870c4d2b0a061069c7c3dc13f1321f964bad7a17f45b54e7e901c338a91ad4c"
     },
     {
       "path": "tests/Converty.Security.Tests/Workers/WorkerFileSystemScopeTests.cs",
