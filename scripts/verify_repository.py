@@ -82,7 +82,7 @@ REQUIRED_SOURCE_TOKENS = {
     "src/Converty.Security/Workers/WindowsWorkerProcessLauncher.cs": [
         "UseShellExecute = false",
         "ArgumentList.Add",
-        "CreateNoWindow = true,
+        "CreateNoWindow = true",
         "WaitForExitAsync",
     ],
     "providers/Converty.Provider.FFmpeg/FfmpegProcessLauncher.cs": [
