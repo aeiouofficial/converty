@@ -1,9 +1,14 @@
 using System.ComponentModel;
+using System.Threading;
 
 namespace Converty.Security.Workers;
 
 internal sealed class WindowsAclGrant : IDisposable
 {
+    private const string AclMutationMutexName = @"Local\Converty.StrictWorkerAclMutation.v1";
+    private static readonly TimeSpan AclMutationMutexTimeout = TimeSpan.FromSeconds(30);
+    private static readonly Mutex AclMutationMutex = new(initiallyOwned: false, AclMutationMutexName);
+
     private readonly nint _sid;
     private readonly List<string> _grantedPaths;
     private bool _disposed;
@@ -101,69 +106,96 @@ internal sealed class WindowsAclGrant : IDisposable
 
     private static void UpdatePathAcl(string path, nint sid, uint accessPermissions, uint accessMode)
     {
-        uint result = WindowsNativeMethods.GetNamedSecurityInfoW(
-            path,
-            WindowsNativeMethods.SE_FILE_OBJECT,
-            WindowsNativeMethods.DACL_SECURITY_INFORMATION,
-            out _,
-            out _,
-            out nint oldAcl,
-            out _,
-            out nint securityDescriptor);
-        if (result != 0)
-        {
-            throw new Win32Exception(checked((int)result), "Converty could not read a filesystem ACL for strict worker isolation.");
-        }
-
-        nint newAcl = nint.Zero;
+        bool ownsMutationMutex = false;
         try
         {
-            bool directory = Directory.Exists(path);
-            var entry = new WindowsNativeMethods.ExplicitAccess
+            try
             {
-                AccessPermissions = accessPermissions,
-                AccessMode = accessMode,
-                Inheritance = directory
-                    ? WindowsNativeMethods.OBJECT_INHERIT_ACE | WindowsNativeMethods.CONTAINER_INHERIT_ACE
-                    : 0,
-                Trustee = new WindowsNativeMethods.Trustee
-                {
-                    MultipleTrustee = nint.Zero,
-                    MultipleTrusteeOperation = 0,
-                    TrusteeForm = checked((int)WindowsNativeMethods.TRUSTEE_IS_SID),
-                    TrusteeType = checked((int)WindowsNativeMethods.TRUSTEE_IS_UNKNOWN),
-                    Name = sid,
-                },
-            };
-
-            result = WindowsNativeMethods.SetEntriesInAclW(1, ref entry, oldAcl, out newAcl);
-            if (result != 0)
+                ownsMutationMutex = AclMutationMutex.WaitOne(AclMutationMutexTimeout);
+            }
+            catch (AbandonedMutexException)
             {
-                throw new Win32Exception(checked((int)result), "Converty could not construct a scoped strict worker ACL.");
+                // Windows transfers ownership when a prior Converty process exits while
+                // mutating an ACL, so continue from the freshly re-read security state.
+                ownsMutationMutex = true;
             }
 
-            result = WindowsNativeMethods.SetNamedSecurityInfoW(
+            if (!ownsMutationMutex)
+            {
+                throw new TimeoutException("Converty timed out waiting to update a strict worker ACL.");
+            }
+
+            uint result = WindowsNativeMethods.GetNamedSecurityInfoW(
                 path,
                 WindowsNativeMethods.SE_FILE_OBJECT,
                 WindowsNativeMethods.DACL_SECURITY_INFORMATION,
-                nint.Zero,
-                nint.Zero,
-                newAcl,
-                nint.Zero);
+                out _,
+                out _,
+                out nint oldAcl,
+                out _,
+                out nint securityDescriptor);
             if (result != 0)
             {
-                throw new Win32Exception(checked((int)result), "Converty could not apply a scoped strict worker ACL.");
+                throw new Win32Exception(checked((int)result), "Converty could not read a filesystem ACL for strict worker isolation.");
+            }
+
+            nint newAcl = nint.Zero;
+            try
+            {
+                bool directory = Directory.Exists(path);
+                var entry = new WindowsNativeMethods.ExplicitAccess
+                {
+                    AccessPermissions = accessPermissions,
+                    AccessMode = accessMode,
+                    Inheritance = directory
+                        ? WindowsNativeMethods.OBJECT_INHERIT_ACE | WindowsNativeMethods.CONTAINER_INHERIT_ACE
+                        : 0,
+                    Trustee = new WindowsNativeMethods.Trustee
+                    {
+                        MultipleTrustee = nint.Zero,
+                        MultipleTrusteeOperation = 0,
+                        TrusteeForm = checked((int)WindowsNativeMethods.TRUSTEE_IS_SID),
+                        TrusteeType = checked((int)WindowsNativeMethods.TRUSTEE_IS_UNKNOWN),
+                        Name = sid,
+                    },
+                };
+
+                result = WindowsNativeMethods.SetEntriesInAclW(1, ref entry, oldAcl, out newAcl);
+                if (result != 0)
+                {
+                    throw new Win32Exception(checked((int)result), "Converty could not construct a scoped strict worker ACL.");
+                }
+
+                result = WindowsNativeMethods.SetNamedSecurityInfoW(
+                    path,
+                    WindowsNativeMethods.SE_FILE_OBJECT,
+                    WindowsNativeMethods.DACL_SECURITY_INFORMATION,
+                    nint.Zero,
+                    nint.Zero,
+                    newAcl,
+                    nint.Zero);
+                if (result != 0)
+                {
+                    throw new Win32Exception(checked((int)result), "Converty could not apply a scoped strict worker ACL.");
+                }
+            }
+            finally
+            {
+                if (newAcl != nint.Zero)
+                {
+                    _ = WindowsNativeMethods.LocalFree(newAcl);
+                }
+                if (securityDescriptor != nint.Zero)
+                {
+                    _ = WindowsNativeMethods.LocalFree(securityDescriptor);
+                }
             }
         }
         finally
         {
-            if (newAcl != nint.Zero)
+            if (ownsMutationMutex)
             {
-                _ = WindowsNativeMethods.LocalFree(newAcl);
-            }
-            if (securityDescriptor != nint.Zero)
-            {
-                _ = WindowsNativeMethods.LocalFree(securityDescriptor);
+                AclMutationMutex.ReleaseMutex();
             }
         }
     }
