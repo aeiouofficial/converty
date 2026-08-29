@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "workspaceVersion": "0.1.0-dev.11",
+  "workspaceVersion": "0.1.0-dev.12",
   "generatedDate": "2026-08-25",
   "excludedParts": [
     ".git",
@@ -120,8 +120,8 @@
     },
     {
       "path": "CHANGELOG.md",
-      "bytes": 9036,
-      "sha256": "994a4eff9e01baaa263da6a1124ace1ff4c900069375174fd2141d706c8044ee"
+      "bytes": 10050,
+      "sha256": "a9479e54a729c08887ea885a52de95b820fa8c3844bdf68b23beda46f8e5421e"
     },
     {
       "path": "CMakeLists.txt",
@@ -200,8 +200,8 @@
     },
     {
       "path": "docs/development/IMPLEMENTATION_STATUS.md",
-      "bytes": 2062,
-      "sha256": "a725b814e7a2f998ce0c009d2a25c7af2409031058de339e54bc344bf42d2898"
+      "bytes": 2711,
+      "sha256": "2c673f289085b1536f99b5115b895e7f0969fc0701d948ae5c8dd9eac14dd980"
     },
     {
       "path": "docs/development/MODULE_BOUNDARIES.md",
@@ -220,13 +220,13 @@
     },
     {
       "path": "docs/HANDOVER_NEXT_AGENT.md",
-      "bytes": 5737,
-      "sha256": "8acb9cfec08e93c64c7d1d794e70a6fdda2e7f6a1a8851dd37607bd24678d25a"
+      "bytes": 5603,
+      "sha256": "c649fa5f94c83fdf5975a60ea79db0c0583ef290cc2baf4273b689e655256b7d"
     },
     {
       "path": "docs/HANDOVER_PROMPT.txt",
-      "bytes": 5791,
-      "sha256": "7fe3dbfd03077770bd0fbff2c47c61058228e0411176dbf3ba79b9f23cdc6f3a"
+      "bytes": 5603,
+      "sha256": "c649fa5f94c83fdf5975a60ea79db0c0583ef290cc2baf4273b689e655256b7d"
     },
     {
       "path": "docs/REFERENCE_SOURCES.md",
@@ -299,6 +299,11 @@
       "sha256": "1c05336bc82765084bdef1fbb2bf27c609781c1882abf6cd7b835191dd46af3e"
     },
     {
+      "path": "docs/superpowers/plans/2026-08-29-dev12-output-budget-determinism.md",
+      "bytes": 4348,
+      "sha256": "fdf64720baebf26595699860a8ab0fbb4dca7ded871abe434aa692f149c8cb70"
+    },
+    {
       "path": "docs/superpowers/plans/2026-08-29-main-authority-continuity.md",
       "bytes": 7637,
       "sha256": "acc75d430078048b2a177ddd8f6f3f7e75bea0b318734c2607e8ada5f8b28f37"
@@ -330,13 +335,13 @@
     },
     {
       "path": "docs/TASK_BACKLOG.md",
-      "bytes": 5783,
-      "sha256": "4d6e4c016a582418ee1c16f758f2f5048a08a882803c01087b71f37ddb124fdb"
+      "bytes": 6343,
+      "sha256": "052b69735f7e46936e1b18035bd2d4767048500c16dcf9b7a8f2e7fac505e4ad"
     },
     {
       "path": "docs/TEST_AND_RELEASE_GATES.md",
-      "bytes": 5109,
-      "sha256": "90bee1049f0722bfc924258320ed94eec7115c63343acf42df3e98fdd338cfb0"
+      "bytes": 5648,
+      "sha256": "1e4c2686f85b2c473452b52d428aac33d38cb4e6c2f069ac9d9c3ba5c2b77b55"
     },
     {
       "path": "eng/ffmpeg-development.json",
@@ -350,8 +355,8 @@
     },
     {
       "path": "eng/toolchain.json",
-      "bytes": 1282,
-      "sha256": "74ea4223b06c671c0e049959d17014e2f9f133fe57bbcfd9b2fac78fd0b98235"
+      "bytes": 1236,
+      "sha256": "ab6918f06e835ee8606600e4cfb3cfd8488eb3c51f747e6a832488aeb8632317"
     },
     {
       "path": "global.json",
@@ -360,33 +365,33 @@
     },
     {
       "path": "machine-readable/build_evidence.json",
-      "bytes": 7540,
-      "sha256": "00cb5c50eb33e8f89b89ff4500e160fd6cfdf52e87a08e364d649e8b2473111d"
+      "bytes": 4942,
+      "sha256": "750ee6e78f15eaa59e3579fda695ec4e15484b9066d46303b5ceeef5aaf847da"
     },
     {
       "path": "machine-readable/ci_action_pins.json",
       "bytes": 1132,
-      "sha256": "b91f8878a9e654f3c37c92d0417210cc29372b3200e65bf85d798862c12b87ee"
+      "sha256": "b08d5bddf726a2e08f3feab7293d0efa51f404dcb86dbea3109644dc8f28c8ba"
     },
     {
       "path": "machine-readable/handover_state.json",
-      "bytes": 6166,
-      "sha256": "a1557c9489b43f163c8bf7a7f382bd2a14bbb9b3d49b3f710886f3d85d4e92cb"
+      "bytes": 4122,
+      "sha256": "fbc1ea1951f5da4214a1e937637b452d54998f55199121dba28840b2379aecb3"
     },
     {
       "path": "machine-readable/release_policy.json",
       "bytes": 2002,
-      "sha256": "cc5f9c4e3ecfc84ab2e74a425964e9ccac4438793d9b7d9cf5ebd64c0ffa6a08"
+      "sha256": "ae59c78e410b68d2108d6911d3ffc34f04f48617a26c1d921c39503e47933e1e"
     },
     {
       "path": "machine-readable/release_sbom.spdx.json",
       "bytes": 22991,
-      "sha256": "e195879a77276b8074c7bf01b8bf529d8f47138113f08774799ee41afee1ab46"
+      "sha256": "0c5b49ba1247bdf8a4df7683cb60bce76d00d6b11669c274ee06913bcf1b9a53"
     },
     {
       "path": "machine-readable/source_sbom.spdx.json",
       "bytes": 11341,
-      "sha256": "edd4ba2c4bc96e3561dbae056f1a07fb0385d3dfb8dbccd9c35a36ace6e5173b"
+      "sha256": "0a604b68f48ae144af225e564fc7e7b01200c6edf5930718e59b624004015640"
     },
     {
       "path": "native/cmake/Hardening.cmake",
@@ -485,8 +490,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 4010,
-      "sha256": "1884ed1906805432b0d350a509781348f9c56dcad1cc8e9dd073c12bb54c93c9"
+      "bytes": 3921,
+      "sha256": "ec32900639cd478069bf8fe4b049d675f2df4f9aca54754ca079ef7991945d97"
     },
     {
       "path": "reference-images/01_system_architecture.dot",
@@ -1500,8 +1505,8 @@
     },
     {
       "path": "tests/Converty.Security.Tests/Workers/WorkerOutputLimitTests.cs",
-      "bytes": 3993,
-      "sha256": "2b9b38887c8b8f182d7be35a3ba9691316f81383353637f4e2f15eac4241c67d"
+      "bytes": 5229,
+      "sha256": "7106473b0cc4dbb44086f451a24d2ebf2ea0dbce5f2b858b43404ea664b36d63"
     },
     {
       "path": "tests/Converty.Security.Tests/Workers/WorkerResourceLimitsTests.cs",
@@ -1540,8 +1545,8 @@
     },
     {
       "path": "tests/Converty.WorkerCanary/Program.cs",
-      "bytes": 2992,
-      "sha256": "1c44a9e455548b4c3e26a52014db3a9e9c054d2be5bf5e02e1b6c1acc5929a12"
+      "bytes": 3262,
+      "sha256": "677711ef4642605f2466248073f2e539bce692ab9cc96670a60f6a7e143bdd58"
     },
     {
       "path": "tests/fixtures/dependency-audit/clean.json",
@@ -1686,7 +1691,7 @@
     {
       "path": "VERSION",
       "bytes": 13,
-      "sha256": "81b3c3d13e4a55211a1dc3d8b0a7ee6992bca8af9d1c2b0345a035906d5a0f1e"
+      "sha256": "fea86a7bb2d5323b7f0207151642c40477b0e0c9aa01564c2f1c0ba62c48a87e"
     }
   ]
 }
