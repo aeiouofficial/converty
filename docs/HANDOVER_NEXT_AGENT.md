@@ -8,6 +8,7 @@
 - Development B2 source-authority head: `1d4c22733c43f4eee4a4a4cd6751608e60359561`.
 - Pre-version exact-tree qualifier: `0d37afdba33abcd9ca31f3e59d0d6dc8a1bb7e5d`; run `33260905467`, managed `99122561963`, static `99122562067`.
 - Workspace version authority is `0.1.0-dev.11`; generated dev.11 SBOM/package/hash authority is pending regeneration from this source-authority tree.
+- Next workspace version after dev.11 closure: `0.1.0-dev.12`.
 
 ## Dev.11 B2 result
 - Host is staged beside Bridge in the development package.
