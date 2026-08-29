@@ -1,0 +1,82 @@
+name: dev11-generated-authority-sync
+
+on:
+  push:
+    branches:
+      - dev/0.1.0-dev.11-b2-auth
+
+permissions:
+  actions: read
+  contents: write
+
+jobs:
+  sync-generated-authority:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 2
+          persist-credentials: true
+      - name: Verify exact source-authority parent
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD^)" = "393409d756139fe45a80f0ab5afbd7aecc6d2c07"
+      - name: Download and verify exact dev11 generated authority
+        shell: bash
+        run: |
+          set -euo pipefail
+          gh api "repos/${GITHUB_REPOSITORY}/actions/artifacts/9717382116/zip" > authority.zip
+          echo "8a73c57bde398938b09443910e4d709d9f98cf6bb3b66a3e9bedea327671d796  authority.zip" | sha256sum -c -
+          rm -rf authority && mkdir authority
+          unzip -q authority.zip -d authority
+          python - <<'PY'
+          from pathlib import Path
+          expected = {
+              'SHA256SUMS.txt',
+              'machine-readable/source_sbom.spdx.json',
+              'machine-readable/release_sbom.spdx.json',
+              'machine-readable/package_manifest.json',
+          }
+          actual = {p.as_posix().removeprefix('authority/') for p in Path('authority').rglob('*') if p.is_file()}
+          if actual != expected:
+              raise SystemExit(f'unexpected authority contents: {sorted(actual)}')
+          PY
+          echo "b9b2213c155fe84de48481112d2974c180ba604729e93aa4204f6f9276df3558  authority/SHA256SUMS.txt" | sha256sum -c -
+          echo "8045f4e1874952e2ad82c8b193db47e4955a23b66301a5134b3459131ccc8fc2  authority/machine-readable/package_manifest.json" | sha256sum -c -
+          echo "e195879a77276b8074c7bf01b8bf529d8f47138113f08774799ee41afee1ab46  authority/machine-readable/release_sbom.spdx.json" | sha256sum -c -
+          echo "edd4ba2c4bc96e3561dbae056f1a07fb0385d3dfb8dbccd9c35a36ace6e5173b  authority/machine-readable/source_sbom.spdx.json" | sha256sum -c -
+      - name: Apply exact bytes and remove helper
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp authority/SHA256SUMS.txt SHA256SUMS.txt
+          cp authority/machine-readable/source_sbom.spdx.json machine-readable/source_sbom.spdx.json
+          cp authority/machine-readable/release_sbom.spdx.json machine-readable/release_sbom.spdx.json
+          cp authority/machine-readable/package_manifest.json machine-readable/package_manifest.json
+          rm .github/workflows/dev11-generated-authority-sync.yml
+          python - <<'PY'
+          import subprocess
+          expected = {
+              '.github/workflows/dev11-generated-authority-sync.yml',
+              'SHA256SUMS.txt',
+              'machine-readable/source_sbom.spdx.json',
+              'machine-readable/release_sbom.spdx.json',
+              'machine-readable/package_manifest.json',
+          }
+          actual = set(subprocess.check_output(['git','diff','--name-only'], text=True).splitlines())
+          if actual != expected:
+              raise SystemExit(f'unexpected generated-authority delta: {sorted(actual)}')
+          PY
+      - name: Commit exact generated authority atomically
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add SHA256SUMS.txt machine-readable/source_sbom.spdx.json machine-readable/release_sbom.spdx.json machine-readable/package_manifest.json .github/workflows/dev11-generated-authority-sync.yml
+          git commit -m "chore: sync dev11 generated authority"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
