@@ -52,6 +52,9 @@ def test_shell_menu_contains_only_stable_known_product_preset_ids() -> None:
         "extract.audio.mp3",
         "audio.mp3",
         "audio.flac",
+        "audio.m4a.aac",
+        "audio.opus",
+        "audio.ogg.vorbis",
         "audio.wav",
         "image.png",
         "image.jpeg",
@@ -143,7 +146,8 @@ def test_product_smoke_waits_for_winexe_bridge_and_reads_process_exit_code() -> 
     assert "$bridgeStartInfo.UseShellExecute = $false" in script
     assert "$bridgeStartInfo.CreateNoWindow = $true" in script
     assert "$bridgeStartInfo.ArgumentList.Add('--preset')" in script
-    assert "$bridgeStartInfo.ArgumentList.Add('audio.mp3')" in script
+    assert "PresetId = 'audio.mp3'" in script
+    assert "$bridgeStartInfo.ArgumentList.Add($case.PresetId)" in script
     assert "$bridgeStartInfo.ArgumentList.Add('--')" in script
     assert "$bridgeStartInfo.ArgumentList.Add($input)" in script
     assert "[System.Diagnostics.Process]::Start($bridgeStartInfo)" in script
