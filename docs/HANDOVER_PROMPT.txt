@@ -3,7 +3,7 @@ PRODUCT-FIRST ROADMAP — 0.1.0-dev.14 SESSION ACCEPTANCE
 
 Continue development directly in https://github.com/aeiouofficial/converty. Default branch: main.
 
-Current workspace version: 0.1.0-dev.14. Repository main is the only durable completed authority. Re-fetch live main before every write and completion claim.
+Current workspace version: 0.1.0-dev.14. Next workspace version: 0.1.0-dev.15. Repository main is the only durable completed authority. Re-fetch live main before every write and completion claim.
 
 PRIOR FROZEN AUTHORITY
 Dev.13 main 19482bc21460f84096e350f730065988239fbd3c, tree 53f8638cb7be0bec1e0175569a8b22c009d3d771, exact-main run 33319810581 all three jobs successful. Deterministic workspace SHA-256 c14ac057f11fb9d47eac7687ec73e59b0aa1f3658cf9b361e83bc325b051743a. Verified delivery artifact 9734576999.
@@ -26,7 +26,7 @@ HEADED LIMITATION
 No headed Windows 11 Explorer/UI/screenshots/failure-matrix claim is qualified here.
 
 ONE PRECISE NEXT TASK AFTER DEV.14 FREEZE
-Expand the fixed typed Audio conversion preset/action matrix through the existing Strict Worker/provider path, test-first, without raw FFmpeg passthrough, PATH lookup, network dependency or containment weakening.
+Implement 0.1.0-dev.15 by expanding the fixed typed Audio conversion preset/action matrix through the existing Strict Worker/provider path, test-first, without raw FFmpeg passthrough, PATH lookup, network dependency or containment weakening.
 
 RECURSIVE HANDOVER RULE
 Every completed tranche must end with a full copy-paste handover containing repo/default branch/live SHA/tree, prior authority, all commits, RED/GREEN history, run/job/artifact IDs, exact changes/reasons, executed tests/build/security outcomes, workspace hashes/counts, blockers, explicitly unverified claims, ONE precise next task, invariants, headed limitation, production signing/FFmpeg limitation, and this same recursive rule.
