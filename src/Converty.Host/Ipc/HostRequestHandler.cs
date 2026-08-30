@@ -71,6 +71,13 @@ public sealed class HostRequestHandler
             return SerializeResponse(accepted: true, admission.JobId, reason: null);
         }
 
+        if (admission.Rejection == JobAdmissionRejection.DuplicateRequest &&
+            _queue.TryGetByRequestId(request.RequestId, out JobStatusSnapshot? existing) &&
+            existing is not null)
+        {
+            return SerializeResponse(accepted: true, existing.JobId, reason: null);
+        }
+
         string reason = admission.Rejection switch
         {
             JobAdmissionRejection.DuplicateRequest => "duplicateRequest",
