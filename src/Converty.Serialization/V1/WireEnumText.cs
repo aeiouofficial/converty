@@ -71,4 +71,34 @@ internal static class WireEnumText
         "rejected" => ConversionJobState.Rejected,
         _ => throw new JsonException("Invalid conversion job state wire value."),
     };
+
+    internal static string ToWire(JobControlOperation value) => value switch
+    {
+        JobControlOperation.Status => "status",
+        JobControlOperation.Cancel => "cancel",
+        _ => throw new ArgumentOutOfRangeException(nameof(value), "Unsupported job control operation."),
+    };
+
+    internal static JobControlOperation ParseJobControlOperation(string? value) => value switch
+    {
+        "status" => JobControlOperation.Status,
+        "cancel" => JobControlOperation.Cancel,
+        _ => throw new JsonException("Invalid job control operation wire value."),
+    };
+
+    internal static string ToWire(JobControlFailureReason value) => value switch
+    {
+        JobControlFailureReason.JobNotFound => "jobNotFound",
+        JobControlFailureReason.NotCancellable => "notCancellable",
+        JobControlFailureReason.PersistenceFailure => "persistenceFailure",
+        _ => throw new ArgumentOutOfRangeException(nameof(value), "Unsupported job control failure reason."),
+    };
+
+    internal static JobControlFailureReason ParseJobControlFailureReason(string? value) => value switch
+    {
+        "jobNotFound" => JobControlFailureReason.JobNotFound,
+        "notCancellable" => JobControlFailureReason.NotCancellable,
+        "persistenceFailure" => JobControlFailureReason.PersistenceFailure,
+        _ => throw new JsonException("Invalid job control failure reason wire value."),
+    };
 }

@@ -121,14 +121,32 @@ public static class ContractJson
     public static string Serialize(JobStatusSnapshot value)
     {
         ArgumentNullException.ThrowIfNull(value);
-        var wire = new JobStatusSnapshotWire
+        return JsonSerializer.Serialize(ToWire(value), SerializerOptions);
+    }
+
+    public static string Serialize(JobControlRequest value)
+    {
+        ArgumentNullException.ThrowIfNull(value);
+        var wire = new JobControlRequestWire
         {
             SchemaVersion = value.SchemaVersion,
+            Operation = WireEnumText.ToWire(value.Operation),
             JobId = value.JobId.ToString("D"),
-            RequestId = value.RequestId.ToString("D"),
-            State = WireEnumText.ToWire(value.State),
-            Progress = value.Progress,
-            Message = value.Message,
+        };
+        return JsonSerializer.Serialize(wire, SerializerOptions);
+    }
+
+    public static string Serialize(JobControlResponse value)
+    {
+        ArgumentNullException.ThrowIfNull(value);
+        var wire = new JobControlResponseWire
+        {
+            SchemaVersion = value.SchemaVersion,
+            Operation = WireEnumText.ToWire(value.Operation),
+            JobId = value.JobId.ToString("D"),
+            Succeeded = value.Succeeded,
+            Status = value.Status is null ? null : ToWire(value.Status),
+            Reason = value.Reason is null ? null : WireEnumText.ToWire(value.Reason.Value),
         };
         return JsonSerializer.Serialize(wire, SerializerOptions);
     }
@@ -150,6 +168,12 @@ public static class ContractJson
 
     public static JobStatusSnapshot DeserializeJobStatusSnapshot(string json) =>
         Dispatch(json, "job status snapshot", DeserializeJobStatusSnapshotV1);
+
+    public static JobControlRequest DeserializeJobControlRequest(string json) =>
+        Dispatch(json, "job control request", DeserializeJobControlRequestV1);
+
+    public static JobControlResponse DeserializeJobControlResponse(string json) =>
+        Dispatch(json, "job control response", DeserializeJobControlResponseV1);
 
     private static T Dispatch<T>(string json, string contractName, Func<string, T> v1Reader)
     {
@@ -279,13 +303,33 @@ public static class ContractJson
     private static JobStatusSnapshot DeserializeJobStatusSnapshotV1(string json)
     {
         var wire = DeserializeWire<JobStatusSnapshotWire>(json, "job status snapshot");
-        return MapDomain("job status snapshot", () => new JobStatusSnapshot(
+        return MapDomain("job status snapshot", () => FromWire(wire));
+    }
+
+    private static JobControlRequest DeserializeJobControlRequestV1(string json)
+    {
+        var wire = DeserializeWire<JobControlRequestWire>(json, "job control request");
+        return MapDomain("job control request", () => new JobControlRequest(
             wire.SchemaVersion,
-            ParseGuid(wire.JobId, "jobId"),
-            ParseGuid(wire.RequestId, "requestId"),
-            WireEnumText.ParseConversionJobState(wire.State),
-            wire.Progress,
-            wire.Message));
+            WireEnumText.ParseJobControlOperation(wire.Operation),
+            ParseCanonicalGuid(wire.JobId, "jobId")));
+    }
+
+    private static JobControlResponse DeserializeJobControlResponseV1(string json)
+    {
+        var wire = DeserializeWire<JobControlResponseWire>(json, "job control response");
+        if (wire.Succeeded is null)
+        {
+            throw new JsonException("Property succeeded is required and must be a boolean.");
+        }
+
+        return MapDomain("job control response", () => new JobControlResponse(
+            wire.SchemaVersion,
+            WireEnumText.ParseJobControlOperation(wire.Operation),
+            ParseCanonicalGuid(wire.JobId, "jobId"),
+            wire.Succeeded.Value,
+            wire.Status is null ? null : FromWire(wire.Status),
+            wire.Reason is null ? null : WireEnumText.ParseJobControlFailureReason(wire.Reason)));
     }
 
     private static TWire DeserializeWire<TWire>(string json, string contractName)
@@ -344,6 +388,16 @@ public static class ContractJson
         return parsed;
     }
 
+    private static Guid ParseCanonicalGuid(string? value, string propertyName)
+    {
+        if (!Guid.TryParseExact(value, "D", out Guid parsed) || parsed == Guid.Empty)
+        {
+            throw new JsonException($"Property {propertyName} must be a non-empty canonical UUID.");
+        }
+
+        return parsed;
+    }
+
     private static FormatId? ParseOptionalFormatId(string? value) =>
         value is null ? null : FormatId.Parse(value);
 
@@ -360,6 +414,24 @@ public static class ContractJson
         FormatId = value.FormatId.Value,
         Length = value.Length,
     };
+
+    private static JobStatusSnapshotWire ToWire(JobStatusSnapshot value) => new()
+    {
+        SchemaVersion = value.SchemaVersion,
+        JobId = value.JobId.ToString("D"),
+        RequestId = value.RequestId.ToString("D"),
+        State = WireEnumText.ToWire(value.State),
+        Progress = value.Progress,
+        Message = value.Message,
+    };
+
+    private static JobStatusSnapshot FromWire(JobStatusSnapshotWire value) => new(
+        value.SchemaVersion,
+        ParseGuid(value.JobId, "jobId"),
+        ParseGuid(value.RequestId, "requestId"),
+        WireEnumText.ParseConversionJobState(value.State),
+        value.Progress,
+        value.Message);
 
     private static ProbedFileDescriptor FromWire(ProbedFileDescriptorWire? value)
     {

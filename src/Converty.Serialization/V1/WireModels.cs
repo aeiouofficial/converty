@@ -69,3 +69,20 @@ internal sealed class JobStatusSnapshotWire
     public double? Progress { get; set; }
     public string? Message { get; set; }
 }
+
+internal sealed class JobControlRequestWire
+{
+    public int SchemaVersion { get; set; }
+    public string? Operation { get; set; }
+    public string? JobId { get; set; }
+}
+
+internal sealed class JobControlResponseWire
+{
+    public int SchemaVersion { get; set; }
+    public string? Operation { get; set; }
+    public string? JobId { get; set; }
+    public bool? Succeeded { get; set; }
+    public JobStatusSnapshotWire? Status { get; set; }
+    public string? Reason { get; set; }
+}
