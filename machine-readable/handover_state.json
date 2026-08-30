@@ -3,10 +3,12 @@
   "project": "Converty",
   "workspaceVersion": "0.1.0-dev.13",
   "baselineDate": "2026-08-30",
-  "implementationStatus": "DEV13_STATUS_CANCEL_BEHAVIOR_QUALIFIED_VERSION_AUTHORITY_SYNC_GENERATED_AUTHORITY_PENDING",
+  "implementationStatus": "DEV13_STATUS_CANCEL_SOURCE_COMPLETE_FINALITY_DEFINED_BY_EXACT_CURRENT_MAIN_ZERO_DIFF_CI",
   "defaultBranch": "main",
-  "liveSourceAuthorityHeadSha": "84f1b2502c912633c8fb019da3d6860e6891cf9c",
-  "liveSourceAuthorityTreeSha": "959a994c5a533e85cb79b1a1ff1d2e73f11c62d5",
+  "sourceBehaviorEvidenceHeadSha": "d3396ece12d7bd9a1d2d86ad03285e206b94456a",
+  "sourceBehaviorEvidenceRunId": 33319252101,
+  "sourceBehaviorEvidenceManagedJobId": 99278206624,
+  "sourceBehaviorEvidenceStaticJobId": 99278206672,
   "nextWorkspaceVersion": "0.1.0-dev.14",
   "nextBatch": "DEV14_IPC_REPLAY_DISCONNECT_RECONNECT_SESSION_ACCEPTANCE",
   "targetOs": "Windows 11 x64",
@@ -27,19 +29,16 @@
     "task2RedRunId": 33285816631,
     "task3RedHeadSha": "7954def408d79e5bf31b783b472df2d02669d2d4",
     "task3RedRunId": 33286056932,
-    "preVersionBehaviorHeadSha": "84f1b2502c912633c8fb019da3d6860e6891cf9c",
-    "preVersionBehaviorTreeSha": "959a994c5a533e85cb79b1a1ff1d2e73f11c62d5",
-    "qualificationRunId": 33318858033,
-    "managedJobId": 99277143724,
-    "staticJobId": 99277143808,
-    "continuityJobId": 99277143780,
+    "strengthenedPreVersionHeadSha": "84f1b2502c912633c8fb019da3d6860e6891cf9c",
+    "versionedBehaviorEvidenceHeadSha": "d3396ece12d7bd9a1d2d86ad03285e206b94456a",
+    "versionedBehaviorEvidenceRunId": 33319252101,
     "managedTests": "248/248 PASS; 0 skipped",
     "staticTests": "78/78 PASS before generated-authority freshness check",
     "contractVectors": "5/5 PASS",
     "releaseBuild": "PASS; 0 warnings; 0 errors",
     "dependencyAudit": "PASS; 18 projects; 18 frameworks; 0 vulnerable-result packages",
     "productPath": "PASS; native Explorer; package/MakeAppx; direct and registered COM Invoke; Bridge→Strict Worker→FFmpeg; Unicode/metacharacter path; source/existing destination preserved; numbered publication; mp3 320000 bit/s",
-    "generatedAuthorityState": "REGEN_REQUIRED_AFTER_DEV13_VERSION_METADATA_SYNC"
+    "finalityRule": "Treat dev.13 as frozen only when repository default branch main points at the current authority tree and an ordinary CI run on that exact current main has continuity, managed, and supply-chain-static all successful with zero generated-authority diff and deterministic verified delivery."
   },
   "shippingOpen": [
     "Headed Windows 11 modern Explorer acceptance and exact-build screenshots",
@@ -51,10 +50,8 @@
     "Final security/fuzz/chaos/release audit and end-user acceptance"
   ],
   "nextActions": [
-    "Qualify the exact dev.13 version/metadata candidate with ordinary CI.",
-    "Regenerate and synchronize the four runner-generated authority files from that exact behavior candidate.",
-    "Fast-forward main only; require exact-current-main continuity/static/managed success and deterministic verified dev.13 delivery.",
-    "Then begin dev.14 replay/disconnect/reconnect/session acceptance without changing normal conversion routing."
+    "Verify exact-current-main zero-diff generated authority and deterministic verified dev.13 delivery; repair authority only if that gate is not green.",
+    "When the exact-current-main gate is green, begin 0.1.0-dev.14 replay/disconnect/reconnect/session acceptance without changing normal conversion routing."
   ],
   "recursiveHandoverRequired": true,
   "recursiveHandoverRule": "Every completed tranche must end with a full copy-paste handover containing repository/default branch/live SHA/tree, prior authority, all commits, RED/GREEN history, run/job/artifact IDs, exact changes/reasons, executed tests/build/security outcomes, workspace hashes/counts, blockers, explicitly unverified claims, ONE precise next task, invariants, headed limitation, production signing/FFmpeg limitation, and this same recursive rule."

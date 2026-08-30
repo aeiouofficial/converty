@@ -1,31 +1,24 @@
 # CONVERTY — CONTINUATION HANDOVER
-# PRODUCT-FIRST ROADMAP — 0.1.0-dev.13 STATUS/CANCEL WIRE
+# PRODUCT-FIRST ROADMAP — 0.1.0-dev.13 → 0.1.0-dev.14
 
 Continue development directly in `https://github.com/aeiouofficial/converty`. Default branch: `main`.
 
-Current workspace version: `0.1.0-dev.13`.
-Next workspace version after exact dev.13 freeze: `0.1.0-dev.14`.
+Current workspace version: `0.1.0-dev.13`. Next workspace version: `0.1.0-dev.14`.
 
-Repository `main` is the only durable completed authority. Re-fetch live `main` before every write and completion/freeze claim. The dev.13 implementation branch is a clean fast-forward line from planning authority `3ccbe5a4e42ee84c8d4616f826ca36997718d4c7`; final main/generated-authority freeze is still pending at this metadata stage.
+Treat dev.13 as frozen only if ordinary CI on the exact current `main` HEAD has continuity, managed, and supply-chain-static all successful, tracked generated authority zero-diff, deterministic workspace verification PASS, and verified delivery uploaded. Otherwise repair only the failing dev.13 authority/delivery gate before new feature work.
 
-## DEV.13 DELIVERED BEHAVIOR
-Existing conversion admission is unchanged. New strict one-shot `status`/`cancel` control contracts use the existing authenticated Host pipe and existing `JobStatusSnapshot`; cancellation is queued-only and transactional. Bridge opens a fresh connection and verifies connected Host identity before first application-frame write. No second pipe, persistent session protocol, polling service, UI, or Host reroute of normal conversion was added.
+Dev.13 adds strict authenticated one-shot `status`/`cancel` on the existing Host pipe while preserving legacy conversion admission and normal Explorer→Bridge→Strict EngineWorker→provider→FFmpeg routing. Status reuses `JobStatusSnapshot`; cancellation is queued-only and transactional. Bridge verifies connected Host identity before first application-frame write. No second pipe/persistent session/UI/rerouting was added.
 
-## EVIDENCE
-Task 1 RED `beabdc7fe0fec0e9d2e0f9f6add4fefa9eaa593b` / run `33285343578`; Task 2 RED `01ac60213d91ed14b721fbe954fbb0c5143e5de3` / run `33285816631`; Task 3 RED `7954def408d79e5bf31b783b472df2d02669d2d4` / run `33286056932`.
+TDD REDs: `beabdc7fe0fec0e9d2e0f9f6add4fefa9eaa593b` / run `33285343578`; `01ac60213d91ed14b721fbe954fbb0c5143e5de3` / run `33285816631`; `7954def408d79e5bf31b783b472df2d02669d2d4` / run `33286056932`.
 
-Pre-version behavior head `84f1b2502c912633c8fb019da3d6860e6891cf9c`, tree `959a994c5a533e85cb79b1a1ff1d2e73f11c62d5`, run `33318858033`, managed `99277143724`, static `99277143808`: Release 0 warnings/errors; native/package/direct+registered COM/product conversion PASS; 248/248 managed; 78/78 static; 5/5 vectors; MP3 320000 bit/s. Workspace A/B byte-identical SHA `acd23ecb25fa2f1118c8ef18f5fadd7d2f281f04513368037dbfbda34f44f782`, then expected stale-authority manifest rejection.
+Versioned behavior evidence: `d3396ece12d7bd9a1d2d86ad03285e206b94456a` / run `33319252101`, managed `99278206624`, static `99278206672`; observed Release 0 warnings/errors, native/package/direct+registered COM/product conversion PASS, 248/248 managed, 78/78 static, 5/5 vectors, Unicode/metachar/no-overwrite behavior, MP3 320000 bit/s.
 
-## INVARIANTS
-Preserve Explorer → native `IExplorerCommand` → fixed Bridge → strict disposable EngineWorker/provider → fixed app-local FFmpeg → private staging → numbered no-overwrite publication. Preserve Unicode/metachar filenames, source/existing-destination preservation, no shell/raw FFmpeg/user converter/PATH/network/silent fallback, media-neutral Host/Bridge, worker/provider-only media parsing, and no signing private keys.
+Preserve Explorer → native `IExplorerCommand` → fixed Bridge → strict disposable EngineWorker/provider → fixed app-local FFmpeg → private staging → numbered no-overwrite publication; preserve no shell/raw FFmpeg/user converter/PATH/network/silent fallback, media-neutral Host/Bridge, worker/provider-only media parsing, and no signing private keys.
 
-Gyan FFmpeg is development-only. No headed Windows 11 UI/screenshots/failure-matrix claim is qualified here.
+Gyan FFmpeg is development-only. No headed Win11 UI/screenshots/failure-matrix claim is qualified.
 
-## OPEN
-Headed Win11 acceptance/screenshots/failure matrix; production signed-package B2 requalification; replay/disconnect/reconnect/session acceptance; production FFmpeg redistribution approval; signed MSIX; clean Win11 VM lifecycle; final security/fuzz/chaos/release/end-user acceptance.
+Open: headed Win11 acceptance/screenshots/failure matrix; production signed-package B2 requalification; replay/disconnect/reconnect/session acceptance; production FFmpeg redistribution approval; signed MSIX; clean Win11 VM lifecycle; final security/fuzz/chaos/release/end-user acceptance.
 
-## NEXT
-Finish dev.13 generated-authority synchronization and exact-current-main deterministic delivery. Then `0.1.0-dev.14`: replay/disconnect/reconnect/session acceptance for existing one-shot admission/status/cancel IPC without unnecessary persistent-session architecture.
+ONE NEXT TASK after exact-current-main dev.13 is green: implement `0.1.0-dev.14` replay/disconnect/reconnect/session acceptance test-first across existing one-shot admission/status/cancel IPC without adding unnecessary persistent-session architecture.
 
-## RECURSIVE HANDOVER RULE
-Every completed tranche must end with a full copy-paste handover containing repo/default branch/live SHA/tree, prior authority, all commits, RED/GREEN history, run/job/artifact IDs, exact changes/reasons, executed tests/build/security outcomes, workspace hashes/counts, blockers, explicitly unverified claims, ONE precise next task, invariants, headed limitation, production signing/FFmpeg limitation, and this same recursive rule.
+Recursive rule: every completed tranche must end with a full copy-paste handover containing repo/default branch/live SHA/tree, prior authority, all commits, RED/GREEN history, run/job/artifact IDs, exact changes/reasons, executed tests/build/security outcomes, workspace hashes/counts, blockers, explicitly unverified claims, ONE precise next task, invariants, headed limitation, production signing/FFmpeg limitation, and this same recursive rule.

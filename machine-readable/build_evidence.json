@@ -3,11 +3,10 @@
   "workspaceVersion": "0.1.0-dev.13",
   "evidenceDate": "2026-08-30",
   "behaviorQualification": {
-    "headSha": "84f1b2502c912633c8fb019da3d6860e6891cf9c",
-    "workflowRunId": 33318858033,
-    "managedJobId": 99277143724,
-    "staticJobId": 99277143808,
-    "continuityJobId": 99277143780,
+    "headSha": "d3396ece12d7bd9a1d2d86ad03285e206b94456a",
+    "workflowRunId": 33319252101,
+    "managedJobId": 99278206624,
+    "staticJobId": 99278206672,
     "runner": {"os": "Windows Server 2025", "image": "windows-2025-vs2026", "dotnetSdk": "10.0.400"},
     "managed": {
       "lockedRestore": "PASS",
@@ -34,8 +33,7 @@
     "static": {
       "tests": "78/78 PASS before generated-authority freshness check",
       "contractVectors": "5/5 PASS",
-      "repositoryVerifier": "PASS after in-job generated source authority",
-      "generatedAuthorityDiff": "EXPECTED_STALE_AFTER_DEV13_SOURCE_TEST_CHANGES"
+      "generatedAuthorityState": "RUNNER_REGEN_REQUIRED_FOR_FINAL_AUTHORITY_TREE"
     }
   },
   "preVersionBehaviorQualification": {
@@ -45,28 +43,18 @@
     "managedJobId": 99277143724,
     "staticJobId": 99277143808,
     "continuityJobId": 99277143780,
-    "runner": {"os": "Windows Server 2025", "image": "windows-2025-vs2026", "imageVersion": "20260824.214.3", "dotnetSdk": "10.0.400"},
-    "lockedRestore": "18/18 PASS",
-    "dependencyAudit": "PASS; 18 projects; 18 frameworks; 0 vulnerable-result packages",
-    "releaseBuild": "PASS; 0 warnings; 0 errors",
-    "nativeExplorerReleaseBuild": "PASS",
-    "developmentPackageAndMakeAppx": "PASS; 33 files",
-    "directAndPackagedComInvoke": "PASS",
-    "productBridgeStrictWorkerFfmpeg": "PASS; mp3 / 320000 bit/s; Unicode/metacharacter path; source and existing destination preserved; numbered publication",
     "managedTests": {"total": 248, "succeeded": 248, "failed": 0, "skipped": 0},
     "staticTests": {"total": 78, "succeeded": 78, "failed": 0},
     "contractVectors": "5/5 PASS",
-    "repositoryVerifier": "PASS after in-job generated source authority",
-    "workspaceDoubleBuild": {"sha256": "acd23ecb25fa2f1118c8ef18f5fadd7d2f281f04513368037dbfbda34f44f782", "bytes": 422404, "files": 348, "byteIdentical": true, "integrityCheck": "EXPECTED_FAIL_STALE_PACKAGE_MANIFEST_AT_src/Converty.Bridge/Ipc/BridgeClient.cs"},
-    "generatedAuthorityDiff": "EXPECTED_STALE_AFTER_DEV13_SOURCE_TEST_CHANGES"
+    "workspaceDoubleBuild": {"sha256": "acd23ecb25fa2f1118c8ef18f5fadd7d2f281f04513368037dbfbda34f44f782", "bytes": 422404, "files": 348, "byteIdentical": true, "integrityCheck": "EXPECTED_FAIL_STALE_PACKAGE_MANIFEST_AT_src/Converty.Bridge/Ipc/BridgeClient.cs"}
   },
   "tddHistory": {
-    "task1Red": {"headSha": "beabdc7fe0fec0e9d2e0f9f6add4fefa9eaa593b", "runId": 33285343578, "managedJobId": 99187464826, "result": "Release build failed because JobControl production contracts/serializers did not yet exist"},
-    "task2Red": {"headSha": "01ac60213d91ed14b721fbe954fbb0c5143e5de3", "runId": 33285816631, "managedJobId": 99188726185, "result": "Build/product gates passed; managed Test failed because Host job-control dispatch did not yet exist"},
-    "task3Red": {"headSha": "7954def408d79e5bf31b783b472df2d02669d2d4", "runId": 33286056932, "managedJobId": 99189341816, "result": "Release build failed because Bridge job-control client surface did not yet exist"},
-    "task3AnalyzerCorrection": {"headSha": "630b622dc7d2d1c8df9a9ce7b44c37efc28c9401", "runId": 33286255211, "result": "Behavior gates and managed Test passed; workspace verification stopped on stale generated authority"},
-    "task4StaticAuthoringFailure": {"headSha": "3bf7ebdc7cc6b9f0456658a214ae35dc0eb1d535", "runId": 33318809296, "result": "77 static passed; one new test asserted a nonexistent enum member; production code unchanged"},
-    "task4Green": {"headSha": "84f1b2502c912633c8fb019da3d6860e6891cf9c", "runId": 33318858033, "managedJobId": 99277143724, "staticJobId": 99277143808, "result": "248/248 managed and 78/78 static PASS; product path PASS; only generated-authority/workspace freshness remained RED"}
+    "task1Red": {"headSha": "beabdc7fe0fec0e9d2e0f9f6add4fefa9eaa593b", "runId": 33285343578, "managedJobId": 99187464826},
+    "task2Red": {"headSha": "01ac60213d91ed14b721fbe954fbb0c5143e5de3", "runId": 33285816631, "managedJobId": 99188726185},
+    "task3Red": {"headSha": "7954def408d79e5bf31b783b472df2d02669d2d4", "runId": 33286056932, "managedJobId": 99189341816},
+    "task3AnalyzerCorrection": {"headSha": "630b622dc7d2d1c8df9a9ce7b44c37efc28c9401", "runId": 33286255211},
+    "task4StaticAuthoringFailure": {"headSha": "3bf7ebdc7cc6b9f0456658a214ae35dc0eb1d535", "runId": 33318809296},
+    "task4Green": {"headSha": "84f1b2502c912633c8fb019da3d6860e6891cf9c", "runId": 33318858033}
   },
   "priorFinalMain": {
     "headSha": "8240b23a881362c624eb7c539fd74c0be0c7c159",
@@ -77,7 +65,7 @@
     "continuityJobId": 99158170918,
     "workspaceSha256": "d6bfcc79e11c1b33115f0791a1f060aabb7cb6bfa8bd2718f14feede6283c1c4"
   },
-  "currentAuthorityState": "DEV13_VERSION_METADATA_CANDIDATE; FINAL_GENERATED_AUTHORITY_AND_EXACT_MAIN_FREEZE_PENDING",
+  "finalityRule": "Final dev.13 delivery authority is the exact current main tree only when ordinary CI has continuity, managed, and supply-chain-static all successful, tracked generated authority zero-diff, deterministic workspace verification PASS, and verified delivery uploaded.",
   "headedWindows11Acceptance": "OPEN",
   "productionSignedPackageB2Requalification": "OPEN",
   "productionFfmpegRedistributionApproval": "OPEN"
