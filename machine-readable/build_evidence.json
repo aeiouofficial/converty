@@ -2,6 +2,42 @@
   "schemaVersion": 1,
   "workspaceVersion": "0.1.0-dev.13",
   "evidenceDate": "2026-08-30",
+  "behaviorQualification": {
+    "headSha": "84f1b2502c912633c8fb019da3d6860e6891cf9c",
+    "workflowRunId": 33318858033,
+    "managedJobId": 99277143724,
+    "staticJobId": 99277143808,
+    "continuityJobId": 99277143780,
+    "runner": {"os": "Windows Server 2025", "image": "windows-2025-vs2026", "dotnetSdk": "10.0.400"},
+    "managed": {
+      "lockedRestore": "PASS",
+      "managedProjects": 18,
+      "dependencyAudit": "PASS",
+      "auditProjects": 18,
+      "auditFrameworks": 18,
+      "vulnerablePackages": 0,
+      "releaseBuild": "PASS",
+      "warnings": 0,
+      "errors": 0,
+      "tests": {"total": 248, "succeeded": 248, "failed": 0, "skipped": 0},
+      "nativeTopologySmoke": "PASS",
+      "nativeExplorerReleaseBuild": "PASS",
+      "developmentFfmpegPinHashAndExecution": "PASS",
+      "makeAppxUnsignedDevelopmentPackage": "PASS",
+      "directShellDllClassFactoryInvoke": "PASS",
+      "loosePackageRegistrationComActivationInvoke": "PASS",
+      "productBridgeToStrictWorkerFfmpegSmoke": "PASS",
+      "audioMp3CodecBitrate": "mp3 / 320000 bit/s PASS",
+      "transactionalNumberedCollision": "PASS",
+      "sourceAndExistingDestinationPreserved": "PASS"
+    },
+    "static": {
+      "tests": "78/78 PASS before generated-authority freshness check",
+      "contractVectors": "5/5 PASS",
+      "repositoryVerifier": "PASS after in-job generated source authority",
+      "generatedAuthorityDiff": "EXPECTED_STALE_AFTER_DEV13_SOURCE_TEST_CHANGES"
+    }
+  },
   "preVersionBehaviorQualification": {
     "headSha": "84f1b2502c912633c8fb019da3d6860e6891cf9c",
     "treeSha": "959a994c5a533e85cb79b1a1ff1d2e73f11c62d5",

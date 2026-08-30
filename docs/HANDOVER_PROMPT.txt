@@ -3,6 +3,9 @@
 
 Continue development directly in `https://github.com/aeiouofficial/converty`. Default branch: `main`.
 
+Current workspace version: `0.1.0-dev.13`.
+Next workspace version after exact dev.13 freeze: `0.1.0-dev.14`.
+
 Repository `main` is the only durable completed authority. Re-fetch live `main` before every write and completion/freeze claim. The dev.13 implementation branch is a clean fast-forward line from planning authority `3ccbe5a4e42ee84c8d4616f826ca36997718d4c7`; final main/generated-authority freeze is still pending at this metadata stage.
 
 ## DEV.13 DELIVERED BEHAVIOR
@@ -22,7 +25,7 @@ Gyan FFmpeg is development-only. No headed Windows 11 UI/screenshots/failure-mat
 Headed Win11 acceptance/screenshots/failure matrix; production signed-package B2 requalification; replay/disconnect/reconnect/session acceptance; production FFmpeg redistribution approval; signed MSIX; clean Win11 VM lifecycle; final security/fuzz/chaos/release/end-user acceptance.
 
 ## NEXT
-Finish dev.13 generated-authority synchronization and exact-current-main deterministic delivery. Then dev.14: replay/disconnect/reconnect/session acceptance for existing one-shot admission/status/cancel IPC without unnecessary persistent-session architecture.
+Finish dev.13 generated-authority synchronization and exact-current-main deterministic delivery. Then `0.1.0-dev.14`: replay/disconnect/reconnect/session acceptance for existing one-shot admission/status/cancel IPC without unnecessary persistent-session architecture.
 
 ## RECURSIVE HANDOVER RULE
 Every completed tranche must end with a full copy-paste handover containing repo/default branch/live SHA/tree, prior authority, all commits, RED/GREEN history, run/job/artifact IDs, exact changes/reasons, executed tests/build/security outcomes, workspace hashes/counts, blockers, explicitly unverified claims, ONE precise next task, invariants, headed limitation, production signing/FFmpeg limitation, and this same recursive rule.
