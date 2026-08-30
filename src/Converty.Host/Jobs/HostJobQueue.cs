@@ -108,6 +108,26 @@ public sealed class HostJobQueue
         }
     }
 
+    public bool TryGetByRequestId(Guid requestId, out JobStatusSnapshot? status)
+    {
+        if (requestId == Guid.Empty)
+        {
+            status = null;
+            return false;
+        }
+
+        lock (_gate)
+        {
+            if (!_requestToJob.TryGetValue(requestId, out Guid jobId))
+            {
+                status = null;
+                return false;
+            }
+
+            return _jobs.TryGetValue(jobId, out status);
+        }
+    }
+
     public bool TryCancel(Guid jobId, out JobStatusSnapshot? status)
     {
         if (jobId == Guid.Empty)
