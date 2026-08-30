@@ -1,12 +1,11 @@
 {
   "schemaVersion": 1,
-  "workspaceVersion": "0.1.0-dev.13",
+  "workspaceVersion": "0.1.0-dev.14",
   "evidenceDate": "2026-08-30",
   "behaviorQualification": {
-    "headSha": "d3396ece12d7bd9a1d2d86ad03285e206b94456a",
-    "workflowRunId": 33319252101,
-    "managedJobId": 99278206624,
-    "staticJobId": 99278206672,
+    "headSha": "46da899ec7dad5ebe2acc934dbaf7c009abc0c26",
+    "workflowRunId": 33327473492,
+    "managedJobId": 99300068738,
     "runner": {"os": "Windows Server 2025", "image": "windows-2025-vs2026", "dotnetSdk": "10.0.400"},
     "managed": {
       "lockedRestore": "PASS",
@@ -18,7 +17,7 @@
       "releaseBuild": "PASS",
       "warnings": 0,
       "errors": 0,
-      "tests": {"total": 248, "succeeded": 248, "failed": 0, "skipped": 0},
+      "tests": {"total": 250, "succeeded": 250, "failed": 0, "skipped": 0},
       "nativeTopologySmoke": "PASS",
       "nativeExplorerReleaseBuild": "PASS",
       "developmentFfmpegPinHashAndExecution": "PASS",
@@ -34,38 +33,28 @@
       "tests": "78/78 PASS before generated-authority freshness check",
       "contractVectors": "5/5 PASS",
       "generatedAuthorityState": "RUNNER_REGEN_REQUIRED_FOR_FINAL_AUTHORITY_TREE"
-    }
-  },
-  "preVersionBehaviorQualification": {
-    "headSha": "84f1b2502c912633c8fb019da3d6860e6891cf9c",
-    "treeSha": "959a994c5a533e85cb79b1a1ff1d2e73f11c62d5",
-    "workflowRunId": 33318858033,
-    "managedJobId": 99277143724,
-    "staticJobId": 99277143808,
-    "continuityJobId": 99277143780,
-    "managedTests": {"total": 248, "succeeded": 248, "failed": 0, "skipped": 0},
-    "staticTests": {"total": 78, "succeeded": 78, "failed": 0},
-    "contractVectors": "5/5 PASS",
-    "workspaceDoubleBuild": {"sha256": "acd23ecb25fa2f1118c8ef18f5fadd7d2f281f04513368037dbfbda34f44f782", "bytes": 422404, "files": 348, "byteIdentical": true, "integrityCheck": "EXPECTED_FAIL_STALE_PACKAGE_MANIFEST_AT_src/Converty.Bridge/Ipc/BridgeClient.cs"}
+    },
+    "workspaceDoubleBuildBeforeAuthoritySync": {"sha256": "d6b3b56b3cf3f84c10a86c652e634f75f052f749b2cd31420169aba7f9dab73a", "bytes": 420896, "files": 349, "byteIdentical": true, "integrityCheck": "EXPECTED_FAIL_STALE_PACKAGE_MANIFEST_AT_src/Converty.Host/Ipc/HostRequestHandler.cs"}
   },
   "tddHistory": {
-    "task1Red": {"headSha": "beabdc7fe0fec0e9d2e0f9f6add4fefa9eaa593b", "runId": 33285343578, "managedJobId": 99187464826},
-    "task2Red": {"headSha": "01ac60213d91ed14b721fbe954fbb0c5143e5de3", "runId": 33285816631, "managedJobId": 99188726185},
-    "task3Red": {"headSha": "7954def408d79e5bf31b783b472df2d02669d2d4", "runId": 33286056932, "managedJobId": 99189341816},
-    "task3AnalyzerCorrection": {"headSha": "630b622dc7d2d1c8df9a9ce7b44c37efc28c9401", "runId": 33286255211},
-    "task4StaticAuthoringFailure": {"headSha": "3bf7ebdc7cc6b9f0456658a214ae35dc0eb1d535", "runId": 33318809296},
-    "task4Green": {"headSha": "84f1b2502c912633c8fb019da3d6860e6891cf9c", "runId": 33318858033}
+    "red": {"headSha": "34b0401ed139efe55f76037b55d8e749e30afc0b", "runId": 33327339694, "managedJobId": 99299712127, "tests": {"total": 250, "succeeded": 249, "failed": 1, "skipped": 0}},
+    "queueLookup": {"headSha": "7766cb1f7831356de08e2288ac2da51bcfee743d"},
+    "green": {"headSha": "46da899ec7dad5ebe2acc934dbaf7c009abc0c26", "runId": 33327473492, "managedJobId": 99300068738}
   },
   "priorFinalMain": {
-    "headSha": "8240b23a881362c624eb7c539fd74c0be0c7c159",
-    "treeSha": "e13c4fafad2fca5264c3a5a635d0f678c33d60f7",
-    "workflowRunId": 33274283948,
-    "managedJobId": 99158170830,
-    "staticJobId": 99158170726,
-    "continuityJobId": 99158170918,
-    "workspaceSha256": "d6bfcc79e11c1b33115f0791a1f060aabb7cb6bfa8bd2718f14feede6283c1c4"
+    "headSha": "19482bc21460f84096e350f730065988239fbd3c",
+    "treeSha": "53f8638cb7be0bec1e0175569a8b22c009d3d771",
+    "workflowRunId": 33319810581,
+    "managedJobId": 99279692688,
+    "staticJobId": 99279692787,
+    "continuityJobId": 99279692791,
+    "workspaceSha256": "c14ac057f11fb9d47eac7687ec73e59b0aa1f3658cf9b361e83bc325b051743a",
+    "workspaceBytes": 418746,
+    "workspaceFiles": 348,
+    "verifiedDeliveryArtifactId": 9734576999,
+    "generatedAuthorityArtifactId": 9734553762
   },
-  "finalityRule": "Final dev.13 delivery authority is the exact current main tree only when ordinary CI has continuity, managed, and supply-chain-static all successful, tracked generated authority zero-diff, deterministic workspace verification PASS, and verified delivery uploaded.",
+  "finalityRule": "Final dev.14 delivery authority is the exact current main tree only when ordinary CI has continuity, managed, and supply-chain-static all successful, tracked generated authority zero-diff, deterministic workspace verification PASS, and verified delivery uploaded.",
   "headedWindows11Acceptance": "OPEN",
   "productionSignedPackageB2Requalification": "OPEN",
   "productionFfmpegRedistributionApproval": "OPEN"

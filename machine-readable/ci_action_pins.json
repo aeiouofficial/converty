@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "workspaceVersion": "0.1.0-dev.13",
+  "workspaceVersion": "0.1.0-dev.14",
   "reviewedAt": "2026-08-30",
   "policy": "Every external GitHub Action used by permanent repository workflows must be pinned to the exact 40-character commit listed here; the release version remains as a trailing human-readable comment.",
   "actions": {

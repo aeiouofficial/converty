@@ -1,31 +1,24 @@
-# Implementation status — 0.1.0-dev.13
+# Implementation status — 0.1.0-dev.14
 
-## Dev.13 authenticated status/cancel wire — 2026-08-30
-- Added strict typed `status` and `cancel` control contracts on the existing Host pipe; no second pipe or persistent session protocol was introduced.
-- Existing conversion admission and the normal `IExplorerCommand → Bridge → Strict EngineWorker → provider → FFmpeg → staging → numbered publication` path remain unchanged.
-- Bridge uses a fresh connection for every submission/control call and verifies the connected Host before writing the first application frame.
-- Host validates the expected peer before reading application frames and rejects malformed/hybrid control payloads with the existing generic `invalidRequest` response.
-- Status reuses `JobStatusSnapshot`. Cancellation delegates to existing `HostJobQueue.TryCancel`, is queued-only, persists before in-memory publication, and reports `jobNotFound`, `notCancellable`, or `persistenceFailure` as appropriate.
-- IPC fuzz corpus is 12 cases. Dedicated dev.13 static gates lock single-pipe reuse, auth ordering, strict serialization, queued-only cancellation, and Host/Bridge media neutrality.
+## Dev.14 one-shot replay/disconnect/reconnect acceptance — 2026-08-30
+- Preserved the existing single authenticated Host pipe and fresh-connection-per-operation model; no persistent-session subsystem was added.
+- Added queue lookup by `requestId` so an authenticated replay can recover the original `jobId` after an ambiguous disconnect without enqueuing a duplicate job.
+- Admission replay is idempotent by `requestId`: duplicate detection still occurs in `HostJobQueue.TryEnqueue`; the request handler resolves the already-known job only for that duplicate outcome.
+- Added real named-pipe acceptance coverage for send/disconnect/replay/status across fresh connections and admission/status/cancel/status across fresh connections.
+- Existing dev.13 typed status/cancel behavior, expected-user authorization ordering, queue/journal transactional cancellation, and normal Explorer→Bridge→Strict Worker→FFmpeg conversion routing are unchanged.
 
 ## TDD evidence
-- Task 1 RED: `beabdc7fe0fec0e9d2e0f9f6add4fefa9eaa593b`, run `33285343578`, managed `99187464826`.
-- Task 2 Host dispatch RED: `01ac60213d91ed14b721fbe954fbb0c5143e5de3`, run `33285816631`, managed `99188726185`.
-- Task 3 Bridge client RED: `7954def408d79e5bf31b783b472df2d02669d2d4`, run `33286056932`, managed `99189341816`.
-- Task 3 analyzer-only correction behavior: `630b622dc7d2d1c8df9a9ce7b44c37efc28c9401`, run `33286255211`.
-- Strengthened pre-version behavior: `84f1b2502c912633c8fb019da3d6860e6891cf9c`, run `33318858033`.
-- Versioned behavior evidence: `d3396ece12d7bd9a1d2d86ad03285e206b94456a`, run `33319252101`; behavior/static gates reach green before the intentional generated-authority freshness boundary.
+- RED `34b0401ed139efe55f76037b55d8e749e30afc0b`, run `33327339694`, managed job `99299712127`: Release/native/package/COM/product smokes passed; managed test total 250, succeeded 249, failed exactly 1 at the new replay `Assert.True(replay.Accepted)` assertion.
+- Queue lookup implementation `7766cb1f7831356de08e2288ac2da51bcfee743d`.
+- GREEN behavior head `46da899ec7dad5ebe2acc934dbaf7c009abc0c26`, run `33327473492`, managed job `99300068738`: managed tests 250/250 PASS, static tests 78/78 PASS, contract vectors 5/5 PASS; build/product gates PASS. Workspace integrity then failed only because tracked generated authority still described pre-dev.14 bytes.
 
-## Observed behavior qualification
-- Windows Server 2025 / .NET SDK 10.0.400.
-- 18/18 locked restore; dependency audit PASS across 18 projects/18 frameworks with 0 vulnerable-result packages.
-- Release build PASS with 0 warnings / 0 errors.
-- Native Explorer, unsigned development package/MakeAppx, direct class-factory Invoke and loose-package COM activation/Invoke PASS.
-- Real Bridge→Strict Worker→FFmpeg conversion PASS; Unicode/metacharacter path, source/existing-destination preservation, numbered `(1)` publication and MP3 exactly 320000 bit/s PASS.
-- Managed tests 248/248 PASS, 0 skipped; Python static tests 78/78 PASS; contract vectors 5/5 PASS.
+## Prior exact-main dev.13 authority
+- Main `19482bc21460f84096e350f730065988239fbd3c`, tree `53f8638cb7be0bec1e0175569a8b22c009d3d771`.
+- Run `33319810581`: managed `99279692688`, static `99279692787`, continuity `99279692791`, all SUCCESS including generated-authority zero-diff and verified delivery.
+- Deterministic dev.13 workspace SHA-256 `c14ac057f11fb9d47eac7687ec73e59b0aa1f3658cf9b361e83bc325b051743a`, 418746 bytes, 348 files.
 
 ## Authority rule
-Do not infer finality from this document alone. Dev.13 is frozen only if the repository's exact current `main` HEAD has an ordinary CI run with continuity, managed and supply-chain-static all successful, tracked generated authority zero-diff, deterministic workspace verification PASS and verified delivery uploaded. If that exact-current-main gate is green, the next implementation tranche is `0.1.0-dev.14` replay/disconnect/reconnect/session acceptance.
+Do not infer dev.14 finality from this document. Dev.14 is frozen only after version-aligned generated authority is synchronized from one exact CI artifact and an ordinary CI run on the exact current `main` HEAD has continuity, managed and supply-chain-static all successful, generated-authority zero-diff, deterministic workspace verification PASS and verified delivery uploaded.
 
 ## Remaining shipping gates
-Headed Win11 UI/screenshots and Explorer failure matrix; production signed-package B2 requalification; replay/disconnect/reconnect/session acceptance; FFmpeg redistribution approval; signed MSIX/clean-VM lifecycle; final security/fuzz/chaos/release/end-user acceptance.
+Headed Windows 11 UI/screenshots and Explorer failure matrix; production signed-package B2 identity/authentication requalification; production FFmpeg redistribution approval; signed production MSIX/clean-VM lifecycle; final security/fuzz/chaos/release/end-user acceptance.
