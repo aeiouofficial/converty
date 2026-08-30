@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "workspaceVersion": "0.1.0-dev.14",
+  "workspaceVersion": "0.1.0-dev.15",
   "generatedDate": "2026-08-25",
   "excludedParts": [
     ".git",
@@ -85,8 +85,8 @@
     },
     {
       "path": "build/product-conversion-smoke.ps1",
-      "bytes": 5844,
-      "sha256": "638c7b6a219c78883c95cd6e7d87e11304a5fa55a0114884ad03ad6157298811"
+      "bytes": 7328,
+      "sha256": "5433233d7e3c9d9e8f38645a90cefb46e78586afcde40cf5b2acdf300cc927b8"
     },
     {
       "path": "build/README.md",
@@ -120,8 +120,8 @@
     },
     {
       "path": "CHANGELOG.md",
-      "bytes": 3497,
-      "sha256": "cdbc75632e1cf78901dbb3f69314a85a3db06fbd271242afb8fc9795e65d3150"
+      "bytes": 3244,
+      "sha256": "2a24e01fac2077a655c3bf2b4bdd40a7f5aa07ad49eea2ba6aab621f25865934"
     },
     {
       "path": "CMakeLists.txt",
@@ -209,9 +209,14 @@
       "sha256": "91151d8c78020c452d05d8498824914154b7ab8e521025e6436f12cb56bd0338"
     },
     {
+      "path": "docs/development/DEV15_AUDIO_PRESET_TDD_EVIDENCE.md",
+      "bytes": 1939,
+      "sha256": "ecedf7a896d006ef78863d857d04eb007953cb8a00c04b515551aaf3793a07d1"
+    },
+    {
       "path": "docs/development/IMPLEMENTATION_STATUS.md",
-      "bytes": 2812,
-      "sha256": "9c7a11c044e2e65153a5cef13cd41516ed15748bf9acb23eb1f9a6144b0b31ca"
+      "bytes": 3975,
+      "sha256": "7dc29063a2e269b95139df0480eb653199b9e0574409d1f4d6a203dde13ab8c5"
     },
     {
       "path": "docs/development/MODULE_BOUNDARIES.md",
@@ -230,13 +235,13 @@
     },
     {
       "path": "docs/HANDOVER_NEXT_AGENT.md",
-      "bytes": 3846,
-      "sha256": "5fc5deb94e1e8514e21cfce66d3d67ea237a35012e1e4ecb33c550114827d997"
+      "bytes": 2579,
+      "sha256": "7880105a7030ffd3d63936de0b0f564e286cfebff73c83593fdccfe0441b1f6c"
     },
     {
       "path": "docs/HANDOVER_PROMPT.txt",
-      "bytes": 3388,
-      "sha256": "69d0eee0ac184be460af81aee482510d8b8a00e184d93ecff215faf7d8b80760"
+      "bytes": 4319,
+      "sha256": "a1395bcafc342d1a7d63ffb3a9f6b800418a276b5d6ddbf9f40aa7e8fe388f30"
     },
     {
       "path": "docs/REFERENCE_SOURCES.md",
@@ -329,6 +334,11 @@
       "sha256": "f60259c7cb28c6317d87649b33abb5aa10e903d170d5857a3ec096d2db40cf5b"
     },
     {
+      "path": "docs/superpowers/plans/2026-08-30-dev15-audio-preset-matrix.md",
+      "bytes": 1155,
+      "sha256": "07680fe2d9422e5d8bc047206adfee386e63548806c473dd00b29b59bea198ee"
+    },
+    {
       "path": "docs/superpowers/specs/2026-08-24-foundation-design.md",
       "bytes": 2051,
       "sha256": "c846b241280c63a34893b1e1fbac2e87e617bb65ff1b9f1c1e05d89edcd2ae95"
@@ -349,6 +359,11 @@
       "sha256": "5c22a2afe0b1bfee5d05dd12ce0f852c100611967ffa0784921763e30e25a3d3"
     },
     {
+      "path": "docs/superpowers/specs/2026-08-30-dev15-audio-preset-matrix-design.md",
+      "bytes": 1249,
+      "sha256": "32d8412ef19310eb0c7e0f27cadf400348e2b45e9cd7a27c335b6396915ef469"
+    },
+    {
       "path": "docs/supply-chain/CI_PROVENANCE_POLICY.md",
       "bytes": 2097,
       "sha256": "66210845738dd0fd49a08968827b4f973f30a91a56a224e5c3a1af93364bc841"
@@ -365,8 +380,8 @@
     },
     {
       "path": "docs/TASK_BACKLOG.md",
-      "bytes": 3494,
-      "sha256": "b91e649803a037366b76e25e63a8b952449af41c9ebca4f5d3fad1d0dc10a6c6"
+      "bytes": 4264,
+      "sha256": "0bde58d36939d806f674daa652439622dc299f399c43fa57f2f9ad20ec764580"
     },
     {
       "path": "docs/TEST_AND_RELEASE_GATES.md",
@@ -385,8 +400,8 @@
     },
     {
       "path": "eng/toolchain.json",
-      "bytes": 1271,
-      "sha256": "b95dca4ef9c3841cda30a7e127d63c7fe82ff4582c2009834c2ad54ab35a5f53"
+      "bytes": 1310,
+      "sha256": "4a31bbc232b593ac799b643e446c5e16b1562853f72b68b7d2fec48040d33571"
     },
     {
       "path": "global.json",
@@ -395,33 +410,33 @@
     },
     {
       "path": "machine-readable/build_evidence.json",
-      "bytes": 3078,
-      "sha256": "a89d76c50c0ad6305ed7a8bb7c26324eb6177ee28f2123042e78d448612bf240"
+      "bytes": 3727,
+      "sha256": "8780c92ac9013678615dcb9546e8084ac3fa2bb6dee704f535d121ad3f71019c"
     },
     {
       "path": "machine-readable/ci_action_pins.json",
       "bytes": 1036,
-      "sha256": "c037dc48d3305f9a4efadc2422ed31bf55ff704dccb622b7563d7e32e28e7008"
+      "sha256": "e8ca35ae4886099e90d710e3a098988276a2f8f6b501dd9e455eb9ce32b7707c"
     },
     {
       "path": "machine-readable/handover_state.json",
-      "bytes": 3825,
-      "sha256": "9f90995856001a36eb37bb94045511b0f0d0ef2356a0be10b73f7b2677f33ef3"
+      "bytes": 5176,
+      "sha256": "08d302fbfc7e6946ba4c5a7530c505d9caeb1f36ce3645ffb6cdecbb82f12127"
     },
     {
       "path": "machine-readable/release_policy.json",
       "bytes": 1888,
-      "sha256": "6fe3a1673a4faedd3f4bba80ef820f32eceaa755a69a0d49cdc63dad60452635"
+      "sha256": "3baef6b2a0c4d95cd48147849034093a9701dc61554db04ffd3c9949b185f2d7"
     },
     {
       "path": "machine-readable/release_sbom.spdx.json",
       "bytes": 22991,
-      "sha256": "e04062ca51501a60d44bd578ddd28200e408b9cb12503b945e17e4cebc79ef6d"
+      "sha256": "256dd6ad4f07e8c8fafdab4c25f31f1ef75f85e02d3badd2b8abb18c54fd1a4e"
     },
     {
       "path": "machine-readable/source_sbom.spdx.json",
       "bytes": 11341,
-      "sha256": "889f479c065c679fd7d6a767b1d0a11c616906ba1ac12691734a63b52b9a1068"
+      "sha256": "df741c98664bca3d6bb74c8bcbe780d8a221f9513a24b9308294f402c4b2eebd"
     },
     {
       "path": "native/cmake/Hardening.cmake",
@@ -440,8 +455,8 @@
     },
     {
       "path": "native/Converty.ShellExtension/ConvertyShellExtension.cpp",
-      "bytes": 24644,
-      "sha256": "b7dcb62f7e46a05f28927c2cf5a8b0a297f76029a74ebee019b4e5eef3b77c53"
+      "bytes": 25125,
+      "sha256": "365655042639c955ecce92752fd25f3ef6bcbf6fae9465b215351cca2a9e70dc"
     },
     {
       "path": "native/Converty.ShellExtension/ExplorerRegistrationSmoke.cpp",
@@ -520,8 +535,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 3753,
-      "sha256": "0eb8b1876f7ab4b53e6193c5513263af724fded1684a8de9c7449f2780806cef"
+      "bytes": 3801,
+      "sha256": "2b1cbb55303bf5985b41c9f7164617e4dcf86e7e55f5537041c7f6636890366e"
     },
     {
       "path": "reference-images/01_system_architecture.dot",
@@ -1015,8 +1030,8 @@
     },
     {
       "path": "src/Converty.Core/Presets/ProductPresetRegistry.cs",
-      "bytes": 5509,
-      "sha256": "dee4a77408f0f908d0bd56b7d6dc2ded3028c5a560b1f8b076c4464c8d885cfa"
+      "bytes": 6452,
+      "sha256": "e70ccbf20ac0715661d69088a5317b7cfcc1ac23eab5824b2e65b6a21bc23fa4"
     },
     {
       "path": "src/Converty.Core/Registry/FormatRegistry.cs",
@@ -1455,8 +1470,8 @@
     },
     {
       "path": "tests/Converty.Core.Tests/Presets/ProductPresetRegistryTests.cs",
-      "bytes": 3555,
-      "sha256": "f4aee034c6e3fac76e0f06612f3494a33bfe405c5b307cffddc39be40b12fd45"
+      "bytes": 5018,
+      "sha256": "4c0899bfdee24460cc1366fd49f496f611b5fff2c7bd52403a884bb642109f34"
     },
     {
       "path": "tests/Converty.Core.Tests/Registry/FormatRegistryTests.cs",
@@ -1684,6 +1699,11 @@
       "sha256": "ecfa274fc8e2d3fbf7ed2631b2cc12f7cb5b9bd1c1d0757bbff5affea29ec571"
     },
     {
+      "path": "tests/static/test_dev15_audio_presets.py",
+      "bytes": 2030,
+      "sha256": "eb5e6f6c7375ef7e70fe8df13821bf230545b1ec50846875455ac498ac17a72c"
+    },
+    {
       "path": "tests/static/test_dev4_ci_provenance.py",
       "bytes": 5363,
       "sha256": "162af7fb33e0ebe1c3ca403ae99383959d16694eaf7b6c925c96c2bccc9244c7"
@@ -1710,8 +1730,8 @@
     },
     {
       "path": "tests/static/test_dev9_explorer_product.py",
-      "bytes": 6883,
-      "sha256": "bcdee032427339dd78d0a09a86ba24a4b472ed3725432dd34fffbb8aaeafaa35"
+      "bytes": 7007,
+      "sha256": "999aaf1bd251611dcf25480e7395e6571f57899b8332b5f86d6783e9456bfa60"
     },
     {
       "path": "tests/static/test_dev9_package_registration.py",
@@ -1776,7 +1796,7 @@
     {
       "path": "VERSION",
       "bytes": 13,
-      "sha256": "446d1fb297d20d53c5ed8aea70873d65419509194014ab2ae944f2b29fd0287f"
+      "sha256": "42460d49dd1a54c503c245d12dbfd8cdd3c067338c712ce644d521df34fada24"
     }
   ]
 }
