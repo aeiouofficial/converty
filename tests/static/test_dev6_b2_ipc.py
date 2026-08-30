@@ -76,6 +76,11 @@ def test_host_single_instance_queue_and_fuzz_corpus_are_present() -> None:
         "truncated-payload",
         "malformed-request-json",
         "unknown-request-member",
+        "control-unknown-member",
+        "control-duplicate-operation",
+        "control-noncanonical-job-id",
+        "control-future-schema",
+        "control-hybrid-conversion-members",
     }
     assert "IpcFuzzCorpusTests" in text("tests/Converty.Host.Tests/Ipc/IpcFuzzCorpusTests.cs")
 
