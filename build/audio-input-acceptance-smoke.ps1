@@ -84,6 +84,8 @@ function Invoke-Bridge {
     $bridgeStartInfo.WorkingDirectory = $layout
     $bridgeStartInfo.RedirectStandardOutput = $true
     $bridgeStartInfo.RedirectStandardError = $true
+    # Explicit automation-only opt-in: Explorer never sets this and retains modal errors.
+    $bridgeStartInfo.Environment['CONVERTY_BRIDGE_NONINTERACTIVE'] = '1'
     $bridgeStartInfo.ArgumentList.Add('--preset')
     $bridgeStartInfo.ArgumentList.Add($presetId)
     $bridgeStartInfo.ArgumentList.Add('--')
