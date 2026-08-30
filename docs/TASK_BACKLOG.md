@@ -1,34 +1,36 @@
 # Converty Implementation Backlog
 
-## Dev.15 closure / dev.16 next
-- [x] Preserve dev.14 authenticated one-shot IPC and normal Explorer→Bridge→Strict Worker→FFmpeg routing.
-- [x] Add fixed typed `audio.m4a.aac`, `audio.opus`, and `audio.ogg.vorbis` product presets without raw FFmpeg passthrough.
-- [x] Mirror the expanded Audio action matrix in the native Explorer submenu with stable preset IDs and canonical GUIDs.
-- [x] Expand real product smoke to MP3 + M4A/AAC + Opus + Ogg Vorbis with Unicode/metacharacter paths, source/existing-destination preservation, numbered publication, no partial outputs, and ffprobe codec checks.
-- [x] Preserve RED evidence at `f729f821c98bc8841e585bad7764d8f7446d1c65` / run `33330926712`.
-- [x] Pre-authority GREEN behavior at `335754a7d99c99f918fa7f2bc29a89f691f0fd2a` / run `33331186761`: 253/253 managed, 81/81 static, 5/5 vectors, Release/native/package/COM/four-target product matrix PASS before expected generated-authority freshness failure.
-- [ ] Synchronize dev.15 generated authority and require branch zero-diff qualification plus exact-current-main CI + deterministic verified delivery.
-- [ ] Dev.16: Audio source-format and malformed-input acceptance across the fixed Audio action matrix before beginning Image/Video expansion.
+## Dev.16 closure / dev.17 next
+- [x] Preserve frozen dev.15 exact-main authority and normal Explorer→Bridge→Strict Worker→FFmpeg routing.
+- [x] Freeze dev.15 on exact `main` `dc46bd4dd25fe672f1695a0895cdb06152a743a7` with exact-main run `33339019327` and verified deterministic delivery.
+- [x] Add dedicated Audio source-format acceptance for WAV/FLAC/MP3/M4A/Ogg/Opus against all six fixed Audio actions.
+- [x] Prove 36/36 product-path conversions with Unicode/metacharacter filenames, source/destination preservation, numbered publication, no partials and ffprobe codec checks.
+- [x] Add repeated malformed/truncated negative acceptance.
+- [x] Diagnose and fix the noninteractive Bridge modal-blocking defect without changing Explorer's default modal error UI.
+- [x] Prove malformed/truncated deterministic exit code 4, source/destination preservation, no publication and no partial residue.
+- [x] Preserve RED/GREEN evidence and pre-authority deterministic workspace evidence for dev.16.
+- [ ] Synchronize dev.16 version-aligned generated authority and require branch zero-diff qualification plus exact-current-main CI + deterministic verified delivery.
+- [ ] Dev.17: final Audio multi-file/mixed-valid-invalid batch failure isolation and matrix closure before beginning Image/Video expansion.
 
 ## B0 Repository/bootstrap
 - [x] .NET 10.0.400 / C# 14 / C++20 topology, warnings-as-errors, analyzers, locked dependencies, immutable Action pins, vulnerability audit and deterministic workspace tooling.
+- [x] Disposable build/test/media/package outputs constrained to excluded `artifacts/`, `bin/`, `obj/` and cache paths; source tests remain organized under `tests/`.
 - [ ] Final Debug/Release signed-production matrix and dependency/license/notices review.
 
 ## B1 Core contracts
 - [x] Strict versioned contracts/schemas, capability/planner/output collision logic, typed JSON v1 adapters and adversarial validation.
-- [x] Typed preset registry with fixed product actions; dev.15 expanded Audio presets remain closed over reviewed arguments.
+- [x] Fixed typed Audio preset registry: MP3, FLAC, M4A/AAC, Opus, Ogg Vorbis, WAV.
 
 ## B2 Host/IPC — release hardening remains open
 - [x] Single-instance Host runtime, current-user pipe DACL/SID validation, bounded framing/timeouts, fixed Host startup, crash-recovery queue/journal.
 - [x] Development connected-server authentication and package identity qualification.
-- [x] Status lookup and queued-only transactional cancellation wire.
-- [x] Replay/disconnect/reconnect acceptance without persistent-session architecture.
+- [x] Status lookup, queued-only transactional cancellation and replay/disconnect/reconnect acceptance.
 - [x] 12-case checked-in IPC adversarial corpus.
 - [ ] Production signed-package B2 identity/authentication requalification.
 
 ## B3 Explorer
 - [x] Real native `IExplorerCommand` DLL, package COM/context-menu registration, fixed typed product subcommands.
-- [x] Dev.15 native submenu contains fixed MP3/FLAC/M4A-AAC/Opus/Ogg-Vorbis/WAV Audio actions plus existing Video/Image actions.
+- [x] Native Audio submenu mirrors fixed MP3/FLAC/M4A-AAC/Opus/Ogg-Vorbis/WAV actions.
 - [ ] Headed Windows 11 modern-menu acceptance with exact-build screenshots.
 - [ ] Explorer crash/hang/failure headed matrix.
 
@@ -36,12 +38,12 @@
 - [x] Private staging, strict AppContainer, Job Object termination/resource ceilings, no-network/outside-scope denial, finite output growth, explicit Strict/Compatibility without silent downgrade.
 
 ## B5–B8 Providers
-- [x] Development Audio MVP: WAV/supported audio → MP3 320k through Bridge→EngineWorker→FFmpeg, ffprobe-verified.
-- [x] Expand fixed typed Audio conversion preset/action matrix: MP3, FLAC, M4A/AAC, Opus, Ogg Vorbis, WAV.
-- [x] Dev.15 real product smoke qualifies MP3 + M4A/AAC + Opus + Ogg Vorbis through the packaged strict path.
-- [ ] Audio source-format and malformed-input acceptance matrix across the expanded actions.
+- [x] Development Audio MVP and expanded fixed Audio matrix.
+- [x] 36-case representative Audio source/action matrix through the packaged strict path.
+- [x] Repeated malformed/truncated rejection with deterministic failure and transactional preservation.
+- [ ] Multi-file/mixed-valid-invalid Audio batch isolation and final Audio matrix closure.
 - [ ] Production FFmpeg/ffprobe pin/signature/hash/licensing/redistribution approval.
-- [ ] Final Audio matrix closure, then Image/Video providers and malformed corpora.
+- [ ] After final Audio closure: Image/Video providers and malformed corpora.
 
 ## B9 UX/settings
 - [ ] Defaults, mixed-selection behavior, pinned presets, output/concurrency/isolation settings and user-visible progress/result UX.

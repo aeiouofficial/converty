@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "workspaceVersion": "0.1.0-dev.15",
+  "workspaceVersion": "0.1.0-dev.16",
   "targetOs": "Windows 11",
   "dotnetSdk": "10.0.400",
   "targetFramework": "net10.0",
@@ -9,11 +9,11 @@
   "nativeBuild": "CMake + MSVC",
   "architecture": "x64-first",
   "notes": [
-    "Dev.15 expands the fixed typed Audio action matrix with M4A/AAC 256k, Opus 192k VBR and Ogg Vorbis q6 while preserving MP3 320k, FLAC and WAV.",
-    "The native Explorer submenu mirrors the managed preset registry with stable preset IDs; Bridge still accepts only typed preset IDs and never exposes raw FFmpeg arguments.",
-    "Behavior head 335754a7d99c99f918fa7f2bc29a89f691f0fd2a run 33331186761 passed Release/native/package/COM and four-target Bridge→Strict Worker→FFmpeg product smokes, 253/253 managed tests, 81/81 static tests and 5/5 vectors before the expected generated-authority freshness boundary.",
-    "Host/Bridge remain media-neutral; parsing and codec execution remain worker/provider-only with private staging and no-overwrite numbered publication.",
-    "Headed Win11 acceptance, production signed-package B2 requalification, production FFmpeg redistribution, signed MSIX/clean-VM lifecycle and final release audit remain open."
+    "Dev.16 adds representative Audio source-format and malformed/truncated-input acceptance without widening the fixed typed preset or executable surface.",
+    "Six source formats are exercised against six fixed Audio actions through packaged Bridge to Strict Worker/provider to app-local FFmpeg; malformed/truncated cases fail deterministically with preservation/no-partial guarantees.",
+    "Bridge noninteractive error reporting is explicit opt-in only; Explorer retains the normal modal error dialog by default.",
+    "Behavior head 061ad75600fee6fd4b34e4a24bd8d571ac17ce90 run 33340338502 passed behavior gates before expected generated-authority freshness failure.",
+    "Headed Win11 acceptance, final Audio batch isolation, production signed-package B2 requalification, production FFmpeg redistribution, signed MSIX clean-VM lifecycle and final release audit remain open."
   ],
   "testRunner": "Microsoft.Testing.Platform",
   "xunitMtpV2": "4.0.0"

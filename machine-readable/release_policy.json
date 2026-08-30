@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "workspaceVersion": "0.1.0-dev.15",
+  "workspaceVersion": "0.1.0-dev.16",
   "hashAlgorithm": "SHA-256",
   "forbiddenHashAlgorithms": ["MD5", "SHA-1"],
   "ciProvenance": {
@@ -28,7 +28,7 @@
   "workspacePackaging": {
     "forbiddenSuffixes": [".pfx", ".p12", ".key", ".pem"],
     "forbiddenNames": [".env"],
-    "note": "Public certificates may use .cer/.crt; private-key-bearing formats are excluded."
+    "note": "Public certificates may use .cer/.crt; private-key-bearing formats are excluded. Disposable build/test/media output is excluded by workspace file policy."
   },
   "releasePrerequisites": [
     "all packages.lock.json present and reviewed",
@@ -36,7 +36,7 @@
     "NuGet audit covers direct and transitive dependencies at low severity threshold",
     "machine-readable dependency vulnerability report passes",
     "managed Release build passes",
-    "managed tests pass",
+    "managed and static tests pass",
     "headed Windows 11 Explorer acceptance passes",
     "restricted worker containment passes",
     "production engine redistribution/license/signature policy is approved",

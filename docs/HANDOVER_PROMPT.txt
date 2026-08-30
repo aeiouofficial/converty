@@ -1,32 +1,35 @@
 CONVERTY — CONTINUATION HANDOVER
-PRODUCT-FIRST ROADMAP — 0.1.0-dev.15 AUDIO PRESET MATRIX
+PRODUCT-FIRST ROADMAP — 0.1.0-dev.16 AUDIO INPUT ACCEPTANCE
 
-Continue development directly in https://github.com/aeiouofficial/converty. Default branch: main.
+Continue development directly in https://github.com/aeiouofficial/converty. Default branch: main. Re-fetch live refs before every write or completion claim; never force over newer concurrent work.
 
-Current workspace version: 0.1.0-dev.15. Next workspace version: 0.1.0-dev.16. Repository main is the only durable completed authority. Re-fetch live main before every write and completion claim.
+CURRENT VERSION CANDIDATE
+0.1.0-dev.16. Behavior head: 061ad75600fee6fd4b34e4a24bd8d571ac17ce90. Dev.16 is not frozen until generated authority is synchronized, branch zero-diff qualification passes, main is non-force fast-forwarded, and exact-main ordinary CI is fully green.
 
 PRIOR FROZEN AUTHORITY
-Dev.14 exact main e0d9a00c3cb832e8109bf7ba7320215302da2177, tree ea530b37b25c89cfea8a1d51566e5288c416c389, exact-main run 33328195635 with all three jobs successful. Deterministic workspace SHA-256 532d1916d33bff2f440e96ab9a3cabc0b0f1898ea5ad2b35bfccb1a9eb63ca44, 424750 bytes, 352 files. Generated-authority artifact 9736854677; verified-delivery artifact 9736885669.
+Dev.15 exact main dc46bd4dd25fe672f1695a0895cdb06152a743a7, tree b170701a80377280065ce758f56076aa8eb044f0, exact-main run 33339019327. Jobs: continuity 99331097453 SUCCESS, static 99331097363 SUCCESS, managed 99331097458 SUCCESS. Workspace SHA-256 8f518bf3b70ca0e51f13d554e9a6966bb17f2897dcf249624cd48fe43ee69c52, 431528 bytes, 356 entries. Generated artifact 9739931738; verified delivery 9739962466.
 
-DEV.15 BEHAVIOR
-The fixed Audio action matrix now contains MP3 320k, FLAC, M4A/AAC 256k faststart, Opus 192k VBR, Ogg Vorbis q6 and PCM WAV. The native Explorer submenu mirrors these typed preset IDs. Bridge resolves only reviewed preset IDs; no raw FFmpeg arguments, arbitrary executables, PATH lookup, network dependency or containment weakening was introduced.
+DEV.16 CHANGES
+Dedicated Windows acceptance covers WAV/FLAC/MP3/M4A/Ogg/Opus × all six fixed Audio actions = 36 real conversions. All preserve source/pre-existing destination, use numbered no-overwrite publication, leave no partials and match expected ffprobe codec. Repeated malformed WAV and truncated FLAC rejection is also covered.
 
-RED/GREEN EVIDENCE
-RED f729f821c98bc8841e585bad7764d8f7446d1c65 / run 33330926712: managed 99309222229 had 253 total, 249 passed, exactly 4 new preset expectation failures; static 99309222365 kept 78 existing tests green and failed exactly 3 new dev.15 feature assertions.
-Implementations: registry 3b68e76f02b8e502ec0e37737ac366627336b41d; product matrix 75276340d71a79ee21053506d6624ef5a1494095; native Explorer 8f5ffccb31b8fa17205fcc29ffccb327fd8df33d; static corrections ba3e7930ef3c9754f181263992239f695cf0f01f and 335754a7d99c99f918fa7f2bc29a89f691f0fd2a.
-GREEN behavior 335754a7d99c99f918fa7f2bc29a89f691f0fd2a / run 33331186761 / managed 99309902055 / static 99309901887: 253/253 managed, 81/81 static, 5/5 vectors, Release 0 warnings/errors, native/package/direct+registered COM PASS, and real MP3 + AAC-in-M4A + Opus + Vorbis-in-Ogg conversion matrix PASS with Unicode/metacharacter source preservation, existing-destination preservation, numbered publication and no partial outputs. Pre-authority deterministic ZIP SHA 7430cc7aaf3b86a37f84edd6467925d9d9e05d9fa5c27917fafa3f2c813af70d, 426577 bytes, 353 files, then expected stale package-manifest failure.
+DEFECT FOUND/FIXED
+The initial malformed case exposed Bridge hanging after conversion failure because the error handler synchronously opened MessageBoxW. Explorer still needs that dialog, so the fix is explicit automation-only CONVERTY_BRIDGE_NONINTERACTIVE=1: bounded error goes to stderr and Bridge returns its normal failure code. Explorer does not set it and keeps MessageBoxW.
 
-FINALITY RULE
-Do not call dev.15 frozen until version-aligned generated authority is synchronized from one exact CI artifact, branch qualification reaches zero-diff, main is fast-forwarded, and ordinary exact-current-main CI has continuity + managed + supply-chain-static all SUCCESS with deterministic workspace verification and verified-delivery upload.
+TDD/CI HISTORY
+RED #1 251b1c54901d212e03961e6bed947bc828df6bc7 / run 33339926916 / static 99333594749: 81 existing PASS, exactly 3 new assertions FAIL.
+Initial matrix 86c6352ce12f2c492d4065b4c15a78223d1d2aab / run 33340046236: 84 static PASS and all 36 valid conversions PASS; malformed input then exposed the modal-blocking defect.
+RED #2 673f92e43738554db364a8db5ea44a00cdd903b7 / run 33340234688 / static 99334412200: 84 existing PASS, exactly 1 new reporter assertion FAIL.
+Fix 066925fa5c90f4bcaf581590c5193a44b64cb4e9; acceptance wiring/behavior head 061ad75600fee6fd4b34e4a24bd8d571ac17ce90.
+GREEN behavior run 33340338502 / managed 99334697033 / static 99334696969: 36/36 success matrix, malformed and truncated repeated negatives both deterministic exit 4, 253/253 managed, 85/85 static, 5/5 vectors, dependency audit 0 vulnerable packages, Release 0 warnings/errors, native/package/direct+registered COM/product smoke PASS. Pre-authority workspace 27b6f96ea8c42afee8de2d67a2ea9d43f48607ab13a4b124cbab6acd3b55a643, 436519 bytes, 358 entries, then expected stale generated-authority failure.
 
 HARD INVARIANTS
-Preserve Explorer → native IExplorerCommand → fixed Bridge → strict disposable EngineWorker/provider → fixed app-local FFmpeg → private staging → transactional numbered no-overwrite publication. Preserve Unicode/metacharacter filenames, source/existing-destination preservation, typed whitelisted preset options, no shell/raw FFmpeg/user converter/PATH/network/silent fallback, media-neutral Host/Bridge, worker/provider-only parsing and no signing private keys. Gyan FFmpeg remains development-only.
+Preserve Explorer → native IExplorerCommand → fixed Bridge → strict disposable EngineWorker/provider → fixed app-local FFmpeg → private staging → transactional numbered no-overwrite publication. Preserve Unicode/metacharacter filenames, source/existing-destination bytes, typed whitelisted presets, no shell/raw FFmpeg/user executable/PATH/network/silent fallback, media-neutral Host/Bridge, worker/provider-only parsing and no signing private keys. Gyan FFmpeg remains development-only qualification input.
 
-HEADED LIMITATION
-No headed Windows 11 modern Explorer visual acceptance, exact-build screenshots or headed crash/hang/failure matrix is qualified here.
+OPEN SHIPPING GATES
+Headed Win11 modern Explorer exact-build UI/screenshots and headed crash/hang/failure matrix; final Audio multi-file/mixed-input closure; production signed-package B2 identity/authentication requalification; production FFmpeg/ffprobe redistribution/license/notices/signature/hash approval; signed production MSIX clean Win11 lifecycle; final security/fuzz/chaos/release/end-user acceptance.
 
-ONE PRECISE NEXT TASK AFTER DEV.15 FREEZE
-Implement 0.1.0-dev.16 as an Audio source-format and malformed-input acceptance matrix across the fixed Audio actions, test-first, through the existing strict worker/provider path. Cover representative supported Audio inputs and malformed/truncated inputs, deterministic failure behavior, source preservation, no destination corruption and no partial outputs. Do not begin Image/Video expansion until this Audio acceptance tranche is evidence-backed and frozen.
+ONE PRECISE NEXT TASK AFTER DEV.16 FREEZE
+Implement 0.1.0-dev.17 test-first as final Audio multi-file/mixed-valid-invalid batch acceptance: exercise multiple selected Audio files through fixed actions, include valid+malformed/truncated mixtures, prove deterministic per-file failure isolation, collision numbering, source/pre-existing-destination preservation, zero partial outputs/orphan workers, and no regression of single-file behavior. Do not begin Image/Video expansion until this Audio closure tranche is evidence-backed and frozen.
 
 RECURSIVE HANDOVER RULE
-Every completed tranche must end with a full copy-paste handover containing repo/default branch/live SHA/tree, prior authority, all commits, RED/GREEN history, run/job/artifact IDs, exact changes/reasons, executed tests/build/security outcomes, workspace hashes/counts, blockers, explicitly unverified claims, ONE precise next task, invariants, headed limitation, production signing/FFmpeg limitation, and this same recursive rule.
+Every completed tranche must end with a full copy-paste handover containing repository/default branch/live SHA/tree, prior authority, all commits, RED/GREEN history, run/job/artifact IDs, exact changes/reasons, executed tests/build/security outcomes, workspace hashes/counts, blockers, explicitly unverified claims, ONE precise next task, invariants, headed limitation, production signing/FFmpeg limitation, and this same recursive rule.

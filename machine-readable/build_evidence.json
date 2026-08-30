@@ -1,12 +1,12 @@
 {
   "schemaVersion": 1,
-  "workspaceVersion": "0.1.0-dev.15",
-  "evidenceDate": "2026-08-30",
+  "workspaceVersion": "0.1.0-dev.16",
+  "evidenceDate": "2026-08-31",
   "behaviorQualification": {
-    "headSha": "335754a7d99c99f918fa7f2bc29a89f691f0fd2a",
-    "workflowRunId": 33331186761,
-    "managedJobId": 99309902055,
-    "staticJobId": 99309901887,
+    "headSha": "061ad75600fee6fd4b34e4a24bd8d571ac17ce90",
+    "workflowRunId": 33340338502,
+    "managedJobId": 99334697033,
+    "staticJobId": 99334696969,
     "runner": {"os": "Windows Server 2025", "image": "windows-2025-vs2026", "dotnetSdk": "10.0.400"},
     "managed": {
       "lockedRestore": "PASS",
@@ -19,65 +19,48 @@
       "warnings": 0,
       "errors": 0,
       "tests": {"total": 253, "succeeded": 253, "failed": 0, "skipped": 0},
-      "nativeTopologySmoke": "PASS",
       "nativeExplorerReleaseBuild": "PASS",
-      "developmentFfmpegPinHashAndExecution": "PASS",
       "makeAppxUnsignedDevelopmentPackage": "PASS",
       "directShellDllClassFactoryInvoke": "PASS",
       "loosePackageRegistrationComActivationInvoke": "PASS",
-      "productBridgeToStrictWorkerFfmpegSmoke": "PASS",
-      "audioTargetMatrix": [
-        "audio.mp3 => mp3 / 320000 bit/s",
-        "audio.m4a.aac => aac in .m4a",
-        "audio.opus => opus in .opus",
-        "audio.ogg.vorbis => vorbis in .ogg"
-      ],
-      "transactionalNumberedCollision": "PASS for every product-matrix target",
-      "sourceAndExistingDestinationPreserved": "PASS for every product-matrix target",
+      "existingProductAudioSmoke": "PASS",
+      "audioSourceActionMatrix": {"sources": 6, "actions": 6, "successfulConversions": 36, "status": "PASS"},
+      "malformedInput": {"attempts": 2, "bridgeExitCode": 4, "deterministic": true, "status": "PASS"},
+      "truncatedInput": {"attempts": 2, "bridgeExitCode": 4, "deterministic": true, "status": "PASS"},
+      "sourceAndExistingDestinationPreserved": "PASS",
+      "numberedNoOverwritePublication": "PASS",
       "partialOutputCleanup": "PASS"
     },
-    "static": {
-      "tests": "81/81 PASS before generated-authority freshness check",
-      "contractVectors": "5/5 PASS",
-      "generatedAuthorityState": "RUNNER_REGEN_REQUIRED_FOR_FINAL_AUTHORITY_TREE"
-    },
+    "static": {"tests": "85/85 PASS before generated-authority freshness check", "contractVectors": "5/5 PASS"},
     "workspaceDoubleBuildBeforeAuthoritySync": {
-      "sha256": "7430cc7aaf3b86a37f84edd6467925d9d9e05d9fa5c27917fafa3f2c813af70d",
-      "bytes": 426577,
-      "files": 353,
+      "sha256": "27b6f96ea8c42afee8de2d67a2ea9d43f48607ab13a4b124cbab6acd3b55a643",
+      "bytes": 436519,
+      "files": 358,
       "byteIdentical": true,
-      "integrityCheck": "EXPECTED_FAIL_STALE_PACKAGE_MANIFEST_AT_build/product-conversion-smoke.ps1"
+      "integrityCheck": "EXPECTED_FAIL_STALE_GENERATED_AUTHORITY_AT_.github/workflows/ci.yml"
     }
   },
   "tddHistory": {
-    "red": {
-      "headSha": "f729f821c98bc8841e585bad7764d8f7446d1c65",
-      "runId": 33330926712,
-      "managedJobId": 99309222229,
-      "staticJobId": 99309222365,
-      "managedTests": {"total": 253, "succeeded": 249, "failed": 4, "skipped": 0},
-      "staticTests": "78 existing PASS; 3 new feature assertions FAIL"
-    },
-    "managedRegistryImplementation": "3b68e76f02b8e502ec0e37737ac366627336b41d",
-    "productMatrixImplementation": "75276340d71a79ee21053506d6624ef5a1494095",
-    "nativeExplorerImplementation": "8f5ffccb31b8fa17205fcc29ffccb327fd8df33d",
-    "staticBoundaryCorrection": "ba3e7930ef3c9754f181263992239f695cf0f01f",
-    "legacyStaticMatrixCorrection": "335754a7d99c99f918fa7f2bc29a89f691f0fd2a"
+    "red1": {"headSha": "251b1c54901d212e03961e6bed947bc828df6bc7", "runId": 33339926916, "staticJobId": 99333594749, "result": "81 existing PASS; exactly 3 new assertions FAIL"},
+    "initialMatrix": {"headSha": "86c6352ce12f2c492d4065b4c15a78223d1d2aab", "runId": 33340046236, "result": "36/36 valid matrix PASS; malformed input exposed modal-blocking lifecycle defect"},
+    "red2": {"headSha": "673f92e43738554db364a8db5ea44a00cdd903b7", "runId": 33340234688, "staticJobId": 99334412200, "result": "84 existing PASS; exactly 1 new reporter assertion FAIL"},
+    "bridgeReporterFix": "066925fa5c90f4bcaf581590c5193a44b64cb4e9",
+    "acceptanceWiringAndBehaviorHead": "061ad75600fee6fd4b34e4a24bd8d571ac17ce90"
   },
   "priorFinalMain": {
-    "headSha": "e0d9a00c3cb832e8109bf7ba7320215302da2177",
-    "treeSha": "ea530b37b25c89cfea8a1d51566e5288c416c389",
-    "workflowRunId": 33328195635,
-    "managedJobId": 99301976027,
-    "staticJobId": 99301975987,
-    "continuityJobId": 99301976091,
-    "workspaceSha256": "532d1916d33bff2f440e96ab9a3cabc0b0f1898ea5ad2b35bfccb1a9eb63ca44",
-    "workspaceBytes": 424750,
-    "workspaceFiles": 352,
-    "generatedAuthorityArtifactId": 9736854677,
-    "verifiedDeliveryArtifactId": 9736885669
+    "headSha": "dc46bd4dd25fe672f1695a0895cdb06152a743a7",
+    "treeSha": "b170701a80377280065ce758f56076aa8eb044f0",
+    "workflowRunId": 33339019327,
+    "managedJobId": 99331097458,
+    "staticJobId": 99331097363,
+    "continuityJobId": 99331097453,
+    "workspaceSha256": "8f518bf3b70ca0e51f13d554e9a6966bb17f2897dcf249624cd48fe43ee69c52",
+    "workspaceBytes": 431528,
+    "workspaceFiles": 356,
+    "generatedAuthorityArtifactId": 9739931738,
+    "verifiedDeliveryArtifactId": 9739962466
   },
-  "finalityRule": "Final dev.15 delivery authority is the exact current main tree only when ordinary CI has continuity, managed and supply-chain-static all successful, tracked generated authority zero-diff, deterministic workspace verification PASS and verified delivery uploaded.",
+  "finalityRule": "Dev.16 is final only after version-aligned generated authority is synchronized, branch zero-diff qualification passes, main is non-force fast-forwarded, and exact-current-main ordinary CI has continuity, managed and supply-chain-static all SUCCESS with deterministic verified delivery.",
   "headedWindows11Acceptance": "OPEN",
   "productionSignedPackageB2Requalification": "OPEN",
   "productionFfmpegRedistributionApproval": "OPEN"

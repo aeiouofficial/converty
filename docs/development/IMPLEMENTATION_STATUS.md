@@ -1,35 +1,35 @@
-# Implementation status — 0.1.0-dev.15
+# Implementation status — 0.1.0-dev.16
 
-## Dev.15 fixed typed Audio preset/action matrix — 2026-08-30
-- Added fixed `audio.m4a.aac`, `audio.opus`, and `audio.ogg.vorbis` presets alongside existing MP3/FLAC/WAV actions.
-- M4A/AAC is fixed at 256k with faststart; Opus uses libopus 192k VBR/application=audio; Ogg Vorbis uses libvorbis quality 6. No user-controlled codec arguments were introduced.
-- Native `IExplorerCommand` submenu now exposes the same stable typed IDs with stable canonical GUIDs. Identity-output actions remain hidden by the existing applicability rule.
-- `build/product-conversion-smoke.ps1` now exercises MP3 plus all three new targets through the staged packaged Bridge→Strict Worker→FFmpeg route using one Unicode/metacharacter WAV source.
-- For every exercised target, the source remains byte-identical, a pre-existing base destination remains byte-identical, numbered `(1)` output is created, no `.partial` file remains, and ffprobe confirms the expected codec. MP3 remains exactly 320000 bit/s.
-- Host/Bridge media neutrality, strict worker containment, private staging, typed preset resolution and no-overwrite publication remain unchanged.
+## Dev.16 Audio source/malformed-input acceptance — 2026-08-31
+- Added `build/audio-input-acceptance-smoke.ps1` as a dedicated Windows acceptance component. Disposable fixtures/results are recreated under excluded `artifacts/audio-input-acceptance-smoke`; no generated media or logs are committed.
+- Qualified six representative source formats (WAV, FLAC, MP3, M4A/AAC, Ogg/Vorbis, Opus) against all six fixed Audio actions, for 36 real packaged Bridge→Strict Worker/provider→FFmpeg conversions.
+- Every success proves Unicode/metacharacter path safety, byte-identical source preservation, byte-identical pre-existing destination preservation, numbered `(1)` publication, zero partial outputs and expected ffprobe codec.
+- Added malformed WAV and physically truncated FLAC cases, each exercised twice. Both now return deterministic Bridge exit code 4, preserve all existing files, publish no output and leave no partials.
+- The first negative integration exposed synchronous `MessageBoxW` blocking noninteractive callers after a legitimate conversion failure. `BridgeErrorDialog` now supports explicit `CONVERTY_BRIDGE_NONINTERACTIVE=1`: automation writes the same bounded error to stderr and returns; Explorer keeps modal UI by default.
+- No codec/parser execution moved into Bridge/Host; strict worker/provider containment and fixed executable/preset boundaries are unchanged.
 
 ## TDD evidence
-- RED head `f729f821c98bc8841e585bad7764d8f7446d1c65`, run `33330926712`: managed `99309222229` had 253 total / 249 passed / exactly 4 new preset expectation failures; static `99309222365` had 78 existing passes and exactly 3 new dev.15 failures.
-- Managed registry implementation `3b68e76f02b8e502ec0e37737ac366627336b41d`.
-- Real product-matrix implementation `75276340d71a79ee21053506d6624ef5a1494095`.
-- Native Explorer action implementation `8f5ffccb31b8fa17205fcc29ffccb327fd8df33d`.
-- Static boundary correction `ba3e7930ef3c9754f181263992239f695cf0f01f` and structured legacy smoke assertion correction `335754a7d99c99f918fa7f2bc29a89f691f0fd2a`.
-- GREEN behavior head `335754a7d99c99f918fa7f2bc29a89f691f0fd2a`, run `33331186761`, managed `99309902055`, static `99309901887`.
+- RED #1 `251b1c54901d212e03961e6bed947bc828df6bc7`, run `33339926916`: 81 existing static tests PASS, exactly 3 new dev.16 contract assertions FAIL because the acceptance component/CI wiring did not exist.
+- Initial matrix implementation `86c6352ce12f2c492d4065b4c15a78223d1d2aab`, run `33340046236`: 84/84 static PASS; all 36 valid Windows conversions PASS; malformed input exposed a real >30s modal-blocking failure lifecycle.
+- RED #2 `673f92e43738554db364a8db5ea44a00cdd903b7`, run `33340234688`: 84 existing static tests PASS, exactly 1 new assertion FAIL for the missing explicit noninteractive reporter.
+- Root-cause fix `066925fa5c90f4bcaf581590c5193a44b64cb4e9`; acceptance caller wiring `061ad75600fee6fd4b34e4a24bd8d571ac17ce90`.
+- GREEN behavior run `33340338502`: managed `99334697033`, static `99334696969`; all behavior gates green before the expected generated-authority/workspace freshness boundary.
 
 ## Observed behavior qualification
-- Windows Server 2025 / .NET SDK 10.0.400.
+- Windows Server 2025 / `windows-2025-vs2026` / .NET SDK 10.0.400.
 - 18/18 locked restore; dependency audit PASS across 18 projects/18 frameworks with 0 vulnerable-result packages.
 - Release build PASS with 0 warnings / 0 errors.
-- Native Explorer, unsigned development package/MakeAppx, direct class-factory Invoke and loose-package COM activation/Invoke PASS.
-- Real product matrix PASS: MP3, AAC-in-M4A, Opus and Vorbis-in-Ogg through Bridge→Strict Worker→FFmpeg; Unicode/metacharacter source and existing destinations preserved; numbered publication and no-partial cleanup PASS.
-- Managed tests 253/253 PASS, 0 skipped; Python static tests 81/81 PASS; contract vectors 5/5 PASS.
-- Pre-authority deterministic A/B workspace SHA-256 `7430cc7aaf3b86a37f84edd6467925d9d9e05d9fa5c27917fafa3f2c813af70d`, 426577 bytes, 353 files; integrity then failed only because tracked generated authority predates `build/product-conversion-smoke.ps1`.
+- Native Explorer, unsigned development MakeAppx package, direct staged class-factory Invoke and loose-package COM activation/Invoke PASS.
+- Existing MP3/M4A-AAC/Opus/Ogg-Vorbis product smoke PASS.
+- Audio source matrix PASS: 36/36; malformed and truncated repeated negatives PASS with deterministic exit 4; preservation/no-partial invariants PASS.
+- Managed tests 253/253 PASS, 0 skipped; Python static tests 85/85 PASS; contract vectors 5/5 PASS.
+- Pre-authority deterministic A/B workspace SHA-256 `27b6f96ea8c42afee8de2d67a2ea9d43f48607ab13a4b124cbab6acd3b55a643`, 436519 bytes, 358 entries; integrity then failed only because tracked generated authority still described dev.15.
 
 ## Prior frozen authority
-Dev.14 exact main `e0d9a00c3cb832e8109bf7ba7320215302da2177`, tree `ea530b37b25c89cfea8a1d51566e5288c416c389`, run `33328195635`; deterministic workspace SHA-256 `532d1916d33bff2f440e96ab9a3cabc0b0f1898ea5ad2b35bfccb1a9eb63ca44`.
+Dev.15 exact main `dc46bd4dd25fe672f1695a0895cdb06152a743a7`, tree `b170701a80377280065ce758f56076aa8eb044f0`, run `33339019327`; workspace SHA-256 `8f518bf3b70ca0e51f13d554e9a6966bb17f2897dcf249624cd48fe43ee69c52`, 431528 bytes, 356 entries; generated artifact `9739931738`, verified-delivery artifact `9739962466`.
 
 ## Authority rule
-Do not infer dev.15 finality from this document. Dev.15 is frozen only after version-aligned generated authority is synchronized from one exact CI artifact, a branch qualification run reaches generated-authority zero-diff with managed/static green, `main` is fast-forwarded, and ordinary CI on the exact current `main` has continuity + managed + supply-chain-static all SUCCESS with deterministic workspace verification and verified delivery upload.
+Dev.16 is frozen only after version-aligned generated authority is synchronized from one exact CI artifact, branch qualification reaches generated-authority zero-diff with managed/static behavior green, `main` is non-force fast-forwarded, and ordinary CI on exact current `main` has continuity + managed + supply-chain-static all SUCCESS with deterministic workspace verification and verified delivery upload.
 
 ## Remaining shipping gates
-Headed Win11 UI/screenshots and Explorer failure matrix; broad Audio source-format/malformed-input acceptance; production signed-package B2 requalification; production FFmpeg redistribution approval; signed MSIX/clean-VM lifecycle; final security/fuzz/chaos/release/end-user acceptance.
+Headed Windows 11 UI/screenshots and Explorer crash/hang/failure matrix; final Audio multi-file/mixed-input isolation; production signed-package B2 requalification; production FFmpeg redistribution approval; signed production MSIX/clean-VM lifecycle; final security/fuzz/chaos/release/end-user acceptance.
