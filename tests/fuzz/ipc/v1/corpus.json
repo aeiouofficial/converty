@@ -42,6 +42,36 @@
       "kind": "requestText",
       "data": "{\"schemaVersion\":1,\"requestId\":\"11111111-1111-1111-1111-111111111111\",\"action\":\"convertUsingDefault\",\"files\":[\"C:\\\\input\\\\sample.wav\"],\"command\":\"forbidden\"}",
       "expectReason": "invalidRequest"
+    },
+    {
+      "id": "control-unknown-member",
+      "kind": "requestText",
+      "data": "{\"schemaVersion\":1,\"operation\":\"status\",\"jobId\":\"11111111-1111-1111-1111-111111111111\",\"command\":\"forbidden\"}",
+      "expectReason": "invalidRequest"
+    },
+    {
+      "id": "control-duplicate-operation",
+      "kind": "requestText",
+      "data": "{\"schemaVersion\":1,\"operation\":\"status\",\"operation\":\"cancel\",\"jobId\":\"11111111-1111-1111-1111-111111111111\"}",
+      "expectReason": "invalidRequest"
+    },
+    {
+      "id": "control-noncanonical-job-id",
+      "kind": "requestText",
+      "data": "{\"schemaVersion\":1,\"operation\":\"status\",\"jobId\":\"{11111111-1111-1111-1111-111111111111}\"}",
+      "expectReason": "invalidRequest"
+    },
+    {
+      "id": "control-future-schema",
+      "kind": "requestText",
+      "data": "{\"schemaVersion\":2,\"operation\":\"status\",\"jobId\":\"11111111-1111-1111-1111-111111111111\"}",
+      "expectReason": "invalidRequest"
+    },
+    {
+      "id": "control-hybrid-conversion-members",
+      "kind": "requestText",
+      "data": "{\"schemaVersion\":1,\"operation\":\"status\",\"jobId\":\"11111111-1111-1111-1111-111111111111\",\"requestId\":\"22222222-2222-2222-2222-222222222222\",\"action\":\"convertUsingDefault\",\"files\":[\"C:\\\\input\\\\sample.wav\"]}",
+      "expectReason": "invalidRequest"
     }
   ]
 }
