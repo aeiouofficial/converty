@@ -3,6 +3,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Converty.Contracts;
 using Converty.Contracts.Conversion;
+using Converty.Contracts.Jobs;
 using Converty.Host.Jobs;
 using Converty.Serialization;
 
@@ -13,6 +14,13 @@ public sealed class HostRequestHandler
     public const int MaximumRequestBytes = 1024 * 1024;
 
     private static readonly UTF8Encoding StrictUtf8 = new(encoderShouldEmitUTF8Identifier: false, throwOnInvalidBytes: true);
+    private static readonly JsonDocumentOptions ClassificationDocumentOptions = new()
+    {
+        AllowTrailingCommas = false,
+        CommentHandling = JsonCommentHandling.Disallow,
+        MaxDepth = 32,
+    };
+
     private readonly HostJobQueue _queue;
 
     public HostRequestHandler(HostJobQueue queue)
@@ -37,21 +45,30 @@ public sealed class HostRequestHandler
             return Task.FromResult(SerializeResponse(accepted: false, Guid.Empty, "invalidRequest"));
         }
 
-        ConversionRequest request;
         try
         {
             string json = StrictUtf8.GetString(payload.Span);
-            request = ContractJson.DeserializeConversionRequest(json);
+            if (IsJobControlRequest(json))
+            {
+                JobControlRequest controlRequest = ContractJson.DeserializeJobControlRequest(json);
+                return Task.FromResult(HandleJobControl(controlRequest));
+            }
+
+            ConversionRequest request = ContractJson.DeserializeConversionRequest(json);
+            return Task.FromResult(HandleAdmission(request));
         }
         catch (Exception error) when (error is JsonException or DecoderFallbackException)
         {
             return Task.FromResult(SerializeResponse(accepted: false, Guid.Empty, "invalidRequest"));
         }
+    }
 
+    private byte[] HandleAdmission(ConversionRequest request)
+    {
         JobAdmissionResult admission = _queue.TryEnqueue(request);
         if (admission.Accepted)
         {
-            return Task.FromResult(SerializeResponse(accepted: true, admission.JobId, reason: null));
+            return SerializeResponse(accepted: true, admission.JobId, reason: null);
         }
 
         string reason = admission.Rejection switch
@@ -61,8 +78,90 @@ public sealed class HostRequestHandler
             JobAdmissionRejection.PersistenceFailure => "persistenceFailure",
             _ => "rejected",
         };
-        return Task.FromResult(SerializeResponse(accepted: false, Guid.Empty, reason));
+        return SerializeResponse(accepted: false, Guid.Empty, reason);
     }
+
+    private byte[] HandleJobControl(JobControlRequest request) => request.Operation switch
+    {
+        JobControlOperation.Status => HandleStatus(request),
+        JobControlOperation.Cancel => HandleCancel(request),
+        _ => throw new InvalidOperationException("Unsupported validated job-control operation."),
+    };
+
+    private byte[] HandleStatus(JobControlRequest request)
+    {
+        if (_queue.TryGet(request.JobId, out JobStatusSnapshot? status))
+        {
+            return SerializeJobControl(new JobControlResponse(
+                SchemaVersions.Current,
+                request.Operation,
+                request.JobId,
+                succeeded: true,
+                status,
+                reason: null));
+        }
+
+        return SerializeJobControl(new JobControlResponse(
+            SchemaVersions.Current,
+            request.Operation,
+            request.JobId,
+            succeeded: false,
+            status: null,
+            JobControlFailureReason.JobNotFound));
+    }
+
+    private byte[] HandleCancel(JobControlRequest request)
+    {
+        bool cancelled = _queue.TryCancel(request.JobId, out JobStatusSnapshot? status);
+        if (cancelled)
+        {
+            if (status is null || status.State != ConversionJobState.Cancelled)
+            {
+                throw new InvalidOperationException("Host queue returned an invalid successful cancellation state.");
+            }
+
+            return SerializeJobControl(new JobControlResponse(
+                SchemaVersions.Current,
+                request.Operation,
+                request.JobId,
+                succeeded: true,
+                status,
+                reason: null));
+        }
+
+        if (status is null)
+        {
+            return SerializeJobControl(new JobControlResponse(
+                SchemaVersions.Current,
+                request.Operation,
+                request.JobId,
+                succeeded: false,
+                status: null,
+                JobControlFailureReason.JobNotFound));
+        }
+
+        JobControlFailureReason reason = status.State == ConversionJobState.Queued
+            ? JobControlFailureReason.PersistenceFailure
+            : JobControlFailureReason.NotCancellable;
+
+        return SerializeJobControl(new JobControlResponse(
+            SchemaVersions.Current,
+            request.Operation,
+            request.JobId,
+            succeeded: false,
+            status,
+            reason));
+    }
+
+    private static bool IsJobControlRequest(string json)
+    {
+        using JsonDocument document = JsonDocument.Parse(json, ClassificationDocumentOptions);
+        return document.RootElement.ValueKind == JsonValueKind.Object &&
+            document.RootElement.TryGetProperty("operation", out _);
+    }
+
+    private static byte[] SerializeJobControl(JobControlResponse response) =>
+        Encoding.UTF8.GetBytes(ContractJson.Serialize(response));
 
     private static byte[] SerializeResponse(bool accepted, Guid jobId, string? reason) =>
         JsonSerializer.SerializeToUtf8Bytes(new AdmissionResponse
