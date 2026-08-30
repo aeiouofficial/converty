@@ -110,6 +110,33 @@ public sealed class ProductPresetRegistry
             ["-vn", "-c:a", "flac"]);
 
         yield return new ProductPresetDefinition(
+            PresetId.Parse("audio.m4a.aac"),
+            "Convert to M4A (AAC)",
+            "Audio",
+            ProductMediaKind.Audio,
+            AudioExtensions,
+            ".m4a",
+            ["-vn", "-c:a", "aac", "-b:a", "256k", "-movflags", "+faststart"]);
+
+        yield return new ProductPresetDefinition(
+            PresetId.Parse("audio.opus"),
+            "Convert to Opus",
+            "Audio",
+            ProductMediaKind.Audio,
+            AudioExtensions,
+            ".opus",
+            ["-vn", "-c:a", "libopus", "-b:a", "192k", "-vbr", "on", "-application", "audio"]);
+
+        yield return new ProductPresetDefinition(
+            PresetId.Parse("audio.ogg.vorbis"),
+            "Convert to Ogg Vorbis",
+            "Audio",
+            ProductMediaKind.Audio,
+            AudioExtensions,
+            ".ogg",
+            ["-vn", "-c:a", "libvorbis", "-q:a", "6"]);
+
+        yield return new ProductPresetDefinition(
             PresetId.Parse("audio.wav"),
             "Convert to WAV",
             "Audio",
