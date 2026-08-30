@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "workspaceVersion": "0.1.0-dev.15",
+  "workspaceVersion": "0.1.0-dev.16",
   "generatedDate": "2026-08-25",
   "excludedParts": [
     ".git",
@@ -40,8 +40,8 @@
     },
     {
       "path": ".github/workflows/ci.yml",
-      "bytes": 8815,
-      "sha256": "75566d7efa10c6099b0fe934598d8c7aa96f2bed9151cfab546178742f447980"
+      "bytes": 8947,
+      "sha256": "a9a0a2f14632b9e7d402bdab5eefdf257da4eec2ae3cd2f663aeac758518dab9"
     },
     {
       "path": ".gitignore",
@@ -52,6 +52,11 @@
       "path": "AGENTS.md",
       "bytes": 2275,
       "sha256": "482f348459735eff9e2ef54c3ddbaab3bcf6149e4826e686bfcd2ccc219d3006"
+    },
+    {
+      "path": "build/audio-input-acceptance-smoke.ps1",
+      "bytes": 12930,
+      "sha256": "dbc3c5508ffe7328d6d991afb7d096b41dd369c08c802eba6b619ca3308b5c6a"
     },
     {
       "path": "build/bootstrap.ps1",
@@ -120,8 +125,8 @@
     },
     {
       "path": "CHANGELOG.md",
-      "bytes": 3244,
-      "sha256": "2a24e01fac2077a655c3bf2b4bdd40a7f5aa07ad49eea2ba6aab621f25865934"
+      "bytes": 5131,
+      "sha256": "4a49833f172df790ae68421bf72f70a41fcc58c2ce6d1680aa14417f9bec141d"
     },
     {
       "path": "CMakeLists.txt",
@@ -214,9 +219,14 @@
       "sha256": "ecedf7a896d006ef78863d857d04eb007953cb8a00c04b515551aaf3793a07d1"
     },
     {
+      "path": "docs/development/DEV16_AUDIO_INPUT_ACCEPTANCE_TDD_EVIDENCE.md",
+      "bytes": 3733,
+      "sha256": "a39d61167de8c12fd9a4e4f5cac626a06fdacee7fcf5d44b067e751d1e2b1ad5"
+    },
+    {
       "path": "docs/development/IMPLEMENTATION_STATUS.md",
-      "bytes": 3975,
-      "sha256": "7dc29063a2e269b95139df0480eb653199b9e0574409d1f4d6a203dde13ab8c5"
+      "bytes": 4419,
+      "sha256": "7901d90b87933a4dc51f53bc06ef52f76aeb5b89286a3b61dab9922d7b3a7a8d"
     },
     {
       "path": "docs/development/MODULE_BOUNDARIES.md",
@@ -235,13 +245,13 @@
     },
     {
       "path": "docs/HANDOVER_NEXT_AGENT.md",
-      "bytes": 2579,
-      "sha256": "7880105a7030ffd3d63936de0b0f564e286cfebff73c83593fdccfe0441b1f6c"
+      "bytes": 1352,
+      "sha256": "bf41a34225d45eb952654a58f8be4a7e47174b3196951fc01e31baef3354db26"
     },
     {
       "path": "docs/HANDOVER_PROMPT.txt",
-      "bytes": 4319,
-      "sha256": "a1395bcafc342d1a7d63ffb3a9f6b800418a276b5d6ddbf9f40aa7e8fe388f30"
+      "bytes": 4773,
+      "sha256": "b0ac7c86b42264348d32277039aa2013fe93ec3b108f7f36500c0e3fc2332969"
     },
     {
       "path": "docs/REFERENCE_SOURCES.md",
@@ -339,6 +349,11 @@
       "sha256": "07680fe2d9422e5d8bc047206adfee386e63548806c473dd00b29b59bea198ee"
     },
     {
+      "path": "docs/superpowers/plans/2026-08-31-dev16-audio-input-acceptance.md",
+      "bytes": 1306,
+      "sha256": "f4f416123e0401fdb20e810e9d1ab90f0dc54f1fc84aa6ae38dff7e8365a8a7d"
+    },
+    {
       "path": "docs/superpowers/specs/2026-08-24-foundation-design.md",
       "bytes": 2051,
       "sha256": "c846b241280c63a34893b1e1fbac2e87e617bb65ff1b9f1c1e05d89edcd2ae95"
@@ -364,6 +379,11 @@
       "sha256": "32d8412ef19310eb0c7e0f27cadf400348e2b45e9cd7a27c335b6396915ef469"
     },
     {
+      "path": "docs/superpowers/specs/2026-08-31-dev16-audio-input-acceptance-design.md",
+      "bytes": 1427,
+      "sha256": "723fd2118d439621f16302f17f1b224b87c11af653ca830b4268569bb7e1f649"
+    },
+    {
       "path": "docs/supply-chain/CI_PROVENANCE_POLICY.md",
       "bytes": 2097,
       "sha256": "66210845738dd0fd49a08968827b4f973f30a91a56a224e5c3a1af93364bc841"
@@ -380,8 +400,8 @@
     },
     {
       "path": "docs/TASK_BACKLOG.md",
-      "bytes": 4264,
-      "sha256": "0bde58d36939d806f674daa652439622dc299f399c43fa57f2f9ad20ec764580"
+      "bytes": 4261,
+      "sha256": "e2669c07047d02aa1c80bf5291890dbf1dd4889536353c2e54b655c6ecda5f7c"
     },
     {
       "path": "docs/TEST_AND_RELEASE_GATES.md",
@@ -400,8 +420,8 @@
     },
     {
       "path": "eng/toolchain.json",
-      "bytes": 1310,
-      "sha256": "4a31bbc232b593ac799b643e446c5e16b1562853f72b68b7d2fec48040d33571"
+      "bytes": 1235,
+      "sha256": "ed0f7f718c17632e002c589a2a90d52f1ee44159809cde2267603964ed68c675"
     },
     {
       "path": "global.json",
@@ -410,33 +430,33 @@
     },
     {
       "path": "machine-readable/build_evidence.json",
-      "bytes": 3727,
-      "sha256": "8780c92ac9013678615dcb9546e8084ac3fa2bb6dee704f535d121ad3f71019c"
+      "bytes": 4110,
+      "sha256": "d089634d186b284a4f76d97e47748c131b06ad9603a35899ca8431245aadccdc"
     },
     {
       "path": "machine-readable/ci_action_pins.json",
       "bytes": 1036,
-      "sha256": "e8ca35ae4886099e90d710e3a098988276a2f8f6b501dd9e455eb9ce32b7707c"
+      "sha256": "8ff625476199b47b74577d3da6b84a35b4e6ffe596325ac1a95efc01a4485dfb"
     },
     {
       "path": "machine-readable/handover_state.json",
-      "bytes": 5176,
-      "sha256": "08d302fbfc7e6946ba4c5a7530c505d9caeb1f36ce3645ffb6cdecbb82f12127"
+      "bytes": 3978,
+      "sha256": "7f00a6c5ba5991cbbd22e5e0ad2434226cbef590b693239b0762d654ee1e161c"
     },
     {
       "path": "machine-readable/release_policy.json",
-      "bytes": 1888,
-      "sha256": "3baef6b2a0c4d95cd48147849034093a9701dc61554db04ffd3c9949b185f2d7"
+      "bytes": 1972,
+      "sha256": "5abf001e6a58dc736639533b8e3775ed41ae72a458a22711005f771881f279ac"
     },
     {
       "path": "machine-readable/release_sbom.spdx.json",
       "bytes": 22991,
-      "sha256": "256dd6ad4f07e8c8fafdab4c25f31f1ef75f85e02d3badd2b8abb18c54fd1a4e"
+      "sha256": "b591173749b099378c2fd772e453439b2cbcf3d0998d0f7d420004cb20c01e33"
     },
     {
       "path": "machine-readable/source_sbom.spdx.json",
       "bytes": 11341,
-      "sha256": "df741c98664bca3d6bb74c8bcbe780d8a221f9513a24b9308294f402c4b2eebd"
+      "sha256": "c7c2717ec260b8518879d0b7f750207fd5fabcdf0ab70244c830c9ed7fbc1ab4"
     },
     {
       "path": "native/cmake/Hardening.cmake",
@@ -535,8 +555,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 3801,
-      "sha256": "2b1cbb55303bf5985b41c9f7164617e4dcf86e7e55f5537041c7f6636890366e"
+      "bytes": 4578,
+      "sha256": "b54868a05cc5a07f2bcc64e3f02c98215074135efdb5a8ce2c3b91be61aa0bb8"
     },
     {
       "path": "reference-images/01_system_architecture.dot",
@@ -795,8 +815,8 @@
     },
     {
       "path": "src/Converty.Bridge/Shell/BridgeErrorDialog.cs",
-      "bytes": 1077,
-      "sha256": "c1f6657cd69fa2490e2c76fb919cc3886084705224deabaa23bcf26c05897e0e"
+      "bytes": 1624,
+      "sha256": "6f41007b0d7f45f53568cf839bd010a8af95f039b63c08dc39a2a9aa88c00307"
     },
     {
       "path": "src/Converty.Bridge/Shell/ShellConversionRequest.cs",
@@ -1704,6 +1724,11 @@
       "sha256": "eb5e6f6c7375ef7e70fe8df13821bf230545b1ec50846875455ac498ac17a72c"
     },
     {
+      "path": "tests/static/test_dev16_audio_input_acceptance.py",
+      "bytes": 2149,
+      "sha256": "befdbf6cd0c600d5eb25a3b8aee4f423904ba2de9b056e2ec8443d57ac290009"
+    },
+    {
       "path": "tests/static/test_dev4_ci_provenance.py",
       "bytes": 5363,
       "sha256": "162af7fb33e0ebe1c3ca403ae99383959d16694eaf7b6c925c96c2bccc9244c7"
@@ -1796,7 +1821,7 @@
     {
       "path": "VERSION",
       "bytes": 13,
-      "sha256": "42460d49dd1a54c503c245d12dbfd8cdd3c067338c712ce644d521df34fada24"
+      "sha256": "c34dd101fd97f3ae1936dfc9e7439dc876b8de7a2f2ad156ab6ce7164c9972b1"
     }
   ]
 }
