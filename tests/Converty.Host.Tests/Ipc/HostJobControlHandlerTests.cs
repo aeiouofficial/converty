@@ -152,7 +152,7 @@ public sealed class HostJobControlHandlerTests
         var queue = new HostJobQueue(capacity: 2);
         var handler = new HostRequestHandler(queue);
         Guid jobId = Guid.NewGuid();
-        string json = $$"{"schemaVersion":1,"operation":"status","jobId":"{{jobId:D}}","requestId":"{{Guid.NewGuid():D}}","action":"convertUsingDefault","files":["C:\\input\\sample.wav"]}";
+        string json = $"{{\"schemaVersion\":1,\"operation\":\"status\",\"jobId\":\"{jobId:D}\",\"requestId\":\"{Guid.NewGuid():D}\",\"action\":\"convertUsingDefault\",\"files\":[\"C:\\\\input\\\\sample.wav\"]}}";
 
         byte[] response = await handler.HandleAsync(
             Encoding.UTF8.GetBytes(json),
