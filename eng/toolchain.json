@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "workspaceVersion": "0.1.0-dev.12",
+  "workspaceVersion": "0.1.0-dev.13",
   "targetOs": "Windows 11",
   "dotnetSdk": "10.0.400",
   "targetFramework": "net10.0",
@@ -9,11 +9,11 @@
   "nativeBuild": "CMake + MSVC",
   "architecture": "x64-first",
   "notes": [
-    "Dev.12 removes the scheduler-dependent output-budget test overshoot assumption without changing production worker limits or containment.",
-    "Behavior head f4c241b0895d06d2e44d72f31e07f141cdc74577 run 33271379504 passed 192/192 managed tests plus native/package/COM/product conversion gates; the run stopped later only because tracked generated authority still described pre-change bytes.",
-    "The deterministic canary writes exactly 64 KiB + 4 KiB then holds; strict launcher output-growth monitoring must detect the breach and terminate the worker.",
-    "WindowsWorkerProcessLauncher, WorkerResourceLimits, AppContainer/Job Object policy, polling interval and production conversion path are unchanged.",
-    "Headed Win11, production signed-package B2 requalification, production FFmpeg redistribution, signed MSIX/clean-VM lifecycle and final release audit remain open."
+    "Dev.13 adds strict authenticated one-shot status lookup and queued-only transactional cancellation on the existing Host pipe.",
+    "Bridge uses a fresh connection per operation and verifies the connected Host before writing the first application frame; legacy conversion admission remains unchanged.",
+    "Pre-version behavior head 84f1b2502c912633c8fb019da3d6860e6891cf9c run 33318858033 passed Release build, native/package/COM/product conversion gates, 248/248 managed tests, 78/78 static tests and 5/5 vectors before expected generated-authority/workspace-integrity freshness failure.",
+    "Host/Bridge remain media-neutral and the normal Explorer→Bridge→Strict Worker→FFmpeg path is unchanged.",
+    "Headed Win11 acceptance, production signed-package B2 requalification, replay/disconnect/reconnect/session acceptance, production FFmpeg redistribution, signed MSIX/clean-VM lifecycle and final release audit remain open."
   ],
   "testRunner": "Microsoft.Testing.Platform",
   "xunitMtpV2": "4.0.0"

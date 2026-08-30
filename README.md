@@ -1,24 +1,24 @@
 # Converty
 <img width="1536" height="1024" alt="Converty Architecture Blueprint" src="https://github.com/user-attachments/assets/985f38c5-5c04-4b45-b69f-5deb0cdcc374" />
 
-Windows 11 modern-context-menu file conversion platform. Converty is being built as a modular right-click converter for Audio, Images, Video, and future file families while keeping Explorer, coordinator, worker, media-engine, staging, and publication trust boundaries explicit.
+Windows 11 modern-context-menu file conversion platform. Converty is a modular right-click converter for Audio, Images, Video, and future file families while keeping Explorer, coordinator, worker, media-engine, staging, and publication trust boundaries explicit.
 
 ## Workspace version
-**0.1.0-dev.12** — output-budget containment verification is deterministic without weakening production limits or containment.
+**0.1.0-dev.13** — authenticated one-shot job status lookup and queued-only transactional cancellation on the existing Host pipe.
 
 ## Current evidence-backed state
 The product path remains:
 
 `IExplorerCommand → fixed Converty.Bridge.exe → Strict Converty.EngineWorker.exe → typed preset/provider → fixed app-local ffmpeg.exe → private staging → validated no-overwrite numbered publication`
 
-Dev.12 fixes the historical output-budget test intermittent at the harness boundary. The canary now writes exactly 64 KiB + 4 KiB and then holds, so the existing strict launcher must detect a bounded breach and terminate the worker. `WindowsWorkerProcessLauncher`, production `WorkerResourceLimits`, AppContainer/Job Object containment, poll interval, and normal conversion routing are unchanged.
+Dev.13 adds typed `status` / `cancel` control contracts without replacing the legacy conversion-admission wire. Every Bridge control operation uses a fresh pipe connection and authenticates the connected Host before the first application frame is written. Host peer authorization remains before application-frame parsing. Cancellation delegates to the existing queue/journal and succeeds only for queued jobs; journal failure leaves the queued state unchanged.
 
-Behavior head `f4c241b0895d06d2e44d72f31e07f141cdc74577` run `33271379504` passed 18/18 locked restore, zero vulnerable-result packages, Release 0 warnings/errors, native Explorer, unsigned MakeAppx, direct and registered COM Invoke, Bridge→Strict Worker→FFmpeg conversion, Unicode/metacharacter paths, source/existing-destination preservation, numbered publication, MP3 exactly 320000 bit/s, 192/192 managed, 72/72 static and 5/5 vectors. The run stopped only at tracked generated-authority/workspace-integrity freshness because the source bytes had changed; dev.12 generated authority regeneration is the current closure step.
+Pre-version behavior head `84f1b2502c912633c8fb019da3d6860e6891cf9c`, run `33318858033`, passed locked restore, zero-vulnerability audit, Release 0 warnings/errors, native Explorer, unsigned MakeAppx, direct and registered COM Invoke, Bridge→Strict Worker→FFmpeg conversion, Unicode/metacharacter paths, source/existing-destination preservation, numbered publication, MP3 exactly 320000 bit/s, 248/248 managed tests, 78/78 static tests and 5/5 vectors. The run stopped only at tracked generated-authority/workspace-integrity freshness after the changed source/test bytes.
 
-## What dev.12 still does not claim
+## What dev.13 still does not claim
 - headed Windows 11 modern Explorer UI acceptance, exact-build screenshots or crash/hang/failure matrix;
 - production signed-package B2 requalification;
-- status/cancel and replay/disconnect/reconnect/session acceptance;
+- replay/disconnect/reconnect/session acceptance;
 - production FFmpeg redistribution/license/notices/signature/hash approval;
 - signed production MSIX and clean Windows 11 VM lifecycle;
 - final security/fuzz/chaos/release audit or end-user acceptance.

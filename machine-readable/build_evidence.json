@@ -1,130 +1,47 @@
 {
   "schemaVersion": 1,
-  "workspaceVersion": "0.1.0-dev.12",
-  "evidenceDate": "2026-08-29",
-  "behaviorQualification": {
-    "headSha": "f4c241b0895d06d2e44d72f31e07f141cdc74577",
-    "workflowRunId": 33271379504,
-    "managedJobId": 99150338647,
-    "staticJobId": 99150338472,
-    "continuityJobId": 99150338602,
-    "runner": {
-      "os": "Windows Server 2025",
-      "image": "windows-2025-vs2026",
-      "dotnetSdk": "10.0.400"
-    },
-    "managed": {
-      "lockedRestore": "PASS",
-      "managedProjects": 18,
-      "dependencyAudit": "PASS",
-      "auditProjects": 18,
-      "auditFrameworks": 18,
-      "vulnerablePackages": 0,
-      "releaseBuild": "PASS",
-      "warnings": 0,
-      "errors": 0,
-      "tests": {
-        "total": 192,
-        "succeeded": 192,
-        "failed": 0,
-        "skipped": 0
-      },
-      "nativeExplorerReleaseBuild": "PASS",
-      "nativeTopologySmoke": "PASS",
-      "developmentFfmpegPinHashAndExecution": "PASS",
-      "makeAppxUnsignedDevelopmentPackage": "PASS",
-      "directShellDllClassFactoryInvoke": "PASS",
-      "loosePackageRegistrationComActivationInvoke": "PASS",
-      "productBridgeToStrictWorkerFfmpegSmoke": "PASS",
-      "audioMp3CodecBitrate": "mp3 / 320000 bit/s PASS",
-      "transactionalNumberedCollision": "PASS",
-      "sourceAndExistingDestinationPreserved": "PASS"
-    },
-    "static": {
-      "tests": "72/72 PASS before generated-authority freshness check",
-      "contractVectors": "5/5 PASS",
-      "repositoryVerifier": "PASS at behavior head",
-      "generatedAuthorityDiff": "EXPECTED_STALE_AFTER_SOURCE_CHANGE"
-    }
-  },
-  "priorFinalMain": {
-    "headSha": "ac475b5a51e19c7618a424ca689657cdf75edcaa",
-    "treeSha": "a0d81da9a4d593c9ba7ec23dd59073eb0e501dc9",
-    "workflowRunId": 33268569169,
-    "managedJobId": 99142859488,
-    "staticJobId": 99142859587,
-    "continuityJobId": 99142859660,
-    "workspaceSha256": "8270fdf0598f73881a674fbc7dddfe5e4727ff09884aedd68d41cfffae9ae395"
-  },
-  "dev12BehaviorQualification": {
-    "headSha": "f4c241b0895d06d2e44d72f31e07f141cdc74577",
-    "treeSha": "30ef2ff8ebfb7f89c8f91b3c18c08432c4fdfbd1",
-    "workflowRunId": 33271379504,
-    "managedJobId": 99150338647,
-    "staticJobId": 99150338472,
-    "continuityJobId": 99150338602,
+  "workspaceVersion": "0.1.0-dev.13",
+  "evidenceDate": "2026-08-30",
+  "preVersionBehaviorQualification": {
+    "headSha": "84f1b2502c912633c8fb019da3d6860e6891cf9c",
+    "treeSha": "959a994c5a533e85cb79b1a1ff1d2e73f11c62d5",
+    "workflowRunId": 33318858033,
+    "managedJobId": 99277143724,
+    "staticJobId": 99277143808,
+    "continuityJobId": 99277143780,
+    "runner": {"os": "Windows Server 2025", "image": "windows-2025-vs2026", "imageVersion": "20260824.214.3", "dotnetSdk": "10.0.400"},
     "lockedRestore": "18/18 PASS",
     "dependencyAudit": "PASS; 18 projects; 18 frameworks; 0 vulnerable-result packages",
     "releaseBuild": "PASS; 0 warnings; 0 errors",
-    "nativeExplorer": "PASS",
+    "nativeExplorerReleaseBuild": "PASS",
     "developmentPackageAndMakeAppx": "PASS; 33 files",
     "directAndPackagedComInvoke": "PASS",
     "productBridgeStrictWorkerFfmpeg": "PASS; mp3 / 320000 bit/s; Unicode/metacharacter path; source and existing destination preserved; numbered publication",
-    "managedTests": {
-      "total": 192,
-      "succeeded": 192,
-      "failed": 0,
-      "skipped": 0
-    },
-    "staticTests": "72/72 PASS",
+    "managedTests": {"total": 248, "succeeded": 248, "failed": 0, "skipped": 0},
+    "staticTests": {"total": 78, "succeeded": 78, "failed": 0},
     "contractVectors": "5/5 PASS",
-    "workspaceDoubleBuild": {
-      "sha256": "2d441ab980035dd63a4101ffb0548a3c47f6adc3049f88055bc4dd6f41b8326e",
-      "bytes": 391329,
-      "files": 335,
-      "byteIdentical": true,
-      "integrityCheck": "EXPECTED_FAIL_STALE_PACKAGE_MANIFEST"
-    },
-    "generatedAuthorityDiff": "EXPECTED_STALE_AFTER_SOURCE_CHANGE"
+    "repositoryVerifier": "PASS after in-job generated source authority",
+    "workspaceDoubleBuild": {"sha256": "acd23ecb25fa2f1118c8ef18f5fadd7d2f281f04513368037dbfbda34f44f782", "bytes": 422404, "files": 348, "byteIdentical": true, "integrityCheck": "EXPECTED_FAIL_STALE_PACKAGE_MANIFEST_AT_src/Converty.Bridge/Ipc/BridgeClient.cs"},
+    "generatedAuthorityDiff": "EXPECTED_STALE_AFTER_DEV13_SOURCE_TEST_CHANGES"
   },
-  "dev12TddHistory": {
-    "red": {
-      "headSha": "ad223384400be1c5749e0b09e301f7ddd5565eda",
-      "runId": 33271012596,
-      "managedJobId": 99149375331,
-      "result": "191/192; target failed because requested canary mode did not exist"
-    },
-    "failedUnboundedExperiment": {
-      "headSha": "8ae59ddb87411f64c647a66a0a7f941b13d37a78",
-      "runId": 33271120406,
-      "result": "191/192; abandoned"
-    },
-    "diagnosticAnalyzerFailure": {
-      "headSha": "5dfaabebaacacde1d6b99a8146d8302b7845ad6e",
-      "runId": 33271235790,
-      "result": "Release analyzer CA1305 RED before tests"
-    },
-    "diagnosticCultureFix": {
-      "headSha": "139c1058bb560756fb6139b01c87f4b277bd28f2",
-      "runId": 33271302074
-    },
-    "greenBehavior": {
-      "headSha": "f4c241b0895d06d2e44d72f31e07f141cdc74577",
-      "runId": 33271379504,
-      "managedJobId": 99150338647,
-      "result": "192/192; product path PASS; only generated-authority/workspace-manifest freshness remained RED"
-    }
+  "tddHistory": {
+    "task1Red": {"headSha": "beabdc7fe0fec0e9d2e0f9f6add4fefa9eaa593b", "runId": 33285343578, "managedJobId": 99187464826, "result": "Release build failed because JobControl production contracts/serializers did not yet exist"},
+    "task2Red": {"headSha": "01ac60213d91ed14b721fbe954fbb0c5143e5de3", "runId": 33285816631, "managedJobId": 99188726185, "result": "Build/product gates passed; managed Test failed because Host job-control dispatch did not yet exist"},
+    "task3Red": {"headSha": "7954def408d79e5bf31b783b472df2d02669d2d4", "runId": 33286056932, "managedJobId": 99189341816, "result": "Release build failed because Bridge job-control client surface did not yet exist"},
+    "task3AnalyzerCorrection": {"headSha": "630b622dc7d2d1c8df9a9ce7b44c37efc28c9401", "runId": 33286255211, "result": "Behavior gates and managed Test passed; workspace verification stopped on stale generated authority"},
+    "task4StaticAuthoringFailure": {"headSha": "3bf7ebdc7cc6b9f0456658a214ae35dc0eb1d535", "runId": 33318809296, "result": "77 static passed; one new test asserted a nonexistent enum member; production code unchanged"},
+    "task4Green": {"headSha": "84f1b2502c912633c8fb019da3d6860e6891cf9c", "runId": 33318858033, "managedJobId": 99277143724, "staticJobId": 99277143808, "result": "248/248 managed and 78/78 static PASS; product path PASS; only generated-authority/workspace freshness remained RED"}
   },
-  "historicalIntermittent": {
-    "test": "StrictWorkerIsTerminatedWhenStagingGrowthExceedsOutputBudget",
-    "dev10RunId": 33044741340,
-    "dev11PreVersionInitialManagedJobId": 99007945036,
-    "dev11FinalInitialManagedJobId": 99124384946,
-    "historicalObservedBytes": 610304,
-    "historicalTestOnlyCeilingBytes": 524288,
-    "status": "ROOT_CAUSE_ELIMINATED_IN_TEST_HARNESS; PRODUCTION LIMIT/CONTAINMENT UNCHANGED"
+  "priorFinalMain": {
+    "headSha": "8240b23a881362c624eb7c539fd74c0be0c7c159",
+    "treeSha": "e13c4fafad2fca5264c3a5a635d0f678c33d60f7",
+    "workflowRunId": 33274283948,
+    "managedJobId": 99158170830,
+    "staticJobId": 99158170726,
+    "continuityJobId": 99158170918,
+    "workspaceSha256": "d6bfcc79e11c1b33115f0791a1f060aabb7cb6bfa8bd2718f14feede6283c1c4"
   },
-  "currentAuthorityState": "DEV12_SOURCE_VERSION_AUTHORITY_SYNCHRONIZED; GENERATED_SBOM_PACKAGE_HASH_AUTHORITY_REGENERATION_REQUIRED",
+  "currentAuthorityState": "DEV13_VERSION_METADATA_CANDIDATE; FINAL_GENERATED_AUTHORITY_AND_EXACT_MAIN_FREEZE_PENDING",
   "headedWindows11Acceptance": "OPEN",
   "productionSignedPackageB2Requalification": "OPEN",
   "productionFfmpegRedistributionApproval": "OPEN"
