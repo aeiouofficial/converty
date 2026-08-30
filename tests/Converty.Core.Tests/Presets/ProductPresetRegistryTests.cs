@@ -18,13 +18,13 @@ public sealed class ProductPresetRegistryTests
     }
 
     [Fact]
-    public void AudioSelectionOffersAudioPresetsOnly()
+    public void AudioSelectionOffersExpandedFixedAudioPresetsOnly()
     {
         IReadOnlyList<ProductPresetDefinition> presets = ProductPresetRegistry.Default.GetApplicable(
             [Path.Combine("work", "voice.wav")]);
 
         Assert.Equal(
-            ["audio.mp3", "audio.flac"],
+            ["audio.mp3", "audio.flac", "audio.m4a.aac", "audio.opus", "audio.ogg.vorbis"],
             presets.Select(preset => preset.Id.Value).ToArray());
     }
 
@@ -62,6 +62,42 @@ public sealed class ProductPresetRegistryTests
         Assert.Contains("libmp3lame", preset.FfmpegArgumentsAfterInput);
         Assert.Contains("320k", preset.FfmpegArgumentsAfterInput);
         Assert.DoesNotContain("192k", preset.FfmpegArgumentsAfterInput);
+    }
+
+    [Fact]
+    public void AudioM4aAacPresetIsFixedAt256k()
+    {
+        ProductPresetDefinition preset = ProductPresetRegistry.Default.GetRequired(PresetId.Parse("audio.m4a.aac"));
+
+        Assert.Equal("Convert to M4A (AAC)", preset.DisplayName);
+        Assert.Equal(".m4a", preset.OutputExtension);
+        Assert.Equal(
+            ["-vn", "-c:a", "aac", "-b:a", "256k", "-movflags", "+faststart"],
+            preset.FfmpegArgumentsAfterInput);
+    }
+
+    [Fact]
+    public void AudioOpusPresetUsesFixedMusicEncodingParameters()
+    {
+        ProductPresetDefinition preset = ProductPresetRegistry.Default.GetRequired(PresetId.Parse("audio.opus"));
+
+        Assert.Equal("Convert to Opus", preset.DisplayName);
+        Assert.Equal(".opus", preset.OutputExtension);
+        Assert.Equal(
+            ["-vn", "-c:a", "libopus", "-b:a", "192k", "-vbr", "on", "-application", "audio"],
+            preset.FfmpegArgumentsAfterInput);
+    }
+
+    [Fact]
+    public void AudioOggVorbisPresetUsesFixedQualityParameters()
+    {
+        ProductPresetDefinition preset = ProductPresetRegistry.Default.GetRequired(PresetId.Parse("audio.ogg.vorbis"));
+
+        Assert.Equal("Convert to Ogg Vorbis", preset.DisplayName);
+        Assert.Equal(".ogg", preset.OutputExtension);
+        Assert.Equal(
+            ["-vn", "-c:a", "libvorbis", "-q:a", "6"],
+            preset.FfmpegArgumentsAfterInput);
     }
 
     [Fact]
