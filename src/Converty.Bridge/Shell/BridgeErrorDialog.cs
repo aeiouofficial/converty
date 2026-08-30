@@ -5,6 +5,7 @@ namespace Converty.Bridge.Shell;
 
 internal static class BridgeErrorDialog
 {
+    internal const string NonInteractiveEnvironmentVariable = "CONVERTY_BRIDGE_NONINTERACTIVE";
     private const uint MbOk = 0x00000000;
     private const uint MbIconError = 0x00000010;
     private const int MaximumMessageCharacters = 2048;
@@ -17,6 +18,17 @@ internal static class BridgeErrorDialog
             : message.Length <= MaximumMessageCharacters
                 ? message
                 : message[..MaximumMessageCharacters];
+
+        // Automation must observe the same bounded Bridge failure path without blocking
+        // on desktop UI. Explorer does not set this explicit opt-in and keeps the dialog.
+        if (string.Equals(
+                Environment.GetEnvironmentVariable(NonInteractiveEnvironmentVariable),
+                "1",
+                StringComparison.Ordinal))
+        {
+            Console.Error.WriteLine(boundedMessage);
+            return;
+        }
 
         _ = MessageBoxW(IntPtr.Zero, boundedMessage, "Converty", MbOk | MbIconError);
     }
