@@ -1,24 +1,35 @@
-# Implementation status — 0.1.0-dev.14
+# Implementation status — 0.1.0-dev.15
 
-## Dev.14 one-shot replay/disconnect/reconnect acceptance — 2026-08-30
-- Preserved the existing single authenticated Host pipe and fresh-connection-per-operation model; no persistent-session subsystem was added.
-- Added queue lookup by `requestId` so an authenticated replay can recover the original `jobId` after an ambiguous disconnect without enqueuing a duplicate job.
-- Admission replay is idempotent by `requestId`: duplicate detection still occurs in `HostJobQueue.TryEnqueue`; the request handler resolves the already-known job only for that duplicate outcome.
-- Added real named-pipe acceptance coverage for send/disconnect/replay/status across fresh connections and admission/status/cancel/status across fresh connections.
-- Existing dev.13 typed status/cancel behavior, expected-user authorization ordering, queue/journal transactional cancellation, and normal Explorer→Bridge→Strict Worker→FFmpeg conversion routing are unchanged.
+## Dev.15 fixed typed Audio preset/action matrix — 2026-08-30
+- Added fixed `audio.m4a.aac`, `audio.opus`, and `audio.ogg.vorbis` presets alongside existing MP3/FLAC/WAV actions.
+- M4A/AAC is fixed at 256k with faststart; Opus uses libopus 192k VBR/application=audio; Ogg Vorbis uses libvorbis quality 6. No user-controlled codec arguments were introduced.
+- Native `IExplorerCommand` submenu now exposes the same stable typed IDs with stable canonical GUIDs. Identity-output actions remain hidden by the existing applicability rule.
+- `build/product-conversion-smoke.ps1` now exercises MP3 plus all three new targets through the staged packaged Bridge→Strict Worker→FFmpeg route using one Unicode/metacharacter WAV source.
+- For every exercised target, the source remains byte-identical, a pre-existing base destination remains byte-identical, numbered `(1)` output is created, no `.partial` file remains, and ffprobe confirms the expected codec. MP3 remains exactly 320000 bit/s.
+- Host/Bridge media neutrality, strict worker containment, private staging, typed preset resolution and no-overwrite publication remain unchanged.
 
 ## TDD evidence
-- RED `34b0401ed139efe55f76037b55d8e749e30afc0b`, run `33327339694`, managed job `99299712127`: Release/native/package/COM/product smokes passed; managed test total 250, succeeded 249, failed exactly 1 at the new replay `Assert.True(replay.Accepted)` assertion.
-- Queue lookup implementation `7766cb1f7831356de08e2288ac2da51bcfee743d`.
-- GREEN behavior head `46da899ec7dad5ebe2acc934dbaf7c009abc0c26`, run `33327473492`, managed job `99300068738`: managed tests 250/250 PASS, static tests 78/78 PASS, contract vectors 5/5 PASS; build/product gates PASS. Workspace integrity then failed only because tracked generated authority still described pre-dev.14 bytes.
+- RED head `f729f821c98bc8841e585bad7764d8f7446d1c65`, run `33330926712`: managed `99309222229` had 253 total / 249 passed / exactly 4 new preset expectation failures; static `99309222365` had 78 existing passes and exactly 3 new dev.15 failures.
+- Managed registry implementation `3b68e76f02b8e502ec0e37737ac366627336b41d`.
+- Real product-matrix implementation `75276340d71a79ee21053506d6624ef5a1494095`.
+- Native Explorer action implementation `8f5ffccb31b8fa17205fcc29ffccb327fd8df33d`.
+- Static boundary correction `ba3e7930ef3c9754f181263992239f695cf0f01f` and structured legacy smoke assertion correction `335754a7d99c99f918fa7f2bc29a89f691f0fd2a`.
+- GREEN behavior head `335754a7d99c99f918fa7f2bc29a89f691f0fd2a`, run `33331186761`, managed `99309902055`, static `99309901887`.
 
-## Prior exact-main dev.13 authority
-- Main `19482bc21460f84096e350f730065988239fbd3c`, tree `53f8638cb7be0bec1e0175569a8b22c009d3d771`.
-- Run `33319810581`: managed `99279692688`, static `99279692787`, continuity `99279692791`, all SUCCESS including generated-authority zero-diff and verified delivery.
-- Deterministic dev.13 workspace SHA-256 `c14ac057f11fb9d47eac7687ec73e59b0aa1f3658cf9b361e83bc325b051743a`, 418746 bytes, 348 files.
+## Observed behavior qualification
+- Windows Server 2025 / .NET SDK 10.0.400.
+- 18/18 locked restore; dependency audit PASS across 18 projects/18 frameworks with 0 vulnerable-result packages.
+- Release build PASS with 0 warnings / 0 errors.
+- Native Explorer, unsigned development package/MakeAppx, direct class-factory Invoke and loose-package COM activation/Invoke PASS.
+- Real product matrix PASS: MP3, AAC-in-M4A, Opus and Vorbis-in-Ogg through Bridge→Strict Worker→FFmpeg; Unicode/metacharacter source and existing destinations preserved; numbered publication and no-partial cleanup PASS.
+- Managed tests 253/253 PASS, 0 skipped; Python static tests 81/81 PASS; contract vectors 5/5 PASS.
+- Pre-authority deterministic A/B workspace SHA-256 `7430cc7aaf3b86a37f84edd6467925d9d9e05d9fa5c27917fafa3f2c813af70d`, 426577 bytes, 353 files; integrity then failed only because tracked generated authority predates `build/product-conversion-smoke.ps1`.
+
+## Prior frozen authority
+Dev.14 exact main `e0d9a00c3cb832e8109bf7ba7320215302da2177`, tree `ea530b37b25c89cfea8a1d51566e5288c416c389`, run `33328195635`; deterministic workspace SHA-256 `532d1916d33bff2f440e96ab9a3cabc0b0f1898ea5ad2b35bfccb1a9eb63ca44`.
 
 ## Authority rule
-Do not infer dev.14 finality from this document. Dev.14 is frozen only after version-aligned generated authority is synchronized from one exact CI artifact and an ordinary CI run on the exact current `main` HEAD has continuity, managed and supply-chain-static all successful, generated-authority zero-diff, deterministic workspace verification PASS and verified delivery uploaded.
+Do not infer dev.15 finality from this document. Dev.15 is frozen only after version-aligned generated authority is synchronized from one exact CI artifact, a branch qualification run reaches generated-authority zero-diff with managed/static green, `main` is fast-forwarded, and ordinary CI on the exact current `main` has continuity + managed + supply-chain-static all SUCCESS with deterministic workspace verification and verified delivery upload.
 
 ## Remaining shipping gates
-Headed Windows 11 UI/screenshots and Explorer failure matrix; production signed-package B2 identity/authentication requalification; production FFmpeg redistribution approval; signed production MSIX/clean-VM lifecycle; final security/fuzz/chaos/release/end-user acceptance.
+Headed Win11 UI/screenshots and Explorer failure matrix; broad Audio source-format/malformed-input acceptance; production signed-package B2 requalification; production FFmpeg redistribution approval; signed MSIX/clean-VM lifecycle; final security/fuzz/chaos/release/end-user acceptance.

@@ -4,20 +4,21 @@
 Windows 11 modern-context-menu file conversion platform. Converty is a modular right-click converter for Audio, Images, Video, and future file families while keeping Explorer, coordinator, worker, media-engine, staging, and publication trust boundaries explicit.
 
 ## Workspace version
-**0.1.0-dev.14** — one-shot admission replay/disconnect/reconnect acceptance on the existing authenticated Host pipe.
+**0.1.0-dev.15** — expanded fixed typed Audio conversion actions through the existing Strict Worker/provider path.
 
 ## Current evidence-backed state
 The product path remains:
 
 `IExplorerCommand → fixed Converty.Bridge.exe → Strict Converty.EngineWorker.exe → typed preset/provider → fixed app-local ffmpeg.exe → private staging → validated no-overwrite numbered publication`
 
-Dev.14 preserves the dev.13 one-shot `status` / `cancel` control wire and the normal conversion path. A repeated authenticated admission with the same `requestId` is now idempotent: it returns the already-queued job ID instead of creating a second job. Fresh named-pipe connections can recover after an ambiguous post-send disconnect and can perform status/cancel/status without a persistent-session protocol. Host peer authorization remains before application-frame parsing.
+Dev.15 adds fixed Audio actions for M4A/AAC 256k, Opus 192k VBR and Ogg Vorbis q6 alongside the existing MP3 320k, FLAC and WAV presets. The native Explorer submenu mirrors these stable preset IDs; Bridge accepts the typed preset ID only, and FFmpeg arguments remain fixed inside the product registry/provider boundary.
 
-Behavior head `46da899ec7dad5ebe2acc934dbaf7c009abc0c26`, run `33327473492`, passed 18/18 locked restore, zero-vulnerability audit, Release build with 0 warnings/errors, native Explorer, unsigned MakeAppx, direct and registered COM Invoke, real Bridge→Strict Worker→FFmpeg conversion, 250/250 managed tests, 78/78 static tests and 5/5 vectors. The run stopped only at the expected tracked generated-authority/workspace-integrity freshness boundary after changed source/test bytes.
+Behavior head `335754a7d99c99f918fa7f2bc29a89f691f0fd2a`, run `33331186761`, passed 18/18 locked restore, zero-vulnerability audit, Release build with 0 warnings/errors, native Explorer, unsigned MakeAppx, direct and registered COM Invoke, 253/253 managed tests, 81/81 static tests and 5/5 vectors. The real product smoke converted the same Unicode/metacharacter WAV through packaged Bridge→Strict Worker→FFmpeg to MP3, M4A/AAC, Opus and Ogg Vorbis while preserving the source and each pre-existing destination and publishing numbered outputs. The run stopped only at the expected generated-authority/workspace-integrity freshness boundary.
 
-## What dev.14 still does not claim
+## What dev.15 still does not claim
 - headed Windows 11 modern Explorer UI acceptance, exact-build screenshots or crash/hang/failure matrix;
-- production signed-package B2 identity/authentication requalification;
+- broad Audio source-format/malformed-input acceptance across the expanded matrix;
+- production signed-package B2 requalification;
 - production FFmpeg redistribution/license/notices/signature/hash approval;
 - signed production MSIX and clean Windows 11 VM lifecycle;
 - final security/fuzz/chaos/release audit or end-user acceptance.
@@ -29,8 +30,8 @@ Behavior head `46da899ec7dad5ebe2acc934dbaf7c009abc0c26`, run `33327473492`, pas
 4. `docs/development/IMPLEMENTATION_STATUS.md`
 5. `docs/TASK_BACKLOG.md`
 6. `docs/Converty_Master_Build_Plan.md`
-7. `docs/superpowers/specs/2026-08-30-dev14-session-replay-acceptance-design.md`
-8. `docs/superpowers/plans/2026-08-30-dev14-session-replay-acceptance.md`
+7. `docs/superpowers/specs/2026-08-30-dev15-audio-preset-matrix-design.md`
+8. `docs/superpowers/plans/2026-08-30-dev15-audio-preset-matrix.md`
 9. `docs/SECURITY_THREAT_MODEL.md`
 10. `docs/TEST_AND_RELEASE_GATES.md`
 

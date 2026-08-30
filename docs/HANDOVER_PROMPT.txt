@@ -1,32 +1,32 @@
 CONVERTY — CONTINUATION HANDOVER
-PRODUCT-FIRST ROADMAP — 0.1.0-dev.14 SESSION ACCEPTANCE
+PRODUCT-FIRST ROADMAP — 0.1.0-dev.15 AUDIO PRESET MATRIX
 
 Continue development directly in https://github.com/aeiouofficial/converty. Default branch: main.
 
-Current workspace version: 0.1.0-dev.14. Next workspace version: 0.1.0-dev.15. Repository main is the only durable completed authority. Re-fetch live main before every write and completion claim.
+Current workspace version: 0.1.0-dev.15. Next workspace version: 0.1.0-dev.16. Repository main is the only durable completed authority. Re-fetch live main before every write and completion claim.
 
 PRIOR FROZEN AUTHORITY
-Dev.13 main 19482bc21460f84096e350f730065988239fbd3c, tree 53f8638cb7be0bec1e0175569a8b22c009d3d771, exact-main run 33319810581 all three jobs successful. Deterministic workspace SHA-256 c14ac057f11fb9d47eac7687ec73e59b0aa1f3658cf9b361e83bc325b051743a. Verified delivery artifact 9734576999.
+Dev.14 exact main e0d9a00c3cb832e8109bf7ba7320215302da2177, tree ea530b37b25c89cfea8a1d51566e5288c416c389, exact-main run 33328195635 with all three jobs successful. Deterministic workspace SHA-256 532d1916d33bff2f440e96ab9a3cabc0b0f1898ea5ad2b35bfccb1a9eb63ca44, 424750 bytes, 352 files. Generated-authority artifact 9736854677; verified-delivery artifact 9736885669.
 
-DEV.14 BEHAVIOR
-Existing one-shot authenticated IPC is preserved. Admission replay is idempotent by requestId: duplicate admission resolves the existing request-to-job mapping and returns the existing jobId without another enqueue. Fresh connections recover after ambiguous disconnect and support status/cancel/status. No persistent-session protocol, second pipe, Host/Bridge media parsing or normal conversion reroute was added.
+DEV.15 BEHAVIOR
+The fixed Audio action matrix now contains MP3 320k, FLAC, M4A/AAC 256k faststart, Opus 192k VBR, Ogg Vorbis q6 and PCM WAV. The native Explorer submenu mirrors these typed preset IDs. Bridge resolves only reviewed preset IDs; no raw FFmpeg arguments, arbitrary executables, PATH lookup, network dependency or containment weakening was introduced.
 
-TDD EVIDENCE
-RED 34b0401ed139efe55f76037b55d8e749e30afc0b / run 33327339694 / managed 99299712127: 250 total, 249 passed, exactly the new replay assertion failed.
-Queue lookup 7766cb1f7831356de08e2288ac2da51bcfee743d.
-GREEN behavior 46da899ec7dad5ebe2acc934dbaf7c009abc0c26 / run 33327473492 / managed 99300068738: 250/250 managed, 78/78 static, 5/5 vectors, Release 0 warnings/errors and all native/package/COM/product conversion gates PASS. Deterministic source A/B ZIP SHA d6b3b56b3cf3f84c10a86c652e634f75f052f749b2cd31420169aba7f9dab73a, 420896 bytes, 349 files, then expected stale-authority failure.
+RED/GREEN EVIDENCE
+RED f729f821c98bc8841e585bad7764d8f7446d1c65 / run 33330926712: managed 99309222229 had 253 total, 249 passed, exactly 4 new preset expectation failures; static 99309222365 kept 78 existing tests green and failed exactly 3 new dev.15 feature assertions.
+Implementations: registry 3b68e76f02b8e502ec0e37737ac366627336b41d; product matrix 75276340d71a79ee21053506d6624ef5a1494095; native Explorer 8f5ffccb31b8fa17205fcc29ffccb327fd8df33d; static corrections ba3e7930ef3c9754f181263992239f695cf0f01f and 335754a7d99c99f918fa7f2bc29a89f691f0fd2a.
+GREEN behavior 335754a7d99c99f918fa7f2bc29a89f691f0fd2a / run 33331186761 / managed 99309902055 / static 99309901887: 253/253 managed, 81/81 static, 5/5 vectors, Release 0 warnings/errors, native/package/direct+registered COM PASS, and real MP3 + AAC-in-M4A + Opus + Vorbis-in-Ogg conversion matrix PASS with Unicode/metacharacter source preservation, existing-destination preservation, numbered publication and no partial outputs. Pre-authority deterministic ZIP SHA 7430cc7aaf3b86a37f84edd6467925d9d9e05d9fa5c27917fafa3f2c813af70d, 426577 bytes, 353 files, then expected stale package-manifest failure.
 
 FINALITY RULE
-Do not call dev.14 frozen until generated authority is synchronized from exact CI output, branch qualification reaches zero-diff, main is fast-forwarded, and ordinary exact-current-main CI has continuity + managed + supply-chain-static all SUCCESS with deterministic workspace verification and verified delivery.
+Do not call dev.15 frozen until version-aligned generated authority is synchronized from one exact CI artifact, branch qualification reaches zero-diff, main is fast-forwarded, and ordinary exact-current-main CI has continuity + managed + supply-chain-static all SUCCESS with deterministic workspace verification and verified-delivery upload.
 
-INVARIANTS
-Preserve Explorer → IExplorerCommand → fixed Bridge → strict disposable EngineWorker/provider → fixed app-local FFmpeg → private staging → transactional numbered no-overwrite publication. Preserve Unicode/metachar filenames, source/existing destination preservation, no shell/raw FFmpeg/user converter/PATH/network/silent fallback, media-neutral Host/Bridge, worker/provider-only parsing, no signing private keys. Gyan FFmpeg is development-only.
+HARD INVARIANTS
+Preserve Explorer → native IExplorerCommand → fixed Bridge → strict disposable EngineWorker/provider → fixed app-local FFmpeg → private staging → transactional numbered no-overwrite publication. Preserve Unicode/metacharacter filenames, source/existing-destination preservation, typed whitelisted preset options, no shell/raw FFmpeg/user converter/PATH/network/silent fallback, media-neutral Host/Bridge, worker/provider-only parsing and no signing private keys. Gyan FFmpeg remains development-only.
 
 HEADED LIMITATION
-No headed Windows 11 Explorer/UI/screenshots/failure-matrix claim is qualified here.
+No headed Windows 11 modern Explorer visual acceptance, exact-build screenshots or headed crash/hang/failure matrix is qualified here.
 
-ONE PRECISE NEXT TASK AFTER DEV.14 FREEZE
-Implement 0.1.0-dev.15 by expanding the fixed typed Audio conversion preset/action matrix through the existing Strict Worker/provider path, test-first, without raw FFmpeg passthrough, PATH lookup, network dependency or containment weakening.
+ONE PRECISE NEXT TASK AFTER DEV.15 FREEZE
+Implement 0.1.0-dev.16 as an Audio source-format and malformed-input acceptance matrix across the fixed Audio actions, test-first, through the existing strict worker/provider path. Cover representative supported Audio inputs and malformed/truncated inputs, deterministic failure behavior, source preservation, no destination corruption and no partial outputs. Do not begin Image/Video expansion until this Audio acceptance tranche is evidence-backed and frozen.
 
 RECURSIVE HANDOVER RULE
 Every completed tranche must end with a full copy-paste handover containing repo/default branch/live SHA/tree, prior authority, all commits, RED/GREEN history, run/job/artifact IDs, exact changes/reasons, executed tests/build/security outcomes, workspace hashes/counts, blockers, explicitly unverified claims, ONE precise next task, invariants, headed limitation, production signing/FFmpeg limitation, and this same recursive rule.

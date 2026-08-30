@@ -1,34 +1,27 @@
 # CONVERTY — CONTINUATION HANDOVER
-# PRODUCT-FIRST ROADMAP — 0.1.0-dev.14 SESSION ACCEPTANCE
+# 0.1.0-dev.15 AUDIO PRESET MATRIX
 
-Continue development directly in `https://github.com/aeiouofficial/converty`. Default branch: `main`.
+Repository: `https://github.com/aeiouofficial/converty`
+Default branch: `main`
+Current workspace: `0.1.0-dev.15`
+Next workspace: `0.1.0-dev.16`
 
-Current workspace version: `0.1.0-dev.14`. Next workspace version: `0.1.0-dev.15`. Repository `main` is the only durable completed authority. Re-fetch live `main` before every write and completion claim.
+## Prior frozen authority
+Dev.14 exact main `e0d9a00c3cb832e8109bf7ba7320215302da2177`, tree `ea530b37b25c89cfea8a1d51566e5288c416c389`, exact-main CI `33328195635`. Deterministic workspace SHA-256 `532d1916d33bff2f440e96ab9a3cabc0b0f1898ea5ad2b35bfccb1a9eb63ca44`.
 
-## PRIOR FROZEN AUTHORITY
-Dev.13 main `19482bc21460f84096e350f730065988239fbd3c`, tree `53f8638cb7be0bec1e0175569a8b22c009d3d771`, exact-main run `33319810581` all three jobs successful. Deterministic workspace SHA-256 `c14ac057f11fb9d47eac7687ec73e59b0aa1f3658cf9b361e83bc325b051743a`. Verified delivery artifact `9734576999`.
+## Dev.15 behavior
+Audio actions now include MP3 320k, FLAC, M4A/AAC 256k, Opus 192k VBR, Ogg Vorbis q6, and WAV. Explorer exposes the same typed preset IDs. Conversion continues through the fixed Bridge → Strict Worker/provider → app-local FFmpeg → private staging → numbered no-overwrite publication path.
 
-## DEV.14 BEHAVIOR
-Existing one-shot authenticated IPC is preserved. Admission replay is now idempotent by `requestId`: if the queue reports a duplicate request, Host resolves the already-known request-to-job mapping and returns the existing `jobId` without enqueueing another job. Fresh connections recover after ambiguous disconnect and support status/cancel/status. No persistent-session protocol, second pipe, media parsing in Host/Bridge, or normal conversion reroute was added.
+## Evidence
+RED `f729f821c98bc8841e585bad7764d8f7446d1c65`, run `33330926712`: managed 253 total / 249 passed / 4 intended new-feature failures; static 78 existing passes / 3 intended new-feature failures.
 
-## TDD EVIDENCE
-- RED `34b0401ed139efe55f76037b55d8e749e30afc0b`, run `33327339694`, managed `99299712127`: 250 total, 249 passed, exactly the new replay acceptance assertion failed.
-- Queue lookup `7766cb1f7831356de08e2288ac2da51bcfee743d`.
-- GREEN behavior `46da899ec7dad5ebe2acc934dbaf7c009abc0c26`, run `33327473492`, managed `99300068738`: 250/250 managed, 78/78 static, 5/5 vectors, Release 0 warnings/errors, native/package/direct+registered COM/product conversion PASS. Deterministic A/B source ZIP SHA `d6b3b56b3cf3f84c10a86c652e634f75f052f749b2cd31420169aba7f9dab73a`, 420896 bytes, 349 files, then expected stale generated-authority manifest failure.
+GREEN behavior `335754a7d99c99f918fa7f2bc29a89f691f0fd2a`, run `33331186761`: managed 253/253, static 81/81, vectors 5/5, Release 0 warnings/errors, native/package/COM PASS, real MP3 + M4A/AAC + Opus + Ogg Vorbis product matrix PASS. Pre-authority deterministic ZIP SHA-256 `7430cc7aaf3b86a37f84edd6467925d9d9e05d9fa5c27917fafa3f2c813af70d`, 426577 bytes, 353 files; final integrity stopped only on stale generated authority.
 
-## FINALITY RULE
-Do not call dev.14 frozen until version-aligned generated authority is synchronized from one exact CI artifact, branch qualification reaches generated-authority zero-diff, `main` is fast-forwarded, and ordinary CI on the exact current `main` has continuity + managed + supply-chain-static all SUCCESS with deterministic workspace verification and verified delivery upload.
+## Finality
+Do not call dev.15 frozen until generated authority is synchronized from the exact versioned CI artifact, branch zero-diff qualification passes, `main` is fast-forwarded, and an ordinary CI run on exact current `main` has continuity, managed, and supply-chain-static all successful with deterministic verified delivery.
 
-## HARD INVARIANTS
-Preserve Explorer → native `IExplorerCommand` → fixed Bridge → strict disposable EngineWorker/provider → fixed app-local FFmpeg → private staging → transactional numbered no-overwrite publication. Preserve Unicode/metacharacter filenames, source/existing-destination preservation, no shell/raw FFmpeg/user converter/PATH/network/silent fallback, media-neutral Host/Bridge, worker/provider-only media parsing, and no signing private keys.
+## Next task
+After dev.15 freeze, implement `0.1.0-dev.16`: Audio source-format and malformed-input acceptance across the fixed Audio actions. Cover representative supported inputs, malformed/truncated inputs, deterministic failures, source preservation, destination preservation, and partial-output cleanup. Do not begin Image/Video expansion before this Audio tranche is frozen.
 
-Gyan FFmpeg remains development qualification input only, not production redistribution approval.
-
-## HEADED WINDOWS 11 LIMITATION
-No real headed Windows 11 Explorer environment is available here. Do not claim modern submenu visual acceptance, mouse-driven acceptance, exact-build screenshots, headed Explorer failure matrix or end-user UI acceptance.
-
-## ONE PRECISE NEXT TASK AFTER DEV.14 FREEZE
-Implement `0.1.0-dev.15` by expanding the fixed typed Audio conversion preset/action matrix through the existing Strict Worker/provider path, test-first, without raw FFmpeg passthrough, PATH lookup, network dependency or containment weakening.
-
-## RECURSIVE HANDOVER RULE
-Every completed tranche must end with a full copy-paste handover containing repo/default branch/live SHA/tree, prior authority, all commits, RED/GREEN history, run/job/artifact IDs, exact changes/reasons, executed tests/build/security outcomes, workspace hashes/counts, blockers, explicitly unverified claims, ONE precise next task, invariants, headed limitation, production signing/FFmpeg limitation, and this same recursive rule.
+## Recursive handover
+Every completed tranche must end with a copy-paste handover containing repo/default branch/live SHA/tree, prior authority, relevant commits, RED/GREEN history, run/job/artifact IDs, changes/reasons, tests/build/security outcomes, workspace hashes/counts, blockers, unverified claims, one precise next task, invariants, headed limitation, production signing/FFmpeg limitation, and this same recursive rule.

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "workspaceVersion": "0.1.0-dev.14",
+  "workspaceVersion": "0.1.0-dev.15",
   "targetOs": "Windows 11",
   "dotnetSdk": "10.0.400",
   "targetFramework": "net10.0",
@@ -9,10 +9,10 @@
   "nativeBuild": "CMake + MSVC",
   "architecture": "x64-first",
   "notes": [
-    "Dev.14 qualifies authenticated one-shot admission replay, disconnect recovery, reconnect, status and cancellation without adding persistent-session architecture.",
-    "A repeated requestId returns the existing jobId and does not enqueue a second job; request-to-job lookup is protected by the existing Host queue lock and restored from persisted status snapshots.",
-    "Behavior head 46da899ec7dad5ebe2acc934dbaf7c009abc0c26 run 33327473492 passed Release/native/package/COM/product conversion gates, 250/250 managed tests, 78/78 static tests and 5/5 vectors before expected generated-authority freshness failure.",
-    "Host/Bridge remain media-neutral and the normal Explorer→Bridge→Strict Worker→FFmpeg path is unchanged.",
+    "Dev.15 expands the fixed typed Audio action matrix with M4A/AAC 256k, Opus 192k VBR and Ogg Vorbis q6 while preserving MP3 320k, FLAC and WAV.",
+    "The native Explorer submenu mirrors the managed preset registry with stable preset IDs; Bridge still accepts only typed preset IDs and never exposes raw FFmpeg arguments.",
+    "Behavior head 335754a7d99c99f918fa7f2bc29a89f691f0fd2a run 33331186761 passed Release/native/package/COM and four-target Bridge→Strict Worker→FFmpeg product smokes, 253/253 managed tests, 81/81 static tests and 5/5 vectors before the expected generated-authority freshness boundary.",
+    "Host/Bridge remain media-neutral; parsing and codec execution remain worker/provider-only with private staging and no-overwrite numbered publication.",
     "Headed Win11 acceptance, production signed-package B2 requalification, production FFmpeg redistribution, signed MSIX/clean-VM lifecycle and final release audit remain open."
   ],
   "testRunner": "Microsoft.Testing.Platform",
