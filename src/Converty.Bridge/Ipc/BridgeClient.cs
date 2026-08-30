@@ -6,6 +6,7 @@ using System.Text;
 using System.Text.Json;
 using Converty.Contracts;
 using Converty.Contracts.Conversion;
+using Converty.Contracts.Jobs;
 using Converty.Ipc.Protocol;
 using Converty.Security.Ipc;
 using Converty.Serialization;
@@ -13,9 +14,13 @@ using Converty.Serialization;
 namespace Converty.Bridge.Ipc;
 
 [SupportedOSPlatform("windows")]
-public sealed class BridgeClient : IBridgeRequestClient
+public sealed class BridgeClient : IBridgeRequestClient, IBridgeJobControlClient
 {
     public static readonly TimeSpan MaximumConnectTimeout = TimeSpan.FromSeconds(30);
+
+    private static readonly UTF8Encoding StrictUtf8 = new(
+        encoderShouldEmitUTF8Identifier: false,
+        throwOnInvalidBytes: true);
 
     private static readonly HashSet<string> ResponseMembers = new(StringComparer.Ordinal)
     {
@@ -68,6 +73,52 @@ public sealed class BridgeClient : IBridgeRequestClient
         ArgumentNullException.ThrowIfNull(request);
         cancellationToken.ThrowIfCancellationRequested();
 
+        byte[] payload = Encoding.UTF8.GetBytes(ContractJson.Serialize(request));
+        ProtocolFrame response = await ExchangeAsync(payload, cancellationToken);
+        return ParseResponse(response.Payload);
+    }
+
+    public Task<JobControlResponse> GetStatusAsync(
+        Guid jobId,
+        CancellationToken cancellationToken = default) =>
+        SendJobControlAsync(JobControlOperation.Status, jobId, cancellationToken);
+
+    public Task<JobControlResponse> CancelAsync(
+        Guid jobId,
+        CancellationToken cancellationToken = default) =>
+        SendJobControlAsync(JobControlOperation.Cancel, jobId, cancellationToken);
+
+    private async Task<JobControlResponse> SendJobControlAsync(
+        JobControlOperation operation,
+        Guid jobId,
+        CancellationToken cancellationToken)
+    {
+        cancellationToken.ThrowIfCancellationRequested();
+        var request = new JobControlRequest(SchemaVersions.Current, operation, jobId);
+        byte[] payload = Encoding.UTF8.GetBytes(ContractJson.Serialize(request));
+        ProtocolFrame responseFrame = await ExchangeAsync(payload, cancellationToken);
+
+        JobControlResponse response;
+        try
+        {
+            string json = StrictUtf8.GetString(responseFrame.Payload.Span);
+            response = ContractJson.DeserializeJobControlResponse(json);
+        }
+        catch (Exception error) when (error is JsonException or DecoderFallbackException)
+        {
+            throw new InvalidDataException("Bridge job-control response is not valid strict JSON.", error);
+        }
+
+        ValidateJobControlResponse(operation, jobId, response);
+        return response;
+    }
+
+    private async Task<ProtocolFrame> ExchangeAsync(
+        byte[] payload,
+        CancellationToken cancellationToken)
+    {
+        ArgumentNullException.ThrowIfNull(payload);
+
         await using var pipe = new NamedPipeClientStream(
             ".",
             PipeName,
@@ -90,11 +141,66 @@ public sealed class BridgeClient : IBridgeRequestClient
 
         _serverIdentityVerifier.VerifyConnectedServer(pipe);
 
-        byte[] payload = Encoding.UTF8.GetBytes(ContractJson.Serialize(request));
         await BoundedProtocolFrameIo.WriteAndFlushAsync(pipe, payload, _connectTimeout, cancellationToken);
+        return await BoundedProtocolFrameIo.ReadAsync(pipe, _connectTimeout, cancellationToken);
+    }
 
-        ProtocolFrame response = await BoundedProtocolFrameIo.ReadAsync(pipe, _connectTimeout, cancellationToken);
-        return ParseResponse(response.Payload);
+    private static void ValidateJobControlResponse(
+        JobControlOperation expectedOperation,
+        Guid expectedJobId,
+        JobControlResponse response)
+    {
+        if (response.Operation != expectedOperation)
+        {
+            throw new InvalidDataException("Bridge job-control response operation does not match the request.");
+        }
+
+        if (response.JobId != expectedJobId)
+        {
+            throw new InvalidDataException("Bridge job-control response job ID does not match the request.");
+        }
+
+        if (expectedOperation == JobControlOperation.Status)
+        {
+            if (!response.Succeeded && response.Reason != JobControlFailureReason.JobNotFound)
+            {
+                throw new InvalidDataException("Status response contains a cancellation-only failure reason.");
+            }
+
+            return;
+        }
+
+        if (response.Succeeded)
+        {
+            if (response.Status?.State != ConversionJobState.Cancelled)
+            {
+                throw new InvalidDataException("Successful cancel response must contain Cancelled status.");
+            }
+
+            return;
+        }
+
+        switch (response.Reason)
+        {
+            case JobControlFailureReason.JobNotFound:
+                return;
+            case JobControlFailureReason.PersistenceFailure:
+                if (response.Status?.State != ConversionJobState.Queued)
+                {
+                    throw new InvalidDataException("Cancel persistenceFailure response must contain Queued status.");
+                }
+
+                return;
+            case JobControlFailureReason.NotCancellable:
+                if (response.Status is null || response.Status.State == ConversionJobState.Queued)
+                {
+                    throw new InvalidDataException("Cancel notCancellable response must contain non-Queued status.");
+                }
+
+                return;
+            default:
+                throw new InvalidDataException("Cancel response contains an unsupported failure reason.");
+        }
     }
 
     private static BridgeSubmissionResult ParseResponse(ReadOnlyMemory<byte> payload)
