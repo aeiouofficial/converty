@@ -16,7 +16,7 @@ public sealed class IpcFuzzCorpusTests
         using JsonDocument document = JsonDocument.Parse(raw);
 
         JsonElement cases = document.RootElement.GetProperty("cases");
-        Assert.Equal(7, cases.GetArrayLength());
+        Assert.Equal(12, cases.GetArrayLength());
 
         foreach (JsonElement fuzzCase in cases.EnumerateArray())
         {
