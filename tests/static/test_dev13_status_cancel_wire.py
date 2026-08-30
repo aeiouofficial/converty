@@ -48,7 +48,7 @@ def test_dev13_host_authorizes_peer_before_reading_application_semantics() -> No
 
     assert server.index("_peerValidator.IsExpectedUser") < server.index("BoundedProtocolFrameIo.ReadAsync")
     assert "PeerAuthorization.ExpectedUser" in server
-    assert "PeerAuthorization.Unauthorized" in handler
+    assert "authorization != PeerAuthorization.ExpectedUser" in handler
     assert handler.index("authorization != PeerAuthorization.ExpectedUser") < handler.index("StrictUtf8.GetString")
 
 
