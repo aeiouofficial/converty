@@ -120,6 +120,9 @@ jobs:
       - name: Product Bridge to FFmpeg smoke
         shell: pwsh
         run: ./build/product-conversion-smoke.ps1
+      - name: Audio source and malformed-input acceptance
+        shell: pwsh
+        run: ./build/audio-input-acceptance-smoke.ps1
       - name: Test
         shell: pwsh
         run: ./build/test.ps1 -Configuration Release
