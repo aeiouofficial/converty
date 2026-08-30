@@ -19,19 +19,32 @@
       "warnings": 0,
       "errors": 0,
       "tests": {"total": 253, "succeeded": 253, "failed": 0, "skipped": 0},
+      "nativeTopologySmoke": "PASS",
       "nativeExplorerReleaseBuild": "PASS",
+      "developmentFfmpegPinHashAndExecution": "PASS",
       "makeAppxUnsignedDevelopmentPackage": "PASS",
       "directShellDllClassFactoryInvoke": "PASS",
       "loosePackageRegistrationComActivationInvoke": "PASS",
-      "existingProductAudioSmoke": "PASS",
+      "productBridgeToStrictWorkerFfmpegSmoke": "PASS",
+      "audioTargetMatrix": [
+        "audio.mp3 => mp3 / 320000 bit/s",
+        "audio.m4a.aac => aac in .m4a",
+        "audio.opus => opus in .opus",
+        "audio.ogg.vorbis => vorbis in .ogg"
+      ],
       "audioSourceActionMatrix": {"sources": 6, "actions": 6, "successfulConversions": 36, "status": "PASS"},
       "malformedInput": {"attempts": 2, "bridgeExitCode": 4, "deterministic": true, "status": "PASS"},
       "truncatedInput": {"attempts": 2, "bridgeExitCode": 4, "deterministic": true, "status": "PASS"},
-      "sourceAndExistingDestinationPreserved": "PASS",
+      "transactionalNumberedCollision": "PASS for every exercised product target",
+      "sourceAndExistingDestinationPreserved": "PASS for every product and dev.16 acceptance case",
       "numberedNoOverwritePublication": "PASS",
       "partialOutputCleanup": "PASS"
     },
-    "static": {"tests": "85/85 PASS before generated-authority freshness check", "contractVectors": "5/5 PASS"},
+    "static": {
+      "tests": "85/85 PASS before generated-authority freshness check",
+      "contractVectors": "5/5 PASS",
+      "generatedAuthorityState": "RUNNER_REGEN_REQUIRED_FOR_FINAL_AUTHORITY_TREE"
+    },
     "workspaceDoubleBuildBeforeAuthoritySync": {
       "sha256": "27b6f96ea8c42afee8de2d67a2ea9d43f48607ab13a4b124cbab6acd3b55a643",
       "bytes": 436519,
