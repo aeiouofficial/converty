@@ -49,7 +49,7 @@ constexpr std::array<const wchar_t*, 8> kAudioExtensions = {
 constexpr std::array<const wchar_t*, 8> kImageExtensions = {
     L".png", L".jpg", L".jpeg", L".webp", L".bmp", L".gif", L".tif", L".tiff"};
 
-constexpr std::array<PresetDefinition, 9> kPresets = {{
+constexpr std::array<PresetDefinition, 12> kPresets = {{
     {L"video.mp4.h264", L"Convert to MP4", MediaKind::Video, L".mp4",
      {0x213da29e, 0x3f2c, 0x4f7e, {0xad, 0x6d, 0x81, 0x8f, 0x9d, 0x62, 0x51, 0xa1}}},
     {L"video.webm.vp9", L"Convert to WebM", MediaKind::Video, L".webm",
@@ -60,6 +60,12 @@ constexpr std::array<PresetDefinition, 9> kPresets = {{
      {0xa048b346, 0x4a75, 0x4b68, {0xb2, 0x28, 0x86, 0xa9, 0xd6, 0x23, 0x17, 0x20}}},
     {L"audio.flac", L"Convert to FLAC", MediaKind::Audio, L".flac",
      {0x536f5ce1, 0x1763, 0x4db9, {0xbf, 0x61, 0x6f, 0xc4, 0x89, 0x10, 0xf8, 0x3e}}},
+    {L"audio.m4a.aac", L"Convert to M4A (AAC)", MediaKind::Audio, L".m4a",
+     {0x38bd3cdf, 0x72c3, 0x4982, {0xbc, 0xe9, 0x5f, 0x00, 0x8e, 0xe2, 0xce, 0xe2}}},
+    {L"audio.opus", L"Convert to Opus", MediaKind::Audio, L".opus",
+     {0xfa5e4009, 0xd5e3, 0x491d, {0x9b, 0x10, 0x75, 0xcd, 0x24, 0x91, 0x61, 0x91}}},
+    {L"audio.ogg.vorbis", L"Convert to Ogg Vorbis", MediaKind::Audio, L".ogg",
+     {0x94e6553e, 0x6646, 0x4c6b, {0xbf, 0xbf, 0xfd, 0x96, 0xd4, 0x90, 0x39, 0xa3}}},
     {L"audio.wav", L"Convert to WAV", MediaKind::Audio, L".wav",
      {0x53c845e3, 0x54f3, 0x48dd, {0xb8, 0x35, 0x85, 0x89, 0x6d, 0xfd, 0x6f, 0xca}}},
     {L"image.png", L"Convert to PNG", MediaKind::Image, L".png",
