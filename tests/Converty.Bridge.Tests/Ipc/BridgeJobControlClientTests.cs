@@ -34,7 +34,7 @@ public sealed class BridgeJobControlClientTests
             jobId,
             response,
             TestContext.Current.CancellationToken);
-        IBridgeJobControlClient client = new BridgeClient(pipeName, TimeSpan.FromSeconds(5), verifier);
+        BridgeClient client = new(pipeName, TimeSpan.FromSeconds(5), verifier);
 
         JobControlResponse result = await client.GetStatusAsync(jobId, TestContext.Current.CancellationToken);
         await serverTask;
@@ -68,7 +68,7 @@ public sealed class BridgeJobControlClientTests
             jobId,
             response,
             TestContext.Current.CancellationToken);
-        IBridgeJobControlClient client = new BridgeClient(pipeName, TimeSpan.FromSeconds(5), verifier);
+        BridgeClient client = new(pipeName, TimeSpan.FromSeconds(5), verifier);
 
         JobControlResponse result = await client.CancelAsync(jobId, TestContext.Current.CancellationToken);
         await serverTask;
@@ -89,7 +89,7 @@ public sealed class BridgeJobControlClientTests
         Guid jobId = Guid.NewGuid();
         using var server = CreateServer(pipeName);
         var verifier = new RecordingVerifier(new BridgeServerIdentityException("fake server"));
-        IBridgeJobControlClient client = new BridgeClient(pipeName, TimeSpan.FromSeconds(5), verifier);
+        BridgeClient client = new(pipeName, TimeSpan.FromSeconds(5), verifier);
         Task serverTask = AssertConnectionClosesWithoutPayloadAsync(server, TestContext.Current.CancellationToken);
 
         await Assert.ThrowsAsync<BridgeServerIdentityException>(() => operation == JobControlOperation.Status
@@ -212,7 +212,7 @@ public sealed class BridgeJobControlClientTests
             jobId,
             Encoding.UTF8.GetBytes(responseJson),
             TestContext.Current.CancellationToken);
-        IBridgeJobControlClient client = new BridgeClient(
+        BridgeClient client = new(
             pipeName,
             TimeSpan.FromSeconds(5),
             new RecordingVerifier());
@@ -232,7 +232,7 @@ public sealed class BridgeJobControlClientTests
             jobId,
             response,
             TestContext.Current.CancellationToken);
-        IBridgeJobControlClient client = new BridgeClient(
+        BridgeClient client = new(
             pipeName,
             TimeSpan.FromSeconds(5),
             new RecordingVerifier());
@@ -252,7 +252,7 @@ public sealed class BridgeJobControlClientTests
             jobId,
             response,
             TestContext.Current.CancellationToken);
-        IBridgeJobControlClient client = new BridgeClient(
+        BridgeClient client = new(
             pipeName,
             TimeSpan.FromSeconds(5),
             new RecordingVerifier());
