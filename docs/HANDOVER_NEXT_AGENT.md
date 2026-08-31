@@ -1,4 +1,4 @@
-# Converty continuation handover — dev.16 candidate
+# Converty continuation handover — dev.17 candidate
 
 Repository: `https://github.com/aeiouofficial/converty`  
 Default branch: `main`
@@ -6,17 +6,17 @@ Default branch: `main`
 Read `docs/HANDOVER_PROMPT.txt` first; it is the canonical recursive continuation prompt for this tranche.
 
 ## Candidate authority
-- Version: `0.1.0-dev.16`
-- Behavior head: `061ad75600fee6fd4b34e4a24bd8d571ac17ce90`
-- Behavior run: `33340338502`
-- Managed: `99334697033`
-- Static: `99334696969`
-- Prior frozen main: `dc46bd4dd25fe672f1695a0895cdb06152a743a7`
+- Version: `0.1.0-dev.17`
+- Behavior head: `5829c868c5d192c70f21ea0da9337250a8d9c961`
+- Behavior run: `33347652162`
+- Managed: `99354775361`
+- Static: `99354775208`
+- Prior frozen main: `dca3cbcba326a35801bc442ec93f16d84f58a692`
 
-The dev.16 behavior is green but finality still requires version-aligned generated-authority sync, branch zero-diff qualification, non-force main promotion and a fully green exact-current-main ordinary CI run. Do not skip those gates and do not overwrite newer concurrent work.
+Dev.17 behavior is green but finality still requires version-aligned generated-authority sync, branch zero-diff qualification, non-force main promotion and a fully green exact-current-main ordinary CI run. Do not skip those gates and do not overwrite newer concurrent work.
 
-## What dev.16 proves
-Six representative Audio source formats × six fixed Audio actions = 36 packaged strict-path conversions, plus repeated malformed/truncated rejection. All transactional preservation/no-partial checks pass. A modal error-reporting hang discovered by this matrix was fixed with explicit automation-only noninteractive reporting while retaining default Explorer MessageBox UI.
+## What dev.17 proves
+A real five-file same-family Audio selection with valid, malformed and truncated inputs is processed by one Bridge process. Ordinary per-file conversion failures no longer suppress later valid items. Successful outputs survive, bad inputs publish nothing, collisions number deterministically, sources/pre-existing destinations are preserved and no partial residue remains. The matrix is exercised twice.
 
 ## Next after freeze
-Dev.17 is final Audio multi-file/mixed-valid-invalid batch isolation and matrix closure. Image/Video expansion remains blocked until that tranche is frozen.
+Dev.18 starts the first fixed typed Image action matrix through the existing Strict Worker/provider boundary. Preserve all Audio qualification and do not weaken containment or executable/preset trust boundaries.
