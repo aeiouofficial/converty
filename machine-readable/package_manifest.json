@@ -240,13 +240,13 @@
     },
     {
       "path": "docs/development/DEV18_IMAGE_INPUT_ACCEPTANCE_TDD_EVIDENCE.md",
-      "bytes": 2735,
-      "sha256": "3fbe938e44150899dcf611e13aaa81f18d2a952d48bd095776fa716647ac826f"
+      "bytes": 3685,
+      "sha256": "1c42400adb4a352d8254b87e497fd6f1dae30d9712330205c880de11e1058a8e"
     },
     {
       "path": "docs/development/IMPLEMENTATION_STATUS.md",
-      "bytes": 4129,
-      "sha256": "48677fddd3705f6a62a81aab54bb30d9f0a0549e130fd37e29f9cce68455127a"
+      "bytes": 4632,
+      "sha256": "e590fe5c60a2ec71a8a59598dcc9a16979e1af0530e0f8b9ff8a2a3baa141eff"
     },
     {
       "path": "docs/development/MODULE_BOUNDARIES.md",
@@ -265,13 +265,13 @@
     },
     {
       "path": "docs/HANDOVER_NEXT_AGENT.md",
-      "bytes": 1511,
-      "sha256": "82e04e7e64826cb3ca660646d07d7c7667c093c7c9a016bca61a404f2a7394b5"
+      "bytes": 2059,
+      "sha256": "15c15d82ef9f57d73ea93df32e9ec6e0e6ae4af39d94c78899287b17a7432061"
     },
     {
       "path": "docs/HANDOVER_PROMPT.txt",
-      "bytes": 4416,
-      "sha256": "cb0f77509eeec31b70c620011b92e46120596613c28764b56e82f111402f6970"
+      "bytes": 5097,
+      "sha256": "2e7a5330d1a43c97a5f7d4854224885489654439ae9610cfd62cae14c00f4fd8"
     },
     {
       "path": "docs/REFERENCE_SOURCES.md",
@@ -440,8 +440,8 @@
     },
     {
       "path": "docs/TASK_BACKLOG.md",
-      "bytes": 4040,
-      "sha256": "aabf636589ce6be7fe3687b5ff5fd014fca848c1e743b5d147592ceef6a8b4f7"
+      "bytes": 4125,
+      "sha256": "4eb3672656cbecfb0bb0c08ce7f9c634a735b9c75f7af0f2b3f8344f0f742cbe"
     },
     {
       "path": "docs/TEST_AND_RELEASE_GATES.md",
@@ -470,8 +470,8 @@
     },
     {
       "path": "machine-readable/build_evidence.json",
-      "bytes": 4318,
-      "sha256": "41329c54b440442cebed8a3f5ac5e970156f6c0bbfc42457316f740124af4664"
+      "bytes": 4214,
+      "sha256": "d633b59d34a345f9d30a1e6e3c505eeb556d3f7727046e3cd9e3403c4607c06c"
     },
     {
       "path": "machine-readable/ci_action_pins.json",
@@ -480,8 +480,8 @@
     },
     {
       "path": "machine-readable/handover_state.json",
-      "bytes": 3661,
-      "sha256": "c1179b34d3e4bf26b083025b572e86afe4a8440e2632ace9c84d2d1476375909"
+      "bytes": 3641,
+      "sha256": "feabd5514f7374f4ce4b93b3116d203e835b3e42465366bf49ab3b261dce306e"
     },
     {
       "path": "machine-readable/release_policy.json",
@@ -595,8 +595,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 4464,
-      "sha256": "32b6b56cbfee814d7bc4bb286f4d49de64810ecc01c01cc5a1888b2995994a1e"
+      "bytes": 5065,
+      "sha256": "24279bd47eda8796119460a3c6bf1e83b2b6b2a1e67de63d07e2b83440cc3dd9"
     },
     {
       "path": "reference-images/01_system_architecture.dot",

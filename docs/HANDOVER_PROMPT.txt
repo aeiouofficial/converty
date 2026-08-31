@@ -1,13 +1,18 @@
 CONVERTY — CONTINUATION HANDOVER
-PRODUCT-FIRST ROADMAP — 0.1.0-dev.18 IMAGE INPUT ACCEPTANCE
+PRODUCT-FIRST ROADMAP — FROZEN 0.1.0-dev.18 → 0.1.0-dev.19 IMAGE MIXED-BATCH CLOSURE
 
 Continue development directly in https://github.com/aeiouofficial/converty. Default branch: main. Re-fetch live refs before every write or completion claim; never force over newer concurrent work.
 
-CURRENT VERSION CANDIDATE
-0.1.0-dev.18. Behavior head: 6075aa3973b75e170cb5f9b812a8ca3b9b71f528. Dev.18 is not frozen until generated authority is synchronized, branch zero-diff qualification passes, main is non-force fast-forwarded, and exact-main ordinary CI is fully green.
-
-PRIOR FROZEN AUTHORITY
-Dev.17 exact main 8b2756910b58b678745e6fda89866ed3bf545474, tree c8066d768aeaeb1b2541cc6ca24217ff882e6048, exact-main run 33349604621. Jobs: managed 99360233371 SUCCESS, continuity 99360233503 SUCCESS, static 99360233566 SUCCESS. Workspace SHA-256 46949a7f0caa4675ce1573987eedbdca609a0ef4f2d331385fb5d8fe401d9eea, 454470 bytes, 367 entries. Generated artifact 9743140776; verified delivery 9743178417.
+CURRENT FROZEN PRODUCT AUTHORITY
+Version: 0.1.0-dev.18.
+Qualification anchor: commit ef079f7e7923e399624067c4d54b9ce7577bf090, tree 0af729f150897d170eac9f9aebfd5bc7d5d4083a.
+Exact-main run: 33390111824.
+Jobs: managed 99481546832 SUCCESS; supply-chain-static 99481546572 SUCCESS; main-authority-continuity 99481546655 SUCCESS.
+Tracked generated authority zero-diff: PASS.
+Deterministic workspace: Converty_0.1.0-dev.18_full_workspace.zip; SHA-256 4be8d5a2f503a8a885347b647bbd0aa0b61ce6d56b3ac39d9af7b11fb801628a; 463162 bytes; 372 entries; 370 package-manifest entries; 371 SHA-manifest entries; CRC/double-build/exclusion policy PASS.
+Generated-authority artifact: 9757102986, digest sha256:a8eb7d4a9d70044d2d6125404de7de686de41a97fd7dada1b2cf814d6f2c50d5.
+Verified-delivery artifact: 9757169067, digest sha256:97931ae9cbee196fb3cc6c3b0c2d792055ad04365d6dc6609e659301edaa0f92.
+Re-fetch live main because metadata-only curation may advance the commit without changing product behavior.
 
 DEV.18 TDD/BEHAVIOR
 RED 7388aec6ffb673e0101b09106d646d417f77a7b3 / run 33349908668 / static 99361086262: 92 existing static PASS, exactly 3 new assertions FAIL because the Image acceptance component did not exist.
@@ -18,7 +23,7 @@ IMAGE ACCEPTANCE
 Sources: png, jpg, jpeg, webp, bmp, gif, tif, tiff. Actions: image.png, image.jpeg, image.webp. 24/24 packaged strict-path conversions PASS. Outputs are ffprobe-verified for png/mjpeg/webp and 64x48 dimensions. Sources and pre-existing destinations remain byte-identical, publication is numbered/no-overwrite, and no partial output remains. Malformed and truncated Image inputs are each repeated and reject deterministically with Bridge exit 4 without publication.
 
 RECURSIVE REGRESSION
-18/18 locked restore PASS; dependency audit 18 projects/18 frameworks/0 vulnerable-result packages; Release build 0 warnings/0 errors; native Explorer/package/direct+registered COM/product gates PASS; Audio 36-case source/action + malformed/truncated + mixed batch PASS; managed 254/254; static 95/95; vectors 5/5. Pre-authority workspace A/B SHA-256 50324f542c263cb7b23f43a6e9c87b68ec773f08c1a7b828dc41da7e369cdda2, 459142 bytes, 369 entries, then expected stale generated-authority failure.
+18/18 locked restore PASS; dependency audit 18 projects/18 frameworks/0 vulnerable-result packages; Release build 0 warnings/0 errors; native Explorer/package/direct+registered COM/product gates PASS; Audio 36-case source/action + malformed/truncated + mixed batch PASS; managed 254/254; static 95/95; vectors 5/5.
 
 HARD INVARIANTS
 Preserve Explorer → native IExplorerCommand → fixed Bridge → strict disposable EngineWorker/provider → fixed app-local FFmpeg → private staging → transactional numbered no-overwrite publication. Preserve Unicode/metacharacter filenames, source/existing-destination bytes, typed whitelisted presets, no shell/raw FFmpeg/user executable/PATH/network/silent fallback, media-neutral Host/Bridge, worker/provider-only codec parsing and no signing private keys. Gyan FFmpeg remains development-only qualification input.
@@ -26,8 +31,11 @@ Preserve Explorer → native IExplorerCommand → fixed Bridge → strict dispos
 OPEN SHIPPING GATES
 Headed Win11 modern Explorer exact-build UI/screenshots and headed crash/hang/failure matrix; Image mixed-batch closure; production signed-package B2 identity/authentication requalification; production FFmpeg/ffprobe redistribution/license/notices/signature/hash approval; signed production MSIX clean Win11 lifecycle; final security/fuzz/chaos/release/end-user acceptance.
 
-ONE PRECISE NEXT TASK AFTER DEV.18 FREEZE
+ONE PRECISE NEXT TASK
 Implement 0.1.0-dev.19 test-first as Image multi-file/mixed-valid-invalid acceptance. Exercise one same-family Explorer/Bridge selection containing valid Images before and after malformed/truncated Images, prove later valid files still publish after ordinary per-file failures, aggregate failure is reported only after the batch, source/pre-existing destinations are preserved, collision numbering is deterministic, no partial output/orphan worker remains, and all single-file Image/Audio behavior regresses green. Do not begin Video expansion until this Image closure tranche is evidence-backed and frozen.
+
+AUTHORITY WORKFLOW
+Start from exact live main and create a dev.19 branch. Preserve RED evidence. Qualify behavior on Windows with real packaged Bridge→Strict Worker/provider→development FFmpeg. Stage version/evidence metadata without hand-editing generated authority. Synchronize generated authority only from the exact CI artifact. Require branch zero-diff qualification. Fast-forward main non-force only if its base is unchanged. Then require ordinary exact-main CI with continuity + managed + supply-chain-static all SUCCESS and deterministic verified delivery.
 
 RECURSIVE HANDOVER RULE
 Every completed tranche must end with a full copy-paste handover containing repository/default branch/live SHA/tree, prior authority, all commits, RED/GREEN history, run/job/artifact IDs, exact changes/reasons, executed tests/build/security outcomes, workspace hashes/counts, blockers, explicitly unverified claims, ONE precise next task, invariants, headed limitation, production signing/FFmpeg limitation, and this same recursive rule.
