@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "workspaceVersion": "0.1.0-dev.17",
+  "workspaceVersion": "0.1.0-dev.18",
   "targetOs": "Windows 11",
   "dotnetSdk": "10.0.400",
   "targetFramework": "net10.0",
@@ -9,11 +9,11 @@
   "nativeBuild": "CMake + MSVC",
   "architecture": "x64-first",
   "notes": [
-    "Dev.17 closes Audio mixed-valid/invalid multi-file failure isolation while retaining one Bridge process per same-family Explorer multi-selection.",
-    "Ordinary per-file ConversionFailedException failures no longer suppress later selected files; cleanup remains per-file and aggregate failure is reported after the batch.",
-    "Cancellation, contract/programmer faults and global infrastructure failures remain fail-fast; no second batch or IPC subsystem was introduced.",
-    "Behavior candidate 5829c868c5d192c70f21ea0da9337250a8d9c961 run 33347652162 passed the real five-file batch twice plus 254/254 managed and 91/91 static tests before expected generated-authority freshness failure.",
-    "Headed Win11 acceptance, production signed-package B2 requalification, production FFmpeg redistribution, signed MSIX clean-VM lifecycle and final release audit remain open."
+    "Dev.18 qualifies the existing fixed Image PNG/JPEG/WebP actions across all eight advertised Image source extensions without widening the typed preset or executable surface.",
+    "24 packaged Bridge-to-Strict-Worker/provider-to-app-local-FFmpeg conversions verify codec, dimensions, preservation, collision numbering and no partial residue.",
+    "Malformed and truncated Image inputs reject deterministically with exit code 4 while all Audio regression gates remain green.",
+    "Behavior head 6075aa3973b75e170cb5f9b812a8ca3b9b71f528 run 33350141373 passed 254/254 managed and 95/95 static tests before expected generated-authority freshness failure.",
+    "Headed Win11 acceptance, Image mixed-batch closure, production signed-package B2 requalification, production FFmpeg redistribution, signed MSIX clean-VM lifecycle and final release audit remain open."
   ],
   "testRunner": "Microsoft.Testing.Platform",
   "xunitMtpV2": "4.0.0"

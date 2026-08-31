@@ -1,35 +1,33 @@
 CONVERTY — CONTINUATION HANDOVER
-PRODUCT-FIRST ROADMAP — 0.1.0-dev.17 AUDIO BATCH ISOLATION
+PRODUCT-FIRST ROADMAP — 0.1.0-dev.18 IMAGE INPUT ACCEPTANCE
 
 Continue development directly in https://github.com/aeiouofficial/converty. Default branch: main. Re-fetch live refs before every write or completion claim; never force over newer concurrent work.
 
 CURRENT VERSION CANDIDATE
-0.1.0-dev.17. Behavior head: 5829c868c5d192c70f21ea0da9337250a8d9c961. Dev.17 is not frozen until generated authority is synchronized, branch zero-diff qualification passes, main is non-force fast-forwarded, and exact-main ordinary CI is fully green.
+0.1.0-dev.18. Behavior head: 6075aa3973b75e170cb5f9b812a8ca3b9b71f528. Dev.18 is not frozen until generated authority is synchronized, branch zero-diff qualification passes, main is non-force fast-forwarded, and exact-main ordinary CI is fully green.
 
 PRIOR FROZEN AUTHORITY
-Dev.16 exact main dca3cbcba326a35801bc442ec93f16d84f58a692, tree 475e3f55ada62c6e5ae3b16fdba8098734fcef65, exact-main run 33346588907. Jobs: continuity 99351774057 SUCCESS, static 99351774016 SUCCESS, managed 99351773826 SUCCESS. Workspace SHA-256 75d7e25eec2f0164540812726151388911560455edea9a7fc0eaf1d9d3e927b5, 442090 bytes, 361 entries. Generated artifact 9742181454; verified delivery 9742227375.
+Dev.17 exact main 8b2756910b58b678745e6fda89866ed3bf545474, tree c8066d768aeaeb1b2541cc6ca24217ff882e6048, exact-main run 33349604621. Jobs: managed 99360233371 SUCCESS, continuity 99360233503 SUCCESS, static 99360233566 SUCCESS. Workspace SHA-256 46949a7f0caa4675ce1573987eedbdca609a0ef4f2d331385fb5d8fe401d9eea, 454470 bytes, 367 entries. Generated artifact 9743140776; verified delivery 9743178417.
 
-DEV.17 CHANGES
-`ConversionBatchRunner` no longer aborts an entire selection on the first ordinary media conversion failure. It isolates `ConversionFailedException` per file, always cleans that file's private staging, continues later files, retains successful numbered publications, and rethrows the first conversion failure after the batch. Cancellation, contract/programmer faults and global infrastructure errors remain fail-fast. Native Explorer still launches one Bridge process for the same-family selection; there is no new IPC or batch subsystem.
+DEV.18 TDD/BEHAVIOR
+RED 7388aec6ffb673e0101b09106d646d417f77a7b3 / run 33349908668 / static 99361086262: 92 existing static PASS, exactly 3 new assertions FAIL because the Image acceptance component did not exist.
+Acceptance implementation 0841395904960945a1988dcedb8b6ccf352a57e0.
+CI wiring/behavior head 6075aa3973b75e170cb5f9b812a8ca3b9b71f528 / run 33350141373.
 
-REAL PRODUCT ACCEPTANCE
-`build/audio-batch-isolation-smoke.ps1` runs valid WAV → malformed WAV → valid FLAC → truncated FLAC → valid WAV in one packaged Bridge process, twice. Every attempt must finish bounded with exit 4 after processing, publish MP3 for all three valid files, publish nothing for the two bad inputs, advance collisions from `(1)` to `(2)`, preserve source and pre-existing destination hashes, ffprobe successful outputs and leave no `.converty-*.partial.*` residue.
+IMAGE ACCEPTANCE
+Sources: png, jpg, jpeg, webp, bmp, gif, tif, tiff. Actions: image.png, image.jpeg, image.webp. 24/24 packaged strict-path conversions PASS. Outputs are ffprobe-verified for png/mjpeg/webp and 64x48 dimensions. Sources and pre-existing destinations remain byte-identical, publication is numbered/no-overwrite, and no partial output remains. Malformed and truncated Image inputs are each repeated and reject deterministically with Bridge exit 4 without publication.
 
-TDD/CI HISTORY
-RED managed 053e086fab6fcea1da83ab109e1a986379e0b82a / run 33346968020 / managed 99352825485: all earlier product gates PASS; 254 total managed, exactly 1 new failure because worker calls expected 3, actual 2.
-RED static product gate 285585107795045a41d85199c22fd971b1ed6191 / run 33346976504: new dedicated mixed-batch smoke/CI contract intentionally absent.
-Production fix dc48000696429df5f1d2c57e4a42310d8345c541; product smoke b50601f5836cc4d0a6962b3423693f40c1f02310; CI wiring 6ee217e63de006bea31f4047d35a01e2de912721.
-Harness parser RED fe2886897dc03eec3942c046973e04558acaf860 then fix 355e5fdc47ad6d7090678a8b32461fb177a0db63. Harness argument-binding RED 6fd23d346ddf5b2acecc34fef5974b559df31289 then fix/behavior head 5829c868c5d192c70f21ea0da9337250a8d9c961.
-GREEN behavior run 33347652162 / managed 99354775361 / static 99354775208: mixed batch PASS twice, dev.16 36-case Audio matrix still PASS, 254/254 managed, 91/91 static, 5/5 vectors, dependency audit 0 vulnerable packages, Release 0 warnings/errors, native/package/direct+registered COM/product smoke PASS. Pre-authority workspace 4af24ae6f866c6389a3010642504aea13952ecb17d717c9974d05161fb8f6ba0, 447903 bytes, 364 entries, then expected stale generated-authority failure.
+RECURSIVE REGRESSION
+18/18 locked restore PASS; dependency audit 18 projects/18 frameworks/0 vulnerable-result packages; Release build 0 warnings/0 errors; native Explorer/package/direct+registered COM/product gates PASS; Audio 36-case source/action + malformed/truncated + mixed batch PASS; managed 254/254; static 95/95; vectors 5/5. Pre-authority workspace A/B SHA-256 50324f542c263cb7b23f43a6e9c87b68ec773f08c1a7b828dc41da7e369cdda2, 459142 bytes, 369 entries, then expected stale generated-authority failure.
 
 HARD INVARIANTS
-Preserve Explorer → native IExplorerCommand → fixed Bridge → strict disposable EngineWorker/provider → fixed app-local FFmpeg → private staging → transactional numbered no-overwrite publication. Preserve Unicode/metacharacter filenames, source/existing-destination bytes, typed whitelisted presets, no shell/raw FFmpeg/user executable/PATH/network/silent fallback, media-neutral Host/Bridge, worker/provider-only parsing and no signing private keys. Gyan FFmpeg remains development-only qualification input.
+Preserve Explorer → native IExplorerCommand → fixed Bridge → strict disposable EngineWorker/provider → fixed app-local FFmpeg → private staging → transactional numbered no-overwrite publication. Preserve Unicode/metacharacter filenames, source/existing-destination bytes, typed whitelisted presets, no shell/raw FFmpeg/user executable/PATH/network/silent fallback, media-neutral Host/Bridge, worker/provider-only codec parsing and no signing private keys. Gyan FFmpeg remains development-only qualification input.
 
 OPEN SHIPPING GATES
-Headed Win11 modern Explorer exact-build UI/screenshots and headed crash/hang/failure matrix; production signed-package B2 identity/authentication requalification; production FFmpeg/ffprobe redistribution/license/notices/signature/hash approval; signed production MSIX clean Win11 lifecycle; final security/fuzz/chaos/release/end-user acceptance.
+Headed Win11 modern Explorer exact-build UI/screenshots and headed crash/hang/failure matrix; Image mixed-batch closure; production signed-package B2 identity/authentication requalification; production FFmpeg/ffprobe redistribution/license/notices/signature/hash approval; signed production MSIX clean Win11 lifecycle; final security/fuzz/chaos/release/end-user acceptance.
 
-ONE PRECISE NEXT TASK AFTER DEV.17 FREEZE
-Implement 0.1.0-dev.18 test-first as the first fixed typed Image conversion action matrix through the existing Strict Worker/provider architecture. Re-audit the existing Image preset definitions/native submenu before changing them, define a bounded set of user-facing fixed actions and representative Image source fixtures, qualify real packaged Bridge→Strict Worker/provider→app-local FFmpeg conversion with Unicode/metacharacter paths, deterministic numbered no-overwrite publication, source/pre-existing-destination preservation, ffprobe/image-property validation, malformed/truncated rejection and no partial residue. Preserve every Audio gate and do not add arbitrary FFmpeg arguments, executable paths, PATH lookup, network dependency or silent Strict→Compatibility fallback.
+ONE PRECISE NEXT TASK AFTER DEV.18 FREEZE
+Implement 0.1.0-dev.19 test-first as Image multi-file/mixed-valid-invalid acceptance. Exercise one same-family Explorer/Bridge selection containing valid Images before and after malformed/truncated Images, prove later valid files still publish after ordinary per-file failures, aggregate failure is reported only after the batch, source/pre-existing destinations are preserved, collision numbering is deterministic, no partial output/orphan worker remains, and all single-file Image/Audio behavior regresses green. Do not begin Video expansion until this Image closure tranche is evidence-backed and frozen.
 
 RECURSIVE HANDOVER RULE
 Every completed tranche must end with a full copy-paste handover containing repository/default branch/live SHA/tree, prior authority, all commits, RED/GREEN history, run/job/artifact IDs, exact changes/reasons, executed tests/build/security outcomes, workspace hashes/counts, blockers, explicitly unverified claims, ONE precise next task, invariants, headed limitation, production signing/FFmpeg limitation, and this same recursive rule.

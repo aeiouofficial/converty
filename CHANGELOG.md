@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.1.0-dev.18 — 2026-08-31
+- Added a dedicated packaged Windows Image acceptance component for the already-existing fixed Image product surface; no second image engine, raw FFmpeg argument surface or new executable path was introduced.
+- Qualified all advertised Image source extensions (`png`, `jpg`, `jpeg`, `webp`, `bmp`, `gif`, `tif`, `tiff`) against `image.png`, `image.jpeg`, and `image.webp`: 24 real Bridge→Strict Worker/provider→FFmpeg conversions.
+- Every successful conversion verifies expected ffprobe codec and 64×48 dimensions, preserves the source and a pre-existing destination byte-for-byte, uses numbered no-overwrite publication, and leaves no partial output.
+- Added repeated malformed and physically truncated Image rejection; both return deterministic Bridge exit code 4, publish nothing, preserve existing files and leave zero partial residue.
+- RED `7388aec6ffb673e0101b09106d646d417f77a7b3` / run `33349908668`: 92 existing static tests PASS and exactly 3 new dev.18 assertions FAIL because the Image acceptance component did not exist.
+- Added the Image matrix at `0841395904960945a1988dcedb8b6ccf352a57e0` and ordinary CI wiring at behavior head `6075aa3973b75e170cb5f9b812a8ca3b9b71f528`.
+- GREEN behavior run `33350141373`: 24/24 Image conversions plus both repeated negative cases PASS; existing Audio product/matrix/batch gates PASS; 254/254 managed, 95/95 static, 5/5 vectors, dependency audit 0 vulnerable-result packages, Release build 0 warnings/errors. Pre-authority deterministic workspace `50324f542c263cb7b23f43a6e9c87b68ec773f08c1a7b828dc41da7e369cdda2`, 459142 bytes, 369 entries, then expected stale tracked-authority failure.
+
 ## 0.1.0-dev.17 — 2026-08-31
 - Closed Audio mixed-valid/invalid multi-file failure isolation without adding a second batch subsystem or changing the native one-Bridge-per-selection topology.
 - `ConversionBatchRunner` now catches ordinary per-file `ConversionFailedException`, always cleans that file's private staging, continues later selected files, and rethrows the first media conversion failure only after the batch has been attempted. Cancellation, contract/programmer faults and global infrastructure errors remain fail-fast.

@@ -1,4 +1,4 @@
-# Converty continuation handover — dev.17 candidate
+# Converty continuation handover — dev.18 candidate
 
 Repository: `https://github.com/aeiouofficial/converty`  
 Default branch: `main`
@@ -6,17 +6,17 @@ Default branch: `main`
 Read `docs/HANDOVER_PROMPT.txt` first; it is the canonical recursive continuation prompt for this tranche.
 
 ## Candidate authority
-- Version: `0.1.0-dev.17`
-- Behavior head: `5829c868c5d192c70f21ea0da9337250a8d9c961`
-- Behavior run: `33347652162`
-- Managed: `99354775361`
-- Static: `99354775208`
-- Prior frozen main: `dca3cbcba326a35801bc442ec93f16d84f58a692`
+- Version: `0.1.0-dev.18`
+- Behavior head: `6075aa3973b75e170cb5f9b812a8ca3b9b71f528`
+- Behavior run: `33350141373`
+- Managed: `99361743241`
+- Static: `99361743276`
+- Prior frozen main: `8b2756910b58b678745e6fda89866ed3bf545474`
 
-Dev.17 behavior is green but finality still requires version-aligned generated-authority sync, branch zero-diff qualification, non-force main promotion and a fully green exact-current-main ordinary CI run. Do not skip those gates and do not overwrite newer concurrent work.
+Dev.18 behavior is green but finality still requires version-aligned generated-authority sync, branch zero-diff qualification, non-force main promotion and a fully green exact-current-main ordinary CI run. Do not skip those gates and do not overwrite newer concurrent work.
 
-## What dev.17 proves
-A real five-file same-family Audio selection with valid, malformed and truncated inputs is processed by one Bridge process. Ordinary per-file conversion failures no longer suppress later valid items. Successful outputs survive, bad inputs publish nothing, collisions number deterministically, sources/pre-existing destinations are preserved and no partial residue remains. The matrix is exercised twice.
+## What dev.18 proves
+All eight advertised Image source extensions are exercised against all three fixed Image actions through packaged Bridge→Strict Worker/provider→app-local FFmpeg. 24/24 conversions pass with codec/dimension checks, source/pre-existing-destination preservation, numbered publication and zero partial residue. Repeated malformed/truncated Image inputs reject deterministically with exit 4. Existing Audio gates remain green. No product-code change was necessary because the fixed Image path already satisfied the acceptance contract.
 
 ## Next after freeze
-Dev.18 starts the first fixed typed Image action matrix through the existing Strict Worker/provider boundary. Preserve all Audio qualification and do not weaken containment or executable/preset trust boundaries.
+Dev.19 is Image multi-file/mixed-valid-invalid failure isolation and final Image matrix closure. Video expansion remains blocked until that tranche is frozen.
