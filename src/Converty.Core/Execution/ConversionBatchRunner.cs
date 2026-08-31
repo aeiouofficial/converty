@@ -48,6 +48,7 @@ public sealed class ConversionBatchRunner
 
         ProductPresetDefinition preset = _presets.GetRequired(presetId);
         var results = new List<ConversionFileResult>(inputPaths.Count);
+        ConversionFailedException? firstConversionFailure = null;
 
         foreach (string inputPath in inputPaths)
         {
@@ -58,40 +59,55 @@ public sealed class ConversionBatchRunner
             ConversionStagingPaths staging = ConversionStagingDirectory.Create(inputPath, preset.OutputExtension);
             try
             {
-                ConversionWorkerResult execution = await _workerClient.ExecuteAsync(
-                    preset.Id,
-                    staging.InputPath,
-                    staging.OutputPath,
-                    _executionTimeout,
-                    cancellationToken).ConfigureAwait(false);
-
-                if (!execution.Succeeded)
+                try
                 {
-                    string detail = string.IsNullOrWhiteSpace(execution.StandardError)
-                        ? "Conversion worker reported a failure."
-                        : $"Conversion worker reported a failure: {execution.StandardError}";
-                    throw new ConversionFailedException(inputPath, plannedOutputPath, execution.ExitCode, detail);
-                }
+                    ConversionWorkerResult execution = await _workerClient.ExecuteAsync(
+                        preset.Id,
+                        staging.InputPath,
+                        staging.OutputPath,
+                        _executionTimeout,
+                        cancellationToken).ConfigureAwait(false);
 
-                if (!File.Exists(staging.OutputPath) || new FileInfo(staging.OutputPath).Length == 0)
-                {
-                    throw new ConversionFailedException(
+                    if (!execution.Succeeded)
+                    {
+                        string detail = string.IsNullOrWhiteSpace(execution.StandardError)
+                            ? "Conversion worker reported a failure."
+                            : $"Conversion worker reported a failure: {execution.StandardError}";
+                        throw new ConversionFailedException(inputPath, plannedOutputPath, execution.ExitCode, detail);
+                    }
+
+                    if (!File.Exists(staging.OutputPath) || new FileInfo(staging.OutputPath).Length == 0)
+                    {
+                        throw new ConversionFailedException(
+                            inputPath,
+                            plannedOutputPath,
+                            execution.ExitCode,
+                            "Conversion worker exited successfully but did not produce a non-empty output file.");
+                    }
+
+                    string publishedOutputPath = PublishTemporaryOutput(
                         inputPath,
-                        plannedOutputPath,
-                        execution.ExitCode,
-                        "Conversion worker exited successfully but did not produce a non-empty output file.");
+                        preset.OutputExtension,
+                        staging.OutputPath);
+                    results.Add(new ConversionFileResult(inputPath, publishedOutputPath, execution.ExitCode));
                 }
-
-                string publishedOutputPath = PublishTemporaryOutput(
-                    inputPath,
-                    preset.OutputExtension,
-                    staging.OutputPath);
-                results.Add(new ConversionFileResult(inputPath, publishedOutputPath, execution.ExitCode));
+                catch (ConversionFailedException error)
+                {
+                    // A malformed or otherwise unconvertible media payload is local to this selected
+                    // file. Preserve the first failure for Bridge reporting, but do not suppress later
+                    // independent selections in the same Explorer batch.
+                    firstConversionFailure ??= error;
+                }
             }
             finally
             {
                 ConversionStagingDirectory.DeleteOwned(staging.DirectoryPath);
             }
+        }
+
+        if (firstConversionFailure is not null)
+        {
+            throw firstConversionFailure;
         }
 
         return new ConversionBatchResult(results.AsReadOnly());
