@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "workspaceVersion": "0.1.0-dev.17",
+  "workspaceVersion": "0.1.0-dev.18",
   "generatedDate": "2026-08-25",
   "excludedParts": [
     ".git",
@@ -40,8 +40,8 @@
     },
     {
       "path": ".github/workflows/ci.yml",
-      "bytes": 9070,
-      "sha256": "e9148c7d442a29f11b2709a3de14a1f7a420486193741fb08d363e0d576fac21"
+      "bytes": 9202,
+      "sha256": "5e16ea839d09a5e9a8cd9896176df7fda59762f8d15d903481c37c30afbd38ad"
     },
     {
       "path": ".gitignore",
@@ -82,6 +82,11 @@
       "path": "build/explorer-registration-smoke.ps1",
       "bytes": 4819,
       "sha256": "335f75d07e013d75ba671da0e108d6aff273ebca32b3c91e8f240c0a8f9e9aba"
+    },
+    {
+      "path": "build/image-input-acceptance-smoke.ps1",
+      "bytes": 12786,
+      "sha256": "28012c24efd01e31d4d6d47376ce2004e6c4d0a88472d978c13be0cf2f1ea62e"
     },
     {
       "path": "build/native-smoke.ps1",
@@ -130,8 +135,8 @@
     },
     {
       "path": "CHANGELOG.md",
-      "bytes": 5401,
-      "sha256": "fab93b8c60c784e24229ec97322679606c04e6c21f02a3dc05238660df71201d"
+      "bytes": 7080,
+      "sha256": "4571bf4ef7054b47ca7018267fd1b6ccdba03c5a786d5dece587dfc512a07b1a"
     },
     {
       "path": "CMakeLists.txt",
@@ -234,9 +239,14 @@
       "sha256": "78716824968f95ebe3cfa9b2b08e52b6c90ae96916733001346d5e9d94fe397e"
     },
     {
+      "path": "docs/development/DEV18_IMAGE_INPUT_ACCEPTANCE_TDD_EVIDENCE.md",
+      "bytes": 2735,
+      "sha256": "3fbe938e44150899dcf611e13aaa81f18d2a952d48bd095776fa716647ac826f"
+    },
+    {
       "path": "docs/development/IMPLEMENTATION_STATUS.md",
-      "bytes": 4613,
-      "sha256": "30668a9282026ac26d0c862f2cb3aa878fcc6861699950ed8482b7a4c6f1f091"
+      "bytes": 4129,
+      "sha256": "48677fddd3705f6a62a81aab54bb30d9f0a0549e130fd37e29f9cce68455127a"
     },
     {
       "path": "docs/development/MODULE_BOUNDARIES.md",
@@ -255,13 +265,13 @@
     },
     {
       "path": "docs/HANDOVER_NEXT_AGENT.md",
-      "bytes": 1433,
-      "sha256": "bddc97cf414e3c33ac786a992977881c57a781597ea8594e4eb2a532923bdcee"
+      "bytes": 1511,
+      "sha256": "82e04e7e64826cb3ca660646d07d7c7667c093c7c9a016bca61a404f2a7394b5"
     },
     {
       "path": "docs/HANDOVER_PROMPT.txt",
-      "bytes": 5506,
-      "sha256": "13dabc3a38a7296bbadfac207d673c96f52710447cfa1c9afa64a489e572f20e"
+      "bytes": 4416,
+      "sha256": "cb0f77509eeec31b70c620011b92e46120596613c28764b56e82f111402f6970"
     },
     {
       "path": "docs/REFERENCE_SOURCES.md",
@@ -369,6 +379,11 @@
       "sha256": "d87284dbd9d0e253287aeab7696038b5b0e7b1148ffceb3a60d267d487c22232"
     },
     {
+      "path": "docs/superpowers/plans/2026-08-31-dev18-image-input-acceptance.md",
+      "bytes": 1810,
+      "sha256": "89242873edfba2bc4bef63c6067edd39b7c7387027dd155c85c2a5d7e4a49cfe"
+    },
+    {
       "path": "docs/superpowers/specs/2026-08-24-foundation-design.md",
       "bytes": 2051,
       "sha256": "c846b241280c63a34893b1e1fbac2e87e617bb65ff1b9f1c1e05d89edcd2ae95"
@@ -404,6 +419,11 @@
       "sha256": "ae0fdc68bb8f3b9eaba4600148054cea2372b4fd61b78f1a5cd50b4a04bd8640"
     },
     {
+      "path": "docs/superpowers/specs/2026-08-31-dev18-image-input-acceptance-design.md",
+      "bytes": 1836,
+      "sha256": "5e36281cd96d9be71de6711cd601569e211acf82e5eab6d42b7bdd7d7aa3e13f"
+    },
+    {
       "path": "docs/supply-chain/CI_PROVENANCE_POLICY.md",
       "bytes": 2097,
       "sha256": "66210845738dd0fd49a08968827b4f973f30a91a56a224e5c3a1af93364bc841"
@@ -420,8 +440,8 @@
     },
     {
       "path": "docs/TASK_BACKLOG.md",
-      "bytes": 4237,
-      "sha256": "93a51549ac897c41342fb37d8a529796fdb1aef587a52a7dacd5ef99d806c2f9"
+      "bytes": 4040,
+      "sha256": "aabf636589ce6be7fe3687b5ff5fd014fca848c1e743b5d147592ceef6a8b4f7"
     },
     {
       "path": "docs/TEST_AND_RELEASE_GATES.md",
@@ -440,8 +460,8 @@
     },
     {
       "path": "eng/toolchain.json",
-      "bytes": 1231,
-      "sha256": "f056b408fc301c449d9da4edd53fa3969054216734ca00aec4f178d09853be94"
+      "bytes": 1218,
+      "sha256": "25bad1c8005de6f15538bbd0c2d9b17044465cc45a43123d339995b0a142bf41"
     },
     {
       "path": "global.json",
@@ -450,33 +470,33 @@
     },
     {
       "path": "machine-readable/build_evidence.json",
-      "bytes": 4140,
-      "sha256": "fb79d1438512cdf8bf1093345ad21983fa1ed469d08d4046eaf7e56c1688653d"
+      "bytes": 4318,
+      "sha256": "41329c54b440442cebed8a3f5ac5e970156f6c0bbfc42457316f740124af4664"
     },
     {
       "path": "machine-readable/ci_action_pins.json",
       "bytes": 1036,
-      "sha256": "11bd71d96eb7a00ce69df0b9361b58fcd6a8c743da85cbb9d0dc1c860ce9e1a6"
+      "sha256": "17704fe3b282fe99900b900baa33b3be722fa42c53ff10a03e8966c03fd5b6ea"
     },
     {
       "path": "machine-readable/handover_state.json",
-      "bytes": 3913,
-      "sha256": "db0b097155868d135d5bf519e5d0574d939031ae4458beb6ed803367b1c15717"
+      "bytes": 3661,
+      "sha256": "c1179b34d3e4bf26b083025b572e86afe4a8440e2632ace9c84d2d1476375909"
     },
     {
       "path": "machine-readable/release_policy.json",
       "bytes": 1972,
-      "sha256": "9a2b5c0d5e872888b9a91ada4537635c189cef3899fb4c0284f1ffde01239b30"
+      "sha256": "8035f63dc123bd6da11549bdd34f2e487b56da6c71bcc566ea18f6fc1ce793d7"
     },
     {
       "path": "machine-readable/release_sbom.spdx.json",
       "bytes": 22991,
-      "sha256": "6c4a4e24fa1b9f911dc3fd56c14602e39642a01144336a53dd53987b2fad192f"
+      "sha256": "1f077179626deb731a4b89d12ea1835f91a11180811e6d6e47576e6f16beada4"
     },
     {
       "path": "machine-readable/source_sbom.spdx.json",
       "bytes": 11341,
-      "sha256": "33536487630fc3e16eba06a79de647bab2f90bfb1e6c3417ece73efd07473a3d"
+      "sha256": "3da99ad7aa537ece8e00f9f2647b1045e19382bf20caa5b1b59873799b704065"
     },
     {
       "path": "native/cmake/Hardening.cmake",
@@ -575,8 +595,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 4279,
-      "sha256": "c7a5d26b4c47266ea453f9315e0c8e01eda7898ae3115cb2d79f4db2f58b5096"
+      "bytes": 4464,
+      "sha256": "32b6b56cbfee814d7bc4bb286f4d49de64810ecc01c01cc5a1888b2995994a1e"
     },
     {
       "path": "reference-images/01_system_architecture.dot",
@@ -1759,6 +1779,11 @@
       "sha256": "596f3d2e1456302e18d063a0219d3ba86b77813cd27b43459dffe29ebbded69e"
     },
     {
+      "path": "tests/static/test_dev18_image_actions.py",
+      "bytes": 2656,
+      "sha256": "e8ea92537ac1a2396260f64b45fd06e2c40cc5f4d3fa09c043052803b9d44841"
+    },
+    {
       "path": "tests/static/test_dev4_ci_provenance.py",
       "bytes": 5363,
       "sha256": "162af7fb33e0ebe1c3ca403ae99383959d16694eaf7b6c925c96c2bccc9244c7"
@@ -1851,7 +1876,7 @@
     {
       "path": "VERSION",
       "bytes": 13,
-      "sha256": "4e9e8827d4915ff973d3cca1e9ba54dfcfe9c528fb8ff3edc2c8c020617a007f"
+      "sha256": "39f19e32e8fbbd0b65f32a542ed04e20f641e39d61c44210b0eb519d1d267592"
     }
   ]
 }
