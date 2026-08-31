@@ -210,7 +210,7 @@ foreach ($attempt in 1..2) {
     }
 
     Assert-NoPartialOutputs
-    Write-Host "Mixed batch attempt $attempt: exit code 4; valid-before and valid-after files published numbered MP3 outputs."
+    Write-Host "Mixed batch attempt ${attempt}: exit code 4; valid-before and valid-after files published numbered MP3 outputs."
 }
 
 Write-Host 'Audio mixed-batch failure isolation: PASS.'
