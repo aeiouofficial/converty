@@ -48,6 +48,12 @@ def test_dev17_locks_per_file_transactional_and_cleanup_invariants():
         assert token.lower() in smoke.lower()
 
 
+def test_dev17_powershell_log_interpolation_is_parser_safe():
+    smoke = SMOKE.read_text(encoding="utf-8")
+    assert '"Mixed batch attempt ${attempt}:' in smoke
+    assert '"Mixed batch attempt $attempt:' not in smoke
+
+
 def test_native_explorer_keeps_single_bridge_process_for_same_family_multiselection():
     native = NATIVE.read_text(encoding="utf-8")
 
