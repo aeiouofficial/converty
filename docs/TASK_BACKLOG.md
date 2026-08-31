@@ -1,13 +1,13 @@
 # Converty Implementation Backlog
 
-## Dev.18 closure / dev.19 next
+## Dev.18 frozen / dev.19 next
 - [x] Freeze dev.17 Audio mixed-valid/invalid batch isolation on exact `main` `8b2756910b58b678745e6fda89866ed3bf545474` with exact-main run `33349604621` and deterministic verified delivery.
 - [x] Define dev.18 Image acceptance test-first with 92 prior static tests green and exactly 3 new RED assertions.
 - [x] Exercise all advertised Image source extensions against all three fixed Image actions through packaged Bridge→Strict Worker/provider→FFmpeg.
 - [x] Prove 24/24 Image conversions with codec/dimension verification, collision numbering, source/destination preservation and no partials.
 - [x] Add repeated malformed/truncated Image rejection with deterministic exit 4 and transactional preservation.
 - [x] Preserve all Audio single-file/source-matrix/mixed-batch behavior recursively.
-- [ ] Synchronize dev.18 version-aligned generated authority, require branch zero-diff qualification, then exact-current-main CI + deterministic verified delivery.
+- [x] Synchronize dev.18 version-aligned generated authority, pass branch zero-diff qualification, non-force promote to `main`, and pass exact-main run `33390111824` with continuity + managed + static all SUCCESS and deterministic verified delivery.
 - [ ] Dev.19: Image multi-file/mixed-valid-invalid failure-isolation acceptance and Image matrix closure before beginning Video expansion.
 
 ## B0 Repository/bootstrap
