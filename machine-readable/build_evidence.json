@@ -41,37 +41,41 @@
       "partialOutputCleanup": "PASS"
     },
     "static": {
-      "tests": "95/95 PASS before generated-authority freshness check",
-      "contractVectors": "5/5 PASS",
-      "generatedAuthorityState": "RUNNER_REGEN_REQUIRED_FOR_FINAL_AUTHORITY_TREE"
-    },
-    "workspaceDoubleBuildBeforeAuthoritySync": {
-      "sha256": "50324f542c263cb7b23f43a6e9c87b68ec773f08c1a7b828dc41da7e369cdda2",
-      "bytes": 459142,
-      "files": 369,
-      "byteIdentical": true,
-      "integrityCheck": "EXPECTED_FAIL_STALE_GENERATED_AUTHORITY_AT_.github/workflows/ci.yml"
+      "tests": "95/95 PASS",
+      "contractVectors": "5/5 PASS"
     }
+  },
+  "frozenAuthorityQualificationAnchor": {
+    "headSha": "ef079f7e7923e399624067c4d54b9ce7577bf090",
+    "treeSha": "0af729f150897d170eac9f9aebfd5bc7d5d4083a",
+    "workflowRunId": 33390111824,
+    "managedJobId": 99481546832,
+    "staticJobId": 99481546572,
+    "continuityJobId": 99481546655,
+    "allJobs": "SUCCESS",
+    "workspace": {
+      "sha256": "4be8d5a2f503a8a885347b647bbd0aa0b61ce6d56b3ac39d9af7b11fb801628a",
+      "bytes": 463162,
+      "files": 372,
+      "packageManifestEntries": 370,
+      "shaManifestEntries": 371,
+      "crc": "PASS",
+      "deterministicDoubleBuild": "PASS",
+      "exclusionPolicy": "PASS"
+    },
+    "generatedAuthorityArtifact": {"id": 9757102986, "digest": "sha256:a8eb7d4a9d70044d2d6125404de7de686de41a97fd7dada1b2cf814d6f2c50d5"},
+    "verifiedDeliveryArtifact": {"id": 9757169067, "digest": "sha256:97931ae9cbee196fb3cc6c3b0c2d792055ad04365d6dc6609e659301edaa0f92"}
   },
   "tddHistory": {
     "red": {"headSha": "7388aec6ffb673e0101b09106d646d417f77a7b3", "runId": 33349908668, "staticJobId": 99361086262, "result": "92 existing static PASS; exactly 3 new dev18 assertions FAIL because Image acceptance smoke is missing"},
     "acceptanceImplementation": "0841395904960945a1988dcedb8b6ccf352a57e0",
     "ciWiringAndBehaviorHead": "6075aa3973b75e170cb5f9b812a8ca3b9b71f528"
   },
-  "priorFinalMain": {
-    "headSha": "8b2756910b58b678745e6fda89866ed3bf545474",
-    "treeSha": "c8066d768aeaeb1b2541cc6ca24217ff882e6048",
-    "workflowRunId": 33349604621,
-    "managedJobId": 99360233371,
-    "staticJobId": 99360233566,
-    "continuityJobId": 99360233503,
-    "workspaceSha256": "46949a7f0caa4675ce1573987eedbdca609a0ef4f2d331385fb5d8fe401d9eea",
-    "workspaceBytes": 454470,
-    "workspaceFiles": 367,
-    "generatedAuthorityArtifactId": 9743140776,
-    "verifiedDeliveryArtifactId": 9743178417
+  "metadataCuration": {
+    "scope": "documentation and machine-readable closure metadata only",
+    "productBehaviorChanged": false,
+    "rule": "curation must re-run ordinary CI and generated-authority zero-diff before promotion"
   },
-  "finalityRule": "Dev.18 is final only after version-aligned generated authority is synchronized, branch zero-diff qualification passes, main is non-force fast-forwarded, and exact-current-main ordinary CI has continuity, managed and supply-chain-static all SUCCESS with deterministic verified delivery.",
   "headedWindows11Acceptance": "OPEN",
   "productionSignedPackageB2Requalification": "OPEN",
   "productionFfmpegRedistributionApproval": "OPEN"
