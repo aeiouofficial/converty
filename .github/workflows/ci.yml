@@ -126,6 +126,9 @@ jobs:
       - name: Audio mixed-batch failure isolation
         shell: pwsh
         run: ./build/audio-batch-isolation-smoke.ps1
+      - name: Image source and malformed-input acceptance
+        shell: pwsh
+        run: ./build/image-input-acceptance-smoke.ps1
       - name: Test
         shell: pwsh
         run: ./build/test.ps1 -Configuration Release
