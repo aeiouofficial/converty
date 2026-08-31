@@ -139,11 +139,12 @@ foreach ($fixture in @(
     [pscustomobject]@{ Path = $validWavFixture; Encoder = @('-c:a', 'pcm_s16le') },
     [pscustomobject]@{ Path = $validFlacFixture; Encoder = @('-c:a', 'flac') }
 )) {
-    $fixtureResult = Invoke-StructuredProcess -FileName $ffmpeg -WorkingDirectory $smokeRoot -Arguments @(
+    $fixtureArguments = @(
         '-hide_banner', '-loglevel', 'error',
         '-f', 'lavfi', '-i', 'sine=frequency=523.25:sample_rate=44100',
         '-t', '0.25'
     ) + $fixture.Encoder + @('-y', $fixture.Path)
+    $fixtureResult = Invoke-StructuredProcess -FileName $ffmpeg -WorkingDirectory $smokeRoot -Arguments $fixtureArguments
     if ($fixtureResult.ExitCode -ne 0 -or -not (Test-Path -LiteralPath $fixture.Path)) {
         throw "Could not create mixed-batch fixture '$($fixture.Path)': $($fixtureResult.StdErr.Trim())"
     }
