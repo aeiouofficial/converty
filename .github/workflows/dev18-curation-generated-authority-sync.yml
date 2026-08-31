@@ -1,0 +1,95 @@
+name: dev18-curation-generated-authority-sync
+
+on:
+  push:
+    branches:
+      - dev/0.1.0-dev.18-final-curation
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout staging commit
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 2
+          persist-credentials: true
+
+      - name: Guard exact source authority parent
+        shell: bash
+        run: |
+          set -euo pipefail
+          expected_parent='2d37e01ca1bd084be9108baac39e0d93764c6fb8'
+          actual_parent="$(git rev-parse HEAD^)"
+          test "$actual_parent" = "$expected_parent" || {
+            echo "Refusing sync: expected parent $expected_parent, got $actual_parent" >&2
+            exit 1
+          }
+
+      - name: Download and verify exact generated authority artifact
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          artifact_id='9765687820'
+          expected_zip_sha='955b8bb93539bec748c438a1dd0db1cd78610924d390a6e772b9559a819086c7'
+          curl --fail --silent --show-error --location \
+            --header "Authorization: Bearer ${GH_TOKEN}" \
+            --header 'X-GitHub-Api-Version: 2022-11-28' \
+            "https://api.github.com/repos/${GITHUB_REPOSITORY}/actions/artifacts/${artifact_id}/zip" \
+            --output generated-authority.zip
+          actual_zip_sha="$(sha256sum generated-authority.zip | awk '{print $1}')"
+          test "$actual_zip_sha" = "$expected_zip_sha" || {
+            echo "Artifact digest mismatch: expected $expected_zip_sha, got $actual_zip_sha" >&2
+            exit 1
+          }
+          rm -rf generated-authority
+          mkdir generated-authority
+          unzip -q generated-authority.zip -d generated-authority
+          python - <<'PY'
+          from pathlib import Path
+          root = Path('generated-authority')
+          expected = {
+              'machine-readable/source_sbom.spdx.json',
+              'machine-readable/release_sbom.spdx.json',
+              'machine-readable/package_manifest.json',
+              'SHA256SUMS.txt',
+          }
+          actual = {p.relative_to(root).as_posix() for p in root.rglob('*') if p.is_file()}
+          if actual != expected:
+              raise SystemExit(f'Unexpected artifact members: {sorted(actual)}')
+          PY
+
+      - name: Synchronize only generated authority files
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp generated-authority/machine-readable/source_sbom.spdx.json machine-readable/source_sbom.spdx.json
+          cp generated-authority/machine-readable/release_sbom.spdx.json machine-readable/release_sbom.spdx.json
+          cp generated-authority/machine-readable/package_manifest.json machine-readable/package_manifest.json
+          cp generated-authority/SHA256SUMS.txt SHA256SUMS.txt
+          rm -f .github/workflows/dev18-curation-generated-authority-sync.yml
+          rm -rf generated-authority generated-authority.zip
+
+      - name: Commit synchronized authority
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add SHA256SUMS.txt machine-readable/source_sbom.spdx.json machine-readable/release_sbom.spdx.json machine-readable/package_manifest.json .github/workflows/dev18-curation-generated-authority-sync.yml
+          expected_changes=$'.github/workflows/dev18-curation-generated-authority-sync.yml\nSHA256SUMS.txt\nmachine-readable/package_manifest.json\nmachine-readable/release_sbom.spdx.json\nmachine-readable/source_sbom.spdx.json'
+          actual_changes="$(git diff --cached --name-only | sort)"
+          test "$actual_changes" = "$expected_changes" || {
+            echo 'Refusing commit; staged path set was not exact.' >&2
+            printf 'Expected:\n%s\nActual:\n%s\n' "$expected_changes" "$actual_changes" >&2
+            exit 1
+          }
+          git commit -m 'chore: synchronize dev18 curation authority'
+          git push origin HEAD:dev/0.1.0-dev.18-final-curation
