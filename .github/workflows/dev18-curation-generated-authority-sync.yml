@@ -17,17 +17,23 @@ jobs:
       - name: Checkout staging commit
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          fetch-depth: 2
+          fetch-depth: 3
           persist-credentials: true
 
-      - name: Guard exact source authority parent
+      - name: Guard exact source authority ancestry
         shell: bash
         run: |
           set -euo pipefail
-          expected_parent='2d37e01ca1bd084be9108baac39e0d93764c6fb8'
+          expected_parent='e0df80406263ca57b9569e703e5e5a1dbee59783'
+          expected_source='2d37e01ca1bd084be9108baac39e0d93764c6fb8'
           actual_parent="$(git rev-parse HEAD^)"
+          actual_source="$(git rev-parse HEAD^^)"
           test "$actual_parent" = "$expected_parent" || {
-            echo "Refusing sync: expected parent $expected_parent, got $actual_parent" >&2
+            echo "Refusing sync: expected staging parent $expected_parent, got $actual_parent" >&2
+            exit 1
+          }
+          test "$actual_source" = "$expected_source" || {
+            echo "Refusing sync: expected curated source $expected_source, got $actual_source" >&2
             exit 1
           }
 
@@ -84,7 +90,7 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add SHA256SUMS.txt machine-readable/source_sbom.spdx.json machine-readable/release_sbom.spdx.json machine-readable/package_manifest.json .github/workflows/dev18-curation-generated-authority-sync.yml
-          expected_changes=$'.github/workflows/dev18-curation-generated-authority-sync.yml\nSHA256SUMS.txt\nmachine-readable/package_manifest.json\nmachine-readable/release_sbom.spdx.json\nmachine-readable/source_sbom.spdx.json'
+          expected_changes=$'.github/workflows/dev18-curation-generated-authority-sync.yml\nSHA256SUMS.txt\nmachine-readable/package_manifest.json'
           actual_changes="$(git diff --cached --name-only | sort)"
           test "$actual_changes" = "$expected_changes" || {
             echo 'Refusing commit; staged path set was not exact.' >&2
