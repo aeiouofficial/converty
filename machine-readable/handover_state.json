@@ -3,27 +3,34 @@
   "project": "Converty",
   "workspaceVersion": "0.1.0-dev.18",
   "baselineDate": "2026-08-31",
-  "implementationStatus": "DEV18_IMAGE_INPUT_ACCEPTANCE_BEHAVIOR_GREEN_FINAL_AUTHORITY_PENDING",
+  "implementationStatus": "DEV18_FROZEN_IMAGE_INPUT_ACCEPTANCE_COMPLETE_DEV19_READY",
   "defaultBranch": "main",
-  "sourceBehaviorEvidenceHeadSha": "6075aa3973b75e170cb5f9b812a8ca3b9b71f528",
-  "sourceBehaviorEvidenceRunId": 33350141373,
-  "sourceBehaviorEvidenceManagedJobId": 99361743241,
-  "sourceBehaviorEvidenceStaticJobId": 99361743276,
   "nextWorkspaceVersion": "0.1.0-dev.19",
   "nextBatch": "DEV19_IMAGE_MIXED_BATCH_FAILURE_ISOLATION_MATRIX_CLOSURE",
   "targetOs": "Windows 11 x64",
-  "priorFinalMain": {
-    "headSha": "8b2756910b58b678745e6fda89866ed3bf545474",
-    "treeSha": "c8066d768aeaeb1b2541cc6ca24217ff882e6048",
-    "workflowRunId": 33349604621,
-    "managedJobId": 99360233371,
-    "staticJobId": 99360233566,
-    "continuityJobId": 99360233503,
-    "workspaceSha256": "46949a7f0caa4675ce1573987eedbdca609a0ef4f2d331385fb5d8fe401d9eea",
-    "workspaceBytes": 454470,
-    "workspaceFiles": 367,
-    "generatedAuthorityArtifactId": 9743140776,
-    "verifiedDeliveryArtifactId": 9743178417
+  "sourceBehaviorEvidence": {
+    "headSha": "6075aa3973b75e170cb5f9b812a8ca3b9b71f528",
+    "workflowRunId": 33350141373,
+    "managedJobId": 99361743241,
+    "staticJobId": 99361743276
+  },
+  "frozenDev18QualificationAnchor": {
+    "headSha": "ef079f7e7923e399624067c4d54b9ce7577bf090",
+    "treeSha": "0af729f150897d170eac9f9aebfd5bc7d5d4083a",
+    "workflowRunId": 33390111824,
+    "managedJobId": 99481546832,
+    "staticJobId": 99481546572,
+    "continuityJobId": 99481546655,
+    "workspaceSha256": "4be8d5a2f503a8a885347b647bbd0aa0b61ce6d56b3ac39d9af7b11fb801628a",
+    "workspaceBytes": 463162,
+    "workspaceFiles": 372,
+    "packageManifestEntries": 370,
+    "shaManifestEntries": 371,
+    "generatedAuthorityArtifactId": 9757102986,
+    "generatedAuthorityArtifactDigest": "sha256:a8eb7d4a9d70044d2d6125404de7de686de41a97fd7dada1b2cf814d6f2c50d5",
+    "verifiedDeliveryArtifactId": 9757169067,
+    "verifiedDeliveryArtifactDigest": "sha256:97931ae9cbee196fb3cc6c3b0c2d792055ad04365d6dc6609e659301edaa0f92",
+    "status": "PASS_ALL_THREE_EXACT_MAIN_JOBS"
   },
   "dev18ImageAcceptance": {
     "redHeadSha": "7388aec6ffb673e0101b09106d646d417f77a7b3",
@@ -36,11 +43,10 @@
     "imageMatrix": "8 source extensions x 3 fixed actions = 24/24 PASS",
     "negativeCases": "malformed and truncated repeated; deterministic exit 4; PASS",
     "managedTests": "254/254 PASS; 0 skipped",
-    "staticTests": "95/95 PASS before generated-authority freshness check",
+    "staticTests": "95/95 PASS",
     "contractVectors": "5/5 PASS",
     "releaseBuild": "PASS; 0 warnings; 0 errors",
-    "dependencyAudit": "PASS; 18 projects; 18 frameworks; 0 vulnerable-result packages",
-    "preAuthorityWorkspace": {"sha256": "50324f542c263cb7b23f43a6e9c87b68ec773f08c1a7b828dc41da7e369cdda2", "bytes": 459142, "files": 369, "byteIdenticalDoubleBuild": true}
+    "dependencyAudit": "PASS; 18 projects; 18 frameworks; 0 vulnerable-result packages"
   },
   "shippingOpen": [
     "Headed Windows 11 modern Explorer acceptance and exact-build screenshots",
@@ -52,9 +58,9 @@
     "Final security/fuzz/chaos/release audit and end-user acceptance"
   ],
   "nextActions": [
-    "Synchronize dev.18 generated authority from exact versioned CI output and require branch zero-diff qualification.",
-    "Fast-forward main non-force only if live main is still frozen dev.17, then require exact-main ordinary CI full success and verified delivery.",
-    "After dev.18 freeze, implement dev.19 Image multi-file/mixed-valid-invalid failure isolation and Image matrix closure before Video expansion."
+    "Re-fetch live main and never overwrite newer concurrent work.",
+    "Create dev.19 from the exact current main only after confirming dev.18 remains fully green.",
+    "Implement dev.19 Image multi-file/mixed-valid-invalid failure isolation and Image matrix closure test-first before Video expansion."
   ],
   "recursiveHandoverRequired": true,
   "recursiveHandoverRule": "Every completed tranche must end with a full copy-paste handover containing repository/default branch/live SHA/tree, prior authority, all commits, RED/GREEN history, run/job/artifact IDs, exact changes/reasons, executed tests/build/security outcomes, workspace hashes/counts, blockers, explicitly unverified claims, ONE precise next task, invariants, headed limitation, production signing/FFmpeg limitation, and this same recursive rule."
