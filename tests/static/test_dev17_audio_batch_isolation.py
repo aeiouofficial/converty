@@ -54,6 +54,13 @@ def test_dev17_powershell_log_interpolation_is_parser_safe():
     assert '"Mixed batch attempt $attempt:' not in smoke
 
 
+def test_dev17_fixture_argument_list_is_built_before_parameter_binding():
+    smoke = SMOKE.read_text(encoding="utf-8")
+    assert "$fixtureArguments = @(" in smoke
+    assert ") + $fixture.Encoder + @('-y', $fixture.Path)" in smoke
+    assert "-Arguments $fixtureArguments" in smoke
+
+
 def test_native_explorer_keeps_single_bridge_process_for_same_family_multiselection():
     native = NATIVE.read_text(encoding="utf-8")
 
