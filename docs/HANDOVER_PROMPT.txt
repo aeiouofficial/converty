@@ -54,18 +54,18 @@ AUTHORITY FREEZE SEQUENCE
 REPOSITORY CURATION
 Source tests remain under tests/. Generated build/test/media/package/log output stays under excluded artifacts/, bin/, obj/ and caches. Never hand-edit generated SBOM/package/hash files. Remove temporary workflow files from final trees. Preserve historical changelog/evidence fields. If GitHub connector permissions prevent deleting stale noncanonical refs, do not force or rewrite them; document the limitation.
 
-NEXT PRODUCT ORDER
-After dev.19 freeze, create the next branch from exact frozen main and work test-first on Video foundation:
+NEXT PRODUCT ORDER — DEV.20 VIDEO
+After dev.19 is frozen, create `dev/0.1.0-dev.20-video-foundation` from the exact frozen main. Work test-first:
 - inspect and reuse the existing typed registry/provider/native architecture;
 - define fixed typed Video action IDs and output contracts;
-- RED static and managed tests before implementation;
-- representative Video source extensions × every fixed action;
-- Unicode/metachar filenames, pre-existing destinations, collision numbering;
-- malformed/truncated deterministic rejection;
-- real packaged Bridge → Strict Worker/provider → FFmpeg acceptance;
-- mixed-valid/invalid Video batch isolation using the established runner behavior;
-- worker/process cleanup, staging cleanup, bounded waits;
-- preserve all Audio 36-case/single-negative/mixed-batch and Image 24-case/single-negative/mixed-batch regression gates.
+- establish RED static and managed tests before implementation;
+- qualify representative Video source extensions against every fixed action;
+- preserve Unicode/metacharacter filenames, pre-existing destinations and collision numbering;
+- add malformed/truncated deterministic rejection;
+- prove packaged Bridge → Strict Worker/provider → app-local FFmpeg;
+- prove mixed-valid/invalid Video batch isolation using the established runner behavior;
+- prove worker/process cleanup, staging cleanup and bounded waits;
+- retain all Audio 36-case + malformed/truncated + mixed-batch and Image 24-case + malformed/truncated + mixed-batch regression gates.
 
 RELEASE/HARDENING AFTER VIDEO
 1. Video closure.
@@ -88,7 +88,8 @@ FIRST ACTIONS FOR A NEW AGENT
 2. Determine actual current heads; GitHub is authoritative over this document.
 3. Finish dev.19 qualification and freeze if not already frozen.
 4. Keep every change committed and every generated authority update CI-derived.
-5. Begin the next tranche only from exact frozen main.
-6. End every completed tranche by updating this handover recursively with exact refs, commits, tests, artifacts, hashes, blockers, unverified claims and one precise next task.
+5. Create dev.20 only from the exact frozen main commit.
+6. Begin dev.20 RED-first and preserve all prior regression gates.
+7. End every completed tranche by updating this handover recursively with exact refs, commits, tests, artifacts, hashes, blockers, unverified claims and one precise next task.
 
 DO NOT RESET OR FORCE-PUSH MAIN. DO NOT DELETE HISTORICAL COMMITS. DO NOT PUT SECRETS OR PRIVATE SIGNING MATERIAL IN THE REPOSITORY.
