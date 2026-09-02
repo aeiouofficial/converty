@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "workspaceVersion": "0.1.0-dev.18",
-  "reviewedAt": "2026-08-31",
+  "workspaceVersion": "0.1.0-dev.19",
+  "reviewedAt": "2026-09-02",
   "policy": "Every external GitHub Action used by permanent repository workflows must be pinned to the exact 40-character commit listed here; the release version remains as a trailing human-readable comment.",
   "actions": {
     "actions/checkout": {"version": "v7.0.1", "sha": "3d3c42e5aac5ba805825da76410c181273ba90b1", "releaseUrl": "https://github.com/actions/checkout/releases/tag/v7.0.1"},
