@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.0-dev.19 — 2026-09-02
+- Added focused Image multi-file failure-isolation coverage to prove later valid selections survive ordinary malformed/truncated members.
+- Added a real packaged Windows Image mixed-batch acceptance smoke using one Bridge process for valid PNG → malformed JPG → valid WebP → truncated BMP → valid JPEG, repeated twice.
+- The acceptance contract requires aggregate Bridge exit code 4 after the full selection, later valid outputs to publish with numbered no-overwrite semantics, invalid members to publish nothing, sources and pre-existing destinations to remain byte-identical, no `.converty-*.partial.*` residue and no test-package converter-worker/FFmpeg orphan processes.
+- Added the dev.19 managed CI gate and static contract; existing Audio and Image single-file acceptance gates remain mandatory regression gates.
+- Preserved the full granular historical changelog and machine-readable evidence vocabulary; generated SBOM/package/hash authority remains CI-derived.
+
 ## 0.1.0-dev.18 — 2026-08-31
 - Added a dedicated packaged Windows Image acceptance component for the already-existing fixed Image product surface; no second image engine, raw FFmpeg argument surface or new executable path was introduced.
 - Qualified all advertised Image source extensions (`png`, `jpg`, `jpeg`, `webp`, `bmp`, `gif`, `tif`, `tiff`) against `image.png`, `image.jpeg`, and `image.webp`: 24 real Bridge→Strict Worker/provider→FFmpeg conversions.
