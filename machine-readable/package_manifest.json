@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "workspaceVersion": "0.1.0-dev.19",
+  "workspaceVersion": "0.1.0-dev.20",
   "generatedDate": "2026-08-25",
   "excludedParts": [
     ".git",
@@ -40,8 +40,8 @@
     },
     {
       "path": ".github/workflows/ci.yml",
-      "bytes": 9325,
-      "sha256": "4fe1bafcb75e2e61370f8a5a71ac37510170c86e559148906dcc393236426cfe"
+      "bytes": 9580,
+      "sha256": "b8f9d3ca8f38d84e21565c8bf4e52c5cdf761575fb5f29c6bedb58dda29043f1"
     },
     {
       "path": ".gitignore",
@@ -137,6 +137,16 @@
       "path": "build/verify.ps1",
       "bytes": 450,
       "sha256": "471a330f358cdb26956f44809c4d6faaec204ad7909fb8434dfcf36f1d0c4b4a"
+    },
+    {
+      "path": "build/video-batch-isolation-smoke.ps1",
+      "bytes": 10839,
+      "sha256": "f3aa0606cde6a7971d380bf004fbe858a92c005b5b320290d250523321dad82e"
+    },
+    {
+      "path": "build/video-input-acceptance-smoke.ps1",
+      "bytes": 16044,
+      "sha256": "e94a4a5efe0d962cd0e916ce3833b602ba920980ffb228f21812af81dd616a67"
     },
     {
       "path": "CHANGELOG.md",
@@ -254,9 +264,14 @@
       "sha256": "e43f6da07049686aa4f99eeabffbd0e7f1ada4ef53d1ecc84cc9ffd6556a873b"
     },
     {
+      "path": "docs/development/DEV20_VIDEO_QUALIFICATION_TDD_EVIDENCE.md",
+      "bytes": 4912,
+      "sha256": "ae2c4f55ef7a19d2a9e08c26373dc77adb73d4fec267fcd8ce0eaa5bf526ada8"
+    },
+    {
       "path": "docs/development/IMPLEMENTATION_STATUS.md",
-      "bytes": 5029,
-      "sha256": "534e35865d8025b446c88772a1dcd6f9df77cb93038bfe38cdd14a582232531d"
+      "bytes": 4542,
+      "sha256": "5eb32c2bce82c95dc482e965b97dc30eafa940ba3e9dcdba243eab7b09687be8"
     },
     {
       "path": "docs/development/MODULE_BOUNDARIES.md",
@@ -275,13 +290,13 @@
     },
     {
       "path": "docs/HANDOVER_NEXT_AGENT.md",
-      "bytes": 6884,
-      "sha256": "be73b1b54e462bd9df00bb1be1ad47f50e461887aca42137b2d093c3a4ea6656"
+      "bytes": 3487,
+      "sha256": "309cd9c27a3c94582b5aa2cec92b88a6f864b089f874c28b2f7efd43a731f4fa"
     },
     {
       "path": "docs/HANDOVER_PROMPT.txt",
-      "bytes": 12290,
-      "sha256": "4bf0c341b09786193389d6e7efc1ef5472ae186b490ab196750b267f678c8f62"
+      "bytes": 9188,
+      "sha256": "5898c0440f7f251857461cbd0008c1aff301bd3f983da1f7e49bd084c1dac4f2"
     },
     {
       "path": "docs/REFERENCE_SOURCES.md",
@@ -399,6 +414,11 @@
       "sha256": "cc681190e5fc5411ee9f1646f8a33c41078a6c49a9df243b9db0e65ef45fb4bf"
     },
     {
+      "path": "docs/superpowers/plans/2026-09-02-dev20-video-qualification.md",
+      "bytes": 20735,
+      "sha256": "b4a5ca26ed3d8e91999884f2de382ff47a60fee1b64b404b98ea98e0404f2215"
+    },
+    {
       "path": "docs/superpowers/specs/2026-08-24-foundation-design.md",
       "bytes": 2051,
       "sha256": "c846b241280c63a34893b1e1fbac2e87e617bb65ff1b9f1c1e05d89edcd2ae95"
@@ -444,6 +464,11 @@
       "sha256": "ea5eca8f37deae3a8f1493ba8d990228e81c90db0ca4aab9bbc4aea95cc8e300"
     },
     {
+      "path": "docs/superpowers/specs/2026-09-02-dev20-video-qualification-design.md",
+      "bytes": 10091,
+      "sha256": "8835de555388a6d29eb62c27ca25e2c008f61f20eb7aea3f074cffb47e0d9746"
+    },
+    {
       "path": "docs/supply-chain/CI_PROVENANCE_POLICY.md",
       "bytes": 2097,
       "sha256": "66210845738dd0fd49a08968827b4f973f30a91a56a224e5c3a1af93364bc841"
@@ -460,8 +485,8 @@
     },
     {
       "path": "docs/TASK_BACKLOG.md",
-      "bytes": 4447,
-      "sha256": "a5826eff19b10848429dc507812e545a6f6ec2b43614619644658aadd8443ea7"
+      "bytes": 4143,
+      "sha256": "8fee16bc64ba9740ca04322235bec86a6e79e99107bab506c9443e5c64264f8f"
     },
     {
       "path": "docs/TEST_AND_RELEASE_GATES.md",
@@ -480,8 +505,8 @@
     },
     {
       "path": "eng/toolchain.json",
-      "bytes": 1148,
-      "sha256": "71800718d58a7a3bb8ffdf5029de0dee7d8c17ba11086f19148973dafd2b67ac"
+      "bytes": 1200,
+      "sha256": "896d4e13308b044db0339202b8a55832df45fccf42083737da8ca4a95416deac"
     },
     {
       "path": "global.json",
@@ -490,33 +515,33 @@
     },
     {
       "path": "machine-readable/build_evidence.json",
-      "bytes": 6667,
-      "sha256": "2a220b3b45b2d18f9b19bb8c9cb6ae1a76711bb157fec978f5e5b1ce450b4c96"
+      "bytes": 7176,
+      "sha256": "2a7aa028857c88195935be1c5f3093ff4bc614e43d333cd1667e7d7a6b469575"
     },
     {
       "path": "machine-readable/ci_action_pins.json",
       "bytes": 1036,
-      "sha256": "323c0ec11162e7ca63a3ec1c826997485ebf88ad8f4325a7fe90412f162041df"
+      "sha256": "f6018e6f73149cb6be975e92fb45cbd8f5513f924e5e333ba3ccea68efc3f11d"
     },
     {
       "path": "machine-readable/handover_state.json",
-      "bytes": 5625,
-      "sha256": "66dab66a2ef0173540d519e3ee612f3221a85b857217bd618fae13d31122b42e"
+      "bytes": 5754,
+      "sha256": "cdb8599a3722d92f6cb09298b354f7737984e23bf0e16de9c629edc20557b7a8"
     },
     {
       "path": "machine-readable/release_policy.json",
       "bytes": 1972,
-      "sha256": "a6d459973187bde04e020a29e77ca8001a1bd89943c0a9182e9206b6921f53bb"
+      "sha256": "46570c907774978e37aea8868ea6cbea1688496a9bfa2f5d37a20ab498967735"
     },
     {
       "path": "machine-readable/release_sbom.spdx.json",
       "bytes": 22991,
-      "sha256": "256dd6dea1675c40098d17aafdc2219237c70c3f4fe83502053f7562411e497a"
+      "sha256": "237bc021a861c51588c12892c39375eb7ea3a413eec07972e6483f9a376fcfe6"
     },
     {
       "path": "machine-readable/source_sbom.spdx.json",
       "bytes": 11341,
-      "sha256": "596b2b45fb8ce6458875535401f49fed8073350b0fe658795400943a9870e785"
+      "sha256": "044d140739e1b50cd9360d73b707faf196431a6909545c5f30c7a9adde1b4a63"
     },
     {
       "path": "native/cmake/Hardening.cmake",
@@ -615,8 +640,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 5654,
-      "sha256": "a4d69cc9e83fb37cffe375a0bce101b5976c98954e6715ae9d81012acf45107e"
+      "bytes": 6219,
+      "sha256": "260303323ce96d24f712c65beac962deb28eeee805132dbd4289548dc95610ea"
     },
     {
       "path": "reference-images/01_system_architecture.dot",
@@ -1560,8 +1585,8 @@
     },
     {
       "path": "tests/Converty.Core.Tests/Presets/ProductPresetRegistryTests.cs",
-      "bytes": 5018,
-      "sha256": "4c0899bfdee24460cc1366fd49f496f611b5fff2c7bd52403a884bb642109f34"
+      "bytes": 7825,
+      "sha256": "bfc11cc31c1833c26d403726b0e8f95c09b88f2f4143b8e1fd2b2b47d5198d39"
     },
     {
       "path": "tests/Converty.Core.Tests/Registry/FormatRegistryTests.cs",
@@ -1814,6 +1839,11 @@
       "sha256": "24eedd1b24ddfa7de74cfe83c5e9d0a5012f240756faf66a290418bde8f0e1ef"
     },
     {
+      "path": "tests/static/test_dev20_video_qualification.py",
+      "bytes": 3047,
+      "sha256": "a2be1a2dac20827a60a682ae8c922b5bdc78f2a9d5b208ee8236d057ba990eb6"
+    },
+    {
       "path": "tests/static/test_dev4_ci_provenance.py",
       "bytes": 5363,
       "sha256": "162af7fb33e0ebe1c3ca403ae99383959d16694eaf7b6c925c96c2bccc9244c7"
@@ -1906,7 +1936,7 @@
     {
       "path": "VERSION",
       "bytes": 13,
-      "sha256": "ed1ea23150e64a9dcc4cbd964b86b8d5d140579ca9ccd9305bc2444e291139f2"
+      "sha256": "33c419ea652efe0dd3775a96c6105dad75cb2e12c61b4bd97d3312d7948bd546"
     }
   ]
 }
