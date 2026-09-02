@@ -1,38 +1,35 @@
-# Implementation status — 0.1.0-dev.18
+# Implementation status — 0.1.0-dev.19
 
-## Frozen dev.18 Image input/action acceptance — 2026-08-31
-- `0.1.0-dev.18` is frozen as an evidence-backed product tranche. The qualification anchor is exact-main commit `ef079f7e7923e399624067c4d54b9ce7577bf090`, tree `0af729f150897d170eac9f9aebfd5bc7d5d4083a`, run `33390111824`.
-- Exact-main jobs all succeeded: managed `99481546832`, supply-chain-static `99481546572`, main-authority-continuity `99481546655`.
-- The tracked generated-authority zero-diff gate passed on exact `main`.
-- Deterministic verified workspace: `Converty_0.1.0-dev.18_full_workspace.zip`, SHA-256 `4be8d5a2f503a8a885347b647bbd0aa0b61ce6d56b3ac39d9af7b11fb801628a`, 463162 bytes, 372 entries, 370 package-manifest entries, 371 SHA-manifest entries; CRC/double-build/exclusion policy PASS.
-- Exact-main generated-authority artifact `9757102986`, digest `sha256:a8eb7d4a9d70044d2d6125404de7de686de41a97fd7dada1b2cf814d6f2c50d5`.
-- Exact-main verified-delivery artifact `9757169067`, digest `sha256:97931ae9cbee196fb3cc6c3b0c2d792055ad04365d6dc6609e659301edaa0f92`.
+## Frozen baseline: dev.18 Image acceptance
+- `0.1.0-dev.18` exact-main authority: `ef079f7e7923e399624067c4d54b9ce7577bf090`, tree `0af729f150897d170eac9f9aebfd5bc7d5d4083a`, run `33390111824`.
+- Managed `99481546832`, supply-chain-static `99481546572`, continuity `99481546655`: SUCCESS.
+- Workspace SHA-256 `4be8d5a2f503a8a885347b647bbd0aa0b61ce6d56b3ac39d9af7b11fb801628a`, 463162 bytes, 372 entries; generated-authority artifact `9757102986`; verified delivery `9757169067`.
+- Image single-file acceptance: 8 source extensions × 3 fixed actions = 24/24 real packaged conversions; repeated malformed/truncated rejection; source/destination preservation; numbered publication; zero partial residue.
+- Recursive baseline: 18/18 locked restore, 0 vulnerable-result packages, Release 0 warnings/errors, native/package/COM/product gates PASS, Audio 36-case + malformed/truncated + mixed-batch PASS, 254/254 managed, 95/95 static, 5/5 vectors.
 
-## Dev.18 product acceptance
-- Added `build/image-input-acceptance-smoke.ps1` as a dedicated Windows product acceptance component. All fixture media/output is recreated below excluded `artifacts/image-input-acceptance-smoke`; no generated media/log debris is committed.
-- Exercised all advertised Image source extensions (`png`, `jpg`, `jpeg`, `webp`, `bmp`, `gif`, `tif`, `tiff`) against all three existing fixed Image actions (`image.png`, `image.jpeg`, `image.webp`) for 24 real packaged Bridge→Strict Worker/provider→FFmpeg conversions.
-- Every success verifies the expected codec (`png`, `mjpeg`, `webp`) and 64×48 dimensions, preserves source and a pre-existing destination byte-for-byte, publishes numbered output only, and leaves zero `.converty-*.partial.*` residue.
-- Repeated malformed and physically truncated Image inputs reject deterministically with Bridge exit code 4 and do not publish output.
-- No production-code change was necessary: the existing typed registry, native Explorer commands, Bridge, Strict Worker and FFmpeg provider already satisfy the tested Image path. Dev.18 therefore adds evidence and regression coverage rather than duplicating media execution logic.
-- Existing Audio product, six-by-six source/action, malformed/truncated and mixed-batch gates remain green.
+## Dev.19 Image mixed-batch closure
+- Added `build/image-batch-isolation-smoke.ps1`, a real Windows packaged product gate.
+- Added `tests/static/test_dev19_image_batch_isolation.py` and `tests/Converty.Core.Tests/Execution/ImageBatchIsolationTests.cs`.
+- Added CI step `Image mixed-batch failure isolation` after the existing Image single-file gate.
+- Contract: one Bridge process receives valid PNG → malformed JPG → valid WebP → truncated BMP → valid JPEG; ordinary per-file failures do not suppress later valid members; aggregate failure is returned after the full batch.
+- Transactional requirements: valid members publish numbered PNG outputs; invalid members publish nothing; source/pre-existing destination hashes remain unchanged; no `.converty-*.partial.*`; no test-package converter-worker/FFmpeg orphan processes.
+- Batch is repeated twice and all Audio + Image single-file regression gates remain mandatory.
+- No new production media subsystem or widened executable/argument surface is introduced.
 
-## TDD evidence
-- RED `7388aec6ffb673e0101b09106d646d417f77a7b3`, run `33349908668`, static job `99361086262`: 92 existing static tests PASS; exactly 3 new dev.18 assertions FAIL because the Image acceptance smoke was absent.
-- Acceptance implementation `0841395904960945a1988dcedb8b6ccf352a57e0` added the dedicated smoke.
-- CI wiring/behavior head `6075aa3973b75e170cb5f9b812a8ca3b9b71f528`, run `33350141373`: new Image gate and all prior product behavior PASS.
-- Final generated-authority qualification and exact-main freeze completed at the anchor above.
+## Dev.19 TDD evidence
+- Static RED was established before the smoke existed; subsequent harness corrections were independently guarded.
+- PowerShell harness corrections preserve safe `${attempt}` interpolation and named argument arrays instead of relying on fragile inline concatenation.
+- Current branch qualification must still be completed after the latest metadata/CI commits. Do not label dev.19 frozen until generated-authority zero-diff and exact-main qualification succeed.
 
-## Observed recursive qualification
-- Windows Server 2025 / `windows-2025-vs2026` / .NET SDK 10.0.400.
-- 18/18 locked restore; dependency audit PASS across 18 projects/18 frameworks with 0 vulnerable-result packages.
-- Release build PASS with 0 warnings / 0 errors.
-- Native Explorer, unsigned development MakeAppx package, direct staged class-factory Invoke, loose-package COM activation/Invoke and product conversion smoke PASS.
-- Audio source/action matrix 36/36 PASS; malformed/truncated Audio rejection PASS; mixed Audio batch PASS twice.
-- Image matrix 24/24 PASS; repeated malformed/truncated Image rejection PASS with deterministic exit 4; source/destination/no-partial invariants PASS.
-- Managed tests 254/254 PASS, 0 skipped; static tests 95/95 PASS; contract vectors 5/5 PASS.
+## Remaining implementation/release work
+1. Finish dev.19 authority qualification and exact-main freeze.
+2. Video foundation and fixed typed action/source/malformed/batch matrix, test-first, reusing the strict worker/provider architecture.
+3. UX/settings: defaults, mixed-selection UX, progress/results, output/concurrency/isolation settings.
+4. Plugin SDK manifest/API/signature/hash gate with worker-only sample provider.
+5. Production FFmpeg/ffprobe exact-binary provenance, signature/hash/license/notices and redistribution approval.
+6. Production signed-package B2 identity/authentication requalification.
+7. Signed production MSIX clean Windows 11 install/update/uninstall.
+8. Headed Windows 11 modern Explorer exact-build mouse-driven acceptance, screenshots and crash/hang/failure matrix.
+9. Final fuzz/chaos/security/release audit and end-user acceptance.
 
-## Next product tranche
-`0.1.0-dev.19`: Image multi-file/mixed-valid-invalid failure-isolation acceptance and Image matrix closure. Exercise valid Images before and after malformed/truncated inputs in one same-family selection; later valid files must still publish, aggregate failure must be reported after the batch, source/pre-existing destinations must remain unchanged, numbered collision publication must remain deterministic, and no partial output/orphan worker may remain. Do not begin Video expansion until this Image closure tranche is evidence-backed and frozen.
-
-## Remaining shipping gates
-Headed Windows 11 UI/screenshots and Explorer crash/hang/failure matrix; Image mixed-batch closure; production signed-package B2 requalification; production FFmpeg redistribution approval; signed production MSIX/clean-VM lifecycle; final security/fuzz/chaos/release/end-user acceptance.
+Automated CI does not close headed UI, production signing, production FFmpeg redistribution or final end-user/security gates.
