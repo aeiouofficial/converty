@@ -1,19 +1,14 @@
 {
   "schemaVersion": 1,
   "project": "Converty",
-  "workspaceVersion": "0.1.0-dev.18",
-  "baselineDate": "2026-08-31",
-  "implementationStatus": "DEV18_FROZEN_IMAGE_INPUT_ACCEPTANCE_COMPLETE_DEV19_READY",
+  "workspaceVersion": "0.1.0-dev.19",
+  "baselineDate": "2026-09-02",
+  "implementationStatus": "DEV19_IMAGE_MIXED_BATCH_IMPLEMENTED_PENDING_FINAL_AUTHORITY_QUALIFICATION",
   "defaultBranch": "main",
-  "nextWorkspaceVersion": "0.1.0-dev.19",
-  "nextBatch": "DEV19_IMAGE_MIXED_BATCH_FAILURE_ISOLATION_MATRIX_CLOSURE",
+  "currentDevelopmentBranch": "dev/0.1.0-dev.19-image-batch-isolation",
+  "nextWorkspaceVersion": "0.1.0-dev.20",
+  "nextBatch": "DEV20_VIDEO_FOUNDATION_AND_FIXED_ACTION_SOURCE_MALFORMED_BATCH_MATRIX",
   "targetOs": "Windows 11 x64",
-  "sourceBehaviorEvidence": {
-    "headSha": "6075aa3973b75e170cb5f9b812a8ca3b9b71f528",
-    "workflowRunId": 33350141373,
-    "managedJobId": 99361743241,
-    "staticJobId": 99361743276
-  },
   "frozenDev18QualificationAnchor": {
     "headSha": "ef079f7e7923e399624067c4d54b9ce7577bf090",
     "treeSha": "0af729f150897d170eac9f9aebfd5bc7d5d4083a",
@@ -29,38 +24,44 @@
     "generatedAuthorityArtifactId": 9757102986,
     "generatedAuthorityArtifactDigest": "sha256:a8eb7d4a9d70044d2d6125404de7de686de41a97fd7dada1b2cf814d6f2c50d5",
     "verifiedDeliveryArtifactId": 9757169067,
-    "verifiedDeliveryArtifactDigest": "sha256:97931ae9cbee196fb3cc6c3b0c2d792055ad04365d6dc6609e659301edaa0f92",
-    "status": "PASS_ALL_THREE_EXACT_MAIN_JOBS"
+    "verifiedDeliveryArtifactDigest": "sha256:97931ae9cbee196fb3cc6c3b0c2d792055ad04365d6dc6609e659301edaa0f92"
   },
-  "dev18ImageAcceptance": {
-    "redHeadSha": "7388aec6ffb673e0101b09106d646d417f77a7b3",
-    "redRunId": 33349908668,
-    "redStaticJobId": 99361086262,
-    "redResult": "92 existing PASS; exactly 3 new failures",
-    "acceptanceImplementationSha": "0841395904960945a1988dcedb8b6ccf352a57e0",
-    "behaviorHeadSha": "6075aa3973b75e170cb5f9b812a8ca3b9b71f528",
-    "behaviorRunId": 33350141373,
-    "imageMatrix": "8 source extensions x 3 fixed actions = 24/24 PASS",
-    "negativeCases": "malformed and truncated repeated; deterministic exit 4; PASS",
-    "managedTests": "254/254 PASS; 0 skipped",
-    "staticTests": "95/95 PASS",
+  "dev19": {
+    "branch": "dev/0.1.0-dev.19-image-batch-isolation",
+    "currentHeadSha": "6f92301cc5542e7e7dff7778d6d3a9a9f070c8ca",
+    "scope": "Image multi-file/mixed-valid-invalid failure isolation",
+    "selection": ["valid png", "malformed jpg", "valid webp", "truncated bmp", "valid jpeg"],
+    "fixedAction": "image.png",
+    "singleBridgeProcessPerAttempt": true,
+    "repeatedAttempts": 2,
+    "expectedAggregateExitCode": 4,
+    "staticContract": "PASS on corrected run before metadata commits; latest metadata commit requires a fresh run",
+    "managedQualification": "IN_PROGRESS_OR_SUPERSEDED_BY_LATEST_METADATA_COMMIT",
+    "finalAuthorityQualification": "OPEN"
+  },
+  "recursiveRegressionBaseline": {
+    "managedTests": "254/254 PASS",
+    "staticTests": "95/95 PASS at frozen dev18",
     "contractVectors": "5/5 PASS",
-    "releaseBuild": "PASS; 0 warnings; 0 errors",
-    "dependencyAudit": "PASS; 18 projects; 18 frameworks; 0 vulnerable-result packages"
+    "dependencyAudit": "18 projects / 18 frameworks / 0 vulnerable-result packages",
+    "releaseBuild": "0 warnings / 0 errors at frozen dev18"
   },
   "shippingOpen": [
+    "Dev.19 final generated-authority synchronization and exact-main qualification",
+    "Video foundation and fixed action/source/malformed/batch matrix",
     "Headed Windows 11 modern Explorer acceptance and exact-build screenshots",
     "Explorer crash/hang/failure headed matrix",
-    "Image multi-file/mixed-valid-invalid batch isolation and matrix closure",
     "Production signed-package B2 identity/authentication requalification",
     "Production FFmpeg/ffprobe redistribution/license/notices/signature/hash approval",
     "Signed production MSIX and clean Windows 11 VM lifecycle acceptance",
-    "Final security/fuzz/chaos/release audit and end-user acceptance"
+    "Final security/fuzz/chaos/release audit and end-user acceptance",
+    "UX/settings and plugin SDK gates"
   ],
   "nextActions": [
-    "Re-fetch live main and never overwrite newer concurrent work.",
-    "Create dev.19 from the exact current main only after confirming dev.18 remains fully green.",
-    "Implement dev.19 Image multi-file/mixed-valid-invalid failure isolation and Image matrix closure test-first before Video expansion."
+    "Finish the latest dev19 CI from the actual current head.",
+    "Synchronize generated authority only from the exact CI artifact after independent verification.",
+    "Require branch zero-diff and exact-main three-job qualification before declaring dev19 frozen.",
+    "Create dev20 from exact frozen main and begin Video test-first."
   ],
   "recursiveHandoverRequired": true,
   "recursiveHandoverRule": "Every completed tranche must end with a full copy-paste handover containing repository/default branch/live SHA/tree, prior authority, all commits, RED/GREEN history, run/job/artifact IDs, exact changes/reasons, executed tests/build/security outcomes, workspace hashes/counts, blockers, explicitly unverified claims, ONE precise next task, invariants, headed limitation, production signing/FFmpeg limitation, and this same recursive rule."
