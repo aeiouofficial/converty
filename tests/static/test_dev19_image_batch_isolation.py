@@ -1,3 +1,4 @@
+import re
 from pathlib import Path
 
 
@@ -44,3 +45,31 @@ def test_dev19_smoke_locks_transactional_and_process_cleanup_invariants():
         "get-ciminstance win32_process",
     ):
         assert token in smoke
+
+
+def test_dev19_smoke_never_aliases_a_source_with_the_preexisting_target_path():
+    """The harness must not overwrite a selected source while seeding collision targets."""
+    smoke = SMOKE.read_text(encoding="utf-8")
+
+    preset_match = re.search(r"ArgumentList\.Add\('image(?P<ext>\.[a-z0-9]+)'\)", smoke, re.IGNORECASE)
+    assert preset_match, "dev.19 smoke must expose the fixed Image output extension"
+    target_extension = preset_match.group("ext").lower()
+
+    fixture_paths = {
+        variable: filename
+        for variable, filename in re.findall(
+            r"\$(\w+)\s*=\s*Join-Path\s+\$caseRoot\s+'([^']+)'",
+            smoke,
+            re.IGNORECASE,
+        )
+    }
+    selected_variables = re.findall(r"Path=\$(\w+);\s*Valid=\$(?:true|false)", smoke, re.IGNORECASE)
+    assert selected_variables, "dev.19 smoke must define the mixed Image selection"
+
+    for variable in selected_variables:
+        assert variable in fixture_paths, f"missing fixture path for selected variable ${variable}"
+        source_extension = Path(fixture_paths[variable]).suffix.lower()
+        assert source_extension != target_extension, (
+            f"${variable} aliases its source with the pre-existing {target_extension} target; "
+            "the harness would mutate the source before Bridge execution"
+        )
