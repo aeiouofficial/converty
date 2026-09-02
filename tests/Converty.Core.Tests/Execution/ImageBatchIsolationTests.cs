@@ -18,7 +18,6 @@ public sealed class ImageBatchIsolationTests
             string middle = Path.Combine(root, "middle.webp");
             string truncated = Path.Combine(root, "truncated.bmp");
             string last = Path.Combine(root, "last.jpeg");
-            string firstExisting = Path.Combine(root, "first.png");
             string middleExisting = Path.Combine(root, "middle.png");
             string lastExisting = Path.Combine(root, "last.png");
 
@@ -30,13 +29,9 @@ public sealed class ImageBatchIsolationTests
             File.WriteAllBytes(middleExisting, [42]);
             File.WriteAllBytes(lastExisting, [43]);
 
-            // The first source's same-name destination is intentionally the source itself;
-            // OutputPathResolver must reject self-overwrite before invoking the worker.
-            // Use a separate collision target to keep this test focused on batch isolation.
-            File.Delete(firstExisting);
-            string firstDestination = Path.Combine(root, "first-output.png");
-            File.WriteAllBytes(firstDestination, [41]);
-
+            // For first.png -> image.png, the selected source is itself the occupied base
+            // output path. OutputPathResolver must therefore preserve the source and publish
+            // the successful conversion as first (1).png without any special-case setup.
             var worker = new SequencedWorkerClient([0, 7, 0, 7, 0]);
             var runner = new ConversionBatchRunner(
                 ProductPresetRegistry.Default,
@@ -65,7 +60,6 @@ public sealed class ImageBatchIsolationTests
             Assert.Equal([5], File.ReadAllBytes(last));
             Assert.Equal([42], File.ReadAllBytes(middleExisting));
             Assert.Equal([43], File.ReadAllBytes(lastExisting));
-            Assert.Equal([41], File.ReadAllBytes(firstDestination));
 
             Assert.All(worker.Inputs, stagedPath => Assert.False(File.Exists(stagedPath)));
             Assert.All(worker.Outputs, stagedPath => Assert.False(File.Exists(stagedPath)));
