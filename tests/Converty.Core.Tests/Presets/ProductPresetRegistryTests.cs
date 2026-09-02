@@ -18,6 +18,68 @@ public sealed class ProductPresetRegistryTests
     }
 
     [Fact]
+    public void VideoPresetsSupportExactlyTheNineAdvertisedSourceExtensions()
+    {
+        string[] expected = [".mp4", ".mov", ".mkv", ".avi", ".webm", ".m4v", ".mpeg", ".mpg", ".wmv"];
+
+        foreach (string id in new[] { "video.mp4.h264", "video.webm.vp9", "extract.audio.mp3" })
+        {
+            ProductPresetDefinition preset = ProductPresetRegistry.Default.GetRequired(PresetId.Parse(id));
+
+            Assert.Equal(expected, preset.InputExtensions);
+            Assert.All(expected, extension => Assert.True(preset.SupportsPath("clip" + extension)));
+        }
+    }
+
+    [Fact]
+    public void VideoMp4PresetUsesExactDev20EncodingContract()
+    {
+        ProductPresetDefinition preset = ProductPresetRegistry.Default.GetRequired(PresetId.Parse("video.mp4.h264"));
+
+        Assert.Equal(".mp4", preset.OutputExtension);
+        Assert.Equal(
+            ["-map", "0:v:0?", "-map", "0:a:0?", "-c:v", "libx264", "-preset", "medium", "-crf", "23", "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart"],
+            preset.FfmpegArgumentsAfterInput);
+    }
+
+    [Fact]
+    public void VideoWebmPresetUsesExactDev20EncodingContract()
+    {
+        ProductPresetDefinition preset = ProductPresetRegistry.Default.GetRequired(PresetId.Parse("video.webm.vp9"));
+
+        Assert.Equal(".webm", preset.OutputExtension);
+        Assert.Equal(
+            ["-map", "0:v:0?", "-map", "0:a:0?", "-c:v", "libvpx-vp9", "-crf", "32", "-b:v", "0", "-c:a", "libopus", "-b:a", "128k"],
+            preset.FfmpegArgumentsAfterInput);
+    }
+
+    [Fact]
+    public void ExtractAudioMp3PresetUsesExactDev20EncodingContract()
+    {
+        ProductPresetDefinition preset = ProductPresetRegistry.Default.GetRequired(PresetId.Parse("extract.audio.mp3"));
+
+        Assert.Equal(".mp3", preset.OutputExtension);
+        Assert.Equal(
+            ["-vn", "-c:a", "libmp3lame", "-b:a", "192k"],
+            preset.FfmpegArgumentsAfterInput);
+    }
+
+    [Fact]
+    public void VideoFfmpegArgumentsKeepUnicodeAndMetacharacterPathsAsIndependentTokens()
+    {
+        ProductPresetDefinition preset = ProductPresetRegistry.Default.GetRequired(PresetId.Parse("video.mp4.h264"));
+        const string input = @"C:\Media\Hör clip & semi; -dash [x].mov";
+        const string output = @"C:\Media\Hör clip & semi; -dash [x].mp4";
+
+        IReadOnlyList<string> arguments = preset.BuildFfmpegArguments(input, output);
+
+        Assert.Equal(1, arguments.Count(argument => argument == input));
+        Assert.Equal(1, arguments.Count(argument => argument == output));
+        Assert.DoesNotContain(arguments, argument => argument.Contains("cmd.exe", StringComparison.OrdinalIgnoreCase));
+        Assert.DoesNotContain(arguments, argument => argument.Contains("powershell", StringComparison.OrdinalIgnoreCase));
+    }
+
+    [Fact]
     public void AudioSelectionOffersExpandedFixedAudioPresetsOnly()
     {
         IReadOnlyList<ProductPresetDefinition> presets = ProductPresetRegistry.Default.GetApplicable(
