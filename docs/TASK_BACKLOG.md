@@ -1,28 +1,46 @@
 # Converty Implementation Backlog
 
-## Dev.19 Image mixed-batch closure
+## Dev.19 Image mixed-batch closure — FROZEN
 - [x] Preserve frozen dev.18 Image single-file authority and recursive Audio evidence.
-- [x] Define dev.19 test-first contract for one same-family Image selection containing valid and malformed/truncated members.
+- [x] Define dev.19 test-first mixed-valid/invalid Image batch contract.
 - [x] Add focused core-runner Image batch isolation coverage.
 - [x] Add real Windows packaged Image mixed-batch smoke and CI wiring.
-- [x] Correct same-extension Image source/target alias in the acceptance harness with RED/GREEN evidence.
-- [x] Correct the core-test same-extension fixture so it preserves the selected source and exercises resolver numbering.
-- [x] Requalify behavior on Windows: Audio/Image product gates, 255/255 managed, 99/99 static, 5/5 vectors PASS on behavior anchor `8a64d0a12ccf47df5df364a1c6c545f876d57d29` / run `33596229372`.
-- [ ] Synchronize final curated dev.19 generated authority from independently verified CI artifact.
-- [ ] Require canonical dev.19 generated-authority zero-diff plus complete Windows deterministic-workspace/delivery qualification.
-- [ ] Fast-forward unchanged `main` non-force and require fresh exact-main three-job SUCCESS.
-- [ ] Independently verify final exact-main workspace and delivery before declaring dev.19 frozen.
-- [ ] Do not begin Video expansion until dev.19 is evidence-backed and frozen.
+- [x] Correct same-extension Image source/target alias with RED/GREEN evidence.
+- [x] Correct the core-test same-extension fixture without changing production behavior.
+- [x] Requalify behavior: Audio/Image product gates, 255/255 managed, 99/99 static, 5/5 vectors.
+- [x] Curate and independently verify exact generated authority.
+- [x] Synchronize generated authority via guarded exact-parent self-deleting workflow.
+- [x] Require canonical dev.19 zero-diff plus complete deterministic-workspace/delivery qualification.
+- [x] Re-read unchanged main and fast-forward non-force only.
+- [x] Require fresh exact-main three-job SUCCESS.
+- [x] Independently verify final exact-main workspace and delivery.
+- [x] Freeze dev.19 at main `eb0ce66dab646427d5bef1548c12e5cc4765b2f1`, tree `337a4e11fb41bab6b6eeb462c3755381580f06c1`, run `33597504612`.
+
+## Dev.20 Video foundation — NEXT
+- [ ] Use Superpowers brainstorming on exact frozen main; inspect existing typed preset/provider/native Explorer patterns.
+- [ ] Present Video design options and recommended design to the human; obtain explicit design approval before implementation.
+- [ ] Commit approved Video design spec and invoke writing-plans.
+- [ ] Create `dev/0.1.0-dev.20-video-foundation` from exact frozen main `eb0ce66dab646427d5bef1548c12e5cc4765b2f1` after approval.
+- [ ] Establish RED static and managed Video contracts before production implementation.
+- [ ] Define only fixed typed Video actions/output contracts; no raw FFmpeg surface or arbitrary executable path.
+- [ ] Qualify representative Video source extensions × every fixed action through packaged Bridge → Strict Worker/provider → app-local FFmpeg.
+- [ ] Preserve Unicode/metacharacter filenames, sources, pre-existing destinations and collision numbering.
+- [ ] Add repeated malformed/truncated deterministic rejection.
+- [ ] Prove mixed-valid/invalid Video batch failure isolation and later-valid continuation.
+- [ ] Prove bounded waits, staging cleanup, partial cleanup and worker/FFmpeg process cleanup.
+- [ ] Keep all Audio 36-case + negatives + mixed-batch and Image 24-case + negatives + mixed-batch gates green.
+- [ ] Close generated authority, branch zero-diff and exact-main qualification before freezing dev.20.
 
 ## B0 Repository/bootstrap
 - [x] .NET 10.0.400 / C# 14 / C++20 topology, warnings-as-errors, analyzers, locked dependencies, immutable Action pins, vulnerability audit and deterministic workspace tooling.
-- [x] Disposable build/test/media/package outputs constrained to excluded `artifacts/`, `bin/`, `obj` and cache paths; source tests remain organized under `tests/`.
+- [x] Disposable build/test/media/package outputs constrained to excluded `artifacts/`, `bin/`, `obj` and cache paths.
 - [ ] Final Debug/Release signed-production matrix and dependency/license/notices review.
 
 ## B1 Core contracts
 - [x] Strict versioned contracts/schemas, capability/planner/output collision logic, typed JSON v1 adapters and adversarial validation.
 - [x] Fixed typed Audio preset registry.
-- [x] Existing fixed typed Image actions (PNG/JPEG/WebP) product-path qualified by dev.18.
+- [x] Fixed typed Image actions (PNG/JPEG/WebP) qualified through single-file and mixed-batch product gates.
+- [ ] Fixed typed Video actions after approved dev.20 design.
 
 ## B2 Host/IPC — release hardening remains open
 - [x] Single-instance Host runtime, current-user pipe DACL/SID validation, bounded framing/timeouts, fixed Host startup, crash-recovery queue/journal.
@@ -34,6 +52,7 @@
 ## B3 Explorer
 - [x] Real native `IExplorerCommand` DLL, package COM/context-menu registration, fixed typed product subcommands.
 - [x] Native Audio and Image submenu actions map only to fixed typed preset IDs.
+- [ ] Video submenu integration after approved fixed Video contracts.
 - [ ] Headed Windows 11 modern-menu acceptance with exact-build screenshots.
 - [ ] Explorer crash/hang/failure headed matrix.
 
@@ -42,11 +61,9 @@
 
 ## B5–B8 Providers
 - [x] Audio action/source/malformed/batch closure through strict product path.
-- [x] Image 8-source × 3-action acceptance plus malformed/truncated rejection.
-- [x] Image mixed-valid/invalid multi-file behavior closure; final authority/main freeze remains open above.
-- [ ] Additional Image malformed corpus if evidence warrants it.
+- [x] Image 8-source × 3-action acceptance plus malformed/truncated and mixed-batch closure.
 - [ ] Production FFmpeg/ffprobe pin/signature/hash/licensing/redistribution approval.
-- [ ] Video action/source/malformed/batch qualification after Image closure freeze.
+- [ ] Video action/source/malformed/batch qualification.
 
 ## B9 UX/settings
 - [ ] Defaults, mixed-selection behavior, pinned presets, output/concurrency/isolation settings and user-visible progress/result UX.
@@ -60,4 +77,4 @@
 - [ ] Final SBOM/notices/hash manifest and headed end-user acceptance.
 
 ## Execution rule
-Check a box only when matching evidence exists. Product-first development ordering does not waive final shipping requirements. Preserve all existing granular evidence keys when extending machine-readable authority; never hand-edit generated SBOM/package/hash artifacts.
+Check a box only when matching evidence exists. Product-first development ordering does not waive final shipping requirements. Never hand-edit generated SBOM/package/hash authority.

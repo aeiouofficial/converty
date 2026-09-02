@@ -5,100 +5,99 @@ READ THIS ENTIRE FILE BEFORE CHANGING CODE.
 Repository: https://github.com/aeiouofficial/converty
 Product: Converty, a Windows 11 Explorer modern-context-menu converter.
 Default branch: main.
-Current development line: 0.1.0-dev.19 Image mixed-batch isolation.
+Frozen workspace version: 0.1.0-dev.19.
+Next product tranche: 0.1.0-dev.20 Video foundation.
 
 MISSION
-Finish Converty to customer-shippable quality. Work directly in GitHub. Do not merely propose work. Commit every meaningful change, run the repository's real CI, preserve deterministic generated authority, and leave the repo curated and self-explanatory for the next agent.
+Finish Converty to customer-shippable quality. Work from live GitHub state, not narrative assumptions. Commit meaningful changes, run the real CI, preserve deterministic generated authority, never force-push main, and leave a context-free recursive handover after every completed tranche.
 
-CURRENT FROZEN AUTHORITY
-Dev.18 is frozen with exact-main qualification anchor ef079f7e7923e399624067c4d54b9ce7577bf090, tree 0af729f150897d170eac9f9aebfd5bc7d5d4083a, run 33390111824. Managed 99481546832, static 99481546572 and continuity 99481546655 succeeded. That anchor included 254/254 managed tests, 95/95 static tests, 5/5 contract vectors, 36/36 Audio source/action conversions, repeated malformed/truncated Audio rejection, Audio mixed-batch isolation, and 24/24 Image source/action conversions plus repeated malformed/truncated Image rejection. Live main may contain later metadata-only curation; ALWAYS re-fetch it.
+CURRENT FROZEN AUTHORITY — DEV.19
+Dev.19 is frozen. The exact frozen/default-branch authority is:
+- main SHA: eb0ce66dab646427d5bef1548c12e5cc4765b2f1
+- tree: 337a4e11fb41bab6b6eeb462c3755381580f06c1
+- version: 0.1.0-dev.19
+- exact-main workflow run: 33597504612
+- main-authority-continuity job: 100143814059 — SUCCESS
+- supply-chain-static job: 100143814189 — SUCCESS
+- managed job: 100143814261 — SUCCESS
+- exact-main generated-authority artifact: 9833901138
+- exact-main generated-authority artifact digest: sha256:255e9328231e0951368b468308774f1df97dc05a0b05094f8ea4d1f566749ed6
+- exact-main verified-delivery artifact: 9833955082
+- verified-delivery outer digest: sha256:6e7b7e753a4101a3e690ffe558c96e47f9dba831b858bed5f0005ec144837809
+- deterministic full-workspace SHA-256: 167b4695cca6810fe0e36e57c45a7bf11483105c0e71b955a948604f2cd9e584
+- workspace bytes: 484507
+- workspace ZIP entries: 378
+- package-manifest entries: 376
+- SHA256SUMS entries: 377
+- ZIP CRC: PASS
+- deterministic double build: PASS
+- exclusion policy: PASS
+- independent delivery verification: PASS; exact four outer files, nested CRC PASS, version/root PASS, 0 package-hash failures, 0 SHA-manifest failures, 0 obvious exclusion violations.
+
+Immediately after final verification, live main and dev/0.1.0-dev.19-image-batch-isolation both pointed to eb0ce66dab646427d5bef1548c12e5cc4765b2f1 / tree 337a4e11fb41bab6b6eeb462c3755381580f06c1. This file may later live on a metadata-only dev.19 handover descendant. NEVER use that metadata-only descendant as the dev.20 code base. Re-fetch live main and use the exact frozen main authority above unless main has been intentionally advanced by a later fully documented tranche.
+
+EXACT-MAIN QUALIFICATION RESULTS
+On run 33597504612:
+- locked restore: PASS
+- dependency audit: PASS, 18 projects / 18 frameworks / 0 vulnerable-result packages
+- Release build: PASS, 0 warnings / 0 errors
+- native Explorer topology/build: PASS
+- pinned development FFmpeg execution: PASS; development qualification only, not production redistribution approval
+- development MSIX layout validation: PASS; unsigned and not a release package
+- direct shell DLL class-factory invoke: PASS
+- loose-package COM activation/invoke: PASS
+- packaged Bridge → Strict Worker/provider → app-local FFmpeg: PASS
+- Audio matrix: 6 sources × 6 actions = 36/36 PASS
+- repeated malformed/truncated Audio rejection: PASS, deterministic Bridge exit 4
+- Audio mixed-batch isolation: PASS twice
+- Image matrix: 8 sources × 3 actions = 24/24 PASS
+- repeated malformed/truncated Image rejection: PASS, deterministic Bridge exit 4
+- Image mixed-batch isolation: PASS twice
+- managed tests: 255/255 PASS
+- static tests: 99/99 PASS
+- raw contract vectors: 5/5 PASS
+- tracked generated authority zero-diff: PASS
+- deterministic workspace semantic verification: PASS
+- verified-delivery staging/upload: PASS
 
 ARCHITECTURE — DO NOT WIDEN TRUST BOUNDARIES
 IExplorerCommand DLL → fixed app-local Converty.Bridge.exe → strict disposable Converty.EngineWorker.exe / typed provider → fixed app-local FFmpeg → private staging → validated transactional numbered no-overwrite publication.
 
-Host/Bridge are media/process neutral. Untrusted parsing/codec execution belongs in the disposable restricted worker/provider. Never add shell command construction, raw FFmpeg argument passthrough, arbitrary converter executable paths, PATH lookup, writable plugin/DLL discovery, ordinary conversion network dependencies, or silent Strict→Compatibility fallback.
+Host/Bridge remain media/process neutral. Untrusted parsing/codec execution belongs in the disposable restricted worker/provider. Never add shell command construction, raw FFmpeg argument passthrough, arbitrary converter executable paths, PATH lookup, writable plugin/DLL discovery, ordinary conversion network dependencies, or silent Strict→Compatibility fallback.
 
-Preserve Unicode/metacharacter filenames, source files, existing destinations, bounded waits, worker termination, transactional publication and current-user IPC authentication ordering. Signing private keys never enter repo/workspace. GitHub Actions external actions use exact full SHA pins and normal CI contents read-only with checkout persist-credentials=false.
+Preserve Unicode/metacharacter filenames, source files, existing destinations, bounded waits, worker termination, transactional publication and current-user IPC authentication ordering. Signing private keys never enter repo/workspace. External GitHub Actions remain exact full-SHA pinned; normal CI uses contents read-only and checkout persist-credentials=false.
 
-DEV.19 IMPLEMENTATION
-Canonical branch: dev/0.1.0-dev.19-image-batch-isolation.
-Behavior qualification anchor: 8a64d0a12ccf47df5df364a1c6c545f876d57d29.
-Behavior run: 33596229372; managed 100140113348; static 100140113457; continuity 100140113271.
+DEV.19 IMPLEMENTATION AND TDD HISTORY
+Dev.19 added real Image mixed-valid/invalid batch isolation without adding a second image subsystem. One Bridge process handles valid PNG → malformed JPG → valid WebP → truncated BMP → valid JPEG. Ordinary per-file conversion failures do not suppress later valid members; aggregate failure is reported after the selection; successful outputs use numbered no-overwrite publication; invalid members publish nothing; sources/existing destinations remain unchanged; partial staging and test-package converter processes are cleaned.
 
-Implemented files include:
-- build/image-batch-isolation-smoke.ps1 — real Windows packaged mixed Image product gate.
-- tests/static/test_dev19_image_batch_isolation.py — static contract and source/target collision-seed guard.
-- tests/Converty.Core.Tests/Execution/ImageBatchIsolationTests.cs — focused core-runner coverage.
-- .github/workflows/ci.yml — managed Image mixed-batch gate.
-- docs/development/DEV19_IMAGE_BATCH_ISOLATION_TDD_EVIDENCE.md
-- docs/superpowers/specs/2026-09-02-dev19-image-batch-isolation-design.md
-- docs/superpowers/plans/2026-09-02-dev19-image-batch-isolation.md
-
-Behavior contract: one same-family Image selection is valid PNG → malformed JPG → valid WebP → truncated BMP → valid JPEG. One Bridge process handles each batch attempt. Ordinary per-file failures do not suppress later valid members. Aggregate failure is reported after all members are attempted. Later valid outputs publish with numbered/no-overwrite semantics; failing members publish nothing. Sources and pre-existing destinations remain byte-identical. No .converty-*.partial.* residue and no test-package converter-worker/FFmpeg orphan processes remain. The complete batch is repeated twice.
-
-DEV.19 TDD / QUALIFICATION HISTORY
-Historical implementation anchors are retained in machine-readable/build_evidence.json. During final qualification, two additional fixture defects were found and fixed without changing production behavior.
-
-1. SAME-EXTENSION WINDOWS HARNESS SOURCE ALIAS
-Run 33593266879 failed with `Source preserved invariant failed for valid-before`. The harness used ChangeExtension(source, '.png') for an already-.png source and then wrote collision sentinel bytes to that same path after hashing it.
-- initial reproducer: ce54e0f08b5dfd9ba1b4d6cba6132c64f7ce006f / run 33595367172;
-- corrected RED: a988204b058ada86f8909cf94e1d9f2b6e69cf39 / run 33595474461, exactly 1 failed / 98 passed on the missing source/target guard;
-- GREEN: 633fc39b5df8062496914cc641b7001adea805ee; synthetic pre-existing-target seeding is skipped only when resolved target equals selected source. Same-extension conversion remains valid and matches the already-qualified single-Image gate.
-
-2. CORE TEST DELETED ITS INPUT
-The next managed run reached ImageBatchIsolationTests and raised FileNotFoundException because the fixture itself deleted first.png before RunAsync. Production ValidateInputPath behavior was correct. The Audio reference test and OutputPathResolver show the correct same-extension semantics: first.png itself occupies the base output, so success publishes first (1).png.
-- GREEN: 8a64d0a12ccf47df5df364a1c6c545f876d57d29; source is preserved and normal resolver numbering is exercised. No production execution code changed.
-
-PRE-AUTHORITY BEHAVIOR EVIDENCE
-Run 33596229372 on exact 8a64d0a12ccf47df5df364a1c6c545f876d57d29 passed:
-- locked restore;
-- dependency audit: 18 projects / 18 frameworks / 0 vulnerable-result packages;
-- Release build: 0 warnings / 0 errors;
-- native Explorer, development package, COM activation and packaged Bridge→FFmpeg gates;
-- Audio 36/36 source/action conversions + repeated malformed/truncated rejection + mixed batch;
-- Image 24/24 source/action conversions + repeated malformed/truncated rejection + mixed batch twice;
-- 255/255 managed tests;
-- 99/99 static tests;
-- 5/5 raw contract vectors.
-
-The workspace ZIP was built twice byte-identically at SHA-256 1c8d197941a616a25bcc4bab59550037a221309f51bc937a1ba7daa9b34bf97d, 475353 bytes, 378 entries. The subsequent semantic archive assertion correctly failed because tracked machine-readable/package_manifest.json was still dev.18 generated authority. Delivery staging/upload was skipped. This is PRE-AUTHORITY deterministic evidence only, not final workspace or delivery authority.
-
-A pre-curation static artifact existed at artifact ID 9833492879 / SHA-256 a6b87f0fcfaa6e32cf9c3a94c95231ccd3818fc7fd94a208f9474f9f27bcdef8. DO NOT use it for final sync because metadata curation changes the workspace. Final authority must come from CI on the exact curated canonical dev.19 head.
-
-CURRENT REQUIRED ACTION — DEV.19 FREEZE
-1. Re-fetch live main and dev/0.1.0-dev.19-image-batch-isolation. GitHub is authoritative over this document.
-2. Confirm the canonical dev.19 head contains the behavior fixes plus pre-authority curation and is a descendant of the intended line; do not overwrite concurrent work.
-3. Let ordinary CI on that exact curated head generate source SBOM, release SBOM, package manifest and SHA256SUMS. Static tests/contracts must pass; tracked-authority zero-diff is expected to remain the only static closure failure before sync. Managed behavior must remain green; archive semantic verification may remain blocked until authority sync.
-4. Independently verify the exact generated-authority artifact: download exact artifact ID, verify ZIP SHA-256, CRC, exact four-member set only (SHA256SUMS.txt, machine-readable/package_manifest.json, machine-readable/release_sbom.spdx.json, machine-readable/source_sbom.spdx.json), and verify 0.1.0-dev.19 version/name alignment.
-5. Create a temporary dev19 generated-authority sync workflow modeled on the historical dev18 guarded sync. It must use an exact-parent guard, exact branch guard, hardcoded independently verified artifact ID/digest, exact four-member verification, self-delete, assert that only the four generated paths plus the workflow changed, commit them, and push only the canonical dev.19 branch.
-6. Require canonical dev.19 generated-authority zero-diff. The complete Windows managed job must also reach deterministic workspace semantic verification, handoff staging and verified-delivery upload.
-7. Re-read live main immediately before promotion. Fast-forward main NON-FORCE only if its expected base is unchanged and the dev.19 candidate is a strict descendant. Never reset or force-push main.
-8. Require a fresh exact-main CI run where main-authority-continuity, supply-chain-static and managed are all SUCCESS for the exact current main SHA.
-9. Independently verify the exact-main verified-delivery artifact and deterministic workspace ZIP: digest, CRC, root/version, package-manifest entries, SHA256SUMS entries and exclusion policy.
-10. Re-read main and dev.19 refs, record exact SHA/tree/run/job/artifact/hash/count authority, curate final status/handover without making unqualified self-referential claims, and only then call dev.19 frozen.
+Key qualification history:
+- initial implementation/static anchors are retained in machine-readable/build_evidence.json and docs/development/DEV19_IMAGE_BATCH_ISOLATION_TDD_EVIDENCE.md.
+- run 33593266879 exposed `Source preserved invariant failed for valid-before`.
+- initial source/target alias reproducer: ce54e0f08b5dfd9ba1b4d6cba6132c64f7ce006f / run 33595367172.
+- corrected RED: a988204b058ada86f8909cf94e1d9f2b6e69cf39 / run 33595474461, exactly 1 failed / 98 passed on the missing collision-seed source guard.
+- GREEN harness fix: 633fc39b5df8062496914cc641b7001adea805ee. Same-extension conversion stays valid; synthetic target seeding is skipped only when target aliases source.
+- next managed run exposed a separate core-test fixture defect that deleted first.png before RunAsync; production ValidateInputPath was correct.
+- GREEN core-test fix / behavior anchor: 8a64d0a12ccf47df5df364a1c6c545f876d57d29 / run 33596229372. No production execution logic changed.
+- pre-authority curation: d88412c9cdac13450806b34db7737be95190e314.
+- independently verified curated generated-authority artifact: 9833673969, SHA-256 d14ddad32701283f13dd587b079a151743211c8f5935fa5f1373225600bf6f61, exact four generated members, CRC/version PASS.
+- temporary guarded authority sync staging: fe3b33fe367741c7b748c2ab9863799d86867b55.
+- self-deleting bot authority sync: d5a8e10dd43c742660574dbd9b54848df7d82421, tree 337a4e11fb41bab6b6eeb462c3755381580f06c1; only the four generated authority files plus removal of the temporary workflow changed.
+- empty same-tree qualification commit: eb0ce66dab646427d5bef1548c12e5cc4765b2f1.
+- branch qualification run 33597141220: static zero-diff SUCCESS and managed SUCCESS; side-branch continuity failed only because it was not main.
+- main was re-read unchanged at 2ecf65d6131568c23e6fb4bbfe2371b6bc978407, candidate was 29 ahead / 0 behind, then main was fast-forwarded NON-FORCE to eb0ce66dab646427d5bef1548c12e5cc4765b2f1.
+- exact-main run 33597504612 closed all three jobs SUCCESS and produced the independently verified final delivery above.
 
 GENERATED AUTHORITY RULE
-Never hand-edit generated source/release SBOM, package manifest or SHA256SUMS. Generate them in CI and synchronize only from an independently verified exact artifact through a guarded exact-parent workflow. Temporary write workflows must self-delete and must not survive in the frozen tree.
+Never hand-edit generated source/release SBOM, package manifest or SHA256SUMS. Generate them in CI and synchronize only from an independently verified exact artifact through a guarded exact-parent workflow. Temporary write workflows must self-delete and must not survive in a frozen authority tree.
 
-REPOSITORY CURATION
-Source tests remain under tests/. Generated build/test/media/package/log output stays under excluded artifacts/, bin/, obj/ and caches. Preserve historical changelog/evidence fields. If connector permissions prevent deleting stale noncanonical refs, do not force or rewrite them; document the limitation.
+ONE PRECISE NEXT TASK — DEV.20 VIDEO FOUNDATION
+Use Superpowers brainstorming on the exact frozen main authority. This is an architectural feature tranche, so inspect the existing typed preset/provider/native Explorer patterns, present the Video design and alternatives to the human, obtain explicit design approval, write the approved spec, then use writing-plans before implementation. After approval, create dev/0.1.0-dev.20-video-foundation from exact frozen main eb0ce66dab646427d5bef1548c12e5cc4765b2f1 — NOT from any metadata-only dev.19 handover descendant.
 
-NEXT PRODUCT ORDER — DEV.20 VIDEO
-ONLY AFTER DEV.19 IS FROZEN, create dev/0.1.0-dev.20-video-foundation from the exact frozen/current main intended as the development base. Work test-first:
-- inspect and reuse the existing typed registry/provider/native architecture;
-- define fixed typed Video action IDs and output contracts;
-- establish RED static and managed tests before implementation;
-- qualify representative Video source extensions against every fixed action;
-- preserve Unicode/metacharacter filenames, pre-existing destinations and collision numbering;
-- add malformed/truncated deterministic rejection;
-- prove packaged Bridge → Strict Worker/provider → app-local FFmpeg;
-- prove mixed-valid/invalid Video batch isolation using established runner behavior;
-- prove worker/process cleanup, staging cleanup and bounded waits;
-- retain all Audio 36-case + malformed/truncated + mixed-batch and Image 24-case + malformed/truncated + mixed-batch regression gates.
+The dev.20 design must preserve the current architecture and establish fixed typed Video actions/output contracts, RED static/managed tests first, representative Video source-extension × action acceptance, Unicode/metacharacter/collision preservation, malformed/truncated deterministic rejection, packaged Bridge → Strict Worker/provider → app-local FFmpeg proof, mixed-valid/invalid Video batch isolation, bounded waits/process/staging cleanup, and the complete existing Audio/Image regression suite.
 
 RELEASE/HARDENING AFTER VIDEO
 1. Video closure.
-2. Additional justified fixed media families.
+2. Additional justified fixed media families only if required.
 3. UX/settings: defaults, mixed-selection UX, progress/results, output/concurrency/isolation settings.
 4. Plugin SDK manifest/API/signature/hash gate with worker-only sample provider.
 5. Production FFmpeg/ffprobe exact binaries, provenance, signatures, hashes, license/notices and redistribution approval.
@@ -110,9 +109,9 @@ RELEASE/HARDENING AFTER VIDEO
 11. Only then declare customer shipment readiness.
 
 NON-NEGOTIABLE LIMITATIONS
-Automated CI does not prove headed Windows 11 Explorer UX, production signing, production FFmpeg redistribution approval, signed MSIX lifecycle, or final end-user/security acceptance. Keep those explicitly OPEN until their dedicated evidence exists. Never claim absolute regression-free status.
+Automated CI does not prove headed Windows 11 Explorer UX, production signing, production FFmpeg redistribution approval, signed MSIX lifecycle, or final end-user/security acceptance. Keep those explicitly OPEN until dedicated evidence exists. Never claim absolute regression-free or customer-ready status before those gates close.
 
 RECURSIVE HANDOVER RULE
-Every completed tranche must end with a full copy-paste handover containing repository/default branch/live SHA/tree, prior authority, all commits, RED/GREEN history, run/job/artifact IDs, exact changes/reasons, executed tests/build/security outcomes, workspace hashes/counts, blockers, explicitly unverified claims, ONE precise next task, invariants, headed limitation, production signing/FFmpeg limitation, and this same recursive rule.
+Every completed tranche must end with a full copy-paste handover containing repository/default branch/live SHA/tree, prior authority, all tranche commits, RED/GREEN history, run/job/artifact IDs, exact changes/reasons, executed tests/build/security outcomes, workspace hashes/counts, blockers, explicitly unverified claims, ONE precise next task, architecture/security invariants, headed limitation, production signing/FFmpeg limitation, and this same recursive rule.
 
 DO NOT RESET OR FORCE-PUSH MAIN. DO NOT DELETE HISTORICAL COMMITS. DO NOT PUT SECRETS OR PRIVATE SIGNING MATERIAL IN THE REPOSITORY.
