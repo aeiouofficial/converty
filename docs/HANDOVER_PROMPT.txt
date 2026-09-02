@@ -1,41 +1,94 @@
-CONVERTY — CONTINUATION HANDOVER
-PRODUCT-FIRST ROADMAP — FROZEN 0.1.0-dev.18 → 0.1.0-dev.19 IMAGE MIXED-BATCH CLOSURE
+CONVERTY — FRESH-ACCOUNT AGENT HANDOVER
 
-Continue development directly in https://github.com/aeiouofficial/converty. Default branch: main. Re-fetch live refs before every write or completion claim; never force over newer concurrent work.
+READ THIS ENTIRE FILE BEFORE CHANGING CODE.
 
-CURRENT FROZEN PRODUCT AUTHORITY
-Version: 0.1.0-dev.18.
-Qualification anchor: commit ef079f7e7923e399624067c4d54b9ce7577bf090, tree 0af729f150897d170eac9f9aebfd5bc7d5d4083a.
-Exact-main run: 33390111824.
-Jobs: managed 99481546832 SUCCESS; supply-chain-static 99481546572 SUCCESS; main-authority-continuity 99481546655 SUCCESS.
-Tracked generated authority zero-diff: PASS.
-Deterministic workspace: Converty_0.1.0-dev.18_full_workspace.zip; SHA-256 4be8d5a2f503a8a885347b647bbd0aa0b61ce6d56b3ac39d9af7b11fb801628a; 463162 bytes; 372 entries; 370 package-manifest entries; 371 SHA-manifest entries; CRC/double-build/exclusion policy PASS.
-Generated-authority artifact: 9757102986, digest sha256:a8eb7d4a9d70044d2d6125404de7de686de41a97fd7dada1b2cf814d6f2c50d5.
-Verified-delivery artifact: 9757169067, digest sha256:97931ae9cbee196fb3cc6c3b0c2d792055ad04365d6dc6609e659301edaa0f92.
-Re-fetch live main because metadata-only curation may advance the commit without changing product behavior.
+Repository: https://github.com/aeiouofficial/converty
+Product: Converty, a Windows 11 Explorer modern-context-menu converter.
+Default branch: main.
+Current development line: 0.1.0-dev.19 Image mixed-batch isolation.
 
-DEV.18 TDD/BEHAVIOR
-RED 7388aec6ffb673e0101b09106d646d417f77a7b3 / run 33349908668 / static 99361086262: 92 existing static PASS, exactly 3 new assertions FAIL because the Image acceptance component did not exist.
-Acceptance implementation 0841395904960945a1988dcedb8b6ccf352a57e0.
-CI wiring/behavior head 6075aa3973b75e170cb5f9b812a8ca3b9b71f528 / run 33350141373.
+MISSION
+Finish Converty to customer-shippable quality. Work directly in GitHub. Do not merely propose work. Commit every meaningful change, run the repository's real CI, preserve deterministic generated authority, and leave the repo curated and self-explanatory for the next agent.
 
-IMAGE ACCEPTANCE
-Sources: png, jpg, jpeg, webp, bmp, gif, tif, tiff. Actions: image.png, image.jpeg, image.webp. 24/24 packaged strict-path conversions PASS. Outputs are ffprobe-verified for png/mjpeg/webp and 64x48 dimensions. Sources and pre-existing destinations remain byte-identical, publication is numbered/no-overwrite, and no partial output remains. Malformed and truncated Image inputs are each repeated and reject deterministically with Bridge exit 4 without publication.
+CURRENT AUTHORITY
+Dev.18 is frozen on main at commit ef079f7e7923e399624067c4d54b9ce7577bf090, tree 0af729f150897d170eac9f9aebfd5bc7d5d4083a. Exact-main CI run 33390111824 passed continuity, supply-chain/static and Windows managed qualification. It included 254/254 managed tests, 95/95 static tests, 5/5 contract vectors, 36/36 Audio source/action conversions, repeated malformed/truncated Audio rejection, Audio mixed-batch isolation, and 24/24 Image source/action conversions plus repeated malformed/truncated Image rejection.
 
-RECURSIVE REGRESSION
-18/18 locked restore PASS; dependency audit 18 projects/18 frameworks/0 vulnerable-result packages; Release build 0 warnings/0 errors; native Explorer/package/direct+registered COM/product gates PASS; Audio 36-case source/action + malformed/truncated + mixed batch PASS; managed 254/254; static 95/95; vectors 5/5.
+ARCHITECTURE — DO NOT WIDEN TRUST BOUNDARIES
+IExplorerCommand DLL → fixed app-local Converty.Bridge.exe → strict disposable Converty.EngineWorker.exe / typed provider → fixed app-local FFmpeg → private staging → validated transactional numbered no-overwrite publication.
 
-HARD INVARIANTS
-Preserve Explorer → native IExplorerCommand → fixed Bridge → strict disposable EngineWorker/provider → fixed app-local FFmpeg → private staging → transactional numbered no-overwrite publication. Preserve Unicode/metacharacter filenames, source/existing-destination bytes, typed whitelisted presets, no shell/raw FFmpeg/user executable/PATH/network/silent fallback, media-neutral Host/Bridge, worker/provider-only codec parsing and no signing private keys. Gyan FFmpeg remains development-only qualification input.
+Host/Bridge are media/process neutral. Untrusted parsing/codec execution belongs in the disposable restricted worker/provider. Never add shell command construction, raw FFmpeg argument passthrough, arbitrary converter executable paths, PATH lookup, writable plugin/DLL discovery, ordinary conversion network dependencies, or silent Strict→Compatibility fallback.
 
-OPEN SHIPPING GATES
-Headed Win11 modern Explorer exact-build UI/screenshots and headed crash/hang/failure matrix; Image mixed-batch closure; production signed-package B2 identity/authentication requalification; production FFmpeg/ffprobe redistribution/license/notices/signature/hash approval; signed production MSIX clean Win11 lifecycle; final security/fuzz/chaos/release/end-user acceptance.
+Preserve Unicode/metacharacter filenames, source files, existing destinations, bounded waits, worker termination, transactional publication and current-user IPC authentication ordering. Signing private keys never enter repo/workspace. GitHub Actions external actions use exact full SHA pins and normal CI contents read-only with checkout persist-credentials=false.
 
-ONE PRECISE NEXT TASK
-Implement 0.1.0-dev.19 test-first as Image multi-file/mixed-valid-invalid acceptance. Exercise one same-family Explorer/Bridge selection containing valid Images before and after malformed/truncated Images, prove later valid files still publish after ordinary per-file failures, aggregate failure is reported only after the batch, source/pre-existing destinations are preserved, collision numbering is deterministic, no partial output/orphan worker remains, and all single-file Image/Audio behavior regresses green. Do not begin Video expansion until this Image closure tranche is evidence-backed and frozen.
+DEV.19 IMPLEMENTATION
+Branch: dev/0.1.0-dev.19-image-batch-isolation.
+Implemented files:
+- build/image-batch-isolation-smoke.ps1 — real Windows packaged mixed Image product gate.
+- tests/static/test_dev19_image_batch_isolation.py — static contract.
+- tests/Converty.Core.Tests/Execution/ImageBatchIsolationTests.cs — focused core-runner coverage.
+- .github/workflows/ci.yml — managed Image mixed-batch gate.
+- docs/development/DEV19_IMAGE_BATCH_ISOLATION_TDD_EVIDENCE.md
+- docs/superpowers/specs/2026-09-02-dev19-image-batch-isolation-design.md
+- docs/superpowers/plans/2026-09-02-dev19-image-batch-isolation.md
 
-AUTHORITY WORKFLOW
-Start from exact live main and create a dev.19 branch. Preserve RED evidence. Qualify behavior on Windows with real packaged Bridge→Strict Worker/provider→development FFmpeg. Stage version/evidence metadata without hand-editing generated authority. Synchronize generated authority only from the exact CI artifact. Require branch zero-diff qualification. Fast-forward main non-force only if its base is unchanged. Then require ordinary exact-main CI with continuity + managed + supply-chain-static all SUCCESS and deterministic verified delivery.
+Behavior contract: one same-family Image selection is valid → malformed → valid → truncated → valid. One Bridge process handles the batch. Ordinary per-file failures do not suppress later valid members. Aggregate failure is reported after all members are attempted. Later valid outputs publish with numbered/no-overwrite semantics; failing members publish nothing. Sources and pre-existing destinations remain byte-identical. No .converty-*.partial.* residue and no test-package converter-worker/FFmpeg orphan processes remain. The complete batch is repeated twice.
 
-RECURSIVE HANDOVER RULE
-Every completed tranche must end with a full copy-paste handover containing repository/default branch/live SHA/tree, prior authority, all commits, RED/GREEN history, run/job/artifact IDs, exact changes/reasons, executed tests/build/security outcomes, workspace hashes/counts, blockers, explicitly unverified claims, ONE precise next task, invariants, headed limitation, production signing/FFmpeg limitation, and this same recursive rule.
+TDD HISTORY
+The dev.19 static RED was established before the acceptance smoke existed. During implementation two harness defects were found and corrected with focused regression checks: PowerShell $attempt: interpolation and inline array concatenation passed as -Arguments. Do not remove those guards or weaken assertions to hide harness failures.
+
+CURRENT CI QUALIFICATION
+A latest branch run may still be in progress. Always re-fetch GitHub before acting. Side-branch continuity failure is expected. Static must reach zero-diff; managed must complete the complete Windows path, including Audio and Image regressions, Image mixed batch, managed tests and deterministic workspace packaging.
+
+AUTHORITY FREEZE SEQUENCE
+1. Finish behavior qualification.
+2. Set VERSION to 0.1.0-dev.19 and curate README/status/backlog/changelog/machine-readable evidence/handover while preserving all historical granular evidence keys.
+3. Generate source SBOM, release SBOM, package manifest and SHA256SUMS only through CI.
+4. Independently verify the generated artifact digest, exact four-member set, CRC and version.
+5. Use a guarded exact-parent temporary sync workflow; it must touch only those four generated files plus self-delete.
+6. Require branch zero-diff qualification.
+7. Re-read live main.
+8. Fast-forward main non-force only if the expected base is unchanged.
+9. Require a fresh exact-main CI run with continuity + supply-chain/static + managed all SUCCESS.
+10. Independently verify exact-main verified delivery and deterministic workspace; re-read both refs and confirm exact SHA/tree.
+
+REPOSITORY CURATION
+Source tests remain under tests/. Generated build/test/media/package/log output stays under excluded artifacts/, bin/, obj/ and caches. Never hand-edit generated SBOM/package/hash files. Remove temporary workflow files from final trees. Preserve historical changelog/evidence fields. If GitHub connector permissions prevent deleting stale noncanonical refs, do not force or rewrite them; document the limitation.
+
+NEXT PRODUCT ORDER
+After dev.19 freeze, create the next branch from exact frozen main and work test-first on Video foundation:
+- inspect and reuse the existing typed registry/provider/native architecture;
+- define fixed typed Video action IDs and output contracts;
+- RED static and managed tests before implementation;
+- representative Video source extensions × every fixed action;
+- Unicode/metachar filenames, pre-existing destinations, collision numbering;
+- malformed/truncated deterministic rejection;
+- real packaged Bridge → Strict Worker/provider → FFmpeg acceptance;
+- mixed-valid/invalid Video batch isolation using the established runner behavior;
+- worker/process cleanup, staging cleanup, bounded waits;
+- preserve all Audio 36-case/single-negative/mixed-batch and Image 24-case/single-negative/mixed-batch regression gates.
+
+RELEASE/HARDENING AFTER VIDEO
+1. Video closure.
+2. Additional justified fixed media families.
+3. UX/settings: defaults, mixed-selection UX, progress/results, output/concurrency/isolation settings.
+4. Plugin SDK manifest/API/signature/hash gate with worker-only sample provider.
+5. Production FFmpeg/ffprobe exact binaries, provenance, signatures, hashes, license/notices and redistribution approval.
+6. Production signed-package B2 identity/authentication requalification.
+7. Signed production MSIX clean Windows 11 install/update/uninstall.
+8. Headed Windows 11 modern Explorer exact-build mouse-driven acceptance, screenshots and crash/hang/failure matrix.
+9. Final fuzz/chaos/security/release audit.
+10. Final SBOM/notices/hash/delivery audit and headed end-user acceptance.
+11. Only then declare customer shipment readiness.
+
+NON-NEGOTIABLE LIMITATIONS
+Automated CI does not prove headed Windows 11 Explorer UX, production signing, production FFmpeg redistribution approval, signed MSIX lifecycle, or final end-user/security acceptance. Keep those explicitly OPEN until their dedicated evidence exists. Never claim absolute regression-free status.
+
+FIRST ACTIONS FOR A NEW AGENT
+1. Fetch live main and dev/0.1.0-dev.19-image-batch-isolation plus latest CI runs.
+2. Determine actual current heads; GitHub is authoritative over this document.
+3. Finish dev.19 qualification and freeze if not already frozen.
+4. Keep every change committed and every generated authority update CI-derived.
+5. Begin the next tranche only from exact frozen main.
+6. End every completed tranche by updating this handover recursively with exact refs, commits, tests, artifacts, hashes, blockers, unverified claims and one precise next task.
+
+DO NOT RESET OR FORCE-PUSH MAIN. DO NOT DELETE HISTORICAL COMMITS. DO NOT PUT SECRETS OR PRIVATE SIGNING MATERIAL IN THE REPOSITORY.
