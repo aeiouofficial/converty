@@ -7,7 +7,7 @@ This file is a metadata-only continuation map. It does **not** replace GitHub as
 ## Authority order
 
 1. GitHub repository / exact refs / CI artifacts are authoritative for code and release evidence.
-2. Slack is the live operational mirror for current project state, roadmap, tasks and changelog.
+2. Slack is the live operational mirror for current project state, roadmap, implementation plan, tasks, changelog and the single open handover.
 3. Google Drive is the persistent cloud documentation library and backup mirror.
 4. After every completed tranche, update all three layers coherently. At least once daily, reconcile Slack/Drive against live GitHub refs and CI.
 
@@ -32,13 +32,28 @@ Workspace channels:
   - canonical anchor TS `1788366973.077219`
 - `#roadmap-converty` — channel ID `C0BU2405ZMM`
   - canonical anchor TS `1788366984.732379`
+- `#plan-converty` — channel ID `C0BUKLHKL65`
+  - current implementation plan; keep one canonical current-plan anchor
 - `#tasks-converty` — channel ID `C0BTWQZQX4P`
   - canonical anchor TS `1788327299.747159`
 - `#changelog-converty` — channel ID `C0BUM4XRZ6G`
   - canonical anchor TS `1788366995.127219`
+- `#handover-open-converty` — channel ID `C0BUM8J0ZEG`
+  - current OPEN handover TS `1788367585.736179`
+  - there must be exactly one `OPEN` handover at a time
 - `#pre-devlog-converty` — channel ID `C0BV6HDMVDW`
 
-Slack Canvas is not available in this workspace (`not_supported_free_team`). Therefore each live channel uses one canonical anchor message that is edited in place, while full durable documents live in Google Drive.
+Slack Canvas is not available in this workspace (`not_supported_free_team`). Therefore each live documentation channel uses canonical anchor messages edited in place, while full durable documents live in Google Drive.
+
+### Open handover lifecycle
+
+After every meaningful completed work block:
+
+1. Re-read live GitHub authority and relevant CI/evidence.
+2. Reconcile Authority + Roadmap + Plan + Tasks + Changelog + durable Recursive Handover.
+3. Edit the current `OPEN` handover to `PROCESSED` and add the successor handover reference. If direct edit is impossible, add an explicit processed reply before creating the successor.
+4. Publish exactly one successor `OPEN` handover containing the precise next task, current authority, acceptance criteria, blockers and architecture/security invariants.
+5. Never leave more than one active `OPEN` handover for Converty.
 
 ## Google Drive library
 
@@ -67,6 +82,9 @@ Fixed live Google Docs — update these IDs in place; do not create replacement 
 - Live Roadmap
   - `1p3xKxj2akSqZTzVp442QNetoZ8Eg9u6pvckjwUnBLsI`
   - https://docs.google.com/document/d/1p3xKxj2akSqZTzVp442QNetoZ8Eg9u6pvckjwUnBLsI/edit
+- Current Implementation Plan
+  - `1eGVajQAxw3Vjc7F_7NJgt9do6tRzZpV_Vbfcl24g9-s`
+  - https://docs.google.com/document/d/1eGVajQAxw3Vjc7F_7NJgt9do6tRzZpV_Vbfcl24g9-s/edit
 - Open Tasks & Gates
   - `1BH44EUYcNBexIZasxq24mlYBZk0VxF5XaG6RnUkQPrc`
   - https://docs.google.com/document/d/1BH44EUYcNBexIZasxq24mlYBZk0VxF5XaG6RnUkQPrc/edit
@@ -91,11 +109,12 @@ Use the already-existing fixed Video surface:
 ## Synchronization rules for future agents
 
 - Re-read live GitHub refs and CI before every status claim or write.
-- Edit Slack anchor messages in place using the channel IDs and message timestamps above.
+- Edit Slack canonical anchors in place using the channel IDs/message timestamps above.
 - Update the fixed Google Docs in place using the IDs above.
 - Append historical changelog entries; do not erase provenance.
-- Keep Roadmap and Tasks current-state documents concise and non-duplicative.
-- Keep the recursive Handover sufficient for a fresh account/model with no conversation history.
+- Keep Roadmap strategic, Plan execution-specific, and Tasks stateful/non-duplicative.
+- Keep the Recursive Handover sufficient for a fresh account/model with no conversation history.
+- Keep `#handover-open-converty` as the single operational start-point queue: exactly one OPEN handover, predecessor PROCESSED before successor OPEN.
 - Never let Slack/Drive narrative override contradictory GitHub evidence.
 - Do not edit generated SBOM/package/hash authority by hand.
 - Do not move frozen `main` for documentation-only synchronization.
