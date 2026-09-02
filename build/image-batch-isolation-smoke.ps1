@@ -121,7 +121,9 @@ $sources = @(
 foreach ($source in $sources) {
     Add-Member -InputObject $source -NotePropertyName SourceHash -NotePropertyValue ((Get-FileHash -LiteralPath $source.Path -Algorithm SHA256).Hash)
     $baseOutput = [System.IO.Path]::ChangeExtension($source.Path, '.png')
-    [System.IO.File]::WriteAllBytes($baseOutput, [byte[]](91,82,73,67))
+    if (-not [string]::Equals($baseOutput, $source.Path, [StringComparison]::OrdinalIgnoreCase)) {
+        [System.IO.File]::WriteAllBytes($baseOutput, [byte[]](91,82,73,67))
+    }
     Add-Member -InputObject $source -NotePropertyName BaseOutput -NotePropertyValue $baseOutput
     Add-Member -InputObject $source -NotePropertyName DestinationHash -NotePropertyValue ((Get-FileHash -LiteralPath $baseOutput -Algorithm SHA256).Hash)
 }
