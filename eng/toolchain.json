@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "workspaceVersion": "0.1.0-dev.18",
+  "workspaceVersion": "0.1.0-dev.19",
   "targetOs": "Windows 11",
   "dotnetSdk": "10.0.400",
   "targetFramework": "net10.0",
@@ -9,11 +9,11 @@
   "nativeBuild": "CMake + MSVC",
   "architecture": "x64-first",
   "notes": [
-    "Dev.18 qualifies the existing fixed Image PNG/JPEG/WebP actions across all eight advertised Image source extensions without widening the typed preset or executable surface.",
-    "24 packaged Bridge-to-Strict-Worker/provider-to-app-local-FFmpeg conversions verify codec, dimensions, preservation, collision numbering and no partial residue.",
-    "Malformed and truncated Image inputs reject deterministically with exit code 4 while all Audio regression gates remain green.",
-    "Behavior head 6075aa3973b75e170cb5f9b812a8ca3b9b71f528 run 33350141373 passed 254/254 managed and 95/95 static tests before expected generated-authority freshness failure.",
-    "Headed Win11 acceptance, Image mixed-batch closure, production signed-package B2 requalification, production FFmpeg redistribution, signed MSIX clean-VM lifecycle and final release audit remain open."
+    "Dev.19 closes Image mixed-valid/invalid multi-file failure isolation before Video expansion.",
+    "One packaged Bridge process receives valid PNG, malformed JPG, valid WebP, truncated BMP and valid JPEG; later valid members must publish after ordinary per-file failures.",
+    "The batch reports aggregate exit code 4 after the full selection while preserving source/existing-destination bytes, numbered publication and staging/process cleanup.",
+    "Audio 36-case source/action, malformed/truncated and mixed-batch gates plus Image 24-case single-file/malformed/truncated gates remain mandatory regression coverage.",
+    "Headed Win11 acceptance, production signed-package B2 requalification, production FFmpeg redistribution, signed MSIX lifecycle and final release audit remain open."
   ],
   "testRunner": "Microsoft.Testing.Platform",
   "xunitMtpV2": "4.0.0"
