@@ -129,6 +129,9 @@ jobs:
       - name: Image source and malformed-input acceptance
         shell: pwsh
         run: ./build/image-input-acceptance-smoke.ps1
+      - name: Image mixed-batch failure isolation
+        shell: pwsh
+        run: ./build/image-batch-isolation-smoke.ps1
       - name: Test
         shell: pwsh
         run: ./build/test.ps1 -Configuration Release
