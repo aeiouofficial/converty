@@ -4,39 +4,43 @@
 Windows 11 modern-context-menu file conversion platform. Converty keeps Explorer, Bridge, disposable worker/provider, media engine, private staging, and transactional publication trust boundaries explicit.
 
 ## Workspace version
-**0.1.0-dev.19** — Image mixed-valid/invalid batch isolation is behavior-qualified and awaiting final CI-derived generated-authority synchronization, branch zero-diff, and exact-main freeze.
+**0.1.0-dev.20** — existing fixed Video actions are behavior-qualified on the development branch; final CI-derived generated-authority synchronization, branch zero-diff, promotion, and exact-main freeze remain open.
 
-## Current evidence-backed state
+## Frozen release authority
+`main` remains frozen at dev.19 commit `eb0ce66dab646427d5bef1548c12e5cc4765b2f1`, tree `337a4e11fb41bab6b6eeb462c3755381580f06c1`, exact-main run `33597504612`. Continuity `100143814059`, supply-chain/static `100143814189`, and managed `100143814261` are SUCCESS. That authority includes 255/255 managed tests, 99/99 static tests, 5/5 contract vectors, workspace SHA-256 `167b4695cca6810fe0e36e57c45a7bf11483105c0e71b955a948604f2cd9e584`, generated-authority artifact `9833901138`, and verified-delivery artifact `9833955082`.
+
+## Dev.20 Video qualification
 The product path remains:
 
 `IExplorerCommand → fixed Converty.Bridge.exe → Strict Converty.EngineWorker.exe → typed preset/provider → fixed app-local ffmpeg.exe → private staging → validated no-overwrite numbered publication`
 
-Dev.19 adds one real Windows packaged mixed-Image batch gate without a parallel image subsystem or a widened executable/argument surface. One Bridge invocation receives valid PNG → malformed JPG → valid WebP → truncated BMP → valid JPEG. Ordinary per-file conversion failures do not suppress later valid members; aggregate failure is reported only after the full selection is attempted. Successful outputs use numbered no-overwrite publication, failing members publish nothing, sources and existing destinations remain byte-identical, partial staging is removed, and test-package converter-worker/FFmpeg processes must not remain.
+Branch `dev/0.1.0-dev.20-video-foundation` qualifies the already-existing Video surface without adding new action IDs or a parallel media subsystem.
 
-Behavior anchor `8a64d0a12ccf47df5df364a1c6c545f876d57d29`, run `33596229372`: locked restore PASS; dependency audit 18 projects / 18 frameworks / 0 vulnerable-result packages; Release build 0 warnings / 0 errors; native Explorer, development package, COM, Bridge→FFmpeg, Audio 36-case + negatives + mixed batch, Image 24-case + negatives + mixed batch PASS; **255/255 managed tests**, **99/99 static tests**, and **5/5 contract vectors** PASS.
+Accepted Video sources: `.mp4`, `.mov`, `.mkv`, `.avi`, `.webm`, `.m4v`, `.mpeg`, `.mpg`, `.wmv`.
 
-The same run produced two byte-identical pre-authority workspace ZIPs, SHA-256 `1c8d197941a616a25bcc4bab59550037a221309f51bc937a1ba7daa9b34bf97d`, 475353 bytes, 378 entries. Final archive semantic verification and delivery were intentionally blocked because tracked generated authority still contains dev.18 package metadata. That is the remaining authority-sync gate, not a product or determinism success claim.
+Fixed actions under qualification:
+- `video.mp4.h264` → H.264 + AAC MP4;
+- `video.webm.vp9` → VP9 + Opus WebM;
+- `extract.audio.mp3` → MP3 audio with no video stream.
 
-The frozen dev.18 exact-main qualification anchor remains `ef079f7e7923e399624067c4d54b9ce7577bf090`, tree `0af729f150897d170eac9f9aebfd5bc7d5d4083a`, run `33390111824`.
+Behavior run `33669379940` on `b8019ecf926fce9813fdcd2cbd74e5f59e439d08` proved 27/27 packaged Video source/action conversions, ffprobe codec contracts, repeated malformed and physically truncated rejection, Unicode/metacharacter paths, source/pre-existing-destination byte preservation, same-extension numbered publication, zero partial staging, and a twice-run five-member mixed batch `valid MP4 → malformed AVI → valid MOV → truncated MKV → valid WebM` with aggregate exit 4 and later valid publication. Audio and Image product regressions remained green; 260/260 managed tests and 103/103 static tests passed within that behavior qualification. No production source code change was required.
 
-## Dev.19 qualification corrections
-- Windows harness source/target alias RED: same-extension `PNG → image.png` collision setup overwrote its own source before Bridge execution.
-- Corrected RED contract requires collision seeding to be skipped when resolved target equals source; same-extension conversion remains valid.
-- GREEN harness fix mirrors the already-qualified single-Image acceptance behavior.
-- Core-test fixture defect then deleted `first.png` before `RunAsync`; production input validation correctly rejected it.
-- GREEN core-test fix preserves the source and lets `OutputPathResolver` naturally publish `first (1).png`.
+The behavior-run workspace ZIP was deterministic byte-for-byte (`5db1e06c084e58354aa2445f3645d1b53c760fc63f565fe7960224c2eec2467f`, 505672 bytes, 383 entries) but semantic archive validation correctly stopped on stale tracked generated authority. That is pre-authority evidence, not a final delivery artifact.
 
-## Still open before dev.19 freeze
-- curate exact pre-authority metadata on the canonical dev.19 branch;
-- generate and independently verify the exact four-file CI authority artifact;
-- guarded exact-parent generated-authority synchronization;
-- branch generated-authority zero-diff qualification;
-- non-force fast-forward of unchanged `main` only;
-- fresh exact-main continuity + static/supply-chain + Windows managed SUCCESS;
-- independent final deterministic workspace and verified-delivery artifact verification.
+Run `33669979101` subsequently generated artifact `9862090305` with SHA-256 `7cb43be8a0a67cf5e0deb19c79827c9df786a26777ddd7f11bdc9cf95d5edba2`, but this repository curation changes workspace bytes, so that artifact is explicitly not eligible for final sync. Final generated authority must come from ordinary CI on the exact curated dev.20 head.
+
+## Current freeze sequence
+1. Complete non-generated dev.20 repository curation.
+2. Run ordinary CI on the exact curated branch head.
+3. Independently verify the generated-authority ZIP digest, CRC, exact four-member set, and dev.20 version alignment.
+4. Synchronize only those four generated files through a guarded exact-parent, exact-branch, self-deleting temporary workflow. Never hand-edit generated authority.
+5. Require branch generated-authority zero-diff and complete Windows deterministic workspace/delivery qualification.
+6. Re-read `main`; fast-forward non-force only if frozen dev.19 `main` is unchanged and the candidate is a strict descendant.
+7. Require fresh exact-main continuity + supply-chain/static + managed SUCCESS on the exact promoted SHA.
+8. Independently verify exact-main generated authority and verified-delivery artifacts before calling dev.20 frozen.
 
 ## Still open before customer launch
-- Video action/source/malformed/batch qualification after dev.19 freeze;
+- dev.21 B8 Video Copy/Remux/Transcode planner after dev.20 freeze;
 - UX/settings defaults, mixed-selection UX, progress/results, output/concurrency/isolation settings;
 - plugin SDK manifest/API/signature/hash gate;
 - production FFmpeg/ffprobe provenance, signatures, hashes, license/notices, and redistribution approval;
@@ -51,11 +55,11 @@ The frozen dev.18 exact-main qualification anchor remains `ef079f7e7923e39962406
 3. `machine-readable/handover_state.json`
 4. `machine-readable/build_evidence.json`
 5. `docs/development/IMPLEMENTATION_STATUS.md`
-6. `docs/development/DEV19_IMAGE_BATCH_ISOLATION_TDD_EVIDENCE.md`
-7. `docs/TASK_BACKLOG.md`
-8. `docs/Converty_Master_Build_Plan.md`
-9. `docs/SECURITY_THREAT_MODEL.md`
-10. `docs/TEST_AND_RELEASE_GATES.md`
+6. `docs/development/DEV20_VIDEO_QUALIFICATION_TDD_EVIDENCE.md`
+7. `docs/superpowers/specs/2026-09-02-dev20-video-qualification-design.md`
+8. `docs/superpowers/plans/2026-09-02-dev20-video-qualification.md`
+9. `docs/TASK_BACKLOG.md`
+10. `docs/Converty_Master_Build_Plan.md`
 
 ## Verification
 On Windows with .NET SDK `10.0.400`:
@@ -73,7 +77,9 @@ On Windows with .NET SDK `10.0.400`:
 ./build/audio-batch-isolation-smoke.ps1
 ./build/image-input-acceptance-smoke.ps1
 ./build/image-batch-isolation-smoke.ps1
+./build/video-input-acceptance-smoke.ps1
+./build/video-batch-isolation-smoke.ps1
 ./build/test.ps1 -Configuration Release
 ```
 
-Disposable build, test, media, package, and log output stays below excluded `artifacts/`, `bin/`, `obj/`, and cache directories. Gyan FFmpeg remains development qualification input only and is not production redistribution approval.
+Disposable build, test, media, package, and log output stays below excluded `artifacts/`, `bin/`, `obj/`, and cache directories. Development Gyan FFmpeg remains qualification input only and is not production redistribution approval.

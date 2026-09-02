@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "workspaceVersion": "0.1.0-dev.19",
+  "workspaceVersion": "0.1.0-dev.20",
   "targetOs": "Windows 11",
   "dotnetSdk": "10.0.400",
   "targetFramework": "net10.0",
@@ -9,10 +9,10 @@
   "nativeBuild": "CMake + MSVC",
   "architecture": "x64-first",
   "notes": [
-    "Dev.19 closes Image mixed-valid/invalid multi-file failure isolation before Video expansion.",
-    "One packaged Bridge process receives valid PNG, malformed JPG, valid WebP, truncated BMP and valid JPEG; later valid members must publish after ordinary per-file failures.",
-    "The batch reports aggregate exit code 4 after the full selection while preserving source/existing-destination bytes, numbered publication and staging/process cleanup.",
-    "Audio 36-case source/action, malformed/truncated and mixed-batch gates plus Image 24-case single-file/malformed/truncated gates remain mandatory regression coverage.",
+    "Dev.20 qualifies the existing fixed Video product surface without adding a second Video architecture.",
+    "Nine advertised Video source extensions are exercised against video.mp4.h264, video.webm.vp9 and extract.audio.mp3 for 27 real packaged conversions with ffprobe codec verification.",
+    "Repeated malformed/truncated Video rejection and a twice-run valid-invalid-valid-invalid-valid mixed batch require aggregate exit 4 only after all members, later valid publication, source/destination preservation, no partial staging and no orphan converter processes.",
+    "Audio 36-case and Image 24-case acceptance/negative/mixed-batch regression gates remain mandatory.",
     "Headed Win11 acceptance, production signed-package B2 requalification, production FFmpeg redistribution, signed MSIX lifecycle and final release audit remain open."
   ],
   "testRunner": "Microsoft.Testing.Platform",

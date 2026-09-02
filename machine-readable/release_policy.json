@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "workspaceVersion": "0.1.0-dev.19",
+  "workspaceVersion": "0.1.0-dev.20",
   "hashAlgorithm": "SHA-256",
   "forbiddenHashAlgorithms": ["MD5", "SHA-1"],
   "ciProvenance": {
