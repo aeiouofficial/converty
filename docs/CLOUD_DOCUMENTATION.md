@@ -2,70 +2,63 @@
 
 Last reconciled: 2026-09-02.
 
-This file is a metadata-only continuation map. It does **not** replace GitHub as code/release authority and does **not** supersede the frozen `main` release tree.
+This file is a **metadata-only continuation/routing map**. It does not replace GitHub as code/release authority and must never be substituted for the frozen `main` tree.
 
 ## Authority order
 
-1. GitHub repository / exact refs / CI artifacts are authoritative for code and release evidence.
-2. Slack is the live operational mirror for current project state, roadmap, implementation plan, tasks, changelog and the single open handover.
-3. Google Drive is the persistent cloud documentation library and backup mirror.
-4. After every completed work block/tranche, update all three layers coherently. At least once daily, reconcile Slack/Drive against live GitHub refs and CI.
+1. GitHub exact refs, code, CI runs/jobs and release artifacts are authoritative for code/release evidence.
+2. Slack is the live operational mirror for project state, roadmap, current plan, tasks, changelog and the single OPEN handover.
+3. Google Drive is the persistent cloud documentation/evidence library.
+4. After every meaningful completed work block, reconcile all three layers; contradictory Slack/Drive narrative must be corrected to live GitHub evidence.
 
-## Frozen dev.19 release authority
+## Frozen dev.20 release authority
 
-- Version: `0.1.0-dev.19`
-- `main`: `eb0ce66dab646427d5bef1548c12e5cc4765b2f1`
-- Tree: `337a4e11fb41bab6b6eeb462c3755381580f06c1`
-- Exact-main run: `33597504612`
-- Continuity: `100143814059` SUCCESS
-- Static/supply-chain: `100143814189` SUCCESS
-- Windows managed: `100143814261` SUCCESS
-- Workspace SHA-256: `167b4695cca6810fe0e36e57c45a7bf11483105c0e71b955a948604f2cd9e584`
-- Exact-main verified-delivery artifact: `9833955082`
-- Verified-delivery digest: `sha256:6e7b7e753a4101a3e690ffe558c96e47f9dba831b858bed5f0005ec144837809`
+- Version: `0.1.0-dev.20`
+- `main`: `8a1f46603aa842728247bc11b34fcccf121858fd`
+- Tree: `4bd6f8d7acbadd60a3488870c773d2eafd67ba26`
+- Exact-main run: `33671671714`
+- Continuity: `100386513722` SUCCESS
+- Supply-chain/static: `100386513825` SUCCESS
+- Windows managed: `100386513350` SUCCESS
+- Managed tests: `260/260` PASS
+- Static tests: `103/103` PASS
+- Contract vectors: `5/5` PASS
+- Video: `27/27` real packaged conversions + ffprobe + repeated malformed/truncated + twice-run mixed-batch PASS
+- Audio 36-case and Image 24-case regressions: PASS
+- Workspace SHA-256: `743c375cff7d854e0d63ea184f2423cc49ff9a7dca552442670c2b4322c5c805`
+- Workspace bytes: `506224`
+- Workspace ZIP entries: `384`
+- Package-manifest entries: `382`
+- SHA256SUMS entries: `383`
+- Exact-main generated-authority artifact: `9862733877`
+- Generated-authority digest: `sha256:dc7e8e8e9c220d9acad96a9a3c5bb0fc1e18555fb18cf02ec80e0ca0e399f627`
+- Exact-main verified-delivery artifact: `9862843977`
+- Verified-delivery digest: `sha256:1ab1a6b8127a5e1cf56dd44f1c9547a8d46293bdc3a2aa0aee911e3137386a11`
+- Independent generated-authority/delivery verification: CRC, exact members, root/version, 382 package hashes, 383 SHA hashes and exclusion policy PASS; zero violations.
+
+Historical dev.19 authority remains provenance only: `eb0ce66dab646427d5bef1548c12e5cc4765b2f1`, tree `337a4e11fb41bab6b6eeb462c3755381580f06c1`, run `33597504612`.
 
 ## Slack live documentation
 
-Workspace channels:
+- `#proj-converty` — `C0BUFGMGMFG` — anchor `1788366973.077219`
+- `#roadmap-converty` — `C0BU2405ZMM` — anchor `1788366984.732379`
+- `#plan-converty` — `C0BUKLHKL65` — anchor `1788368651.564749`
+- `#tasks-converty` — `C0BTWQZQX4P` — anchor `1788327299.747159`
+- `#changelog-converty` — `C0BUM4XRZ6G` — anchor `1788366995.127219`
+- `#handover-open-converty` — `C0BUM8J0ZEG`
+  - Handover #1 — TS `1788367585.736179` — `PROCESSED`
+  - Handover #2 — TS `1788368822.626919` — `PROCESSED`
+  - ACTIVE HANDOVER #3 — TS `1788376926.580049` — `OPEN`
+  - exactly one OPEN handover is allowed
+- `#pre-devlog-converty` — `C0BV6HDMVDW`
 
-- `#proj-converty` — channel ID `C0BUFGMGMFG`
-  - canonical anchor TS `1788366973.077219`
-- `#roadmap-converty` — channel ID `C0BU2405ZMM`
-  - canonical anchor TS `1788366984.732379`
-- `#plan-converty` — channel ID `C0BUKLHKL65`
-  - canonical current-plan anchor TS `1788368651.564749`
-- `#tasks-converty` — channel ID `C0BTWQZQX4P`
-  - canonical anchor TS `1788327299.747159`
-- `#changelog-converty` — channel ID `C0BUM4XRZ6G`
-  - canonical anchor TS `1788366995.127219`
-- `#handover-open-converty` — channel ID `C0BUM8J0ZEG`
-  - predecessor Handover #1 TS `1788367585.736179` — `PROCESSED`
-  - current `OPEN` Handover #2 TS `1788368822.626919`
-  - there must be exactly one `OPEN` handover at a time
-- `#pre-devlog-converty` — channel ID `C0BV6HDMVDW`
-
-Slack Canvas is not available in this workspace (`not_supported_free_team`). Therefore each live documentation channel uses canonical anchor messages edited in place, while full durable documents live in Google Drive.
-
-### Open handover lifecycle
-
-After every meaningful completed work block:
-
-1. Re-read live GitHub authority and relevant CI/evidence.
-2. Reconcile Authority + Roadmap + Plan + Tasks + Changelog + durable Recursive Handover.
-3. Edit the current `OPEN` handover to `PROCESSED` and add the successor handover reference. If direct edit is impossible, add an explicit processed reply before creating the successor.
-4. Publish exactly one successor `OPEN` handover containing the precise next task, current authority, acceptance criteria, blockers and architecture/security invariants.
-5. Backfill the predecessor with the exact successor message TS/reference.
-6. Never leave more than one active `OPEN` handover for Converty.
+Slack Canvas is unavailable in this free workspace, so canonical anchor messages are edited in place and durable full documents live in Google Drive.
 
 ## Google Drive library
 
-Project Documentation Library:
+Project Documentation Library: `1h0GoSM8MfRy8GUjQa6hMLIQbhzEfkoT_`
 
-- https://drive.google.com/drive/folders/1h0GoSM8MfRy8GUjQa6hMLIQbhzEfkoT_
-
-Converty root:
-
-- https://drive.google.com/drive/folders/1zSKLK-yKmX15xIWSj1D_39tmArymhHmn
+Converty root: `1zSKLK-yKmX15xIWSj1D_39tmArymhHmn`
 
 Subfolders:
 
@@ -76,47 +69,58 @@ Subfolders:
 - `04 Handover`: `1FOS_EQfv65Hp4fZAiXDkw2FzxUDEBz4H`
 - `05 Devlogs & Release Evidence`: `1wZOfy2kzffGyXMtMq05MgSB4Xli2p-Yl`
 
-Fixed live Google Docs — update these IDs in place; do not create replacement copies:
+Fixed live Docs — update in place, never create competing current-state copies:
 
-- Project Authority & Documentation Index
-  - `1ZdDGUpSVxeEfvICLKD_VctT49MlJMyhNICyj4ebeYRw`
-  - https://docs.google.com/document/d/1ZdDGUpSVxeEfvICLKD_VctT49MlJMyhNICyj4ebeYRw/edit
-- Live Roadmap
-  - `1p3xKxj2akSqZTzVp442QNetoZ8Eg9u6pvckjwUnBLsI`
-  - https://docs.google.com/document/d/1p3xKxj2akSqZTzVp442QNetoZ8Eg9u6pvckjwUnBLsI/edit
-- Current Implementation Plan
-  - `1eGVajQAxw3Vjc7F_7NJgt9do6tRzZpV_Vbfcl24g9-s`
-  - https://docs.google.com/document/d/1eGVajQAxw3Vjc7F_7NJgt9do6tRzZpV_Vbfcl24g9-s/edit
-- Open Tasks & Gates
-  - `1BH44EUYcNBexIZasxq24mlYBZk0VxF5XaG6RnUkQPrc`
-  - https://docs.google.com/document/d/1BH44EUYcNBexIZasxq24mlYBZk0VxF5XaG6RnUkQPrc/edit
-- Changelog
-  - `1JsJfEECcWaB2UJtW0oiW45RD86RZT4i5spANV38Zzoc`
-  - https://docs.google.com/document/d/1JsJfEECcWaB2UJtW0oiW45RD86RZT4i5spANV38Zzoc/edit
-- Recursive Handover
-  - `1HVfL2KV6LZbpl0fc4Je1dzqLs3ya9q9Onjb3YbFF9L8`
-  - https://docs.google.com/document/d/1HVfL2KV6LZbpl0fc4Je1dzqLs3ya9q9Onjb3YbFF9L8/edit
+- Authority / Index: `1ZdDGUpSVxeEfvICLKD_VctT49MlJMyhNICyj4ebeYRw`
+- Roadmap: `1p3xKxj2akSqZTzVp442QNetoZ8Eg9u6pvckjwUnBLsI`
+- Current Implementation Plan: `1eGVajQAxw3Vjc7F_7NJgt9do6tRzZpV_Vbfcl24g9-s`
+- Open Tasks & Gates: `1BH44EUYcNBexIZasxq24mlYBZk0VxF5XaG6RnUkQPrc`
+- Changelog: `1JsJfEECcWaB2UJtW0oiW45RD86RZT4i5spANV38Zzoc`
+- Recursive Handover: `1HVfL2KV6LZbpl0fc4Je1dzqLs3ya9q9Onjb3YbFF9L8`
+- Release & Test Evidence: `1LizDehSMDnBfihXnntX9z13QNai87zzMwlkzPptkcB0`
 
-## Current approved next tranche
+## Current next tranche — ACTIVE HANDOVER #3
 
-`dev.20 Video Qualification Closure — Design A` is approved and is the precise next task in ACTIVE HANDOVER #2.
+`0.1.0-dev.21 — B8 Video Copy/Remux/Transcode Planner`.
 
-Use the already-existing fixed Video surface:
+The precise next executable block is **Superpowers design / decision-model work before production code**:
 
-- Sources: `.mp4`, `.mov`, `.mkv`, `.avi`, `.webm`, `.m4v`, `.mpeg`, `.mpg`, `.wmv`
-- Actions: `video.mp4.h264`, `video.webm.vp9`, `extract.audio.mp3`
-- Target: 27 real packaged source/action conversions, repeated malformed/truncated rejection, mixed-valid/invalid Video batch isolation, full Audio/Image regression preservation, and the existing authority/freeze protocol.
-- Explicitly out of scope for dev.20: new Video actions, remux/copy planner, hardware acceleration, HDR/subtitle/metadata expansion.
+1. Fresh-read exact frozen dev.20 `main` and current Video/probe/provider/domain/contracts/tests.
+2. Compare bounded planner approaches and recommend one.
+3. Define typed auditable execution mode `Copy | Remux | Transcode` and exact compatibility decision table from authoritative probe/capability facts.
+4. Define deterministic conservative behavior for unknown/ambiguous/incompatible input.
+5. Define compatibility pixel-format/audio defaults and explicit subtitle/HDR/metadata/non-primary-stream policy.
+6. Keep Host/Bridge media/process neutral; provider translates typed plan only to fixed known engine tokens; no raw FFmpeg argument pass-through.
+7. Preserve strict disposable worker isolation, fixed app-local engine, private staging, transactional numbered no-overwrite publication and all Audio/Image/dev.20 Video gates.
+8. Hardware acceleration remains disabled/out of scope.
+9. Produce RED acceptance matrix and implementation file map.
+10. Obtain design approval before production behavior changes.
+11. After approval only, create `dev/0.1.0-dev.21` from exact frozen dev.20 `main`, write the detailed implementation plan and execute RED -> GREEN TDD.
 
-## Synchronization rules for future agents
+## Still open before customer launch
 
-- Re-read live GitHub refs and CI before every status claim or write.
-- Edit Slack canonical anchors in place using the channel IDs/message timestamps above.
-- Update the fixed Google Docs in place using the IDs above.
-- Append historical changelog entries; do not erase provenance.
-- Keep Roadmap strategic, Plan execution-specific, and Tasks stateful/non-duplicative.
-- Keep the Recursive Handover sufficient for a fresh account/model with no conversation history.
-- Keep `#handover-open-converty` as the single operational start-point queue: exactly one OPEN handover, predecessor PROCESSED before successor OPEN.
-- Never let Slack/Drive narrative override contradictory GitHub evidence.
-- Do not edit generated SBOM/package/hash authority by hand.
-- Do not move frozen `main` for documentation-only synchronization.
+- dev.21 B8 planner/compatibility
+- UX/settings
+- Plugin SDK
+- production FFmpeg/ffprobe provenance/signature/hash/license/notices/redistribution approval
+- production signed-package B2 identity/authentication requalification
+- signed production MSIX clean-Windows-11 lifecycle
+- headed Windows 11 modern Explorer exact-build screenshots and crash/hang/failure matrix
+- final fuzz/chaos/security/release/end-user acceptance
+
+Converty is **not customer ship-ready**.
+
+## Continuation / handover lifecycle
+
+For `weiter`, `continue`, `start current documented handover` or equivalent:
+
+1. Read the single current OPEN Slack handover — currently #3 TS `1788376926.580049`.
+2. Fresh-read GitHub refs/CI and reconcile Drive/Slack against GitHub authority.
+3. Execute the documented next task under Superpowers/TDD/security/review/evidence gates rather than re-planning approved work.
+4. Verify the completed material block.
+5. Update Authority + Roadmap + Plan + Tasks + Changelog + Evidence + Recursive Handover and canonical Slack anchors in place.
+6. Mark the current OPEN handover PROCESSED **before** publishing its successor.
+7. Publish exactly one context-free successor OPEN, then backfill exact successor TS/reference into the predecessor and all routing docs.
+8. Re-read Slack + Recursive Handover and require exactly one OPEN.
+
+Never hand-edit generated SBOM/package/hash authority. Never move frozen `main` merely for documentation synchronization.
