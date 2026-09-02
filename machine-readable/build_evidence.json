@@ -22,7 +22,7 @@
       "releaseBuild": "PASS",
       "warnings": 0,
       "errors": 0,
-      "tests": {"total": 254, "succeeded": 254, "failed": 0, "skipped": 0},
+      "tests": {"total": 255, "succeeded": 255, "failed": 0, "skipped": 0},
       "nativeTopologySmoke": "PASS",
       "nativeExplorerReleaseBuild": "PASS",
       "developmentFfmpegPinHashAndExecution": "PASS",
@@ -40,15 +40,29 @@
       "imageDimensions": "64x48 PASS for every successful conversion",
       "malformedImage": {"repeated": true, "bridgeExitCode": 4, "deterministic": true, "status": "PASS"},
       "truncatedImage": {"repeated": true, "bridgeExitCode": 4, "deterministic": true, "status": "PASS"},
+      "imageMixedBatchIsolation": {"attempts": 2, "selectionItems": 5, "validItems": 3, "invalidItems": 2, "bridgeExitCode": 4, "singleBridgeProcessPerAttempt": true, "laterValidItemsPublished": true, "sourceTargetAliasGuard": true, "status": "PASS"},
       "sourceAndExistingDestinationPreserved": "PASS for every Audio mixed-batch and Image acceptance item",
       "numberedNoOverwritePublication": "PASS",
-      "partialOutputCleanup": "PASS"
+      "partialOutputCleanup": "PASS",
+      "orphanImageConverterProcessCleanup": "PASS"
+    },
+    "static": {
+      "tests": {"total": 99, "succeeded": 99, "failed": 0},
+      "contractVectors": {"total": 5, "succeeded": 5, "failed": 0},
+      "ciPins": "PASS",
+      "releaseInputPreflight": "PASS"
     }
   },
   "dev19": {
     "branch": "dev/0.1.0-dev.19-image-batch-isolation",
-    "currentHeadSha": "818e8f3759bce75c378cfab90569b4ccf3c07678",
-    "qualificationStatus": "PENDING_FINAL_CI",
+    "behaviorHeadSha": "8a64d0a12ccf47df5df364a1c6c545f876d57d29",
+    "behaviorWorkflowRunId": 33596229372,
+    "behaviorManagedJobId": 100140113348,
+    "behaviorStaticJobId": 100140113457,
+    "behaviorContinuityJobId": 100140113271,
+    "currentHeadSha": "8a64d0a12ccf47df5df364a1c6c545f876d57d29",
+    "headSemantics": "behavior qualification anchor; metadata/authority commits may advance the branch and must be re-read live",
+    "qualificationStatus": "BEHAVIOR_GREEN_FINAL_AUTHORITY_OPEN",
     "scope": "Image multi-file/mixed-valid-invalid batch failure isolation",
     "selection": ["valid png", "malformed jpg", "valid webp", "truncated bmp", "valid jpeg"],
     "fixedAction": "image.png",
@@ -59,7 +73,22 @@
     "invalidItemsMustNotPublish": true,
     "sourceAndExistingDestinationPreserved": true,
     "partialCleanupRequired": true,
-    "orphanConverterProcessCleanupRequired": true
+    "orphanConverterProcessCleanupRequired": true,
+    "preAuthorityWorkspace": {
+      "deterministicDoubleBuild": "PASS",
+      "sha256": "1c8d197941a616a25bcc4bab59550037a221309f51bc937a1ba7daa9b34bf97d",
+      "bytes": 475353,
+      "zipEntries": 378,
+      "semanticArchiveVerification": "BLOCKED_AS_EXPECTED_BY_STALE_TRACKED_DEV18_PACKAGE_MANIFEST",
+      "verifiedDelivery": "NOT_PRODUCED",
+      "finalAuthority": false
+    },
+    "preCurationGeneratedAuthority": {
+      "artifactId": 9833492879,
+      "artifactSha256": "a6b87f0fcfaa6e32cf9c3a94c95231ccd3818fc7fd94a208f9474f9f27bcdef8",
+      "usableForFinalSync": false,
+      "reason": "metadata curation changes the workspace; final authority must be generated from the curated canonical dev19 head"
+    }
   },
   "tddHistory": {
     "dev18Red": {"headSha": "7388aec6ffb673e0101b09106d646d417f77a7b3", "runId": 33349908668, "staticJobId": 99361086262, "result": "92 existing static PASS; exactly 3 new dev18 assertions FAIL because Image acceptance smoke is missing"},
@@ -69,12 +98,16 @@
     "dev19ImageSmoke": "3a494427a9ef794766fd326273f22ac715610107",
     "dev19CoreTest": "405514a5eb29b53765cfc14d42705e749b43ad91",
     "dev19CiWiring": "051d0cde725ef33350e150d03a932bbe60420f61",
-    "dev19StaticContractCorrection": "3cd15f4dfad4742b25fa91ece36d651291dd7f5c"
+    "dev19StaticContractCorrection": "3cd15f4dfad4742b25fa91ece36d651291dd7f5c",
+    "dev19SourceTargetAliasInitialReproducer": {"headSha": "ce54e0f08b5dfd9ba1b4d6cba6132c64f7ce006f", "runId": 33595367172},
+    "dev19SourceTargetAliasCorrectedRed": {"headSha": "a988204b058ada86f8909cf94e1d9f2b6e69cf39", "runId": 33595474461, "result": "1 failed, 98 passed; exact missing source/target collision-seed guard"},
+    "dev19SourceTargetAliasGreen": "633fc39b5df8062496914cc641b7001adea805ee",
+    "dev19CoreFixtureGreen": {"headSha": "8a64d0a12ccf47df5df364a1c6c545f876d57d29", "runId": 33596229372, "result": "255/255 managed; 99/99 static; all Audio/Image product gates PASS before expected generated-authority closure"}
   },
   "metadataCuration": {
-    "scope": "documentation and machine-readable closure metadata",
+    "scope": "documentation and machine-readable pre-authority closure metadata",
     "productBehaviorChanged": false,
-    "rule": "curation must re-run ordinary CI and generated-authority zero-diff before promotion"
+    "rule": "curation must re-run ordinary CI and final generated authority must come from that exact curated workspace before promotion"
   },
   "headedWindows11Acceptance": "OPEN",
   "productionSignedPackageB2Requalification": "OPEN",

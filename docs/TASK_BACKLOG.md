@@ -5,7 +5,13 @@
 - [x] Define dev.19 test-first contract for one same-family Image selection containing valid and malformed/truncated members.
 - [x] Add focused core-runner Image batch isolation coverage.
 - [x] Add real Windows packaged Image mixed-batch smoke and CI wiring.
-- [ ] Complete final dev.19 qualification, generated-authority synchronization and exact-main freeze.
+- [x] Correct same-extension Image source/target alias in the acceptance harness with RED/GREEN evidence.
+- [x] Correct the core-test same-extension fixture so it preserves the selected source and exercises resolver numbering.
+- [x] Requalify behavior on Windows: Audio/Image product gates, 255/255 managed, 99/99 static, 5/5 vectors PASS on behavior anchor `8a64d0a12ccf47df5df364a1c6c545f876d57d29` / run `33596229372`.
+- [ ] Synchronize final curated dev.19 generated authority from independently verified CI artifact.
+- [ ] Require canonical dev.19 generated-authority zero-diff plus complete Windows deterministic-workspace/delivery qualification.
+- [ ] Fast-forward unchanged `main` non-force and require fresh exact-main three-job SUCCESS.
+- [ ] Independently verify final exact-main workspace and delivery before declaring dev.19 frozen.
 - [ ] Do not begin Video expansion until dev.19 is evidence-backed and frozen.
 
 ## B0 Repository/bootstrap
@@ -37,10 +43,10 @@
 ## B5–B8 Providers
 - [x] Audio action/source/malformed/batch closure through strict product path.
 - [x] Image 8-source × 3-action acceptance plus malformed/truncated rejection.
-- [ ] Image mixed-valid/invalid multi-file closure; dev.19 acceptance is implemented and awaiting final authority qualification.
+- [x] Image mixed-valid/invalid multi-file behavior closure; final authority/main freeze remains open above.
 - [ ] Additional Image malformed corpus if evidence warrants it.
 - [ ] Production FFmpeg/ffprobe pin/signature/hash/licensing/redistribution approval.
-- [ ] Video action/source/malformed/batch qualification after Image closure.
+- [ ] Video action/source/malformed/batch qualification after Image closure freeze.
 
 ## B9 UX/settings
 - [ ] Defaults, mixed-selection behavior, pinned presets, output/concurrency/isolation settings and user-visible progress/result UX.

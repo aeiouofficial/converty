@@ -3,7 +3,7 @@
   "project": "Converty",
   "workspaceVersion": "0.1.0-dev.19",
   "baselineDate": "2026-09-02",
-  "implementationStatus": "DEV19_IMAGE_MIXED_BATCH_IMPLEMENTED_PENDING_FINAL_AUTHORITY_QUALIFICATION",
+  "implementationStatus": "DEV19_BEHAVIOR_GREEN_FINAL_AUTHORITY_AND_EXACT_MAIN_OPEN",
   "defaultBranch": "main",
   "currentDevelopmentBranch": "dev/0.1.0-dev.19-image-batch-isolation",
   "nextWorkspaceVersion": "0.1.0-dev.20",
@@ -28,26 +28,57 @@
   },
   "dev19": {
     "branch": "dev/0.1.0-dev.19-image-batch-isolation",
-    "currentHeadSha": "6f92301cc5542e7e7dff7778d6d3a9a9f070c8ca",
+    "behaviorHeadSha": "8a64d0a12ccf47df5df364a1c6c545f876d57d29",
+    "behaviorRunId": 33596229372,
+    "managedJobId": 100140113348,
+    "staticJobId": 100140113457,
+    "continuityJobId": 100140113271,
     "scope": "Image multi-file/mixed-valid-invalid failure isolation",
     "selection": ["valid png", "malformed jpg", "valid webp", "truncated bmp", "valid jpeg"],
     "fixedAction": "image.png",
     "singleBridgeProcessPerAttempt": true,
     "repeatedAttempts": 2,
     "expectedAggregateExitCode": 4,
-    "staticContract": "PASS on corrected run before metadata commits; latest metadata commit requires a fresh run",
-    "managedQualification": "IN_PROGRESS_OR_SUPERSEDED_BY_LATEST_METADATA_COMMIT",
-    "finalAuthorityQualification": "OPEN"
+    "staticContract": "99/99 PASS on behavior anchor; tracked generated authority remains intentionally stale until curated authority sync",
+    "managedBehaviorQualification": "PASS THROUGH 255/255 TESTS AND ALL AUDIO/IMAGE PRODUCT GATES",
+    "preAuthorityWorkspace": {
+      "sha256": "1c8d197941a616a25bcc4bab59550037a221309f51bc937a1ba7daa9b34bf97d",
+      "bytes": 475353,
+      "entries": 378,
+      "doubleBuildDeterministic": true,
+      "semanticVerification": "BLOCKED_BY_STALE_DEV18_TRACKED_PACKAGE_MANIFEST",
+      "deliveryArtifact": "NOT_PRODUCED"
+    },
+    "finalAuthorityQualification": "OPEN",
+    "exactMainQualification": "OPEN",
+    "frozen": false
   },
+  "dev19QualificationCorrections": [
+    {
+      "problem": "Image mixed-batch smoke seeded a pre-existing .png target over the selected .png source",
+      "correctedRedSha": "a988204b058ada86f8909cf94e1d9f2b6e69cf39",
+      "correctedRedRunId": 33595474461,
+      "greenSha": "633fc39b5df8062496914cc641b7001adea805ee",
+      "productionBehaviorChanged": false
+    },
+    {
+      "problem": "Image core batch test deleted first.png before RunAsync",
+      "greenSha": "8a64d0a12ccf47df5df364a1c6c545f876d57d29",
+      "greenRunId": 33596229372,
+      "productionBehaviorChanged": false
+    }
+  ],
   "recursiveRegressionBaseline": {
-    "managedTests": "254/254 PASS",
-    "staticTests": "95/95 PASS at frozen dev18",
+    "managedTests": "255/255 PASS at dev19 behavior anchor",
+    "staticTests": "99/99 PASS at dev19 behavior anchor",
     "contractVectors": "5/5 PASS",
     "dependencyAudit": "18 projects / 18 frameworks / 0 vulnerable-result packages",
-    "releaseBuild": "0 warnings / 0 errors at frozen dev18"
+    "releaseBuild": "0 warnings / 0 errors",
+    "audio": "36/36 source-action + repeated malformed/truncated + mixed batch PASS",
+    "image": "24/24 source-action + repeated malformed/truncated + mixed batch PASS"
   },
   "shippingOpen": [
-    "Dev.19 final generated-authority synchronization and exact-main qualification",
+    "Dev.19 curated generated-authority synchronization, branch zero-diff and exact-main freeze",
     "Video foundation and fixed action/source/malformed/batch matrix",
     "Headed Windows 11 modern Explorer acceptance and exact-build screenshots",
     "Explorer crash/hang/failure headed matrix",
@@ -58,10 +89,13 @@
     "UX/settings and plugin SDK gates"
   ],
   "nextActions": [
-    "Finish the latest dev19 CI from the actual current head.",
-    "Synchronize generated authority only from the exact CI artifact after independent verification.",
-    "Require branch zero-diff and exact-main three-job qualification before declaring dev19 frozen.",
-    "Create dev20 from exact frozen main and begin Video test-first."
+    "Commit pre-authority curation onto the exact 8a64d0a behavior lineage and advance only the canonical dev19 ref non-force.",
+    "Use the exact curated-head CI generated-authority artifact; independently verify digest, CRC, exact four members and version.",
+    "Synchronize generated authority through a guarded exact-parent self-deleting workflow; never hand-edit generated authority.",
+    "Require canonical dev19 zero-diff plus complete managed deterministic workspace/delivery qualification.",
+    "Re-read main and fast-forward non-force only if the expected main base is unchanged.",
+    "Require fresh exact-main three-job SUCCESS and independently verify final workspace/delivery.",
+    "Create dev20 from exact frozen main only after all dev19 freeze gates pass."
   ],
   "recursiveHandoverRequired": true,
   "recursiveHandoverRule": "Every completed tranche must end with a full copy-paste handover containing repository/default branch/live SHA/tree, prior authority, all commits, RED/GREEN history, run/job/artifact IDs, exact changes/reasons, executed tests/build/security outcomes, workspace hashes/counts, blockers, explicitly unverified claims, ONE precise next task, invariants, headed limitation, production signing/FFmpeg limitation, and this same recursive rule."

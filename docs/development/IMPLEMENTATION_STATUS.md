@@ -16,20 +16,36 @@
 - Batch is repeated twice and all Audio + Image single-file regression gates remain mandatory.
 - No new production media subsystem or widened executable/argument surface is introduced.
 
-## Dev.19 TDD evidence
-- Static RED was established before the smoke existed; subsequent harness corrections were independently guarded.
-- PowerShell harness corrections preserve safe `${attempt}` interpolation and named argument arrays instead of relying on fragile inline concatenation.
-- Current branch qualification must still be completed after the latest metadata/CI commits. Do not label dev.19 frozen until generated-authority zero-diff and exact-main qualification succeed.
+## Dev.19 qualification corrections
+Two independent qualification-fixture defects were found and fixed without changing production behavior:
+1. The Windows mixed-batch harness seeded a `.png` collision target over the `.png` source itself. Corrected RED `a988204b058ada86f8909cf94e1d9f2b6e69cf39` / run `33595474461` proved the source/target guard requirement; GREEN `633fc39b5df8062496914cc641b7001adea805ee` skips collision seeding only when target aliases source.
+2. The core Image batch test deleted `first.png` before `RunAsync`. GREEN `8a64d0a12ccf47df5df364a1c6c545f876d57d29` preserves the source and exercises the real `OutputPathResolver` same-extension numbering path.
+
+## Current pre-authority behavior qualification
+Exact behavior SHA `8a64d0a12ccf47df5df364a1c6c545f876d57d29`, run `33596229372`:
+- locked restore PASS;
+- dependency audit PASS: 18 projects / 18 frameworks / 0 vulnerable-result packages;
+- Release build PASS: 0 warnings / 0 errors;
+- native Explorer, development package, COM registration, and packaged Bridge→FFmpeg PASS;
+- Audio 36-case source/action + repeated malformed/truncated + mixed-batch PASS;
+- Image 24-case source/action + repeated malformed/truncated + mixed-batch PASS;
+- 255/255 managed tests PASS;
+- 99/99 static tests PASS;
+- 5/5 contract vectors PASS.
+
+The workspace ZIP was produced twice byte-identically: SHA-256 `1c8d197941a616a25bcc4bab59550037a221309f51bc937a1ba7daa9b34bf97d`, 475353 bytes, 378 entries. Semantic archive verification then correctly rejected the stale tracked dev.18 `package_manifest.json`; delivery staging/upload was skipped. This is an expected pre-authority blocker. It is not final workspace or delivery evidence.
+
+## Required dev.19 freeze sequence
+1. Commit this metadata curation onto the exact behavior lineage.
+2. Run ordinary CI and obtain the exact generated-authority artifact for the curated workspace.
+3. Independently verify artifact SHA-256, ZIP CRC, exact four-member set, and `0.1.0-dev.19` version alignment.
+4. Perform guarded exact-parent, self-deleting generated-authority synchronization.
+5. Require canonical dev.19 generated-authority zero-diff and complete Windows managed qualification including deterministic workspace and delivery.
+6. Re-read live `main`; fast-forward non-force only if its expected base is unchanged.
+7. Require fresh exact-main continuity + supply-chain/static + managed SUCCESS.
+8. Independently verify final deterministic workspace and delivery artifacts before declaring dev.19 frozen.
 
 ## Remaining implementation/release work
-1. Finish dev.19 authority qualification and exact-main freeze.
-2. Video foundation and fixed typed action/source/malformed/batch matrix, test-first, reusing the strict worker/provider architecture.
-3. UX/settings: defaults, mixed-selection UX, progress/results, output/concurrency/isolation settings.
-4. Plugin SDK manifest/API/signature/hash gate with worker-only sample provider.
-5. Production FFmpeg/ffprobe exact-binary provenance, signature/hash/license/notices and redistribution approval.
-6. Production signed-package B2 identity/authentication requalification.
-7. Signed production MSIX clean Windows 11 install/update/uninstall.
-8. Headed Windows 11 modern Explorer exact-build mouse-driven acceptance, screenshots and crash/hang/failure matrix.
-9. Final fuzz/chaos/security/release audit and end-user acceptance.
+After dev.19 freeze: Video foundation and fixed typed action/source/malformed/batch matrix, then UX/settings, plugin SDK, production FFmpeg approval, production signed-package B2 requalification, signed MSIX lifecycle, headed Windows 11 Explorer acceptance, and final fuzz/chaos/security/release/end-user acceptance.
 
-Automated CI does not close headed UI, production signing, production FFmpeg redistribution or final end-user/security gates.
+Automated CI does not close headed UI, production signing, production FFmpeg redistribution, signed MSIX lifecycle, or final end-user/security gates.
