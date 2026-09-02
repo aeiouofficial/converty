@@ -9,7 +9,7 @@ This file is a metadata-only continuation map. It does **not** replace GitHub as
 1. GitHub repository / exact refs / CI artifacts are authoritative for code and release evidence.
 2. Slack is the live operational mirror for current project state, roadmap, implementation plan, tasks, changelog and the single open handover.
 3. Google Drive is the persistent cloud documentation library and backup mirror.
-4. After every completed tranche, update all three layers coherently. At least once daily, reconcile Slack/Drive against live GitHub refs and CI.
+4. After every completed work block/tranche, update all three layers coherently. At least once daily, reconcile Slack/Drive against live GitHub refs and CI.
 
 ## Frozen dev.19 release authority
 
@@ -33,13 +33,14 @@ Workspace channels:
 - `#roadmap-converty` — channel ID `C0BU2405ZMM`
   - canonical anchor TS `1788366984.732379`
 - `#plan-converty` — channel ID `C0BUKLHKL65`
-  - current implementation plan; keep one canonical current-plan anchor
+  - canonical current-plan anchor TS `1788368651.564749`
 - `#tasks-converty` — channel ID `C0BTWQZQX4P`
   - canonical anchor TS `1788327299.747159`
 - `#changelog-converty` — channel ID `C0BUM4XRZ6G`
   - canonical anchor TS `1788366995.127219`
 - `#handover-open-converty` — channel ID `C0BUM8J0ZEG`
-  - current OPEN handover TS `1788367585.736179`
+  - predecessor Handover #1 TS `1788367585.736179` — `PROCESSED`
+  - current `OPEN` Handover #2 TS `1788368822.626919`
   - there must be exactly one `OPEN` handover at a time
 - `#pre-devlog-converty` — channel ID `C0BV6HDMVDW`
 
@@ -53,7 +54,8 @@ After every meaningful completed work block:
 2. Reconcile Authority + Roadmap + Plan + Tasks + Changelog + durable Recursive Handover.
 3. Edit the current `OPEN` handover to `PROCESSED` and add the successor handover reference. If direct edit is impossible, add an explicit processed reply before creating the successor.
 4. Publish exactly one successor `OPEN` handover containing the precise next task, current authority, acceptance criteria, blockers and architecture/security invariants.
-5. Never leave more than one active `OPEN` handover for Converty.
+5. Backfill the predecessor with the exact successor message TS/reference.
+6. Never leave more than one active `OPEN` handover for Converty.
 
 ## Google Drive library
 
@@ -97,7 +99,7 @@ Fixed live Google Docs — update these IDs in place; do not create replacement 
 
 ## Current approved next tranche
 
-`dev.20 Video Qualification Closure — Design A` is approved.
+`dev.20 Video Qualification Closure — Design A` is approved and is the precise next task in ACTIVE HANDOVER #2.
 
 Use the already-existing fixed Video surface:
 
