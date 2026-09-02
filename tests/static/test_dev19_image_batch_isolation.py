@@ -40,7 +40,7 @@ def test_dev19_smoke_locks_transactional_and_process_cleanup_invariants():
         "numbered",
         ".converty-*.partial.*",
         "source preserved",
-        "no orphan",
-        "process::getprocessesbyname",
+        "orphan converter processes",
+        "get-ciminstance win32_process",
     ):
         assert token in smoke
