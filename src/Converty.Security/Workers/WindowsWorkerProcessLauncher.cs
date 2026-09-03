@@ -11,6 +11,7 @@ public sealed class WindowsWorkerProcessLauncher : IWorkerProcessLauncher
     public const int MaximumArgumentCount = 16;
     public const int MaximumArgumentCharacters = 32_767;
     public const int MaximumCapturedErrorCharacters = 64 * 1024;
+    public const int MaximumCapturedStandardOutputBytes = 1024 * 1024;
 
     public async Task<WorkerProcessResult> ExecuteAsync(
         WorkerProcessLaunchRequest request,
@@ -20,11 +21,13 @@ public sealed class WindowsWorkerProcessLauncher : IWorkerProcessLauncher
         Validate(request);
         cancellationToken.ThrowIfCancellationRequested();
 
-        IReadOnlyDictionary<string, long> stagingBaseline =
-            CaptureFileLengths(request.FileSystemScope.WritableDirectory);
+        string? writableDirectory = request.FileSystemScope.WritableDirectory;
+        IReadOnlyDictionary<string, long> stagingBaseline = writableDirectory is null
+            ? new Dictionary<string, long>(StringComparer.OrdinalIgnoreCase)
+            : CaptureFileLengths(writableDirectory);
         WindowsAppContainerProfile? appContainer = null;
         WindowsAclGrant? applicationGrant = null;
-        WindowsAclGrant? stagingGrant = null;
+        WindowsAclGrant? scopeGrant = null;
         WindowsJobObject? job = null;
         WindowsSuspendedProcess? worker = null;
         Process? process = null;
@@ -39,9 +42,12 @@ public sealed class WindowsWorkerProcessLauncher : IWorkerProcessLauncher
                 string applicationDirectory = Path.GetDirectoryName(request.ExecutablePath) ??
                     throw new InvalidOperationException("Strict worker executable requires an application directory.");
                 applicationGrant = WindowsAclGrant.GrantApplicationReadExecute(applicationDirectory, appContainer.Sid);
-                stagingGrant = WindowsAclGrant.GrantStagingReadWrite(
-                    request.FileSystemScope.WritableDirectory,
-                    appContainer.Sid);
+                scopeGrant = writableDirectory is not null
+                    ? WindowsAclGrant.GrantStagingReadWrite(writableDirectory, appContainer.Sid)
+                    : WindowsAclGrant.GrantReadOnlyFile(
+                        request.FileSystemScope.ReadOnlyFile ??
+                            throw new InvalidOperationException("Worker filesystem scope is incomplete."),
+                        appContainer.Sid);
             }
 
             job = WindowsJobObject.Create(request.ResourceLimits);
@@ -60,7 +66,9 @@ public sealed class WindowsWorkerProcessLauncher : IWorkerProcessLauncher
             standardErrorTask = DrainAsync(
                 worker.StandardError,
                 request.MaximumCapturedStandardErrorCharacters);
-            standardOutputTask = DrainAsync(worker.StandardOutput, maximumCharacters: 0);
+            standardOutputTask = CaptureStandardOutputAsync(
+                worker.StandardOutput.BaseStream,
+                request.MaximumCapturedStandardOutputBytes);
 
             worker.Resume();
             using CancellationTokenSource timeoutCancellation =
@@ -70,19 +78,39 @@ public sealed class WindowsWorkerProcessLauncher : IWorkerProcessLauncher
             try
             {
                 Task processExitTask = process.WaitForExitAsync(timeoutCancellation.Token);
+                bool standardOutputCompleted = false;
                 while (!processExitTask.IsCompleted)
                 {
-                    Task completed = await Task.WhenAny(
-                        processExitTask,
-                        Task.Delay(OutputPollInterval, CancellationToken.None)).ConfigureAwait(false);
-                    if (completed != processExitTask)
+                    Task delayTask = Task.Delay(OutputPollInterval, CancellationToken.None);
+                    Task completed = standardOutputCompleted
+                        ? await Task.WhenAny(processExitTask, delayTask).ConfigureAwait(false)
+                        : await Task.WhenAny(processExitTask, standardOutputTask, delayTask).ConfigureAwait(false);
+
+                    if (!standardOutputCompleted && completed == standardOutputTask)
                     {
-                        ThrowIfOutputBudgetExceeded(request, stagingBaseline);
+                        _ = await standardOutputTask.ConfigureAwait(false);
+                        standardOutputCompleted = true;
+                        continue;
+                    }
+
+                    if (completed != processExitTask && writableDirectory is not null)
+                    {
+                        ThrowIfOutputBudgetExceeded(request, stagingBaseline, writableDirectory);
                     }
                 }
 
                 await processExitTask.ConfigureAwait(false);
-                ThrowIfOutputBudgetExceeded(request, stagingBaseline);
+                if (writableDirectory is not null)
+                {
+                    ThrowIfOutputBudgetExceeded(request, stagingBaseline, writableDirectory);
+                }
+            }
+            catch (WorkerStandardOutputLimitExceededException)
+            {
+                TerminateAndDisposeJob(job, exitCode: 127);
+                job = null;
+                await IgnoreDrainFailuresAsync(standardErrorTask, standardOutputTask).ConfigureAwait(false);
+                throw;
             }
             catch (WorkerOutputLimitExceededException)
             {
@@ -108,26 +136,22 @@ public sealed class WindowsWorkerProcessLauncher : IWorkerProcessLauncher
 
             int exitCode = process.ExitCode;
 
-            // Closing a kill-on-close job after the worker exits removes any descendant
-            // that attempted to outlive the single conversion worker.
             job.Dispose();
             job = null;
 
             string standardError = await standardErrorTask.ConfigureAwait(false);
-            _ = await standardOutputTask.ConfigureAwait(false);
-            return new WorkerProcessResult(exitCode, standardError);
+            string standardOutput = await standardOutputTask.ConfigureAwait(false);
+            return new WorkerProcessResult(exitCode, standardError, standardOutput);
         }
         finally
         {
             job?.Dispose();
             process?.Dispose();
             worker?.Dispose();
-            DisposeIsolation(stagingGrant, applicationGrant, appContainer);
+            DisposeIsolation(scopeGrant, applicationGrant, appContainer);
         }
     }
 
-    // Retained as a non-launching projection for structured-argument regression tests
-    // and repository guardrails. ExecuteAsync uses the suspended native launch path.
     public static ProcessStartInfo CreateStartInfo(WorkerProcessLaunchRequest request)
     {
         ArgumentNullException.ThrowIfNull(request);
@@ -200,6 +224,10 @@ public sealed class WindowsWorkerProcessLauncher : IWorkerProcessLauncher
         {
             throw new ArgumentOutOfRangeException(nameof(request));
         }
+        if (request.MaximumCapturedStandardOutputBytes is < 0 or > MaximumCapturedStandardOutputBytes)
+        {
+            throw new ArgumentOutOfRangeException(nameof(request));
+        }
     }
 
     private static async Task<string> DrainAsync(StreamReader reader, int maximumCharacters)
@@ -222,6 +250,40 @@ public sealed class WindowsWorkerProcessLauncher : IWorkerProcessLauncher
         }
 
         return captured.ToString();
+    }
+
+    private static async Task<string> CaptureStandardOutputAsync(Stream stream, int maximumBytes)
+    {
+        byte[] buffer = new byte[4096];
+        if (maximumBytes == 0)
+        {
+            while (await stream.ReadAsync(buffer.AsMemory()).ConfigureAwait(false) != 0)
+            {
+            }
+            return string.Empty;
+        }
+
+        using var captured = new MemoryStream(Math.Min(maximumBytes, buffer.Length));
+        long observed = 0;
+        while (true)
+        {
+            int read = await stream.ReadAsync(buffer.AsMemory()).ConfigureAwait(false);
+            if (read == 0)
+            {
+                break;
+            }
+
+            observed = checked(observed + read);
+            if (observed > maximumBytes)
+            {
+                throw new WorkerStandardOutputLimitExceededException(maximumBytes, observed);
+            }
+
+            captured.Write(buffer, 0, read);
+        }
+
+        return new UTF8Encoding(encoderShouldEmitUTF8Identifier: false, throwOnInvalidBytes: true)
+            .GetString(captured.GetBuffer(), 0, checked((int)captured.Length));
     }
 
     private static Dictionary<string, long> CaptureFileLengths(string root)
@@ -275,7 +337,6 @@ public sealed class WindowsWorkerProcessLauncher : IWorkerProcessLauncher
                 }
                 catch (FileNotFoundException)
                 {
-                    // The worker removed the file between enumeration and length sampling.
                 }
             }
         }
@@ -285,10 +346,10 @@ public sealed class WindowsWorkerProcessLauncher : IWorkerProcessLauncher
 
     private static void ThrowIfOutputBudgetExceeded(
         WorkerProcessLaunchRequest request,
-        IReadOnlyDictionary<string, long> stagingBaseline)
+        IReadOnlyDictionary<string, long> stagingBaseline,
+        string writableDirectory)
     {
-        IReadOnlyDictionary<string, long> current =
-            CaptureFileLengths(request.FileSystemScope.WritableDirectory);
+        IReadOnlyDictionary<string, long> current = CaptureFileLengths(writableDirectory);
         long growth = 0;
         foreach ((string path, long currentLength) in current)
         {
@@ -318,7 +379,6 @@ public sealed class WindowsWorkerProcessLauncher : IWorkerProcessLauncher
         }
         catch (Win32Exception)
         {
-            // JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE remains the fail-closed backstop.
         }
         finally
         {
@@ -327,13 +387,13 @@ public sealed class WindowsWorkerProcessLauncher : IWorkerProcessLauncher
     }
 
     private static void DisposeIsolation(
-        WindowsAclGrant? stagingGrant,
+        WindowsAclGrant? scopeGrant,
         WindowsAclGrant? applicationGrant,
         WindowsAppContainerProfile? appContainer)
     {
         try
         {
-            stagingGrant?.Dispose();
+            scopeGrant?.Dispose();
         }
         finally
         {
@@ -355,6 +415,9 @@ public sealed class WindowsWorkerProcessLauncher : IWorkerProcessLauncher
             await Task.WhenAll(drains).ConfigureAwait(false);
         }
         catch (IOException)
+        {
+        }
+        catch (DecoderFallbackException)
         {
         }
         catch (ObjectDisposedException)
