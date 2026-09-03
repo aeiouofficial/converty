@@ -30,6 +30,23 @@ if (args.Length == 2 && string.Equals(args[0], "--spawn-child-and-exit", StringC
     return 0;
 }
 
+if (args.Length == 2 && string.Equals(args[0], "--read-file", StringComparison.Ordinal))
+{
+    try
+    {
+        _ = File.ReadAllBytes(Path.GetFullPath(args[1]));
+        return 0;
+    }
+    catch (UnauthorizedAccessException)
+    {
+        return 13;
+    }
+    catch (IOException)
+    {
+        return 13;
+    }
+}
+
 if (args.Length == 2 && string.Equals(args[0], "--write-file", StringComparison.Ordinal))
 {
     try
@@ -45,6 +62,36 @@ if (args.Length == 2 && string.Equals(args[0], "--write-file", StringComparison.
     {
         return 13;
     }
+}
+
+if (args.Length == 2 && string.Equals(args[0], "--stdout-bytes", StringComparison.Ordinal))
+{
+    long requestedBytes = long.Parse(args[1], NumberStyles.None, CultureInfo.InvariantCulture);
+    await WriteStdoutBytesAsync(requestedBytes).ConfigureAwait(false);
+    return 0;
+}
+
+if (args.Length == 3 && string.Equals(args[0], "--stdout-bytes-spawn-child-and-hold", StringComparison.Ordinal))
+{
+    long requestedBytes = long.Parse(args[1], NumberStyles.None, CultureInfo.InvariantCulture);
+    string childPidPath = Path.GetFullPath(args[2]);
+    string executablePath = Environment.ProcessPath ??
+        throw new InvalidOperationException("Canary process path is unavailable.");
+
+    var startInfo = new ProcessStartInfo
+    {
+        FileName = executablePath,
+        UseShellExecute = false,
+        CreateNoWindow = true,
+    };
+    startInfo.ArgumentList.Add("--hold");
+
+    using Process child = Process.Start(startInfo) ??
+        throw new InvalidOperationException("Canary child process could not be started.");
+    File.WriteAllText(childPidPath, child.Id.ToString(CultureInfo.InvariantCulture));
+    await WriteStdoutBytesAsync(requestedBytes).ConfigureAwait(false);
+    await Task.Delay(TimeSpan.FromMinutes(2)).ConfigureAwait(false);
+    return 0;
 }
 
 if (args.Length == 3 &&
@@ -105,3 +152,18 @@ if (args.Length == 2 && string.Equals(args[0], "--connect-loopback", StringCompa
 
 Console.Error.WriteLine("Unsupported Converty worker canary mode.");
 return 64;
+
+static async Task WriteStdoutBytesAsync(long requestedBytes)
+{
+    byte[] buffer = new byte[4096];
+    Array.Fill(buffer, (byte)'x');
+    await using Stream output = Console.OpenStandardOutput();
+    long written = 0;
+    while (written < requestedBytes)
+    {
+        int count = checked((int)Math.Min(buffer.Length, requestedBytes - written));
+        await output.WriteAsync(buffer.AsMemory(0, count)).ConfigureAwait(false);
+        await output.FlushAsync().ConfigureAwait(false);
+        written += count;
+    }
+}
