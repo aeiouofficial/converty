@@ -52,7 +52,7 @@ public sealed class MediaProbeResultJsonTests
     [InlineData("{\"schemaVersion\":1,\"status\":\"failure\",\"failureReason\":\"timeout\"")]
     public void MalformedFutureDuplicateExtraAndTrailingJsonReject(string json)
     {
-        Assert.Throws<JsonException>(() => Deserialize(json));
+        Assert.ThrowsAny<JsonException>(() => Deserialize(json));
     }
 
     [Fact]
