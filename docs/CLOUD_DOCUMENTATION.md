@@ -1,8 +1,8 @@
 # Converty Cloud Documentation Map
 
-Last reconciled: 2026-09-02.
+Last reconciled: 2026-09-04.
 
-This file is a **metadata-only continuation/routing map**. It does not replace GitHub as code/release authority and must never be substituted for the frozen `main` tree.
+This file is a **metadata-only continuation/routing map**. It does not replace GitHub as code/release authority and must never be substituted for the frozen `main` tree or the active engineering branch.
 
 ## Authority order
 
@@ -26,17 +26,22 @@ This file is a **metadata-only continuation/routing map**. It does not replace G
 - Video: `27/27` real packaged conversions + ffprobe + repeated malformed/truncated + twice-run mixed-batch PASS
 - Audio 36-case and Image 24-case regressions: PASS
 - Workspace SHA-256: `743c375cff7d854e0d63ea184f2423cc49ff9a7dca552442670c2b4322c5c805`
-- Workspace bytes: `506224`
-- Workspace ZIP entries: `384`
-- Package-manifest entries: `382`
-- SHA256SUMS entries: `383`
 - Exact-main generated-authority artifact: `9862733877`
-- Generated-authority digest: `sha256:dc7e8e8e9c220d9acad96a9a3c5bb0fc1e18555fb18cf02ec80e0ca0e399f627`
 - Exact-main verified-delivery artifact: `9862843977`
-- Verified-delivery digest: `sha256:1ab1a6b8127a5e1cf56dd44f1c9547a8d46293bdc3a2aa0aee911e3137386a11`
-- Independent generated-authority/delivery verification: CRC, exact members, root/version, 382 package hashes, 383 SHA hashes and exclusion policy PASS; zero violations.
 
 Historical dev.19 authority remains provenance only: `eb0ce66dab646427d5bef1548c12e5cc4765b2f1`, tree `337a4e11fb41bab6b6eeb462c3755381580f06c1`, run `33597504612`.
+
+## Current dev.21 engineering authority
+
+- Branch: `dev/0.1.0-dev.21`
+- Head: `8b84276af7f2353fc11b64fc3f4d649bcd06e522`
+- Tree: `d60103bc2a30d4678796bb9e6276cfe0946b2b52`
+- Approved design spec commit: `d80cc33a2e7c38738f113856e95f1451fd2df1b0`
+- Implementation plan commit: `e54061368b476184a89dcadb1d6b8a8f6fb6cf68`
+- Final Task-4 development run: `33815328422`
+- Task-4 verified outcomes: build 0 warnings/0 errors; `292/292` managed; `106/106` static; `5/5` vectors; packaged ProbeWorker/fixed ffprobe acceptance PASS; Audio 36, Image 24 and Video 27 plus repeated negative/mixed regressions PASS.
+- Overall dev-branch CI remains intentionally RED only at development-branch main continuity and stale tracked generated-authority/workspace verification gates.
+- No dev.21 generated authority was promoted; no verified dev.21 delivery/freeze/release authority exists.
 
 ## Slack live documentation
 
@@ -48,7 +53,9 @@ Historical dev.19 authority remains provenance only: `eb0ce66dab646427d5bef1548c
 - `#handover-open-converty` — `C0BUM8J0ZEG`
   - Handover #1 — TS `1788367585.736179` — `PROCESSED`
   - Handover #2 — TS `1788368822.626919` — `PROCESSED`
-  - ACTIVE HANDOVER #3 — TS `1788376926.580049` — `OPEN`
+  - Handover #3 — TS `1788376926.580049` — `PROCESSED`
+  - Handover #4 — TS `1788420595.825169` — `PROCESSED`
+  - ACTIVE HANDOVER #5 — TS `1788476701.021959` — `OPEN`
   - exactly one OPEN handover is allowed
 - `#pre-devlog-converty` — `C0BV6HDMVDW`
 
@@ -79,29 +86,35 @@ Fixed live Docs — update in place, never create competing current-state copies
 - Recursive Handover: `1HVfL2KV6LZbpl0fc4Je1dzqLs3ya9q9Onjb3YbFF9L8`
 - Release & Test Evidence: `1LizDehSMDnBfihXnntX9z13QNai87zzMwlkzPptkcB0`
 
-## Current next tranche — ACTIVE HANDOVER #3
+## Current next tranche — ACTIVE HANDOVER #5
 
-`0.1.0-dev.21 — B8 Video Copy/Remux/Transcode Planner`.
+`0.1.0-dev.21 — B8 Video Copy/Remux/Transcode Planner` remains the active engineering tranche.
 
-The precise next executable block is **Superpowers design / decision-model work before production code**:
+Tasks 1–4 are verified. The precise next executable block is **Task 5 RED/GREEN — provider-only FFmpeg token ownership**:
 
-1. Fresh-read exact frozen dev.20 `main` and current Video/probe/provider/domain/contracts/tests.
-2. Compare bounded planner approaches and recommend one.
-3. Define typed auditable execution mode `Copy | Remux | Transcode` and exact compatibility decision table from authoritative probe/capability facts.
-4. Define deterministic conservative behavior for unknown/ambiguous/incompatible input.
-5. Define compatibility pixel-format/audio defaults and explicit subtitle/HDR/metadata/non-primary-stream policy.
-6. Keep Host/Bridge media/process neutral; provider translates typed plan only to fixed known engine tokens; no raw FFmpeg argument pass-through.
-7. Preserve strict disposable worker isolation, fixed app-local engine, private staging, transactional numbered no-overwrite publication and all Audio/Image/dev.20 Video gates.
-8. Hardware acceleration remains disabled/out of scope.
-9. Produce RED acceptance matrix and implementation file map.
-10. Obtain design approval before production behavior changes.
-11. After approval only, create `dev/0.1.0-dev.21` from exact frozen dev.20 `main`, write the detailed implementation plan and execute RED -> GREEN TDD.
+1. Start with RED unit/static tests.
+2. Remove Core-owned FFmpeg syntax/token policy from `ProductPresetDefinition` / `ProductPresetRegistry`; Core retains product/menu/source-extension/output semantics only.
+3. Add closed `providers/Converty.Provider.FFmpeg/FfmpegPresetCompiler.cs`.
+4. Compiler accepts only exact supported `(PresetId, ConversionMode)` tuples and returns immutable known token vectors.
+5. Unsupported tuples reject before process start; no caller-provided arbitrary engine-token surface exists.
+6. Provider owns explicit stream mapping, file-only protocol posture, metadata/chapter stripping and fixed codec/pixel/audio profiles.
+7. Hardware acceleration remains disabled.
+8. Preserve complete existing Audio/Image/Video advertised behavior and security regressions.
+9. Do not synchronize generated authority or claim dev.21 release/freeze during Task 5.
+
+After Task 5: deterministic `VideoPlanningPolicy` → mode-aware EngineWorker + managed byte-exact Copy/SHA equality → stage/probe/plan/execute/post-probe `TargetMediaContract`/publish → real child containment/network/filesystem canaries → runtime engine digest binding → guarded generated-authority stabilization → remaining production release/headed/signing gates.
+
+## Architecture / security invariants
+
+`IExplorerCommand DLL -> fixed app-local Bridge -> private staging -> strict disposable read-only ProbeWorker/fixed ffprobe -> typed bounded facts -> Core VideoPlanningPolicy/existing ConversionMode -> strict EngineWorker -> managed Copy OR provider-owned fixed Remux/Transcode tokens -> fixed app-local FFmpeg -> private staged output -> strict post-probe TargetMediaContract -> transactional numbered no-overwrite publication.`
+
+Never widen to shell command construction, raw FFmpeg argument pass-through, PATH/CWD binary lookup, arbitrary converter/plugin discovery, ordinary conversion network dependency, silent Strict-to-Compatibility fallback, hardware acceleration or repository signing private keys.
 
 ## Still open before customer launch
 
-- dev.21 B8 planner/compatibility
+- remaining dev.21 B8 planner/execution/post-validation/security hardening
 - UX/settings
-- Plugin SDK
+- Plugin SDK under a separate trust architecture
 - production FFmpeg/ffprobe provenance/signature/hash/license/notices/redistribution approval
 - production signed-package B2 identity/authentication requalification
 - signed production MSIX clean-Windows-11 lifecycle
@@ -114,7 +127,7 @@ Converty is **not customer ship-ready**.
 
 For `weiter`, `continue`, `start current documented handover` or equivalent:
 
-1. Read the single current OPEN Slack handover — currently #3 TS `1788376926.580049`.
+1. Read the single current OPEN Slack handover — currently #5 TS `1788476701.021959`.
 2. Fresh-read GitHub refs/CI and reconcile Drive/Slack against GitHub authority.
 3. Execute the documented next task under Superpowers/TDD/security/review/evidence gates rather than re-planning approved work.
 4. Verify the completed material block.
