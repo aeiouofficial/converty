@@ -134,13 +134,13 @@ public sealed class MediaProbeFactsTests
         Type resultType = RequireType(contracts, "MediaProbeResultV1");
         Assert.Equal(1, ReadConstant<int>(resultType, "SchemaVersion"));
 
-        MethodInfo successMethod = Assert.Single(resultType.GetMethods(BindingFlags.Public | BindingFlags.Static).Where(method => method.Name == "Success"));
+        MethodInfo successMethod = Assert.Single(resultType.GetMethods(BindingFlags.Public | BindingFlags.Static), method => method.Name == "Success");
         object success = successMethod.Invoke(null, new[] { facts })!;
         Assert.Equal("Success", ReadProperty<object>(success, "Status").ToString());
         Assert.Same(facts, ReadProperty<object>(success, "Facts"));
         Assert.Equal("None", ReadProperty<object>(success, "FailureReason").ToString());
 
-        MethodInfo failureMethod = Assert.Single(resultType.GetMethods(BindingFlags.Public | BindingFlags.Static).Where(method => method.Name == "Failure"));
+        MethodInfo failureMethod = Assert.Single(resultType.GetMethods(BindingFlags.Public | BindingFlags.Static), method => method.Name == "Failure");
         Type reasonType = RequireType(contracts, "MediaProbeFailureReason");
         object timeout = EnumValue(reasonType, "Timeout");
         object failure = failureMethod.Invoke(null, new[] { timeout })!;
