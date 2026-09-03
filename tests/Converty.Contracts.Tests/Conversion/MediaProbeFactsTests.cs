@@ -67,8 +67,8 @@ public sealed class MediaProbeFactsTests
         object video = CreateStream(contracts, index: 0);
         Assert.Equal(0, ReadProperty<int>(video, "Index"));
         Assert.Equal("Video", ReadProperty<object>(video, "Kind").ToString());
-        Assert.Equal(1920, ReadProperty<int?>(video, "Width"));
-        Assert.Equal(1080, ReadProperty<int?>(video, "Height"));
+        Assert.Equal(1920, ReadNullableIntProperty(video, "Width"));
+        Assert.Equal(1080, ReadNullableIntProperty(video, "Height"));
 
         AssertInvocationThrows<ArgumentOutOfRangeException>(() => CreateStream(contracts, index: 1024));
         AssertInvocationThrows<ArgumentOutOfRangeException>(() => CreateStream(contracts, width: 32769));
@@ -244,6 +244,14 @@ public sealed class MediaProbeFactsTests
             return default!;
         }
         return Assert.IsAssignableFrom<T>(value);
+    }
+
+    private static int? ReadNullableIntProperty(object instance, string name)
+    {
+        PropertyInfo? property = instance.GetType().GetProperty(name, BindingFlags.Public | BindingFlags.Instance);
+        Assert.NotNull(property);
+        object? value = property!.GetValue(instance);
+        return value is null ? null : Convert.ToInt32(value, System.Globalization.CultureInfo.InvariantCulture);
     }
 
     private static TException AssertInvocationThrows<TException>(Action action)
