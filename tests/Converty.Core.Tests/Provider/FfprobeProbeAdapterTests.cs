@@ -156,7 +156,7 @@ public sealed class FfprobeProbeAdapterTests : IDisposable
         string input = Path.Combine(_root, "input.webm");
         File.WriteAllBytes(input, [0x00]);
 
-        Assert.Throws<JsonException>(() => FfprobeJsonAdapter.Parse(input, "{\"streams\":["));
+        Assert.ThrowsAny<JsonException>(() => FfprobeJsonAdapter.Parse(input, "{\"streams\":["));
     }
 
     public void Dispose()

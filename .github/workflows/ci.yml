@@ -112,8 +112,11 @@ jobs:
       - name: Validate Explorer development package
         shell: pwsh
         run: |
-          ./build/stage-dev-package.ps1 -Configuration Release -FfmpegPath ./artifacts/dev-ffmpeg/ffmpeg.exe
+          ./build/stage-dev-package.ps1 -Configuration Release -FfmpegPath ./artifacts/dev-ffmpeg/ffmpeg.exe -FfprobePath ./artifacts/dev-ffmpeg/ffprobe.exe
           ./build/validate-dev-package.ps1
+      - name: Probe worker packaged ffprobe acceptance
+        shell: pwsh
+        run: ./build/probe-worker-smoke.ps1
       - name: Explorer package COM registration smoke
         shell: pwsh
         run: ./build/explorer-registration-smoke.ps1
