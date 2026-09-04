@@ -1,3 +1,4 @@
+using System.Reflection;
 using Converty.Contracts.Identifiers;
 using Converty.Core.Presets;
 
@@ -31,52 +32,45 @@ public sealed class ProductPresetRegistryTests
         }
     }
 
-    [Fact]
-    public void VideoMp4PresetUsesExactDev20EncodingContract()
+    [Theory]
+    [InlineData("video.mp4.h264", "Convert to MP4", "Video", ProductMediaKind.Video, ".mp4")]
+    [InlineData("video.webm.vp9", "Convert to WebM", "Video", ProductMediaKind.Video, ".webm")]
+    [InlineData("extract.audio.mp3", "Extract Audio to MP3", "Extract Audio", ProductMediaKind.Video, ".mp3")]
+    [InlineData("audio.mp3", "Convert to MP3", "Audio", ProductMediaKind.Audio, ".mp3")]
+    [InlineData("audio.flac", "Convert to FLAC", "Audio", ProductMediaKind.Audio, ".flac")]
+    [InlineData("audio.m4a.aac", "Convert to M4A (AAC)", "Audio", ProductMediaKind.Audio, ".m4a")]
+    [InlineData("audio.opus", "Convert to Opus", "Audio", ProductMediaKind.Audio, ".opus")]
+    [InlineData("audio.ogg.vorbis", "Convert to Ogg Vorbis", "Audio", ProductMediaKind.Audio, ".ogg")]
+    [InlineData("audio.wav", "Convert to WAV", "Audio", ProductMediaKind.Audio, ".wav")]
+    [InlineData("image.png", "Convert to PNG", "Image", ProductMediaKind.Image, ".png")]
+    [InlineData("image.jpeg", "Convert to JPEG", "Image", ProductMediaKind.Image, ".jpg")]
+    [InlineData("image.webp", "Convert to WebP", "Image", ProductMediaKind.Image, ".webp")]
+    public void RegistryRetainsOnlyAdvertisedProductSemantics(
+        string id,
+        string displayName,
+        string menuGroup,
+        ProductMediaKind inputKind,
+        string outputExtension)
     {
-        ProductPresetDefinition preset = ProductPresetRegistry.Default.GetRequired(PresetId.Parse("video.mp4.h264"));
+        ProductPresetDefinition preset = ProductPresetRegistry.Default.GetRequired(PresetId.Parse(id));
 
-        Assert.Equal(".mp4", preset.OutputExtension);
-        Assert.Equal(
-            ["-map", "0:v:0?", "-map", "0:a:0?", "-c:v", "libx264", "-preset", "medium", "-crf", "23", "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart"],
-            preset.FfmpegArgumentsAfterInput);
+        Assert.Equal(displayName, preset.DisplayName);
+        Assert.Equal(menuGroup, preset.MenuGroup);
+        Assert.Equal(inputKind, preset.InputKind);
+        Assert.Equal(outputExtension, preset.OutputExtension);
     }
 
     [Fact]
-    public void VideoWebmPresetUsesExactDev20EncodingContract()
+    public void ProductPresetDefinitionExposesNoFfmpegExecutionSurface()
     {
-        ProductPresetDefinition preset = ProductPresetRegistry.Default.GetRequired(PresetId.Parse("video.webm.vp9"));
+        string[] publicMemberNames = typeof(ProductPresetDefinition)
+            .GetMembers(BindingFlags.Instance | BindingFlags.Public)
+            .Select(member => member.Name)
+            .ToArray();
 
-        Assert.Equal(".webm", preset.OutputExtension);
-        Assert.Equal(
-            ["-map", "0:v:0?", "-map", "0:a:0?", "-c:v", "libvpx-vp9", "-crf", "32", "-b:v", "0", "-c:a", "libopus", "-b:a", "128k"],
-            preset.FfmpegArgumentsAfterInput);
-    }
-
-    [Fact]
-    public void ExtractAudioMp3PresetUsesExactDev20EncodingContract()
-    {
-        ProductPresetDefinition preset = ProductPresetRegistry.Default.GetRequired(PresetId.Parse("extract.audio.mp3"));
-
-        Assert.Equal(".mp3", preset.OutputExtension);
-        Assert.Equal(
-            ["-vn", "-c:a", "libmp3lame", "-b:a", "192k"],
-            preset.FfmpegArgumentsAfterInput);
-    }
-
-    [Fact]
-    public void VideoFfmpegArgumentsKeepUnicodeAndMetacharacterPathsAsIndependentTokens()
-    {
-        ProductPresetDefinition preset = ProductPresetRegistry.Default.GetRequired(PresetId.Parse("video.mp4.h264"));
-        const string input = @"C:\Media\Hör clip & semi; -dash [x].mov";
-        const string output = @"C:\Media\Hör clip & semi; -dash [x].mp4";
-
-        IReadOnlyList<string> arguments = preset.BuildFfmpegArguments(input, output);
-
-        Assert.Equal(1, arguments.Count(argument => argument == input));
-        Assert.Equal(1, arguments.Count(argument => argument == output));
-        Assert.DoesNotContain(arguments, argument => argument.Contains("cmd.exe", StringComparison.OrdinalIgnoreCase));
-        Assert.DoesNotContain(arguments, argument => argument.Contains("powershell", StringComparison.OrdinalIgnoreCase));
+        Assert.DoesNotContain("FfmpegArgumentsAfterInput", publicMemberNames);
+        Assert.DoesNotContain("BuildFfmpegArguments", publicMemberNames);
+        Assert.DoesNotContain(publicMemberNames, name => name.Contains("Ffmpeg", StringComparison.OrdinalIgnoreCase));
     }
 
     [Fact]
@@ -114,69 +108,6 @@ public sealed class ProductPresetRegistryTests
     public void UnsupportedExtensionHasNoPreset()
     {
         Assert.Empty(ProductPresetRegistry.Default.GetApplicable([Path.Combine("work", "notes.txt")]));
-    }
-
-    [Fact]
-    public void AudioMp3PresetUsesThe320kProductMvpBitrate()
-    {
-        ProductPresetDefinition preset = ProductPresetRegistry.Default.GetRequired(PresetId.Parse("audio.mp3"));
-
-        Assert.Contains("libmp3lame", preset.FfmpegArgumentsAfterInput);
-        Assert.Contains("320k", preset.FfmpegArgumentsAfterInput);
-        Assert.DoesNotContain("192k", preset.FfmpegArgumentsAfterInput);
-    }
-
-    [Fact]
-    public void AudioM4aAacPresetIsFixedAt256k()
-    {
-        ProductPresetDefinition preset = ProductPresetRegistry.Default.GetRequired(PresetId.Parse("audio.m4a.aac"));
-
-        Assert.Equal("Convert to M4A (AAC)", preset.DisplayName);
-        Assert.Equal(".m4a", preset.OutputExtension);
-        Assert.Equal(
-            ["-vn", "-c:a", "aac", "-b:a", "256k", "-movflags", "+faststart"],
-            preset.FfmpegArgumentsAfterInput);
-    }
-
-    [Fact]
-    public void AudioOpusPresetUsesFixedMusicEncodingParameters()
-    {
-        ProductPresetDefinition preset = ProductPresetRegistry.Default.GetRequired(PresetId.Parse("audio.opus"));
-
-        Assert.Equal("Convert to Opus", preset.DisplayName);
-        Assert.Equal(".opus", preset.OutputExtension);
-        Assert.Equal(
-            ["-vn", "-c:a", "libopus", "-b:a", "192k", "-vbr", "on", "-application", "audio"],
-            preset.FfmpegArgumentsAfterInput);
-    }
-
-    [Fact]
-    public void AudioOggVorbisPresetUsesFixedQualityParameters()
-    {
-        ProductPresetDefinition preset = ProductPresetRegistry.Default.GetRequired(PresetId.Parse("audio.ogg.vorbis"));
-
-        Assert.Equal("Convert to Ogg Vorbis", preset.DisplayName);
-        Assert.Equal(".ogg", preset.OutputExtension);
-        Assert.Equal(
-            ["-vn", "-c:a", "libvorbis", "-q:a", "6"],
-            preset.FfmpegArgumentsAfterInput);
-    }
-
-    [Fact]
-    public void FfmpegArgumentsKeepPathsAsIndependentTokens()
-    {
-        ProductPresetDefinition preset = ProductPresetRegistry.Default.GetRequired(PresetId.Parse("audio.mp3"));
-        const string input = @"C:\Media\track & echo injected; [x] -name.wav";
-        const string output = @"C:\Media\track & echo injected; [x] -name.mp3";
-
-        IReadOnlyList<string> arguments = preset.BuildFfmpegArguments(input, output);
-
-        Assert.Contains(input, arguments);
-        Assert.Contains(output, arguments);
-        Assert.Equal(1, arguments.Count(argument => argument == input));
-        Assert.Equal(1, arguments.Count(argument => argument == output));
-        Assert.DoesNotContain(arguments, argument => argument.Contains("cmd.exe", StringComparison.OrdinalIgnoreCase));
-        Assert.DoesNotContain(arguments, argument => argument.Contains("powershell", StringComparison.OrdinalIgnoreCase));
     }
 
     [Fact]
