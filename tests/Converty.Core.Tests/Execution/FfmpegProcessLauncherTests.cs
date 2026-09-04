@@ -7,7 +7,7 @@ namespace Converty.Provider.FFmpeg.Tests;
 public sealed class FfmpegProcessLauncherTests
 {
     [Fact]
-    public void CreateStartInfoUsesTrustedExecutableAndStructuredArguments()
+    public void CreateStartInfoUsesTrustedExecutableStructuredArgumentsAndFileOnlyProtocol()
     {
         ProductPresetDefinition preset = ProductPresetRegistry.Default.GetRequired(PresetId.Parse("video.mp4.h264"));
         const string ffmpeg = @"C:\Program Files\Converty\tools\ffmpeg\ffmpeg.exe";
@@ -22,8 +22,12 @@ public sealed class FfmpegProcessLauncherTests
         Assert.True(startInfo.RedirectStandardError);
         Assert.True(startInfo.RedirectStandardOutput);
         Assert.Empty(startInfo.Arguments);
-        Assert.Contains(input, startInfo.ArgumentList);
-        Assert.Contains(output, startInfo.ArgumentList);
+        Assert.Equal(1, startInfo.ArgumentList.Count(argument => argument == input));
+        Assert.Equal(1, startInfo.ArgumentList.Count(argument => argument == output));
+        int protocolIndex = startInfo.ArgumentList.IndexOf("-protocol_whitelist");
+        Assert.True(protocolIndex >= 0);
+        Assert.Equal("file", startInfo.ArgumentList[protocolIndex + 1]);
+        Assert.DoesNotContain("file,pipe", startInfo.ArgumentList);
         Assert.Equal(Path.GetDirectoryName(ffmpeg), startInfo.WorkingDirectory);
     }
 

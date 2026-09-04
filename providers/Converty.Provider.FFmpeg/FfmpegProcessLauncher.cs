@@ -37,6 +37,10 @@ public static class FfmpegProcessLauncher
             throw new ArgumentException("Trusted FFmpeg path must have a parent directory.", nameof(ffmpegPath));
         }
 
+        FfmpegCompiledPreset compiled = FfmpegPresetCompiler.Compile(
+            preset.Id,
+            FfmpegPresetCompiler.ResolveCurrentProductMode(preset.Id));
+
         var startInfo = new ProcessStartInfo
         {
             FileName = ffmpegPath,
@@ -47,10 +51,16 @@ public static class FfmpegProcessLauncher
             WorkingDirectory = workingDirectory,
         };
 
-        foreach (string argument in preset.BuildFfmpegArguments(inputPath, outputPath))
+        foreach (string argument in compiled.InputPrefixTokens)
         {
             startInfo.ArgumentList.Add(argument);
         }
+        startInfo.ArgumentList.Add(inputPath);
+        foreach (string argument in compiled.OutputSuffixTokens)
+        {
+            startInfo.ArgumentList.Add(argument);
+        }
+        startInfo.ArgumentList.Add(outputPath);
 
         return startInfo;
     }

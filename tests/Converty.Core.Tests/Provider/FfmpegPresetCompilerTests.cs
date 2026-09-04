@@ -120,7 +120,7 @@ public sealed class FfmpegPresetCompilerTests
         Assert.Throws<NotSupportedException>(() => prefix.Add("-hwaccel"));
         Assert.Throws<NotSupportedException>(() => suffix.Add("cuda"));
 
-        string allTokens = string.Join('\n', compiled.InputPrefixTokens.Concat(compiled.OutputSuffixTokens)).ToLowerInvariant();
+        string allTokens = string.Join("\n", compiled.InputPrefixTokens.Concat(compiled.OutputSuffixTokens)).ToLowerInvariant();
         foreach (string forbidden in new[] { "-hwaccel", "nvenc", "cuda", "qsv", "d3d11va", "videotoolbox", "amf" })
         {
             Assert.DoesNotContain(forbidden, allTokens, StringComparison.Ordinal);
