@@ -34,14 +34,16 @@ Historical dev.19 authority remains provenance only: `eb0ce66dab646427d5bef1548c
 ## Current dev.21 engineering authority
 
 - Branch: `dev/0.1.0-dev.21`
-- Head: `8b84276af7f2353fc11b64fc3f4d649bcd06e522`
-- Tree: `d60103bc2a30d4678796bb9e6276cfe0946b2b52`
+- Head: `4ec11f4557d141d06568a315fec7641426607f2c`
+- Tree: `97f5bac9468d68130eb7c447c2571e5267ee1138`
 - Approved design spec commit: `d80cc33a2e7c38738f113856e95f1451fd2df1b0`
 - Implementation plan commit: `e54061368b476184a89dcadb1d6b8a8f6fb6cf68`
-- Final Task-4 development run: `33815328422`
-- Task-4 verified outcomes: build 0 warnings/0 errors; `292/292` managed; `106/106` static; `5/5` vectors; packaged ProbeWorker/fixed ffprobe acceptance PASS; Audio 36, Image 24 and Video 27 plus repeated negative/mixed regressions PASS.
+- Task-5 RED witness: `4aba44be237b24716051db3a10e725c1a9dfe045`
+- Task-5 GREEN development run: `33861094467`
+- Task-5 verified outcomes: Core presets are engine-neutral; the closed provider compiler exclusively owns exact supported `(PresetId, ConversionMode)` immutable token vectors; unsupported tuples reject pre-process; file-only protocol, explicit Video mapping, metadata/chapter stripping, fixed compatibility profiles and no hardware acceleration are provider policy.
+- Run `33861094467`: static/vector gates PASS; Windows Build, native Explorer, pinned development FFmpeg, package validation, packaged ProbeWorker/ffprobe, COM registration, Product Bridge→FFmpeg, Audio acceptance+mixed isolation, Image acceptance+mixed isolation, Video acceptance+mixed isolation and managed Test step PASS.
 - Overall dev-branch CI remains intentionally RED only at development-branch main continuity and stale tracked generated-authority/workspace verification gates.
-- No dev.21 generated authority was promoted; no verified dev.21 delivery/freeze/release authority exists.
+- No dev.21 generated authority was promoted; delivery was skipped; no verified dev.21 delivery/freeze/release authority exists.
 
 ## Slack live documentation
 
@@ -55,7 +57,8 @@ Historical dev.19 authority remains provenance only: `eb0ce66dab646427d5bef1548c
   - Handover #2 — TS `1788368822.626919` — `PROCESSED`
   - Handover #3 — TS `1788376926.580049` — `PROCESSED`
   - Handover #4 — TS `1788420595.825169` — `PROCESSED`
-  - ACTIVE HANDOVER #5 — TS `1788476701.021959` — `OPEN`
+  - Handover #5 — TS `1788476701.021959` — `PROCESSED`
+  - ACTIVE HANDOVER #6 — TS `1788516603.729439` — `OPEN`
   - exactly one OPEN handover is allowed
 - `#pre-devlog-converty` — `C0BV6HDMVDW`
 
@@ -86,23 +89,24 @@ Fixed live Docs — update in place, never create competing current-state copies
 - Recursive Handover: `1HVfL2KV6LZbpl0fc4Je1dzqLs3ya9q9Onjb3YbFF9L8`
 - Release & Test Evidence: `1LizDehSMDnBfihXnntX9z13QNai87zzMwlkzPptkcB0`
 
-## Current next tranche — ACTIVE HANDOVER #5
+## Current next tranche — ACTIVE HANDOVER #6
 
 `0.1.0-dev.21 — B8 Video Copy/Remux/Transcode Planner` remains the active engineering tranche.
 
-Tasks 1–4 are verified. The precise next executable block is **Task 5 RED/GREEN — provider-only FFmpeg token ownership**:
+Tasks 1–5 are verified. The precise next executable block is **Task 6 RED/GREEN — deterministic VideoPlanningPolicy**:
 
-1. Start with RED unit/static tests.
-2. Remove Core-owned FFmpeg syntax/token policy from `ProductPresetDefinition` / `ProductPresetRegistry`; Core retains product/menu/source-extension/output semantics only.
-3. Add closed `providers/Converty.Provider.FFmpeg/FfmpegPresetCompiler.cs`.
-4. Compiler accepts only exact supported `(PresetId, ConversionMode)` tuples and returns immutable known token vectors.
-5. Unsupported tuples reject before process start; no caller-provided arbitrary engine-token surface exists.
-6. Provider owns explicit stream mapping, file-only protocol posture, metadata/chapter stripping and fixed codec/pixel/audio profiles.
-7. Hardware acceleration remains disabled.
-8. Preserve complete existing Audio/Image/Video advertised behavior and security regressions.
-9. Do not synchronize generated authority or claim dev.21 release/freeze during Task 5.
+1. Start with RED table-driven Core tests.
+2. Create `src/Converty.Core/Planning/VideoExecutionDecision.cs`, `VideoPlanningReasonCode.cs` and `VideoPlanningPolicy.cs`.
+3. Modify `PlanningRequest.cs` and `ConversionPlanner.cs` only as minimally required to delegate Video stream-evidence policy.
+4. Reuse existing `ConversionMode`, `ConversionPlan.Mode`, `CapabilityGraph` and `ConversionPlanner`; do not create a second planner hierarchy.
+5. Require witnesses for MP4 Copy/Remux/Transcode, WebM Copy/Remux/Transcode and extract-MP3 Remux/Transcode.
+6. Require deterministic bounded reason codes.
+7. Reject unknown/unsupported codec/container/required facts, multiple primary A/V streams, subtitle/data/attachment on Video targets, HDR/high-bit-depth, missing extraction audio and unqualified codecs.
+8. Transcode is only allowed when decode capability is explicitly in the qualified allowlist; never use a generic “try FFmpeg and see” fallback.
+9. Preserve complete Tasks 1–5 and dev.20 Audio/Image/Video/security regressions.
+10. Do not synchronize generated authority or claim dev.21 release/freeze during Task 6.
 
-After Task 5: deterministic `VideoPlanningPolicy` → mode-aware EngineWorker + managed byte-exact Copy/SHA equality → stage/probe/plan/execute/post-probe `TargetMediaContract`/publish → real child containment/network/filesystem canaries → runtime engine digest binding → guarded generated-authority stabilization → remaining production release/headed/signing gates.
+After Task 6: mode-aware EngineWorker + managed byte-exact Copy/SHA equality → stage/probe/plan/execute/post-probe `TargetMediaContract`/publish → real child containment/network/filesystem canaries → runtime engine digest binding → guarded generated-authority stabilization → remaining production release/headed/signing gates.
 
 ## Architecture / security invariants
 
@@ -127,7 +131,7 @@ Converty is **not customer ship-ready**.
 
 For `weiter`, `continue`, `start current documented handover` or equivalent:
 
-1. Read the single current OPEN Slack handover — currently #5 TS `1788476701.021959`.
+1. Read the single current OPEN Slack handover — currently #6 TS `1788516603.729439`.
 2. Fresh-read GitHub refs/CI and reconcile Drive/Slack against GitHub authority.
 3. Execute the documented next task under Superpowers/TDD/security/review/evidence gates rather than re-planning approved work.
 4. Verify the completed material block.
