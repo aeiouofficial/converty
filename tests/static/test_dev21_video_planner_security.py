@@ -5,6 +5,9 @@ ROOT = Path(__file__).resolve().parents[2]
 CORE_PRESETS = ROOT / "src" / "Converty.Core" / "Presets"
 COMPILER = ROOT / "providers" / "Converty.Provider.FFmpeg" / "FfmpegPresetCompiler.cs"
 LAUNCHER = ROOT / "providers" / "Converty.Provider.FFmpeg" / "FfmpegProcessLauncher.cs"
+ENGINE_WORKER = ROOT / "src" / "Converty.EngineWorker" / "Program.cs"
+ENGINE_WORKER_CLIENT = ROOT / "src" / "Converty.Bridge" / "Workers" / "EngineWorkerClient.cs"
+MANAGED_COPY = ROOT / "src" / "Converty.Core" / "Execution" / "ManagedByteCopy.cs"
 
 
 def _text(path: Path) -> str:
@@ -67,10 +70,41 @@ def test_provider_compiler_is_closed_and_owns_ffmpeg_policy() -> None:
         assert forbidden not in lowered, f"hardware acceleration token is forbidden: {forbidden}"
 
 
-def test_launcher_consumes_compiler_without_raw_argument_surface() -> None:
+def test_launcher_consumes_explicit_mode_without_raw_argument_surface() -> None:
     launcher = _text(LAUNCHER)
     assert "FfmpegPresetCompiler.Compile" in launcher
+    assert "ConversionMode mode" in launcher
+    assert "ResolveCurrentProductMode" not in launcher
     assert "BuildFfmpegArguments" not in launcher
     assert "FfmpegArgumentsAfterInput" not in launcher
     assert "ArgumentList.Add" in launcher
     assert "file,pipe" not in launcher
+
+
+def test_engine_worker_surface_requires_mode_and_copy_bypasses_ffmpeg() -> None:
+    worker = _text(ENGINE_WORKER)
+    client = _text(ENGINE_WORKER_CLIENT)
+
+    assert "args.Length != 8" in worker
+    for token in ('"--preset"', '"--mode"', '"--input"', '"--output"'):
+        assert token in worker
+        assert token in client
+    assert "ConversionModeArgument.Parse" in worker
+    assert "ManagedByteCopy.CopyAndVerifyAsync" in worker
+    assert "ConversionModeArgument.Format" in client
+
+    copy_dispatch = worker.index("request.Mode == ConversionMode.Copy")
+    ffmpeg_resolution = worker.index("TrustedFfmpegPath.ResolveFromApplicationBaseDirectory")
+    assert copy_dispatch < ffmpeg_resolution, "Copy must dispatch before any FFmpeg resolution"
+
+
+def test_managed_copy_uses_create_new_and_sha256_equality_verification() -> None:
+    assert MANAGED_COPY.is_file(), "managed byte-copy implementation is missing"
+    copy = _text(MANAGED_COPY)
+    for token in (
+        "FileMode.CreateNew",
+        "CopyToAsync",
+        "SHA256",
+        "CryptographicOperations.FixedTimeEquals",
+    ):
+        assert token in copy, f"managed Copy is missing required byte/hash invariant: {token}"
