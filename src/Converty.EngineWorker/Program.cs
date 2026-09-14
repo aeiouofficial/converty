@@ -138,8 +138,16 @@ internal static class Program
 
     private static void ValidateManagedCopy(WorkerRequest request, ProductPresetDefinition preset)
     {
-        if (preset.Id.Value is not ("video.mp4.h264" or "video.webm.vp9") ||
-            !string.Equals(Path.GetExtension(request.InputPath), preset.OutputExtension, StringComparison.OrdinalIgnoreCase))
+        string inputExtension = Path.GetExtension(request.InputPath);
+        bool supportedCopyInput = preset.Id.Value switch
+        {
+            "video.mp4.h264" => inputExtension.Equals(".mp4", StringComparison.OrdinalIgnoreCase)
+                || inputExtension.Equals(".m4v", StringComparison.OrdinalIgnoreCase),
+            "video.webm.vp9" => inputExtension.Equals(".webm", StringComparison.OrdinalIgnoreCase),
+            _ => false,
+        };
+
+        if (!supportedCopyInput)
         {
             throw new InvalidOperationException("Managed Copy is not valid for the selected preset/input combination.");
         }
