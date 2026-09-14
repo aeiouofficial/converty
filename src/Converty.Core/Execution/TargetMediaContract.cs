@@ -73,6 +73,9 @@ public sealed class TargetMediaContract
             throw new ArgumentOutOfRangeException(nameof(mode), "Video targets require Copy, Remux, or Transcode mode.");
         }
 
+        MediaStreamFactsV1[] videoStreams = sourceFacts.Streams
+            .Where(stream => stream.Kind == MediaStreamKind.Video && !stream.IsAttachedPicture)
+            .ToArray();
         MediaStreamFactsV1[] audioStreams = sourceFacts.Streams
             .Where(stream => stream.Kind == MediaStreamKind.Audio)
             .ToArray();
@@ -90,6 +93,7 @@ public sealed class TargetMediaContract
                 presetId,
                 mode,
                 sourceFacts,
+                RequireSingleSourceVideo(videoStreams),
                 sourceAudio,
                 MediaContainerId.Mp4,
                 MediaCodecId.H264,
@@ -100,6 +104,7 @@ public sealed class TargetMediaContract
                 presetId,
                 mode,
                 sourceFacts,
+                RequireSingleSourceVideo(videoStreams),
                 sourceAudio,
                 MediaContainerId.WebM,
                 MediaCodecId.Vp9,
@@ -111,34 +116,61 @@ public sealed class TargetMediaContract
         };
     }
 
+    private static MediaStreamFactsV1 RequireSingleSourceVideo(MediaStreamFactsV1[] videoStreams)
+    {
+        if (videoStreams.Length != 1)
+        {
+            throw new InvalidOperationException("Video target contract requires exactly one primary source Video stream.");
+        }
+
+        return videoStreams[0];
+    }
+
     private static TargetMediaContract CreateVideoTarget(
         PresetId presetId,
         ConversionMode mode,
         MediaProbeFactsV1 sourceFacts,
+        MediaStreamFactsV1 sourceVideo,
         MediaStreamFactsV1? sourceAudio,
-        MediaContainerId container,
-        MediaCodecId videoCodec,
-        MediaCodecId audioCodec,
+        MediaContainerId transcodeOrRemuxContainer,
+        MediaCodecId transcodeVideoCodec,
+        MediaCodecId transcodeAudioCodec,
         int transcodeAudioSampleRate,
         bool preserveSourceMetadata)
     {
         bool expectsAudio = sourceAudio is not null;
+        bool sourcePreserving = mode == ConversionMode.Copy || mode == ConversionMode.Remux;
+
+        MediaContainerId container = mode == ConversionMode.Copy
+            ? sourceFacts.Container
+            : transcodeOrRemuxContainer;
+        MediaCodecId videoCodec = sourcePreserving ? sourceVideo.Codec : transcodeVideoCodec;
+        MediaPixelFormatId pixelFormat = sourcePreserving ? sourceVideo.PixelFormat : MediaPixelFormatId.Yuv420p;
+        int? bitDepth = sourcePreserving ? sourceVideo.BitDepth : 8;
+        MediaColorTransferId colorTransfer = sourcePreserving
+            ? sourceVideo.ColorTransfer
+            : MediaColorTransferId.Bt709;
+        MediaHdrState hdrState = sourcePreserving ? sourceVideo.HdrState : MediaHdrState.Sdr;
+
+        MediaCodecId audioCodec = MediaCodecId.Unknown;
         int? audioSampleRate = null;
         int? audioChannelCount = null;
         MediaAudioChannelLayoutId audioChannelLayout = MediaAudioChannelLayoutId.Unknown;
-        if (expectsAudio)
+        if (sourceAudio is not null)
         {
-            if (mode == ConversionMode.Transcode)
+            if (sourcePreserving)
             {
-                audioSampleRate = transcodeAudioSampleRate;
-                audioChannelCount = 2;
-                audioChannelLayout = MediaAudioChannelLayoutId.Stereo;
+                audioCodec = sourceAudio.Codec;
+                audioSampleRate = sourceAudio.SampleRate;
+                audioChannelCount = sourceAudio.ChannelCount;
+                audioChannelLayout = sourceAudio.ChannelLayout;
             }
             else
             {
-                audioSampleRate = sourceAudio!.SampleRate;
-                audioChannelCount = sourceAudio.ChannelCount;
-                audioChannelLayout = sourceAudio.ChannelLayout;
+                audioCodec = transcodeAudioCodec;
+                audioSampleRate = transcodeAudioSampleRate;
+                audioChannelCount = 2;
+                audioChannelLayout = MediaAudioChannelLayoutId.Stereo;
             }
         }
 
@@ -148,12 +180,12 @@ public sealed class TargetMediaContract
             container,
             expectsVideo: true,
             videoCodec,
-            MediaPixelFormatId.Yuv420p,
-            videoBitDepth: 8,
-            MediaColorTransferId.Bt709,
-            MediaHdrState.Sdr,
+            pixelFormat,
+            bitDepth,
+            colorTransfer,
+            hdrState,
             expectsAudio,
-            expectsAudio ? audioCodec : MediaCodecId.Unknown,
+            audioCodec,
             audioSampleRate,
             audioChannelCount,
             audioChannelLayout,
@@ -167,16 +199,22 @@ public sealed class TargetMediaContract
         ConversionMode mode,
         MediaStreamFactsV1? sourceAudio)
     {
+        if (mode == ConversionMode.Copy)
+        {
+            throw new InvalidOperationException("Audio extraction does not support Copy mode.");
+        }
         if (sourceAudio is null)
         {
             throw new InvalidOperationException("Audio extraction target requires exactly one source Audio stream.");
         }
 
-        int? sampleRate = mode == ConversionMode.Transcode ? 44100 : sourceAudio.SampleRate;
-        int? channelCount = mode == ConversionMode.Transcode ? 2 : sourceAudio.ChannelCount;
-        MediaAudioChannelLayoutId layout = mode == ConversionMode.Transcode
-            ? MediaAudioChannelLayoutId.Stereo
-            : sourceAudio.ChannelLayout;
+        bool sourcePreserving = mode == ConversionMode.Remux;
+        MediaCodecId codec = sourcePreserving ? sourceAudio.Codec : MediaCodecId.Mp3;
+        int? sampleRate = sourcePreserving ? sourceAudio.SampleRate : 44100;
+        int? channelCount = sourcePreserving ? sourceAudio.ChannelCount : 2;
+        MediaAudioChannelLayoutId layout = sourcePreserving
+            ? sourceAudio.ChannelLayout
+            : MediaAudioChannelLayoutId.Stereo;
 
         return new TargetMediaContract(
             presetId,
@@ -189,7 +227,7 @@ public sealed class TargetMediaContract
             MediaColorTransferId.Unknown,
             MediaHdrState.Unknown,
             expectsAudio: true,
-            MediaCodecId.Mp3,
+            codec,
             sampleRate,
             channelCount,
             layout,
