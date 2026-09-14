@@ -1,3 +1,4 @@
+using Converty.Contracts.Conversion;
 using Converty.Contracts.Identifiers;
 using Converty.Core.Presets;
 using Converty.Provider.FFmpeg;
@@ -14,7 +15,12 @@ public sealed class FfmpegProcessLauncherTests
         const string input = @"C:\Media\odd & name; -x.mov";
         const string output = @"C:\Media\odd & name; -x.mp4";
 
-        System.Diagnostics.ProcessStartInfo startInfo = FfmpegProcessLauncher.CreateStartInfo(ffmpeg, preset, input, output);
+        System.Diagnostics.ProcessStartInfo startInfo = FfmpegProcessLauncher.CreateStartInfo(
+            ffmpeg,
+            preset,
+            ConversionMode.Transcode,
+            input,
+            output);
 
         Assert.Equal(ffmpeg, startInfo.FileName);
         Assert.False(startInfo.UseShellExecute);
@@ -39,7 +45,11 @@ public sealed class FfmpegProcessLauncherTests
         const string output = @"C:\Media\a & whoami | calc.exe ; ' quoted [].flac";
 
         System.Diagnostics.ProcessStartInfo startInfo = FfmpegProcessLauncher.CreateStartInfo(
-            @"C:\Converty\tools\ffmpeg\ffmpeg.exe", preset, input, output);
+            @"C:\Converty\tools\ffmpeg\ffmpeg.exe",
+            preset,
+            ConversionMode.Transform,
+            input,
+            output);
 
         Assert.Contains(input, startInfo.ArgumentList);
         Assert.Contains(output, startInfo.ArgumentList);
@@ -126,6 +136,7 @@ public sealed class FfmpegProcessLauncherTests
         await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => FfmpegProcessLauncher.ExecuteAsync(
             @"C:\Converty\tools\ffmpeg\ffmpeg.exe",
             preset,
+            ConversionMode.Transform,
             @"C:\Media\in.wav",
             @"C:\Media\out.mp3",
             TimeSpan.FromSeconds(seconds),

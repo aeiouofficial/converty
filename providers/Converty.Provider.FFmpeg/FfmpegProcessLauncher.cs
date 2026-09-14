@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using System.Text;
+using Converty.Contracts.Conversion;
 using Converty.Core.Presets;
 
 namespace Converty.Provider.FFmpeg;
@@ -12,6 +13,7 @@ public static class FfmpegProcessLauncher
     public static ProcessStartInfo CreateStartInfo(
         string ffmpegPath,
         ProductPresetDefinition preset,
+        ConversionMode mode,
         string inputPath,
         string outputPath)
     {
@@ -37,9 +39,7 @@ public static class FfmpegProcessLauncher
             throw new ArgumentException("Trusted FFmpeg path must have a parent directory.", nameof(ffmpegPath));
         }
 
-        FfmpegCompiledPreset compiled = FfmpegPresetCompiler.Compile(
-            preset.Id,
-            FfmpegPresetCompiler.ResolveCurrentProductMode(preset.Id));
+        FfmpegCompiledPreset compiled = FfmpegPresetCompiler.Compile(preset.Id, mode);
 
         var startInfo = new ProcessStartInfo
         {
@@ -68,6 +68,7 @@ public static class FfmpegProcessLauncher
     public static async Task<FfmpegExecutionResult> ExecuteAsync(
         string ffmpegPath,
         ProductPresetDefinition preset,
+        ConversionMode mode,
         string inputPath,
         string outputPath,
         TimeSpan timeout,
@@ -76,7 +77,7 @@ public static class FfmpegProcessLauncher
         ValidateTimeout(timeout);
         cancellationToken.ThrowIfCancellationRequested();
 
-        ProcessStartInfo startInfo = CreateStartInfo(ffmpegPath, preset, inputPath, outputPath);
+        ProcessStartInfo startInfo = CreateStartInfo(ffmpegPath, preset, mode, inputPath, outputPath);
         using var process = new Process { StartInfo = startInfo };
         if (!process.Start())
         {

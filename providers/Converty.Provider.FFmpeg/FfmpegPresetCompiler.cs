@@ -140,16 +140,4 @@ public static class FfmpegPresetCompiler
 
         return new FfmpegCompiledPreset(FixedInputPrefix, suffix);
     }
-
-    internal static ConversionMode ResolveCurrentProductMode(PresetId presetId)
-    {
-        ArgumentNullException.ThrowIfNull(presetId);
-        return presetId.Value switch
-        {
-            "video.mp4.h264" or "video.webm.vp9" or "extract.audio.mp3" => ConversionMode.Transcode,
-            "audio.mp3" or "audio.flac" or "audio.m4a.aac" or "audio.opus" or "audio.ogg.vorbis" or "audio.wav" or
-            "image.png" or "image.jpeg" or "image.webp" => ConversionMode.Transform,
-            _ => throw new InvalidOperationException($"Unsupported fixed FFmpeg preset: {presetId.Value}."),
-        };
-    }
 }
