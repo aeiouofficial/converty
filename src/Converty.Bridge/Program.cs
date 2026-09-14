@@ -3,6 +3,7 @@ using Converty.Bridge.Shell;
 using Converty.Bridge.Workers;
 using Converty.Core.Execution;
 using Converty.Core.Output;
+using Converty.Core.Planning;
 using Converty.Core.Presets;
 
 namespace Converty.Bridge;
@@ -27,6 +28,8 @@ internal static class Program
                 ProductPresetRegistry.Default,
                 new OutputPathResolver(),
                 EngineWorkerClient.CreateForApplicationBaseDirectory(),
+                ProbeWorkerClient.CreateForApplicationBaseDirectory(),
+                VideoProductCapabilityCatalog.CreatePlanner(),
                 ConversionBatchRunner.MaximumExecutionTimeout);
             _ = await runner.RunAsync(request.PresetId, request.InputPaths).ConfigureAwait(false);
             return Success;
