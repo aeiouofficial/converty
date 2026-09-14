@@ -13,9 +13,10 @@ public sealed class ConversionModeArgumentTests
     public void ParseAcceptsOnlyCanonicalBoundedValues(string value)
     {
         Type type = GetModeArgumentType();
-        MethodInfo parse = Assert.IsType<MethodInfo>(type.GetMethod("Parse", BindingFlags.Public | BindingFlags.Static));
+        MethodInfo? parse = type.GetMethod("Parse", BindingFlags.Public | BindingFlags.Static);
+        Assert.NotNull(parse);
 
-        object? result = parse.Invoke(null, [value]);
+        object? result = parse!.Invoke(null, [value]);
 
         Assert.Equal(value, result!.ToString()!.ToLowerInvariant());
     }
@@ -32,9 +33,10 @@ public sealed class ConversionModeArgumentTests
     public void ParseRejectsNonCanonicalOrUnboundedValues(string value)
     {
         Type type = GetModeArgumentType();
-        MethodInfo parse = Assert.IsType<MethodInfo>(type.GetMethod("Parse", BindingFlags.Public | BindingFlags.Static));
+        MethodInfo? parse = type.GetMethod("Parse", BindingFlags.Public | BindingFlags.Static);
+        Assert.NotNull(parse);
 
-        TargetInvocationException error = Assert.Throws<TargetInvocationException>(() => parse.Invoke(null, [value]));
+        TargetInvocationException error = Assert.Throws<TargetInvocationException>(() => parse!.Invoke(null, [value]));
 
         Assert.IsAssignableFrom<ArgumentException>(error.InnerException);
     }
