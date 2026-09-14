@@ -171,12 +171,12 @@ $sourceFixtures = @(
     [pscustomobject]@{ Name = 'mp4'; Extension = '.mp4'; EncoderArgs = @('-c:v', 'libx264', '-preset', 'ultrafast', '-crf', '30', '-pix_fmt', 'yuv420p', '-c:a', 'aac', '-b:a', '96k', '-f', 'mp4') },
     [pscustomobject]@{ Name = 'mov'; Extension = '.mov'; EncoderArgs = @('-c:v', 'libx264', '-preset', 'ultrafast', '-crf', '30', '-pix_fmt', 'yuv420p', '-c:a', 'aac', '-b:a', '96k', '-f', 'mov') },
     [pscustomobject]@{ Name = 'mkv'; Extension = '.mkv'; EncoderArgs = @('-c:v', 'libx264', '-preset', 'ultrafast', '-crf', '30', '-pix_fmt', 'yuv420p', '-c:a', 'aac', '-b:a', '96k', '-f', 'matroska') },
-    [pscustomobject]@{ Name = 'avi'; Extension = '.avi'; EncoderArgs = @('-c:v', 'mpeg4', '-q:v', '5', '-pix_fmt', 'yuv420p', '-c:a', 'libmp3lame', '-b:a', '96k', '-f', 'avi') },
+    [pscustomobject]@{ Name = 'avi'; Extension = '.avi'; EncoderArgs = @('-c:v', 'mpeg2video', '-q:v', '5', '-pix_fmt', 'yuv420p', '-c:a', 'libmp3lame', '-b:a', '96k', '-f', 'avi') },
     [pscustomobject]@{ Name = 'webm'; Extension = '.webm'; EncoderArgs = @('-c:v', 'libvpx-vp9', '-crf', '36', '-b:v', '0', '-pix_fmt', 'yuv420p', '-c:a', 'libopus', '-b:a', '64k', '-f', 'webm') },
     [pscustomobject]@{ Name = 'm4v'; Extension = '.m4v'; EncoderArgs = @('-c:v', 'libx264', '-preset', 'ultrafast', '-crf', '30', '-pix_fmt', 'yuv420p', '-c:a', 'aac', '-b:a', '96k', '-f', 'mp4') },
     [pscustomobject]@{ Name = 'mpeg'; Extension = '.mpeg'; EncoderArgs = @('-c:v', 'mpeg2video', '-q:v', '5', '-pix_fmt', 'yuv420p', '-c:a', 'mp2', '-b:a', '128k', '-f', 'mpeg') },
     [pscustomobject]@{ Name = 'mpg'; Extension = '.mpg'; EncoderArgs = @('-c:v', 'mpeg2video', '-q:v', '5', '-pix_fmt', 'yuv420p', '-c:a', 'mp2', '-b:a', '128k', '-f', 'mpeg') },
-    [pscustomobject]@{ Name = 'wmv'; Extension = '.wmv'; EncoderArgs = @('-c:v', 'wmv2', '-b:v', '256k', '-pix_fmt', 'yuv420p', '-c:a', 'wmav2', '-b:a', '96k', '-f', 'asf') }
+    [pscustomobject]@{ Name = 'wmv'; Extension = '.wmv'; EncoderArgs = @('-c:v', 'mpeg2video', '-q:v', '5', '-pix_fmt', 'yuv420p', '-c:a', 'wmav2', '-b:a', '96k', '-f', 'asf') }
 )
 
 foreach ($fixture in $sourceFixtures) {
@@ -186,8 +186,9 @@ foreach ($fixture in $sourceFixtures) {
         '-f', 'lavfi', '-i', 'testsrc2=size=64x48:rate=10',
         '-f', 'lavfi', '-i', 'sine=frequency=440:sample_rate=44100',
         '-map', '0:v:0', '-map', '1:a:0',
+        '-vf', 'setparams=colorspace=bt709:color_primaries=bt709:color_trc=bt709',
         '-t', '0.5', '-shortest'
-    ) + $fixture.EncoderArgs + @('-color_trc', 'bt709', '-y', $fixturePath)
+    ) + $fixture.EncoderArgs + @('-y', $fixturePath)
 
     $result = Invoke-StructuredProcess -FileName $fixtureFfmpeg -WorkingDirectory $fixturesRoot -Arguments $arguments
     if ($result.ExitCode -ne 0 -or -not (Test-Path -LiteralPath $fixturePath) -or (Get-Item -LiteralPath $fixturePath).Length -le 0) {
