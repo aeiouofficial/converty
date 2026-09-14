@@ -123,7 +123,7 @@ function New-VideoFixture {
         '-f', 'lavfi', '-i', 'sine=frequency=440:sample_rate=44100',
         '-map', '0:v:0', '-map', '1:a:0',
         '-t', '0.5', '-shortest'
-    ) + $EncoderArgs + @('-y', $Path)
+    ) + $EncoderArgs + @('-color_trc', 'bt709', '-y', $Path)
 
     $result = Invoke-StructuredProcess -FileName $fixtureFfmpeg -WorkingDirectory $smokeRoot -Arguments $arguments
     if ($result.ExitCode -ne 0 -or -not (Test-Path -LiteralPath $Path) -or (Get-Item -LiteralPath $Path).Length -le 0) {
