@@ -7,7 +7,7 @@ namespace Converty.Core.Planning;
 public static class VideoProductCapabilityCatalog
 {
     public static readonly FileFamilyId VideoFamilyId = FileFamilyId.Parse("video");
-    public static readonly ProviderId FfmpegProviderId = ProviderId.Parse("provider.ffmpeg");
+    public static readonly ProviderId EngineProviderId = ProviderId.Parse("provider.engine");
 
     private static readonly FormatId Mp4 = FormatId.Parse("video.mp4");
     private static readonly FormatId Mov = FormatId.Parse("video.mov");
@@ -50,15 +50,15 @@ public static class VideoProductCapabilityCatalog
     {
         foreach (FormatId source in VideoSources)
         {
-            yield return new CapabilityDescriptor(FfmpegProviderId, source, Mp4, ConversionMode.Remux, 90);
-            yield return new CapabilityDescriptor(FfmpegProviderId, source, Mp4, ConversionMode.Transcode, 80);
-            yield return new CapabilityDescriptor(FfmpegProviderId, source, WebM, ConversionMode.Remux, 90);
-            yield return new CapabilityDescriptor(FfmpegProviderId, source, WebM, ConversionMode.Transcode, 80);
-            yield return new CapabilityDescriptor(FfmpegProviderId, source, Mp3, ConversionMode.Remux, 90);
-            yield return new CapabilityDescriptor(FfmpegProviderId, source, Mp3, ConversionMode.Transcode, 80);
+            yield return new CapabilityDescriptor(EngineProviderId, source, Mp4, ConversionMode.Remux, 90);
+            yield return new CapabilityDescriptor(EngineProviderId, source, Mp4, ConversionMode.Transcode, 80);
+            yield return new CapabilityDescriptor(EngineProviderId, source, WebM, ConversionMode.Remux, 90);
+            yield return new CapabilityDescriptor(EngineProviderId, source, WebM, ConversionMode.Transcode, 80);
+            yield return new CapabilityDescriptor(EngineProviderId, source, Mp3, ConversionMode.Remux, 90);
+            yield return new CapabilityDescriptor(EngineProviderId, source, Mp3, ConversionMode.Transcode, 80);
         }
 
-        yield return new CapabilityDescriptor(FfmpegProviderId, Mp4, Mp4, ConversionMode.Copy, 100);
-        yield return new CapabilityDescriptor(FfmpegProviderId, WebM, WebM, ConversionMode.Copy, 100);
+        yield return new CapabilityDescriptor(EngineProviderId, Mp4, Mp4, ConversionMode.Copy, 100);
+        yield return new CapabilityDescriptor(EngineProviderId, WebM, WebM, ConversionMode.Copy, 100);
     }
 }

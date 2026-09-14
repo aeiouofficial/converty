@@ -163,7 +163,7 @@ public sealed class ConversionBatchRunner
                 Guid.NewGuid(),
                 source,
                 targetFormat,
-                VideoProductCapabilityCatalog.FfmpegProviderId,
+                VideoProductCapabilityCatalog.EngineProviderId,
                 preset.Id,
                 allowIdentity: true));
             targetContract = TargetMediaContract.ForPlan(preset.Id, plan.Mode, inputFacts);
