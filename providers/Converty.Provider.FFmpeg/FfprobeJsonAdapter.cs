@@ -41,7 +41,7 @@ public static class FfprobeJsonAdapter
 
         string? formatName = GetOptionalBoundedString(formatElement, "format_name");
         MediaContainerId container = MapContainer(Path.GetExtension(inputPath), formatName);
-        bool hasGlobalMetadata = HasNonEmptyObject(formatElement, "tags");
+        bool hasGlobalMetadata = HasPolicyRelevantTags(formatElement, "tags", formatScope: true);
         bool hasChapters = chaptersElement.ValueKind == JsonValueKind.Array && chaptersElement.GetArrayLength() > 0;
 
         var mappedStreams = new List<MediaStreamFactsV1>(streamCount);
@@ -80,7 +80,8 @@ public static class FfprobeJsonAdapter
         MediaProfileId profile = MapProfile(profileText);
         bool isDefault = GetDispositionFlag(element, "default");
         bool isAttachedPicture = GetDispositionFlag(element, "attached_pic");
-        hasPolicyRelevantMetadata = HasNonEmptyObject(element, "tags") || HasNonEmptyArray(element, "side_data_list");
+        hasPolicyRelevantMetadata = HasPolicyRelevantTags(element, "tags", formatScope: false)
+            || HasNonEmptyArray(element, "side_data_list");
 
         MediaPixelFormatId pixelFormat = MediaPixelFormatId.Unknown;
         int? bitDepth = null;
@@ -349,10 +350,86 @@ public static class FfprobeJsonAdapter
         return flag == 1;
     }
 
-    private static bool HasNonEmptyObject(JsonElement element, string name) =>
-        element.TryGetProperty(name, out JsonElement value)
-        && value.ValueKind == JsonValueKind.Object
-        && value.EnumerateObject().Any();
+    private static bool HasPolicyRelevantTags(JsonElement element, string name, bool formatScope)
+    {
+        if (!element.TryGetProperty(name, out JsonElement tags) || tags.ValueKind != JsonValueKind.Object)
+        {
+            return false;
+        }
+
+        foreach (JsonProperty tag in tags.EnumerateObject())
+        {
+            if (tag.Value.ValueKind != JsonValueKind.String)
+            {
+                return true;
+            }
+
+            string value = tag.Value.GetString() ?? string.Empty;
+            if (!IsKnownTechnicalTag(tag.Name, value, formatScope))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private static bool IsKnownTechnicalTag(string name, string value, bool formatScope)
+    {
+        if (formatScope)
+        {
+            if (name.Equals("encoder", StringComparison.OrdinalIgnoreCase))
+            {
+                return value.StartsWith("Lavf", StringComparison.OrdinalIgnoreCase);
+            }
+
+            return name.Equals("major_brand", StringComparison.OrdinalIgnoreCase)
+                || name.Equals("minor_version", StringComparison.OrdinalIgnoreCase)
+                || name.Equals("compatible_brands", StringComparison.OrdinalIgnoreCase);
+        }
+
+        if (name.Equals("encoder", StringComparison.OrdinalIgnoreCase))
+        {
+            return value.StartsWith("Lavc", StringComparison.OrdinalIgnoreCase);
+        }
+        if (name.Equals("duration", StringComparison.OrdinalIgnoreCase))
+        {
+            return IsBoundedMuxerDuration(value);
+        }
+        if (name.Equals("language", StringComparison.OrdinalIgnoreCase))
+        {
+            return value.Equals("und", StringComparison.OrdinalIgnoreCase);
+        }
+        if (name.Equals("handler_name", StringComparison.OrdinalIgnoreCase))
+        {
+            return value.Equals("VideoHandler", StringComparison.Ordinal)
+                || value.Equals("SoundHandler", StringComparison.Ordinal);
+        }
+        if (name.Equals("vendor_id", StringComparison.OrdinalIgnoreCase))
+        {
+            return value.Equals("[0][0][0][0]", StringComparison.Ordinal);
+        }
+
+        return false;
+    }
+
+    private static bool IsBoundedMuxerDuration(string value)
+    {
+        if (value.Length is < 5 or > 32 || !value.Contains(':', StringComparison.Ordinal))
+        {
+            return false;
+        }
+
+        foreach (char character in value)
+        {
+            if (!((character >= '0' && character <= '9') || character is ':' or '.' or '-'))
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
 
     private static bool HasNonEmptyArray(JsonElement element, string name) =>
         element.TryGetProperty(name, out JsonElement value)
