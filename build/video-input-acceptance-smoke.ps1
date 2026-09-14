@@ -187,7 +187,7 @@ foreach ($fixture in $sourceFixtures) {
         '-f', 'lavfi', '-i', 'sine=frequency=440:sample_rate=44100',
         '-map', '0:v:0', '-map', '1:a:0',
         '-t', '0.5', '-shortest'
-    ) + $fixture.EncoderArgs + @('-y', $fixturePath)
+    ) + $fixture.EncoderArgs + @('-color_trc', 'bt709', '-y', $fixturePath)
 
     $result = Invoke-StructuredProcess -FileName $fixtureFfmpeg -WorkingDirectory $fixturesRoot -Arguments $arguments
     if ($result.ExitCode -ne 0 -or -not (Test-Path -LiteralPath $fixturePath) -or (Get-Item -LiteralPath $fixturePath).Length -le 0) {
