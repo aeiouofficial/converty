@@ -57,7 +57,7 @@ public sealed class FfmpegPresetCompilerTests
             ["-hide_banner", "-loglevel", "error", "-nostdin", "-n", "-protocol_whitelist", "file", "-i"],
             compiled.InputPrefixTokens);
         Assert.Equal(
-            ["-map", "0:v:0", "-map", "0:a:0?", "-map_metadata", "-1", "-map_chapters", "-1", "-c:v", "libx264", "-preset", "medium", "-crf", "23", "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "192k", "-ar", "48000", "-ac", "2", "-movflags", "+faststart"],
+            ["-map", "0:v:0", "-map", "0:a:0?", "-map_metadata", "-1", "-map_chapters", "-1", "-c:v", "libx264", "-preset", "medium", "-crf", "23", "-pix_fmt", "yuv420p", "-vf", "setparams=colorspace=bt709:color_primaries=bt709:color_trc=bt709", "-c:a", "aac", "-b:a", "192k", "-ar", "48000", "-ac", "2", "-movflags", "+faststart"],
             compiled.OutputSuffixTokens);
     }
 
@@ -69,7 +69,7 @@ public sealed class FfmpegPresetCompilerTests
             ConversionMode.Transcode);
 
         Assert.Equal(
-            ["-map", "0:v:0", "-map", "0:a:0?", "-map_metadata", "-1", "-map_chapters", "-1", "-c:v", "libvpx-vp9", "-crf", "32", "-b:v", "0", "-pix_fmt", "yuv420p", "-c:a", "libopus", "-b:a", "128k", "-ar", "48000", "-ac", "2"],
+            ["-map", "0:v:0", "-map", "0:a:0?", "-map_metadata", "-1", "-map_chapters", "-1", "-c:v", "libvpx-vp9", "-crf", "32", "-b:v", "0", "-pix_fmt", "yuv420p", "-vf", "setparams=colorspace=bt709:color_primaries=bt709:color_trc=bt709", "-c:a", "libopus", "-b:a", "128k", "-ar", "48000", "-ac", "2"],
             compiled.OutputSuffixTokens);
     }
 
