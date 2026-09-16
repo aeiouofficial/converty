@@ -1,6 +1,6 @@
 # Converty Cloud Documentation Map
 
-Last reconciled: 2026-09-14.
+Last reconciled: 2026-09-16.
 
 This file is a **metadata-only continuation/routing map**. It does not replace GitHub as code/release authority and must never be substituted for the frozen `main` tree or the active engineering branch.
 
@@ -17,13 +17,10 @@ This file is a **metadata-only continuation/routing map**. It does not replace G
 - `main`: `8a1f46603aa842728247bc11b34fcccf121858fd`
 - Tree: `4bd6f8d7acbadd60a3488870c773d2eafd67ba26`
 - Exact-main run: `33671671714` — SUCCESS
-- Continuity: `100386513722` SUCCESS
-- Supply-chain/static: `100386513825` SUCCESS
-- Windows managed: `100386513350` SUCCESS
 - Managed tests: `260/260` PASS
 - Static tests: `103/103` PASS
 - Contract vectors: `5/5` PASS
-- Video: `27/27` real packaged conversions + ffprobe + repeated malformed/truncated + twice-run mixed-batch PASS
+- Video: `27/27` real packaged conversions plus negative/mixed qualification PASS
 - Audio 36-case and Image 24-case regressions: PASS
 - Workspace SHA-256: `743c375cff7d854e0d63ea184f2423cc49ff9a7dca552442670c2b4322c5c805`
 - Exact-main generated-authority artifact: `9862733877`
@@ -34,54 +31,45 @@ This remains the sole release/freeze authority. Converty is **NOT CUSTOMER SHIP-
 ## Current dev.21 engineering authority
 
 - Branch: `dev/0.1.0-dev.21`
-- Head: `fdea3c43d8301275c39747d605f22ba9d99ac609`
-- Tree: `a52b9acab1749652c260ef6325a032e88e100a1d`
+- Head: `c229fdeca638184b05b5359e735922cc7c9da3c4`
+- Tree: `0ebbe25928f06890922760c839361e602ae872b8`
 - Approved design spec: `d80cc33a2e7c38738f113856e95f1451fd2df1b0`
 - Implementation plan: `e54061368b476184a89dcadb1d6b8a8f6fb6cf68`
 - Plan file: `docs/superpowers/plans/2026-09-03-dev21-video-copy-remux-transcode-security.md`
 
-### Task 7 — mode-aware EngineWorker + managed Copy — VERIFIED
+### Task 8 — stage/probe/plan/execute/post-validate/publish — VERIFIED
 
-TDD lineage:
+Task 8 integrates staged Video probing, existing `VideoPlanningPolicy`/`ConversionPlanner` mode selection, explicit-mode execution, independent Copy SHA verification, staged-output post-probing, immutable `TargetMediaContract` validation and transactional numbered no-overwrite publication. Invalid or unqualified outputs never publish; member-local failures preserve later valid batch continuation.
 
-- Initial RED: `108ecf709a883735e26311a5a13c27c49459e2f5`, run `34879770520`.
-  - Static: 108 PASS / exactly 3 Task-7 FAIL.
-  - Windows Build: 0 warnings / 0 errors.
-  - Existing packaged Audio/Image/Video regressions: PASS.
-  - Managed: 358 total / 352 PASS / exactly 6 Task-7 FAIL.
-- Bounded-mode test commit `40153d0ab1567f7ce2b54f1bfd4ea4bc4488cee6` exposed xUnit2018 in the test itself. The test-only assertion was corrected before GREEN.
-- Corrected bounded-mode RED: `4dc49fa640bdb25d62a54df24081ce0dab7ad29b`, run `34880499859`.
-  - Build: 0 warnings / 0 errors.
-  - Existing packaged regressions: PASS.
-  - Managed: 370 total / 352 PASS / exactly 18 expected Task-7 FAIL.
-- GREEN: `fdea3c43d8301275c39747d605f22ba9d99ac609`, tree `a52b9acab1749652c260ef6325a032e88e100a1d`.
-- GREEN run: `34880896997`.
+Qualification hardening also established:
 
-Task-7 implementation:
+- provider-owned MP4/WebM Transcode enforces the qualified BT.709 SDR target semantics;
+- known technical muxer tags are narrowly classified as non-policy metadata while unknown/untrusted tag names or values remain policy-relevant and fail closed;
+- managed MP4 Copy remains closed to the canonical `.mp4|.m4v` alias set; WebM Copy remains `.webm`;
+- final fixture-only commit `c229fdeca638184b05b5359e735922cc7c9da3c4` aligns Video runner tests with production `provider.engine` authority and changes no production file.
 
-- EngineWorker public surface is exactly `--preset --mode --input --output`.
-- Canonical bounded mode grammar is `copy|remux|transcode|transform`.
-- Managed Copy uses private staging, `FileMode.CreateNew`, streaming byte copy and SHA-256 input/output equality through `CryptographicOperations.FixedTimeEquals`.
-- Copy dispatch occurs before provider compilation and FFmpeg path resolution; Copy never invokes FFmpeg.
-- FFmpeg launcher receives an explicit mode and uses only the closed provider `(PresetId, ConversionMode)` compiler.
-- Unsupported tuples reject before engine process resolution/start.
-- No shell/raw-token/PATH/CWD/hardware-acceleration widening was introduced.
-- Existing Audio/Image `Transform` compatibility is retained until Task 8 integrates planner-driven execution.
+Final Task-8 evidence:
 
-GREEN qualification:
+- CI run: `35094861575`
+- Windows managed job: `104789579843`
+- Dependency audit: 19 projects / 19 frameworks / 0 vulnerable-result packages
+- Build: 0 warnings / 0 errors
+- Managed: `387/387` PASS
+- Static: `119/119` PASS
+- Contract vectors: `5/5` PASS
+- Native Explorer, package validation, packaged ProbeWorker+ffprobe, COM and Product Bridge→FFmpeg: PASS
+- Audio 36-case, Image 24-case and Video 27-case plus malformed/truncated/mixed isolation: PASS
+- Deterministic workspace double-build: SHA-256 `6d9eeeec8832ae50eeb00934b58553cf21371c83fbc1b13fea026b19fc23794c`, 592645 bytes, 435 files
+- Workspace validation then failed only against intentionally stale tracked `.github/workflows/ci.yml` authority; delivery staging/upload skipped
+- Overall dev-branch CI remains intentionally RED only at main-authority-continuity and stale generated/workspace authority
+- No generated-authority synchronization, dev.21 delivery, freeze or release authority exists
+- External independent review: NOT PERFORMED / NOT CLAIMED
 
-- Dependency audit: 19 projects / 19 frameworks / 0 vulnerable-result packages.
-- Build: 0 warnings / 0 errors.
-- Managed: `370/370` PASS.
-- Static: `111/111` PASS.
-- Contract vectors: `5/5` PASS.
-- Native Explorer, package validation, packaged ProbeWorker+ffprobe, COM and Product Bridge→FFmpeg: PASS.
-- Audio 36-case, Image 24-case and Video 27-case matrices plus malformed/truncated/mixed-batch isolation: PASS.
-- Deterministic workspace double-build: SHA-256 `846ff6f01301c54877441551847cfee464e72875f717e804e2e6a2bd2b3356fb`, 577675 bytes, 424 files.
-- Workspace validation then failed only against intentionally stale tracked `.github/workflows/ci.yml` authority; delivery staging/upload skipped.
-- Overall dev-branch CI remains intentionally RED only at main-authority-continuity, tracked generated-authority-current and derived workspace-authority validation.
-- No generated-authority synchronization, dev.21 delivery, freeze or release authority exists.
-- Task 7 self-review: PASS; external independent subagent review: NOT PERFORMED / NOT CLAIMED.
+Development engine qualification input:
+
+- FFmpeg/ffprobe: `9.0.1-essentials_build-www.gyan.dev`
+- Archive SHA-256: `fec81ae03971d9dd4be3ebe02e263bd2ec1d789483f931bdba5f5715e65da2e9`
+- Development qualification input only; not production provenance, licensing/notices, redistribution or release approval
 
 ## Slack live documentation
 
@@ -90,20 +78,14 @@ GREEN qualification:
 - `#plan-converty` — `C0BUKLHKL65` — anchor `1788368651.564749`
 - `#tasks-converty` — `C0BTWQZQX4P` — anchor `1788327299.747159`
 - `#changelog-converty` — `C0BUM4XRZ6G` — anchor `1788366995.127219`
-- `#ci-converty` — `C0BUGDN98CD` — current Task-7 evidence anchor `1788516551.830259`
-- `#engineering-converty` — `C0BUQCRE5K6` — current Task-7 engineering anchor `1788516560.218049`
-- `#docs-converty` — `C0BUQCRL0TW` — current documentation anchor `1788516567.344989`
+- `#ci-converty` — `C0BUGDN98CD` — anchor `1788516551.830259`
+- `#engineering-converty` — `C0BUQCRE5K6` — anchor `1788516560.218049`
+- `#docs-converty` — `C0BUQCRL0TW` — anchor `1788516567.344989`
 - `#handover-open-converty` — `C0BUM8J0ZEG`
-  - Handover #1 — TS `1788367585.736179` — PROCESSED
-  - Handover #2 — TS `1788368822.626919` — PROCESSED
-  - Handover #3 — TS `1788376926.580049` — PROCESSED
-  - Handover #4 — TS `1788420595.825169` — PROCESSED
-  - Handover #5 — TS `1788476701.021959` — PROCESSED
-  - Handover #6 — TS `1788516603.729439` — PROCESSED
-  - Handover #7 — TS `1788519571.133199` — PROCESSED
-  - **ACTIVE HANDOVER #8 — TS `1789410998.184939` — OPEN**
+  - Handover #1 through #8: PROCESSED
+  - Handover #8 — TS `1789410998.184939` — PROCESSED
+  - **ACTIVE HANDOVER #9 — TS `1789561580.123109` — OPEN**
   - exactly one OPEN handover is allowed
-- `#pre-devlog-converty` — `C0BV6HDMVDW`
 
 ## Google Drive live documents
 
@@ -117,25 +99,24 @@ GREEN qualification:
 
 Update these documents in place; never create competing current-state copies.
 
-## Current next tranche — ACTIVE HANDOVER #8
+## Current next tranche — ACTIVE HANDOVER #9
 
-`0.1.0-dev.21 — B8 Video Copy/Remux/Transcode Planner` remains the active engineering tranche. Tasks 1–7 are verified.
+Tasks 1–8 of `0.1.0-dev.21 — B8 Video Copy/Remux/Transcode Planner` are verified.
 
-The precise next executable block is **Task 8 RED/GREEN — stage → probe → plan → execute → post-probe TargetMediaContract → transactional publish**:
+The precise next executable block is **Task 9 RED/GREEN — actual packaged ffprobe/ffmpeg descendant containment and parser/protocol attack-surface qualification**:
 
-1. RED: staged Video input is probed through the existing typed bounded probe boundary.
-2. RED: existing `VideoPlanningPolicy` / `ConversionPlanner` selects Copy, Remux or Transcode.
-3. RED: the selected explicit `ConversionMode` reaches EngineWorker.
-4. RED: staged output is post-probed and validated against a typed immutable `TargetMediaContract` before publication.
-5. RED: engine exit 0 with wrong container/codec/topology/pixel-format/audio/HDR policy does not publish.
-6. RED: post-probe failure, timeout or corrupt output does not publish.
-7. RED: Copy hash mismatch does not publish.
-8. RED: malformed/unsupported member-local failures do not block later valid batch members.
-9. GREEN: integrate the existing planner/probe/execution path with additive compatibility where practical; preserve Audio/Image current behavior and source/existing-destination/no-partial/no-overwrite invariants.
-10. Run full affected Core/Bridge tests and preserve all Tasks 1–7/dev.20 regression evidence.
-11. Do not synchronize generated authority or claim dev.21 delivery/freeze/release during Task 8.
+1. Prove fixed package locations for ProbeWorker+ffprobe and EngineWorker+ffmpeg; missing/untrusted/reparse paths fail closed.
+2. Prove no PATH/CWD/user-binary fallback.
+3. Demonstrate actual `ffprobe.exe` and `ffmpeg.exe` descendants inside the strict Job/AppContainer containment model, not only a generic WorkerCanary.
+4. Prove DNS/TCP/network attempts from descendant context are denied.
+5. Prove reads/writes outside authorized staging/tool scope are denied; ProbeWorker remains exact staged-input read-only.
+6. Prove timeout/cancel/failure kills the complete descendant Job and leaves zero ffprobe/ffmpeg/worker orphans.
+7. Qualify the exact pinned-engine local `file` protocol posture.
+8. Qualify the exact demuxer/format set required by the supported dev.21 source matrix; do not guess or broaden an allowlist.
+9. Preserve all Tasks 1–8 and dev.20 Audio/Image/Video/security regressions.
+10. Keep generated authority unsynchronized until guarded stabilization; make no production redistribution or release claim.
 
-After Task 8: real child containment/network/filesystem canaries → runtime engine digest/package binding → real packaged Copy/Remux/Transcode qualification → governance/supply-chain hardening → guarded generated-authority stabilization → remaining production signing/headed/security/end-user gates.
+After Task 9: Task 10 packaged real Copy/Remux/Transcode qualification → Task 11 governance/supply-chain hardening → Task 12 guarded generated-authority stabilization/exact-candidate freeze → remaining production engine provenance/licensing/signing/MSIX/headed/fuzz/security/end-user release gates.
 
 ## Architecture / security invariants
 
@@ -147,14 +128,14 @@ Never widen to shell command construction, raw FFmpeg argument pass-through, PAT
 
 For `weiter`, `continue`, `start current documented handover` or equivalent:
 
-1. Read ACTIVE HANDOVER #8 TS `1789410998.184939`.
+1. Read ACTIVE HANDOVER #9 TS `1789561580.123109`.
 2. Fresh-read GitHub refs/CI and reconcile Drive/Slack against GitHub authority.
-3. Execute Task 8 under Superpowers/TDD/security/review/evidence gates rather than re-planning approved work.
+3. Execute Task 9 under Superpowers/TDD/security/review/evidence gates rather than re-planning approved work.
 4. Verify the completed material block.
 5. Update Authority + Roadmap + Plan + Tasks + Changelog + Evidence + Recursive Handover and canonical Slack anchors in place.
 6. Fresh-read GitHub/CI again.
-7. Mark #8 PROCESSED **before** publishing its successor.
-8. Publish exactly one context-free successor OPEN, backfill its exact TS/reference into #8, Recursive Handover and this metadata routing map.
+7. Mark #9 PROCESSED **before** publishing its successor.
+8. Publish exactly one context-free successor OPEN, backfill its exact TS/reference into #9, Recursive Handover and this metadata routing map.
 9. Re-read Slack + Recursive Handover and require exactly one OPEN.
 
 Never hand-edit generated SBOM/package/hash authority. Never move frozen `main` merely for documentation synchronization.
