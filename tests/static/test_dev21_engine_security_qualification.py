@@ -3,7 +3,13 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 PROVIDER = ROOT / "providers" / "Converty.Provider.FFmpeg" / "FfmpegPresetCompiler.cs"
 LAUNCHER = ROOT / "providers" / "Converty.Provider.FFmpeg" / "FfmpegProcessLauncher.cs"
-CANARY = ROOT / "tests" / "Converty.WorkerCanary" / "Program.cs"
+ACTUAL_ENGINE_TEST = (
+    ROOT
+    / "tests"
+    / "Converty.Security.Tests"
+    / "Workers"
+    / "ActualEngineDescendantIsolationTests.cs"
+)
 
 
 def test_video_engine_uses_qualified_file_only_format_surface():
@@ -20,11 +26,11 @@ def test_probe_engine_uses_qualified_file_only_format_surface():
     assert '"mov,matroska,avi,mpeg,asf,mp3"' in launcher
 
 
-def test_actual_engine_descendant_canary_modes_are_present():
-    canary = CANARY.read_text(encoding="utf-8")
-    for mode in (
-        "--spawn-ffprobe-read",
-        "--spawn-ffmpeg-write-wave",
-        "--spawn-ffmpeg-hold",
-    ):
-        assert mode in canary
+def test_actual_packaged_engine_descendant_gate_uses_product_workers():
+    test_source = ACTUAL_ENGINE_TEST.read_text(encoding="utf-8")
+    assert "Converty.ProbeWorker.exe" in test_source
+    assert "Converty.EngineWorker.exe" in test_source
+    assert "ffprobe.exe" in test_source
+    assert "ffmpeg.exe" in test_source
+    assert "TokenIsAppContainer" in test_source
+    assert "AssertProcessExitedAsync" in test_source

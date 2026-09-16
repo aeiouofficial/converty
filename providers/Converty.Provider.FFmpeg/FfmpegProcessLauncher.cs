@@ -197,6 +197,7 @@ public static class FfprobeProcessLauncher
     public const int MaximumCapturedStandardOutputBytes = 256 * 1024;
     public const int MaximumCapturedStandardErrorBytes = 64 * 1024;
     public static readonly TimeSpan MaximumExecutionTimeout = TimeSpan.FromMinutes(2);
+    private const string QualifiedProbeInputFormats = "mov,matroska,avi,mpeg,asf,mp3";
 
     public static ProcessStartInfo CreateStartInfo(string ffprobePath, string inputPath)
     {
@@ -223,6 +224,7 @@ public static class FfprobeProcessLauncher
             "-show_chapters",
             "-of", "json",
             "-protocol_whitelist", "file",
+            "-format_whitelist", QualifiedProbeInputFormats,
             trustedInput,
         })
         {

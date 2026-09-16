@@ -43,7 +43,7 @@ public sealed class FfprobeProbeAdapterTests : IDisposable
         Assert.True(startInfo.RedirectStandardError);
         Assert.Equal(engineDirectory, startInfo.WorkingDirectory);
         Assert.Equal(
-            ["-v", "error", "-show_format", "-show_streams", "-show_chapters", "-of", "json", "-protocol_whitelist", "file", input],
+            ["-v", "error", "-show_format", "-show_streams", "-show_chapters", "-of", "json", "-protocol_whitelist", "file", "-format_whitelist", "mov,matroska,avi,mpeg,asf,mp3", input],
             startInfo.ArgumentList);
     }
 

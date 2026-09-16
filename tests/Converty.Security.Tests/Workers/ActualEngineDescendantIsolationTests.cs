@@ -1,4 +1,6 @@
+using System.ComponentModel;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using Converty.Security.Workers;
 
@@ -6,49 +8,39 @@ namespace Converty.Security.Tests.Workers;
 
 public sealed class ActualEngineDescendantIsolationTests
 {
+    private const uint TokenQuery = 0x0008;
+    private const int TokenIsAppContainer = 29;
+
     [Fact]
-    public async Task ActualFfprobeDescendantCanReadOnlyGrantedInput()
+    public async Task ActualPackagedProbeWorkerUsesBundledFfprobeUnderStrictReadOnlyScope()
     {
-        if (!TryResolvePackagedEngines(out EnginePaths? packaged))
+        if (!TryResolvePackagedRuntime(out PackagedRuntime? runtime))
         {
             return;
         }
 
         CancellationToken cancellationToken = TestContext.Current.CancellationToken;
-        string root = CreateTempDirectory("ConvertyActualProbeScope");
+        string root = CreateTempDirectory("ConvertyActualProbeWorker");
         try
         {
-            StagedApplication app = StageCanaryApplication(root, packaged);
-            string fixtureDirectory = Path.Combine(root, "fixtures");
-            Directory.CreateDirectory(fixtureDirectory);
-            string grantedInput = Path.Combine(fixtureDirectory, "granted.mp4");
-            string prohibitedInput = Path.Combine(fixtureDirectory, "prohibited.mp4");
-            await CreateMp4FixtureAsync(packaged.Ffmpeg, grantedInput, cancellationToken);
-            File.Copy(grantedInput, prohibitedInput);
-            string grantedHash = ComputeSha256(grantedInput);
-            string prohibitedHash = ComputeSha256(prohibitedInput);
-
+            string input = Path.Combine(root, "probe.mp4");
+            await CreateVideoFixtureAsync(runtime.Ffmpeg, input, "mp4", cancellationToken);
+            string sourceHash = ComputeSha256(input);
             var launcher = new WindowsWorkerProcessLauncher();
-            WorkerFileSystemScope scope = WorkerFileSystemScope.ForReadOnlyFile(grantedInput);
-            WorkerProcessResult allowed = await launcher.ExecuteAsync(
-                CreateStrictRequest(
-                    app.Canary,
-                    app.Root,
-                    scope,
-                    ["--spawn-ffprobe-read", app.Ffprobe, grantedInput]),
-                cancellationToken);
-            Assert.Equal(0, allowed.ExitCode);
 
-            WorkerProcessResult denied = await launcher.ExecuteAsync(
+            WorkerProcessResult result = await launcher.ExecuteAsync(
                 CreateStrictRequest(
-                    app.Canary,
-                    app.Root,
-                    scope,
-                    ["--spawn-ffprobe-read", app.Ffprobe, prohibitedInput]),
+                    runtime.ProbeWorker,
+                    runtime.Layout,
+                    WorkerFileSystemScope.ForReadOnlyFile(input),
+                    ["--input", input],
+                    maximumCapturedStandardOutputBytes: 256 * 1024),
                 cancellationToken);
-            Assert.NotEqual(0, denied.ExitCode);
-            Assert.Equal(grantedHash, ComputeSha256(grantedInput));
-            Assert.Equal(prohibitedHash, ComputeSha256(prohibitedInput));
+
+            Assert.Equal(0, result.ExitCode);
+            Assert.Contains("media.probe.result.v1", result.StandardOutput, StringComparison.Ordinal);
+            Assert.Equal(sourceHash, ComputeSha256(input));
+            AssertNoRunningProcessAtPath(runtime.Ffprobe);
         }
         finally
         {
@@ -57,47 +49,38 @@ public sealed class ActualEngineDescendantIsolationTests
     }
 
     [Fact]
-    public async Task ActualFfmpegDescendantCanWriteOnlyInsideGrantedStaging()
+    public async Task ActualPackagedEngineWorkerUsesBundledFfmpegUnderStrictWritableScope()
     {
-        if (!TryResolvePackagedEngines(out EnginePaths? packaged))
+        if (!TryResolvePackagedRuntime(out PackagedRuntime? runtime))
         {
             return;
         }
 
         CancellationToken cancellationToken = TestContext.Current.CancellationToken;
-        string root = CreateTempDirectory("ConvertyActualEngineScope");
+        string root = CreateTempDirectory("ConvertyActualEngineWorker");
         try
         {
-            StagedApplication app = StageCanaryApplication(root, packaged);
-            string stagingDirectory = Path.Combine(root, "staging");
-            string outsideDirectory = Path.Combine(root, "outside");
-            Directory.CreateDirectory(stagingDirectory);
-            Directory.CreateDirectory(outsideDirectory);
-            string insideOutput = Path.Combine(stagingDirectory, "inside.wav");
-            string outsideOutput = Path.Combine(outsideDirectory, "outside.wav");
-
+            string staging = Path.Combine(root, "staging");
+            Directory.CreateDirectory(staging);
+            string input = Path.Combine(staging, "source.avi");
+            string output = Path.Combine(staging, "result.webm");
+            await CreateVideoFixtureAsync(runtime.Ffmpeg, input, "avi", cancellationToken);
+            string sourceHash = ComputeSha256(input);
             var launcher = new WindowsWorkerProcessLauncher();
-            WorkerFileSystemScope scope = new(stagingDirectory);
-            WorkerProcessResult allowed = await launcher.ExecuteAsync(
-                CreateStrictRequest(
-                    app.Canary,
-                    app.Root,
-                    scope,
-                    ["--spawn-ffmpeg-write-wave", app.Ffmpeg, insideOutput]),
-                cancellationToken);
-            Assert.Equal(0, allowed.ExitCode);
-            Assert.True(File.Exists(insideOutput));
-            Assert.True(new FileInfo(insideOutput).Length > 0);
 
-            WorkerProcessResult denied = await launcher.ExecuteAsync(
+            WorkerProcessResult result = await launcher.ExecuteAsync(
                 CreateStrictRequest(
-                    app.Canary,
-                    app.Root,
-                    scope,
-                    ["--spawn-ffmpeg-write-wave", app.Ffmpeg, outsideOutput]),
+                    runtime.EngineWorker,
+                    runtime.Layout,
+                    new WorkerFileSystemScope(staging),
+                    ["--preset", "video.webm.vp9", "--mode", "Transcode", "--input", input, "--output", output]),
                 cancellationToken);
-            Assert.NotEqual(0, denied.ExitCode);
-            Assert.False(File.Exists(outsideOutput));
+
+            Assert.Equal(0, result.ExitCode);
+            Assert.True(File.Exists(output));
+            Assert.True(new FileInfo(output).Length > 0);
+            Assert.Equal(sourceHash, ComputeSha256(input));
+            AssertNoRunningProcessAtPath(runtime.Ffmpeg);
         }
         finally
         {
@@ -106,42 +89,44 @@ public sealed class ActualEngineDescendantIsolationTests
     }
 
     [Fact]
-    public async Task ActualFfmpegDescendantDiesWithWorkerJobOnCancellation()
+    public async Task ActualPackagedFfmpegDescendantIsAppContainerAndDiesWithWorkerJobOnCancellation()
     {
-        if (!TryResolvePackagedEngines(out EnginePaths? packaged))
+        if (!TryResolvePackagedRuntime(out PackagedRuntime? runtime))
         {
             return;
         }
 
         CancellationToken testCancellation = TestContext.Current.CancellationToken;
-        string root = CreateTempDirectory("ConvertyActualEngineJob");
+        string root = CreateTempDirectory("ConvertyActualEngineCancellation");
         try
         {
-            StagedApplication app = StageCanaryApplication(root, packaged);
-            string stagingDirectory = Path.Combine(root, "staging");
-            Directory.CreateDirectory(stagingDirectory);
-            string pidPath = Path.Combine(stagingDirectory, "ffmpeg.pid");
+            string staging = Path.Combine(root, "staging");
+            Directory.CreateDirectory(staging);
+            string input = Path.Combine(staging, "long-source.avi");
+            string output = Path.Combine(staging, "result.webm");
+            await CreateLongVideoFixtureAsync(runtime.Ffmpeg, input, testCancellation);
             var launcher = new WindowsWorkerProcessLauncher();
             using var cancellation = CancellationTokenSource.CreateLinkedTokenSource(testCancellation);
 
             Task<WorkerProcessResult> execution = launcher.ExecuteAsync(
                 CreateStrictRequest(
-                    app.Canary,
-                    app.Root,
-                    new WorkerFileSystemScope(stagingDirectory),
-                    ["--spawn-ffmpeg-hold", app.Ffmpeg, pidPath],
-                    timeout: TimeSpan.FromSeconds(15)),
+                    runtime.EngineWorker,
+                    runtime.Layout,
+                    new WorkerFileSystemScope(staging),
+                    ["--preset", "video.webm.vp9", "--mode", "Transcode", "--input", input, "--output", output],
+                    timeout: TimeSpan.FromSeconds(20)),
                 cancellation.Token);
 
-            int childPid = await WaitForPidAsync(pidPath, TimeSpan.FromSeconds(5), testCancellation);
-            using (Process child = Process.GetProcessById(childPid))
+            int ffmpegPid = await WaitForProcessAtPathAsync(runtime.Ffmpeg, TimeSpan.FromSeconds(8), testCancellation);
+            using (Process ffmpeg = Process.GetProcessById(ffmpegPid))
             {
-                Assert.False(child.HasExited);
+                Assert.False(ffmpeg.HasExited);
+                Assert.True(IsAppContainerProcess(ffmpeg), $"Actual packaged ffmpeg pid={ffmpegPid} did not inherit the strict AppContainer token.");
             }
 
             cancellation.Cancel();
             await Assert.ThrowsAnyAsync<OperationCanceledException>(async () => await execution);
-            await AssertProcessExitedAsync(childPid, TimeSpan.FromSeconds(5), testCancellation);
+            await AssertProcessExitedAsync(ffmpegPid, TimeSpan.FromSeconds(5), testCancellation);
         }
         finally
         {
@@ -151,70 +136,95 @@ public sealed class ActualEngineDescendantIsolationTests
 
     private static WorkerProcessLaunchRequest CreateStrictRequest(
         string executable,
-        string appDirectory,
+        string applicationDirectory,
         WorkerFileSystemScope scope,
         IReadOnlyList<string> arguments,
-        TimeSpan? timeout = null) =>
+        TimeSpan? timeout = null,
+        int maximumCapturedStandardOutputBytes = 0) =>
         new(
             executable,
-            appDirectory,
+            applicationDirectory,
             arguments,
             WorkerIsolationLevel.Strict,
             new WorkerResourceLimits(
                 maximumActiveProcesses: 2,
-                maximumProcessMemoryBytes: 512L * 1024 * 1024,
-                maximumJobMemoryBytes: 768L * 1024 * 1024,
+                maximumProcessMemoryBytes: 768L * 1024 * 1024,
+                maximumJobMemoryBytes: 1024L * 1024 * 1024,
                 maximumCpuRatePercent: 100),
             scope,
-            timeout ?? TimeSpan.FromSeconds(15),
-            MaximumCapturedStandardErrorCharacters: 16 * 1024);
+            timeout ?? TimeSpan.FromSeconds(20),
+            MaximumCapturedStandardErrorCharacters: 64 * 1024,
+            maximumCapturedStandardOutputBytes);
 
-    private static bool TryResolvePackagedEngines(out EnginePaths? engines)
+    private static bool TryResolvePackagedRuntime(out PackagedRuntime? runtime)
     {
-        engines = null;
+        runtime = null;
         if (!OperatingSystem.IsWindows())
         {
             return false;
         }
 
         string repositoryRoot = ResolveRepositoryRoot();
-        string engineDirectory = Path.Combine(repositoryRoot, "artifacts", "dev-package-layout", "tools", "ffmpeg");
+        string layout = Path.Combine(repositoryRoot, "artifacts", "dev-package-layout");
+        string probeWorker = Path.Combine(layout, "Converty.ProbeWorker.exe");
+        string engineWorker = Path.Combine(layout, "Converty.EngineWorker.exe");
+        string engineDirectory = Path.Combine(layout, "tools", "ffmpeg");
         string ffmpeg = Path.Combine(engineDirectory, "ffmpeg.exe");
         string ffprobe = Path.Combine(engineDirectory, "ffprobe.exe");
-        if (!File.Exists(ffmpeg) || !File.Exists(ffprobe))
+        if (!File.Exists(probeWorker) || !File.Exists(engineWorker) || !File.Exists(ffmpeg) || !File.Exists(ffprobe))
         {
             return false;
         }
 
-        engines = new EnginePaths(ffmpeg, ffprobe);
+        runtime = new PackagedRuntime(layout, probeWorker, engineWorker, ffmpeg, ffprobe);
         return true;
     }
 
-    private static StagedApplication StageCanaryApplication(string root, EnginePaths packaged)
+    private static async Task CreateVideoFixtureAsync(
+        string ffmpeg,
+        string outputPath,
+        string format,
+        CancellationToken cancellationToken)
     {
-        string applicationRoot = Path.Combine(root, "application");
-        Directory.CreateDirectory(applicationRoot);
-        string sourceCanary = ResolveCanaryExecutable();
-        string sourceDirectory = Path.GetDirectoryName(sourceCanary) ??
-            throw new InvalidOperationException("Canary executable requires a parent directory.");
-        foreach (string source in Directory.EnumerateFiles(sourceDirectory, "Converty.WorkerCanary.*"))
+        string[] codecArguments = format switch
         {
-            File.Copy(source, Path.Combine(applicationRoot, Path.GetFileName(source)));
-        }
+            "mp4" => ["-c:v", "libx264", "-preset", "ultrafast", "-pix_fmt", "yuv420p", "-f", "mp4"],
+            "avi" => ["-c:v", "mpeg2video", "-q:v", "5", "-pix_fmt", "yuv420p", "-f", "avi"],
+            _ => throw new ArgumentOutOfRangeException(nameof(format)),
+        };
 
-        string stagedCanary = Path.Combine(applicationRoot, "Converty.WorkerCanary.exe");
-        string engineDirectory = Path.Combine(applicationRoot, "tools", "ffmpeg");
-        Directory.CreateDirectory(engineDirectory);
-        string stagedFfmpeg = Path.Combine(engineDirectory, "ffmpeg.exe");
-        string stagedFfprobe = Path.Combine(engineDirectory, "ffprobe.exe");
-        File.Copy(packaged.Ffmpeg, stagedFfmpeg);
-        File.Copy(packaged.Ffprobe, stagedFfprobe);
-        Assert.Equal(ComputeSha256(packaged.Ffmpeg), ComputeSha256(stagedFfmpeg));
-        Assert.Equal(ComputeSha256(packaged.Ffprobe), ComputeSha256(stagedFfprobe));
-        return new StagedApplication(applicationRoot, stagedCanary, stagedFfmpeg, stagedFfprobe);
+        await RunFixtureFfmpegAsync(
+            ffmpeg,
+            outputPath,
+            [
+                "-hide_banner", "-loglevel", "error",
+                "-f", "lavfi", "-i", "testsrc2=size=64x48:rate=10",
+                "-t", "0.5",
+                .. codecArguments,
+                "-y", outputPath,
+            ],
+            cancellationToken);
     }
 
-    private static async Task CreateMp4FixtureAsync(string ffmpeg, string outputPath, CancellationToken cancellationToken)
+    private static Task CreateLongVideoFixtureAsync(string ffmpeg, string outputPath, CancellationToken cancellationToken) =>
+        RunFixtureFfmpegAsync(
+            ffmpeg,
+            outputPath,
+            [
+                "-hide_banner", "-loglevel", "error",
+                "-f", "lavfi", "-i", "testsrc2=size=640x360:rate=30",
+                "-t", "20",
+                "-c:v", "mpeg2video", "-q:v", "2", "-pix_fmt", "yuv420p",
+                "-f", "avi",
+                "-y", outputPath,
+            ],
+            cancellationToken);
+
+    private static async Task RunFixtureFfmpegAsync(
+        string ffmpeg,
+        string outputPath,
+        IReadOnlyList<string> arguments,
+        CancellationToken cancellationToken)
     {
         var startInfo = new ProcessStartInfo
         {
@@ -225,47 +235,71 @@ public sealed class ActualEngineDescendantIsolationTests
             RedirectStandardError = true,
             WorkingDirectory = Path.GetDirectoryName(ffmpeg) ?? throw new InvalidOperationException("FFmpeg requires a parent directory."),
         };
-        foreach (string argument in new[]
-        {
-            "-hide_banner", "-loglevel", "error",
-            "-f", "lavfi", "-i", "testsrc2=size=32x24:rate=2",
-            "-frames:v", "2", "-c:v", "libx264", "-preset", "ultrafast", "-pix_fmt", "yuv420p",
-            "-f", "mp4", "-y", outputPath,
-        })
+        foreach (string argument in arguments)
         {
             startInfo.ArgumentList.Add(argument);
         }
 
         using var process = new Process { StartInfo = startInfo };
         Assert.True(process.Start());
-        Task<string> stderr = process.StandardError.ReadToEndAsync(cancellationToken);
         Task<string> stdout = process.StandardOutput.ReadToEndAsync(cancellationToken);
+        Task<string> stderr = process.StandardError.ReadToEndAsync(cancellationToken);
         using var timeout = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
-        timeout.CancelAfter(TimeSpan.FromSeconds(15));
+        timeout.CancelAfter(TimeSpan.FromSeconds(30));
         await process.WaitForExitAsync(timeout.Token);
         _ = await stdout;
         string error = await stderr;
-        Assert.True(process.ExitCode == 0, $"Could not create actual-engine MP4 fixture: {error}");
+        Assert.True(process.ExitCode == 0, $"Could not create engine qualification fixture '{outputPath}': {error}");
         Assert.True(File.Exists(outputPath));
     }
 
-    private static async Task<int> WaitForPidAsync(string pidPath, TimeSpan timeout, CancellationToken cancellationToken)
+    private static async Task<int> WaitForProcessAtPathAsync(
+        string executablePath,
+        TimeSpan timeout,
+        CancellationToken cancellationToken)
     {
         DateTime deadline = DateTime.UtcNow + timeout;
         while (DateTime.UtcNow < deadline)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            if (File.Exists(pidPath))
+            int? pid = FindProcessAtPath(executablePath);
+            if (pid.HasValue)
             {
-                string text = await File.ReadAllTextAsync(pidPath, cancellationToken);
-                if (int.TryParse(text, out int pid))
-                {
-                    return pid;
-                }
+                return pid.Value;
             }
             await Task.Delay(25, cancellationToken);
         }
-        throw new TimeoutException("Actual ffmpeg descendant did not publish its PID before the test deadline.");
+        throw new TimeoutException($"Actual packaged engine process was not observed: {executablePath}");
+    }
+
+    private static void AssertNoRunningProcessAtPath(string executablePath) =>
+        Assert.Null(FindProcessAtPath(executablePath));
+
+    private static int? FindProcessAtPath(string executablePath)
+    {
+        string processName = Path.GetFileNameWithoutExtension(executablePath);
+        foreach (Process process in Process.GetProcessesByName(processName))
+        {
+            using (process)
+            {
+                try
+                {
+                    string? candidate = process.MainModule?.FileName;
+                    if (!string.IsNullOrWhiteSpace(candidate) &&
+                        string.Equals(Path.GetFullPath(candidate), Path.GetFullPath(executablePath), StringComparison.OrdinalIgnoreCase))
+                    {
+                        return process.Id;
+                    }
+                }
+                catch (InvalidOperationException)
+                {
+                }
+                catch (Win32Exception)
+                {
+                }
+            }
+        }
+        return null;
     }
 
     private static async Task AssertProcessExitedAsync(int pid, TimeSpan timeout, CancellationToken cancellationToken)
@@ -288,24 +322,35 @@ public sealed class ActualEngineDescendantIsolationTests
             }
             await Task.Delay(25, cancellationToken);
         }
-        Assert.Fail($"Actual ffmpeg descendant pid={pid} survived worker Job cancellation.");
+        Assert.Fail($"Actual packaged ffmpeg descendant pid={pid} survived strict worker Job cancellation.");
+    }
+
+    private static bool IsAppContainerProcess(Process process)
+    {
+        if (!OpenProcessToken(process.Handle, TokenQuery, out nint token))
+        {
+            throw new Win32Exception(Marshal.GetLastWin32Error(), "Could not open actual engine process token.");
+        }
+
+        try
+        {
+            int isAppContainer = 0;
+            if (!GetTokenInformation(token, TokenIsAppContainer, out isAppContainer, sizeof(int), out _))
+            {
+                throw new Win32Exception(Marshal.GetLastWin32Error(), "Could not inspect actual engine AppContainer token state.");
+            }
+            return isAppContainer != 0;
+        }
+        finally
+        {
+            _ = CloseHandle(token);
+        }
     }
 
     private static string ComputeSha256(string path)
     {
         using FileStream stream = File.OpenRead(path);
         return Convert.ToHexString(SHA256.HashData(stream));
-    }
-
-    private static string ResolveCanaryExecutable()
-    {
-        string repositoryRoot = ResolveRepositoryRoot();
-        DirectoryInfo frameworkDirectory = new(AppContext.BaseDirectory);
-        string configuration = frameworkDirectory.Parent?.Name ??
-            throw new InvalidOperationException("Test configuration directory could not be resolved.");
-        string path = Path.Combine(repositoryRoot, "tests", "Converty.WorkerCanary", "bin", configuration, "net10.0", "Converty.WorkerCanary.exe");
-        Assert.True(File.Exists(path), $"Strict isolation canary executable is missing: {path}");
-        return path;
     }
 
     private static string ResolveRepositoryRoot()
@@ -329,6 +374,27 @@ public sealed class ActualEngineDescendantIsolationTests
         return path;
     }
 
-    private sealed record EnginePaths(string Ffmpeg, string Ffprobe);
-    private sealed record StagedApplication(string Root, string Canary, string Ffmpeg, string Ffprobe);
+    [DllImport("advapi32.dll", SetLastError = true)]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    private static extern bool OpenProcessToken(nint processHandle, uint desiredAccess, out nint tokenHandle);
+
+    [DllImport("advapi32.dll", SetLastError = true)]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    private static extern bool GetTokenInformation(
+        nint tokenHandle,
+        int tokenInformationClass,
+        out int tokenInformation,
+        int tokenInformationLength,
+        out int returnLength);
+
+    [DllImport("kernel32.dll", SetLastError = true)]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    private static extern bool CloseHandle(nint handle);
+
+    private sealed record PackagedRuntime(
+        string Layout,
+        string ProbeWorker,
+        string EngineWorker,
+        string Ffmpeg,
+        string Ffprobe);
 }

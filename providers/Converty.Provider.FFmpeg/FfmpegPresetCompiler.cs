@@ -31,6 +31,8 @@ public sealed class FfmpegCompiledPreset
 
 public static class FfmpegPresetCompiler
 {
+    private const string QualifiedVideoInputFormats = "mov,matroska,avi,mpeg,asf";
+
     private static readonly string[] FixedInputPrefix =
     [
         "-hide_banner",
@@ -38,6 +40,17 @@ public static class FfmpegPresetCompiler
         "-nostdin",
         "-n",
         "-protocol_whitelist", "file",
+        "-i",
+    ];
+
+    private static readonly string[] QualifiedVideoInputPrefix =
+    [
+        "-hide_banner",
+        "-loglevel", "error",
+        "-nostdin",
+        "-n",
+        "-protocol_whitelist", "file",
+        "-format_whitelist", QualifiedVideoInputFormats,
         "-i",
     ];
 
@@ -140,6 +153,11 @@ public static class FfmpegPresetCompiler
                 $"Unsupported fixed FFmpeg preset/mode tuple: {presetId.Value}/{mode}."),
         };
 
-        return new FfmpegCompiledPreset(FixedInputPrefix, suffix);
+        bool usesQualifiedVideoInput =
+            mode is ConversionMode.Remux or ConversionMode.Transcode &&
+            presetId.Value is "video.mp4.h264" or "video.webm.vp9" or "extract.audio.mp3";
+        return new FfmpegCompiledPreset(
+            usesQualifiedVideoInput ? QualifiedVideoInputPrefix : FixedInputPrefix,
+            suffix);
     }
 }
