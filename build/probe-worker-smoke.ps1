@@ -25,8 +25,8 @@ if (Test-Path $work) {
 $unicodeMetacharDirectory = Join-Path $work 'unicode Hör & metachar [x]'
 New-Item -ItemType Directory -Force $unicodeMetacharDirectory | Out-Null
 
-$validInput = Join-Path $unicodeMetacharDirectory 'probe ü & semi; [x].wav'
-& $ffmpeg '-hide_banner' '-loglevel' 'error' '-y' '-f' 'lavfi' '-i' 'sine=frequency=1000:duration=0.20' '-c:a' 'pcm_s16le' $validInput
+$validInput = Join-Path $unicodeMetacharDirectory 'probe ü & semi; [x].mp4'
+& $ffmpeg '-hide_banner' '-loglevel' 'error' '-y' '-f' 'lavfi' '-i' 'testsrc2=size=64x48:rate=10' '-t' '0.20' '-c:v' 'libx264' '-preset' 'ultrafast' '-pix_fmt' 'yuv420p' '-f' 'mp4' $validInput
 if ($LASTEXITCODE -ne 0 -or -not (Test-Path -LiteralPath $validInput)) {
     throw 'Packaged ffmpeg.exe could not create the deterministic ProbeWorker fixture.'
 }
@@ -98,4 +98,4 @@ if ($newProcessIds.Count -ne 0) {
 
 Write-Host 'Probe worker packaged ffprobe acceptance: PASS'
 Write-Host "Contract: $contractMarker"
-Write-Host 'Unicode/metachar input path probed successfully; malformed input returned unsupportedInput; no ProbeWorker/ffprobe orphan remained.'
+Write-Host 'Unicode/metachar MP4 input path probed successfully; malformed input returned unsupportedInput; no ProbeWorker/ffprobe orphan remained.'
