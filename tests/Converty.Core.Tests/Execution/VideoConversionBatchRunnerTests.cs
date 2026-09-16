@@ -164,7 +164,7 @@ public sealed class VideoConversionBatchRunnerTests
 
     private static ConversionPlanner CreateMp4Planner()
     {
-        ProviderId provider = ProviderId.Parse("provider.ffmpeg");
+        ProviderId provider = VideoProductCapabilityCatalog.EngineProviderId;
         FormatId mp4 = FormatId.Parse("video.mp4");
         return new ConversionPlanner(new CapabilityGraph(
         [
