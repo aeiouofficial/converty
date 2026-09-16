@@ -14,7 +14,7 @@ public sealed class ActualEngineDescendantIsolationTests
     [Fact]
     public async Task ActualPackagedProbeWorkerUsesBundledFfprobeUnderStrictReadOnlyScope()
     {
-        if (!TryResolvePackagedRuntime(out PackagedRuntime? runtime))
+        if (!TryResolvePackagedRuntime(out PackagedRuntime runtime))
         {
             return;
         }
@@ -51,7 +51,7 @@ public sealed class ActualEngineDescendantIsolationTests
     [Fact]
     public async Task ActualPackagedEngineWorkerUsesBundledFfmpegUnderStrictWritableScope()
     {
-        if (!TryResolvePackagedRuntime(out PackagedRuntime? runtime))
+        if (!TryResolvePackagedRuntime(out PackagedRuntime runtime))
         {
             return;
         }
@@ -91,7 +91,7 @@ public sealed class ActualEngineDescendantIsolationTests
     [Fact]
     public async Task ActualPackagedFfmpegDescendantIsAppContainerAndDiesWithWorkerJobOnCancellation()
     {
-        if (!TryResolvePackagedRuntime(out PackagedRuntime? runtime))
+        if (!TryResolvePackagedRuntime(out PackagedRuntime runtime))
         {
             return;
         }
@@ -156,9 +156,9 @@ public sealed class ActualEngineDescendantIsolationTests
             MaximumCapturedStandardErrorCharacters: 64 * 1024,
             maximumCapturedStandardOutputBytes);
 
-    private static bool TryResolvePackagedRuntime(out PackagedRuntime? runtime)
+    private static bool TryResolvePackagedRuntime(out PackagedRuntime runtime)
     {
-        runtime = null;
+        runtime = null!;
         if (!OperatingSystem.IsWindows())
         {
             return false;
