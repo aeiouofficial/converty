@@ -135,6 +135,9 @@ jobs:
       - name: Image mixed-batch failure isolation
         shell: pwsh
         run: ./build/image-batch-isolation-smoke.ps1
+      - name: Video Copy Remux Transcode mode qualification
+        shell: pwsh
+        run: ./build/video-mode-qualification-smoke.ps1
       - name: Video source and malformed-input acceptance
         shell: pwsh
         run: ./build/video-input-acceptance-smoke.ps1
