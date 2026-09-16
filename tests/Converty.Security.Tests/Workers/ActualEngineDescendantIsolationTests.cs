@@ -2,6 +2,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
+using System.Text.Json;
 using Converty.Security.Workers;
 
 namespace Converty.Security.Tests.Workers;
@@ -38,7 +39,12 @@ public sealed class ActualEngineDescendantIsolationTests
                 cancellationToken);
 
             Assert.Equal(0, result.ExitCode);
-            Assert.Contains("media.probe.result.v1", result.StandardOutput, StringComparison.Ordinal);
+            using JsonDocument probeResult = JsonDocument.Parse(result.StandardOutput);
+            Assert.Equal(1, probeResult.RootElement.GetProperty("schemaVersion").GetInt32());
+            Assert.Equal("success", probeResult.RootElement.GetProperty("status").GetString());
+            Assert.Equal("none", probeResult.RootElement.GetProperty("failureReason").GetString());
+            Assert.True(probeResult.RootElement.TryGetProperty("facts", out JsonElement facts));
+            Assert.Equal(JsonValueKind.Object, facts.ValueKind);
             Assert.Equal(sourceHash, ComputeSha256(input));
             AssertNoRunningProcessAtPath(runtime.Ffprobe);
         }
@@ -73,7 +79,7 @@ public sealed class ActualEngineDescendantIsolationTests
                     runtime.EngineWorker,
                     runtime.Layout,
                     new WorkerFileSystemScope(staging),
-                    ["--preset", "video.webm.vp9", "--mode", "Transcode", "--input", input, "--output", output]),
+                    ["--preset", "video.webm.vp9", "--mode", "transcode", "--input", input, "--output", output]),
                 cancellationToken);
 
             Assert.Equal(0, result.ExitCode);
@@ -113,7 +119,7 @@ public sealed class ActualEngineDescendantIsolationTests
                     runtime.EngineWorker,
                     runtime.Layout,
                     new WorkerFileSystemScope(staging),
-                    ["--preset", "video.webm.vp9", "--mode", "Transcode", "--input", input, "--output", output],
+                    ["--preset", "video.webm.vp9", "--mode", "transcode", "--input", input, "--output", output],
                     timeout: TimeSpan.FromSeconds(20)),
                 cancellation.Token);
 
