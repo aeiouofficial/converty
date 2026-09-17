@@ -8,7 +8,7 @@
     ]
   },
   "dataLicense": "CC0-1.0",
-  "documentNamespace": "https://converty.invalid/spdx/source/0.1.0-dev.20/24927f8655816ab7908f1305a03d27c05b058de59de1b7863dd83b4e52f79877",
+  "documentNamespace": "https://converty.invalid/spdx/source/0.1.0-dev.20/73cb440fc56155cc5c29cbab9e3ffb5c5f70bec001a21b85c9cf94722528779d",
   "name": "Converty-source-0.1.0-dev.20",
   "packages": [
     {
@@ -97,6 +97,17 @@
       "licenseConcluded": "NOASSERTION",
       "licenseDeclared": "NOASSERTION",
       "name": "Converty.Ipc",
+      "versionInfo": "0.1.0-dev.20"
+    },
+    {
+      "SPDXID": "SPDXRef-Project-Converty.ProbeWorker",
+      "comment": "First-party managed project: src/Converty.ProbeWorker/Converty.ProbeWorker.csproj",
+      "copyrightText": "NOASSERTION",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "name": "Converty.ProbeWorker",
       "versionInfo": "0.1.0-dev.20"
     },
     {
@@ -248,6 +259,11 @@
     },
     {
       "relatedSpdxElement": "SPDXRef-Project-Converty.Ipc",
+      "relationshipType": "DESCRIBES",
+      "spdxElementId": "SPDXRef-DOCUMENT"
+    },
+    {
+      "relatedSpdxElement": "SPDXRef-Project-Converty.ProbeWorker",
       "relationshipType": "DESCRIBES",
       "spdxElementId": "SPDXRef-DOCUMENT"
     },
