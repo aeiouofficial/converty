@@ -1,28 +1,34 @@
 {
   "schemaVersion": 1,
-  "workspaceVersion": "0.1.0-dev.20",
-  "evidenceDate": "2026-09-02",
+  "workspaceVersion": "0.1.0-dev.21",
+  "evidenceDate": "2026-09-18",
+  "releaseAuthority": {
+    "version": "0.1.0-dev.20",
+    "mainSha": "8a1f46603aa842728247bc11b34fcccf121858fd",
+    "treeSha": "4bd6f8d7acbadd60a3488870c773d2eafd67ba26",
+    "workflowRunId": 33671671714,
+    "continuityJobId": 100386513722,
+    "staticJobId": 100386513825,
+    "managedJobId": 100386513350,
+    "status": "FROZEN_EXACT_MAIN_SUCCESS"
+  },
   "behaviorQualification": {
-    "baselineFrozenDev19": {
-      "headSha": "eb0ce66dab646427d5bef1548c12e5cc4765b2f1",
-      "treeSha": "337a4e11fb41bab6b6eeb462c3755381580f06c1",
-      "workflowRunId": 33597504612,
-      "managedJobId": 100143814261,
-      "staticJobId": 100143814189,
-      "continuityJobId": 100143814059,
-      "allJobs": "SUCCESS"
-    },
     "managed": {
       "lockedRestore": "PASS",
-      "managedProjects": 18,
+      "managedProjects": 19,
       "dependencyAudit": "PASS",
-      "auditProjects": 18,
-      "auditFrameworks": 18,
+      "auditProjects": 19,
+      "auditFrameworks": 19,
       "vulnerablePackages": 0,
       "releaseBuild": "PASS",
       "warnings": 0,
       "errors": 0,
-      "tests": {"total": 260, "succeeded": 260, "failed": 0, "skipped": 0},
+      "tests": {
+        "total": 392,
+        "succeeded": 392,
+        "failed": 0,
+        "skipped": 0
+      },
       "nativeTopologySmoke": "PASS",
       "nativeExplorerReleaseBuild": "PASS",
       "developmentFfmpegPinHashAndExecution": "PASS",
@@ -30,93 +36,89 @@
       "directShellDllClassFactoryInvoke": "PASS",
       "loosePackageRegistrationComActivationInvoke": "PASS",
       "productBridgeToStrictWorkerFfmpegSmoke": "PASS",
-      "audioSourceActionMatrix": {"sources": 6, "actions": 6, "successfulConversions": 36, "status": "PASS"},
-      "audioMalformedAndTruncated": "PASS; deterministic exit 4",
-      "audioMixedBatchIsolation": {"attempts": 2, "selectionItems": 5, "validItems": 3, "invalidItems": 2, "bridgeExitCode": 4, "singleBridgeProcessPerAttempt": true, "laterValidItemsPublished": true, "status": "PASS"},
-      "imageSourceActionMatrix": {"sources": 8, "actions": 3, "successfulConversions": 24, "status": "PASS"},
-      "imageMalformedAndTruncated": "PASS; deterministic exit 4",
-      "imageMixedBatchIsolation": {"attempts": 2, "selectionItems": 5, "validItems": 3, "invalidItems": 2, "bridgeExitCode": 4, "singleBridgeProcessPerAttempt": true, "laterValidItemsPublished": true, "status": "PASS"},
-      "videoSourceActionMatrix": {"sources": 9, "actions": 3, "successfulConversions": 27, "status": "PASS"},
-      "videoSources": ["mp4", "mov", "mkv", "avi", "webm", "m4v", "mpeg", "mpg", "wmv"],
-      "videoActions": ["video.mp4.h264", "video.webm.vp9", "extract.audio.mp3"],
-      "videoExpectedCodecs": {"video.mp4.h264": "h264+aac", "video.webm.vp9": "vp9+opus", "extract.audio.mp3": "mp3 audio only"},
-      "videoMalformed": {"repeated": true, "bridgeExitCode": 4, "deterministic": true, "status": "PASS"},
-      "videoTruncated": {"repeated": true, "bridgeExitCode": 4, "deterministic": true, "status": "PASS"},
-      "videoMixedBatchIsolation": {"attempts": 2, "selectionItems": 5, "validItems": 3, "invalidItems": 2, "bridgeExitCode": 4, "singleBridgeProcessPerAttempt": true, "laterValidItemsPublished": true, "sourceTargetAliasGuard": true, "status": "PASS"},
-      "sourceAndExistingDestinationPreserved": "PASS for Audio, Image and Video acceptance/batch qualification",
-      "numberedNoOverwritePublication": "PASS",
-      "partialOutputCleanup": "PASS",
-      "orphanConverterProcessCleanup": "PASS"
+      "probeWorkerFfprobeAcceptance": "PASS",
+      "audioSourceActionMatrix": {
+        "sources": 6,
+        "actions": 6,
+        "successfulConversions": 36,
+        "status": "PASS"
+      },
+      "imageSourceActionMatrix": {
+        "sources": 8,
+        "actions": 3,
+        "successfulConversions": 24,
+        "status": "PASS"
+      },
+      "videoSourceActionMatrix": {
+        "sources": 9,
+        "actions": 3,
+        "successfulConversions": 27,
+        "status": "PASS"
+      },
+      "dev21Task9StrictActualEngineContainment": "PASS",
+      "dev21Task10CopyRemuxTranscodeQualification": "PASS"
     },
     "static": {
-      "tests": {"total": 103, "succeeded": 103, "failed": 0},
-      "contractVectors": {"total": 5, "succeeded": 5, "failed": 0},
-      "ciPins": "PASS after dev20 pin-manifest version alignment",
+      "tests": {
+        "total": 132,
+        "succeeded": 132,
+        "failed": 0
+      },
+      "contractVectors": {
+        "total": 5,
+        "succeeded": 5,
+        "failed": 0
+      },
+      "immutableActionPins": "PASS",
+      "hashLockedPythonDependencies": "PASS",
       "releaseInputPreflight": "PASS"
     }
   },
-  "dev20": {
-    "branch": "dev/0.1.0-dev.20-video-foundation",
-    "branchBaseSha": "eb0ce66dab646427d5bef1548c12e5cc4765b2f1",
-    "behaviorHeadSha": "b8019ecf926fce9813fdcd2cbd74e5f59e439d08",
-    "behaviorWorkflowRunId": 33669379940,
-    "behaviorManagedJobId": 100378904264,
-    "behaviorStaticJobId": 100378904132,
-    "behaviorContinuityJobId": 100378903696,
-    "currentPreCurationHeadSha": "4121f91da887dee5f873e42f6699904c7c0aa429",
-    "headSemantics": "behavior-qualified development line; curation and generated-authority commits advance the branch and must always be re-read live",
-    "qualificationStatus": "VIDEO_BEHAVIOR_GREEN_FINAL_AUTHORITY_OPEN",
-    "scope": "Existing fixed Video product-surface qualification; no new Video architecture",
-    "successfulPackagedConversions": 27,
-    "repeatedNegativeCases": ["malformed advertised Video", "physically truncated Video"],
-    "mixedBatchSelection": ["valid mp4", "malformed avi", "valid mov", "truncated mkv", "valid webm"],
-    "mixedBatchAttempts": 2,
-    "expectedAggregateExitCode": 4,
-    "laterValidItemsMustPublish": true,
-    "invalidItemsMustNotPublish": true,
-    "sourceAndExistingDestinationPreserved": true,
-    "partialCleanupRequired": true,
-    "orphanConverterProcessCleanupRequired": true,
-    "productionBehaviorChanged": false,
-    "preAuthorityWorkspace": {
-      "behaviorRunDeterministicDoubleBuild": "PASS",
-      "sha256": "5db1e06c084e58354aa2445f3645d1b53c760fc63f565fe7960224c2eec2467f",
-      "bytes": 505672,
-      "zipEntries": 383,
-      "semanticArchiveVerification": "BLOCKED_AS_EXPECTED_BY_STALE_TRACKED_GENERATED_AUTHORITY",
-      "verifiedDelivery": "NOT_PRODUCED",
-      "finalAuthority": false
+  "dev21": {
+    "branch": "dev/0.1.0-dev.21",
+    "branchBaseSha": "8a1f46603aa842728247bc11b34fcccf121858fd",
+    "designSpecSha": "d80cc33a2e7c38738f113856e95f1451fd2df1b0",
+    "implementationPlanSha": "e54061368b476184a89dcadb1d6b8a8f6fb6cf68",
+    "preAuthorityEngineeringHeadSha": "277f6c30f5fd22b3107604304717e56839e76641",
+    "preAuthorityEngineeringTreeSha": "b8c1f9ea203e532e235a94174740bb23821c7d86",
+    "task11WorkflowRunId": 35299376030,
+    "task11ManagedJobId": 105458586125,
+    "task11StaticJobId": 105458586278,
+    "task11ContinuityJobId": 105458586284,
+    "cumulativeScope": "Tasks 1-11: bounded probe contracts and serialization, worker containment, ProbeWorker/ffprobe boundary, provider token ownership, deterministic Video planning, explicit mode execution with managed byte-exact Copy, stage-probe-plan-execute-postvalidate-publish integration, real descendant containment, packaged Copy/Remux/Transcode qualification, governance/supply-chain hardening",
+    "currentTests": "392/392 managed; 132/132 static; 5/5 vectors",
+    "deterministicPreAuthorityWorkspace": {
+      "sha256": "e2b1be0a4f5c8ab1f4cb0b936e3289795cabc81f0144d974c8e5a036b6bf1986",
+      "bytes": 613591,
+      "files": 442,
+      "semanticVerification": "BLOCKED_AS_EXPECTED_BY_STALE_TRACKED_GENERATED_AUTHORITY"
     },
-    "preCurationGeneratedAuthority": {
-      "runId": 33669979101,
-      "artifactId": 9862090305,
-      "artifactSha256": "7cb43be8a0a67cf5e0deb19c79827c9df786a26777ddd7f11bdc9cf95d5edba2",
-      "generatedPackageManifestEntries": 381,
-      "generatedShaManifestEntries": 382,
-      "usableForFinalSync": false,
-      "reason": "This curation commit changes the workspace; final authority must be regenerated from the exact curated canonical dev20 head."
-    }
-  },
-  "tddHistory": {
-    "dev20Design": "9da11ee8a1c8063fb21493cbdde3ce5197c7d968",
-    "dev20Plan": "5295ae7b7304f82e567b58095b4600ea664b4b48",
-    "dev20StaticRed": {"headSha": "ea6987ddea57de71661b73e9f073cddb1c3f0bd3", "runId": 33668918551, "staticJobId": 100377398869, "result": "RED: new dev20 Video static contract failed because Video harnesses/CI wiring were absent"},
-    "dev20ManagedCharacterization": "680ed9ff3b3012b4848667124257924b2f95d7b6",
-    "dev20VideoAcceptanceHarness": "57a18c7f3c237dffb8fab056acf635f848e0a097",
-    "dev20VideoMixedBatchHarness": "f0be9311cf84dfc9ed63266db8464cab779c933e",
-    "dev20CiWiring": "b8019ecf926fce9813fdcd2cbd74e5f59e439d08",
-    "dev20BehaviorGreen": {"headSha": "b8019ecf926fce9813fdcd2cbd74e5f59e439d08", "runId": 33669379940, "result": "Video 27/27 + repeated malformed/truncated + mixed batch twice PASS; Audio/Image regressions PASS; 260/260 managed; 103/103 static within managed qualification"},
-    "dev20VersionBump": "ddaac6adeabfb30266ec4d210c9ff1313be40d32",
-    "dev20PinManifestAlignment": "4121f91da887dee5f873e42f6699904c7c0aa429"
+    "task11GeneratedAuthorityInput": {
+      "artifactId": 10529710374,
+      "artifactDigest": "sha256:0029b1def03e329572ef221edc8779c89158a695b0be26ce02a05487e01e99ec",
+      "crc": "PASS",
+      "exactFourMemberSet": "PASS",
+      "artifactWorkspaceVersion": "0.1.0-dev.20",
+      "eligibleForDev21FinalSync": false,
+      "reason": "The artifact correctly reflects the pre-curation workspace but is still versioned dev.20. Dev.21 non-generated authority must be curated first, then regenerated by ordinary CI."
+    },
+    "task12Status": "PRE_AUTHORITY_CURATION",
+    "frozen": false,
+    "customerShipReady": false
   },
   "metadataCuration": {
-    "scope": "non-generated repository authority, evidence and handover curation before final CI-generated authority",
+    "scope": "Non-generated dev.21 version, repository authority, evidence and recursive handover state before final CI-generated authority.",
     "productBehaviorChanged": false,
-    "rule": "final generated authority must come from ordinary CI on the exact curated canonical dev20 head before promotion"
+    "generatedAuthorityHandEdited": false,
+    "rule": "The four generated authority files must be regenerated by ordinary CI and synchronized only from an independently verified exact artifact through the guarded exact-parent self-deleting workflow."
   },
-  "headedWindows11Acceptance": "OPEN",
-  "productionSignedPackageB2Requalification": "OPEN",
-  "productionFfmpegRedistributionApproval": "OPEN",
-  "signedProductionMsixLifecycle": "OPEN",
-  "finalSecurityFuzzChaosReleaseEndUserAcceptance": "OPEN"
+  "releaseBlockers": {
+    "liveRepositoryRuleset": "OPEN",
+    "mainBranchProtection": "OPEN",
+    "headedWindows11ExplorerAcceptance": "OPEN",
+    "productionSignedPackageB2Requalification": "OPEN",
+    "productionFfmpegRedistributionApproval": "OPEN",
+    "signedProductionMsixLifecycle": "OPEN",
+    "finalSecurityFuzzChaosReleaseEndUserAcceptance": "OPEN"
+  }
 }

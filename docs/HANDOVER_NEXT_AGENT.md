@@ -1,41 +1,31 @@
-# Converty continuation handover — dev.20 Video qualification pre-authority closure
+# Converty continuation handover — dev.21 Task 12 authority stabilization
 
 Repository: `aeiouofficial/converty`  
 Default branch: `main`  
-Development branch: `dev/0.1.0-dev.20-video-foundation`
+Development branch: `dev/0.1.0-dev.21`
 
-Read `docs/HANDOVER_PROMPT.txt` first. Re-fetch live refs before writes or completion claims.
+Read `docs/HANDOVER_PROMPT.txt` first and fresh-read GitHub before writes or completion claims.
 
-## Frozen baseline
-Dev.19 exact-main authority remains `eb0ce66dab646427d5bef1548c12e5cc4765b2f1`, tree `337a4e11fb41bab6b6eeb462c3755381580f06c1`, run `33597504612`; continuity `100143814059`, static `100143814189`, managed `100143814261` SUCCESS.
+## Frozen release authority
+`0.1.0-dev.20` remains frozen at exact main `8a1f46603aa842728247bc11b34fcccf121858fd`, tree `4bd6f8d7acbadd60a3488870c773d2eafd67ba26`, exact-main CI `33671671714` SUCCESS.
 
-## Dev.20 behavior
-Approved Design A qualifies the existing nine Video source extensions against the three existing fixed actions; it does not add a new Video subsystem.
+## Current dev.21 pre-authority evidence
+Engineering head before Task-12 metadata curation: `277f6c30f5fd22b3107604304717e56839e76641` / tree `b8c1f9ea203e532e235a94174740bb23821c7d86`. CI `35299376030`: 392/392 managed, 132/132 static, 5/5 vectors, 19/19 dependency audit with zero vulnerable-result packages, Build 0 warnings/errors, all recursive product/security gates PASS before the expected stale-authority closure.
 
-RED: `ea6987ddea57de71661b73e9f073cddb1c3f0bd3`, run `33668918551`, static job `100377398869`.
+Generated artifact `10529710374` / `sha256:0029b1def03e329572ef221edc8779c89158a695b0be26ce02a05487e01e99ec` independently passes digest, CRC and exact four-member verification, but its package/SBOM version is still `0.1.0-dev.20`. Do not synchronize it as final dev.21 authority.
 
-GREEN behavior head: `b8019ecf926fce9813fdcd2cbd74e5f59e439d08`, run `33669379940`.
-- Video 27/27 real packaged conversions PASS.
-- MP4 ffprobe h264+aac; WebM vp9+opus; MP3 audio-only PASS.
-- malformed/truncated Video repeated deterministic exit 4 PASS.
-- mixed batch valid MP4 → malformed AVI → valid MOV → truncated MKV → valid WebM repeated twice, aggregate exit 4 after all members, later valids publish PASS.
-- sources/pre-existing destinations preserved; numbered publication; no partials/orphan worker/FFmpeg PASS.
-- Audio/Image regressions PASS.
-- 260/260 managed, 103/103 static within managed qualification, 5/5 vectors PASS.
-- no production source-code change required.
+## Exact next action
+1. Let ordinary CI run on the exact metadata-curated dev.21 head.
+2. Obtain and independently verify the fresh generated-authority artifact: digest, CRC, exact four members and `0.1.0-dev.21` alignment.
+3. Use the historical guarded exact-parent/exact-branch/self-deleting workflow to synchronize only those four files.
+4. Require exact synchronized candidate generated-authority zero-diff and complete Windows deterministic workspace/delivery qualification.
+5. Independently verify final generated-authority and verified-delivery artifacts.
+6. Stop before main promotion while any required governance/signing/provenance/headed-release prerequisite is open; document the blocker rather than weakening a gate.
 
-Version is now `0.1.0-dev.20`; CI action pin authority has been version-aligned. Pre-curation generated artifact `9862090305` / `sha256:7cb43be8a0a67cf5e0deb19c79827c9df786a26777ddd7f11bdc9cf95d5edba2` is deliberately not final because this curation changes the workspace.
+## Invariants
+`Explorer → fixed Bridge → private staging → strict RO ProbeWorker/fixed ffprobe → typed bounded facts → Core planner → strict EngineWorker → managed Copy OR provider-fixed Remux/Transcode → fixed app-local FFmpeg → post-probe TargetMediaContract → transactional numbered no-overwrite publication`.
 
-## Required next action
-Run ordinary CI on the exact curated dev.20 head, independently verify the newly generated four-file authority artifact, synchronize it only via a guarded exact-parent/self-deleting workflow, then require branch zero-diff + full managed workspace/delivery qualification. Re-read unchanged frozen dev.19 `main` before non-force promotion; after promotion require fresh exact-main three-job SUCCESS and independently verified exact-main artifacts.
+No shell/raw FFmpeg/PATH-CWD lookup/arbitrary executable or plugin/ordinary conversion network/silent Strict→Compatibility/hardware acceleration/private signing keys.
 
-## Next tranche after freeze
-`0.1.0-dev.21` — current roadmap target: B8 Video Copy/Remux/Transcode planning/qualification. Reconcile live Roadmap/Plan/Tasks before starting it.
-
-## Invariants / still open
-`IExplorerCommand DLL → fixed app-local Bridge → strict disposable EngineWorker/provider → fixed app-local FFmpeg → private staging → validated transactional numbered no-overwrite publication`.
-
-No shell construction, raw FFmpeg passthrough, PATH lookup, arbitrary converter/plugin discovery, ordinary conversion network dependency, silent Strict→Compatibility fallback, or repository signing keys. Headed Windows 11 Explorer acceptance, production FFmpeg redistribution approval, production signed-package B2, signed MSIX lifecycle, UX/settings, plugin SDK, final fuzz/chaos/security/release/end-user gates remain OPEN.
-
-## Recursive handover rule
-At every completed work block, reconcile GitHub authority with Slack/Drive, update canonical docs in place, mark the current OPEN handover PROCESSED with successor reference, then publish exactly one context-free successor OPEN containing current authority/evidence, completed work, blockers/unverified items, invariants, exact next task and acceptance criteria.
+## Recursive lifecycle
+Reconcile GitHub first, then canonical Drive/Slack in place. Mark the current OPEN Slack handover PROCESSED before publishing exactly one successor OPEN. Preserve exact evidence and explicitly unverified release claims.

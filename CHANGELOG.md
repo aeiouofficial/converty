@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.1.0-dev.21 — 2026-09-18 — development / pre-authority
+- Completed the dev.21 Tasks 1–11 implementation line under the approved security design and committed plan: bounded probe contracts/serialization, streaming stdout limits and read-only probe scope, strict ProbeWorker/ffprobe boundary, provider-only FFmpeg token ownership, deterministic Video planning, explicit mode-aware EngineWorker execution, managed byte-exact Copy with SHA-256 proof, post-probe TargetMediaContract publication gating, actual ffprobe/ffmpeg descendant containment, packaged Copy/Remux/Transcode qualification, and CI governance/supply-chain hardening.
+- Current pre-authority engineering head `277f6c30f5fd22b3107604304717e56839e76641` / tree `b8c1f9ea203e532e235a94174740bb23821c7d86`; Task-11 run `35299376030` proves 392/392 managed, 132/132 static, 5/5 vectors, 19/19 dependency audit with zero vulnerable-result packages, Release 0 warnings/errors, Audio36/Image24/Video27 + negatives/mixed, Task9 containment and Task10 mode qualification.
+- Permanent CI now installs Python static dependencies from a committed SHA-256 hash lock under `--require-hashes --only-binary=:all:`; external Actions remain exact full-SHA pinned and permanent workflow permission remains `contents: read`.
+- Task-11 generated-authority artifact `10529710374` / `sha256:0029b1def03e329572ef221edc8779c89158a695b0be26ce02a05487e01e99ec` independently passes ZIP digest, CRC and exact four-member verification, but is still versioned `0.1.0-dev.20`. It is retained as Task-12 input only and is not eligible as final dev.21 authority.
+- Task 12 starts with non-generated dev.21 authority/evidence curation. The four generated authority files remain untouched until ordinary CI regenerates them from the exact curated head.
+- Frozen release authority remains `0.1.0-dev.20` on exact main `8a1f46603aa842728247bc11b34fcccf121858fd`; no dev.21 freeze/release claim is made.
+- Promotion is explicitly blocked unless required live repository governance plus production signing/provenance/headed-release prerequisites are genuinely satisfied.
+
 ## 0.1.0-dev.19 — 2026-09-02
 - Added focused Image multi-file failure-isolation coverage to prove later valid selections survive ordinary malformed/truncated members.
 - Added a real packaged Windows Image mixed-batch acceptance smoke using one Bridge process for valid PNG → malformed JPG → valid WebP → truncated BMP → valid JPEG, repeated twice.
