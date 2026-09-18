@@ -7,6 +7,7 @@ Product: Windows 11 Explorer modern-context-menu converter.
 Default branch: main.
 Current development branch: dev/0.1.0-dev.21.
 Workspace version being stabilized: 0.1.0-dev.21.
+Next workspace version after a fully frozen dev.21: 0.1.0-dev.22.
 Current lifecycle task: DEV.21 TASK 12 — generated authority stabilization / exact-candidate qualification.
 
 MISSION
