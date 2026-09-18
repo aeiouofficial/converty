@@ -20,7 +20,7 @@ def test_python_ci_dependencies_are_committed_and_hash_verified() -> None:
     ]
     assert package_lines, "lock file must contain pinned package entries"
     for line in package_lines:
-        assert re.fullmatch(r"[A-Za-z0-9_.-]+==[^\\s\\]+ \\\\", line), line
+        assert re.fullmatch(r"[A-Za-z0-9_.-]+==[^\s\\]+ \\", line), line
     assert text.count("--hash=sha256:") >= len(package_lines)
     assert "--require-hashes" not in text
 
@@ -38,9 +38,9 @@ def test_ci_installs_only_from_hash_locked_python_requirements() -> None:
 
 def test_permanent_workflow_permissions_remain_read_only() -> None:
     workflow = WORKFLOW.read_text(encoding="utf-8")
-    assert re.search(r"(?m)^permissions:\\n  contents: read$", workflow)
+    assert re.search(r"(?m)^permissions:\n  contents: read$", workflow)
     assert "write-all" not in workflow
-    assert not re.search(r"(?m)^\\s+[A-Za-z-]+: write\\s*$", workflow)
+    assert not re.search(r"(?m)^\s+[A-Za-z-]+: write\s*$", workflow)
 
 
 def test_future_main_governance_policy_is_explicit_but_not_claimed_live() -> None:
