@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "purpose": "production-msix",
+  "approvalStatus": "OPEN",
+  "approved": false,
+  "publisherSubject": null,
+  "signerCertificateSha256": null,
+  "packageFamilyName": null,
+  "msixSha256": null,
+  "authenticodeEvidence": null,
+  "msixSignatureEvidence": null,
+  "timestampEvidence": null,
+  "b2ProductionIdentityEvidence": null,
+  "cleanWindows11LifecycleEvidence": null,
+  "approvalRecord": null,
+  "notes": [
+    "Production signing identity and private keys are external release infrastructure and must never be stored in this repository.",
+    "Development identity, development package family, unsigned CI packages, and test certificates must never satisfy this manifest.",
+    "Approval requires evidence from the exact signed production MSIX candidate and clean Windows 11 lifecycle qualification."
+  ]
+}

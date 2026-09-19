@@ -55,6 +55,25 @@ def collect_status(check_live_github: bool) -> dict:
             production_engine_error = str(exc)
     else:
         production_engine_error = (production_result.stderr or production_result.stdout).strip()
+
+    production_package_result = subprocess.run(
+        [sys.executable, "scripts/verify_production_package.py", "--json"],
+        cwd=ROOT,
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+    production_package_approved = False
+    production_package_error = None
+    if production_package_result.returncode == 0:
+        try:
+            production_package_approved = bool(json.loads(production_package_result.stdout).get("approved"))
+        except json.JSONDecodeError as exc:
+            production_package_error = str(exc)
+    else:
+        production_package_error = (
+            production_package_result.stderr or production_package_result.stdout
+        ).strip()
     open_blockers = sorted(
         key for key, value in release_blockers.items()
         if str(value).upper() != "PASS"
@@ -71,11 +90,20 @@ def collect_status(check_live_github: bool) -> dict:
         "liveGithubError": None,
         "productionEngineApproved": production_engine_approved,
         "productionEngineError": production_engine_error,
+        "productionPackageApproved": production_package_approved,
+        "productionPackageError": production_package_error,
     }
 
     if not production_engine_approved:
         status["openBlockers"] = sorted(
             set(status["openBlockers"]) | {"productionFfmpegRedistributionApproval"}
+        )
+        status["shipReady"] = False
+
+    if not production_package_approved:
+        status["openBlockers"] = sorted(
+            set(status["openBlockers"])
+            | {"productionSignedPackageB2Requalification", "signedProductionMsixLifecycle"}
         )
         status["shipReady"] = False
 

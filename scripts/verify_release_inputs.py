@@ -44,6 +44,19 @@ def main() -> int:
             + (production_engine_result.stderr or production_engine_result.stdout).strip()
         )
 
+    production_package_result = subprocess.run(
+        [sys.executable, "scripts/verify_production_package.py", "--json"],
+        cwd=ROOT,
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+    if production_package_result.returncode != 0:
+        failures.append(
+            "production package evidence contract invalid: "
+            + (production_package_result.stderr or production_package_result.stdout).strip()
+        )
+
     policy_path = ROOT / "machine-readable" / "release_policy.json"
     try:
         policy = json.loads(policy_path.read_text(encoding="utf-8"))
