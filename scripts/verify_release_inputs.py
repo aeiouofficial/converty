@@ -31,6 +31,19 @@ def main() -> int:
     if ci_result.returncode != 0:
         failures.append("CI action provenance verification failed: " + (ci_result.stderr or ci_result.stdout).strip())
 
+    production_engine_result = subprocess.run(
+        [sys.executable, "scripts/verify_production_engine.py", "--json"],
+        cwd=ROOT,
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+    if production_engine_result.returncode != 0:
+        failures.append(
+            "production engine evidence contract invalid: "
+            + (production_engine_result.stderr or production_engine_result.stdout).strip()
+        )
+
     policy_path = ROOT / "machine-readable" / "release_policy.json"
     try:
         policy = json.loads(policy_path.read_text(encoding="utf-8"))

@@ -7,6 +7,7 @@ import os
 import sys
 import urllib.error
 import urllib.request
+import subprocess
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -37,6 +38,23 @@ def collect_status(check_live_github: bool) -> dict:
     evidence = load_json(BUILD_EVIDENCE)
     version = VERSION.read_text(encoding="utf-8").strip()
     release_blockers = evidence.get("releaseBlockers", {})
+
+    production_result = subprocess.run(
+        [sys.executable, "scripts/verify_production_engine.py", "--json"],
+        cwd=ROOT,
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+    production_engine_approved = False
+    production_engine_error = None
+    if production_result.returncode == 0:
+        try:
+            production_engine_approved = bool(json.loads(production_result.stdout).get("approved"))
+        except json.JSONDecodeError as exc:
+            production_engine_error = str(exc)
+    else:
+        production_engine_error = (production_result.stderr or production_result.stdout).strip()
     open_blockers = sorted(
         key for key, value in release_blockers.items()
         if str(value).upper() != "PASS"
@@ -51,7 +69,15 @@ def collect_status(check_live_github: bool) -> dict:
         "rulesetCount": None,
         "mainBranchProtected": None,
         "liveGithubError": None,
+        "productionEngineApproved": production_engine_approved,
+        "productionEngineError": production_engine_error,
     }
+
+    if not production_engine_approved:
+        status["openBlockers"] = sorted(
+            set(status["openBlockers"]) | {"productionFfmpegRedistributionApproval"}
+        )
+        status["shipReady"] = False
 
     if not check_live_github:
         return status
