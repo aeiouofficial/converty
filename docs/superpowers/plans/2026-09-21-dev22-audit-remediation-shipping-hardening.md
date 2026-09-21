@@ -47,3 +47,7 @@ Bump coherent non-generated authority to `0.1.0-dev.22`; reconcile docs/evidence
 
 ## Acceptance / review focus
 Final review must prove that release evidence cannot be satisfied by arbitrary strings, approvals are candidate/artifact-bound, live governance is inspected, promotion checks are not circular, partial batch failures remain observable, publication is crash-safe across volumes, secret scanning covers content, and no external evidence is fabricated.
+
+
+## Ruling — approval binding without self-referential Git SHAs
+A tracked approval manifest cannot embed the SHA/tree of the commit that contains that manifest: changing the manifest changes the tree and commit SHA. Dev.22 therefore binds external production approvals to an exact `subjectCommitSha` + `subjectTreeSha` + artifact SHA-256 + qualification workflow evidence. Final readiness must prove that the current candidate descends from that subject and that every post-subject change is restricted to an explicit evidence/generated-authority allowlist, then require fresh exact-current-candidate CI. Any product/code/workflow change after the subject invalidates the approval and requires requalification.
