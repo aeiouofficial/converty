@@ -132,13 +132,15 @@ public sealed class VideoConversionBatchRunnerTests
             var worker = new ModeRecordingWorkerClient([], corruptCopy: false);
             ConversionBatchRunner runner = CreateVideoRunner(worker, probe);
 
-            ConversionFailedException error = await Assert.ThrowsAsync<ConversionFailedException>(() =>
-                runner.RunAsync(
-                    PresetId.Parse("video.mp4.h264"),
-                    [broken, valid],
-                    TestContext.Current.CancellationToken));
+            ConversionBatchResult result = await runner.RunAsync(
+                PresetId.Parse("video.mp4.h264"),
+                [broken, valid],
+                TestContext.Current.CancellationToken);
 
-            Assert.Equal(broken, error.InputPath);
+            ConversionFileFailure failure = Assert.Single(result.Failures);
+            Assert.Equal(broken, failure.InputPath);
+            Assert.Single(result.Files);
+            Assert.True(result.HasFailures);
             Assert.Single(worker.Modes);
             Assert.False(File.Exists(Path.Combine(root, "broken (1).mp4")));
             Assert.Equal([1, 2, 3, 4], File.ReadAllBytes(Path.Combine(root, "valid (1).mp4")));

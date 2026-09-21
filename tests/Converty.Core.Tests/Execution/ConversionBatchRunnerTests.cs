@@ -162,6 +162,103 @@ public sealed class ConversionBatchRunnerTests
         }
     }
 
+
+    [Fact]
+    public async Task RunAsyncMissingMiddleMemberIsRecordedAndLaterMemberStillPublishes()
+    {
+        string root = CreateTempDirectory();
+        try
+        {
+            string first = Path.Combine(root, "first.wav");
+            string missing = Path.Combine(root, "missing.wav");
+            string last = Path.Combine(root, "last.wav");
+            File.WriteAllBytes(first, [1]);
+            File.WriteAllBytes(last, [3]);
+
+            var worker = new RecordingWorkerClient(exitCode: 0, writeOutput: true);
+            var runner = CreateRunner(worker);
+
+            ConversionBatchResult result = await runner.RunAsync(
+                PresetId.Parse("audio.mp3"),
+                [first, missing, last],
+                TestContext.Current.CancellationToken);
+
+            Assert.Equal(2, result.Files.Count);
+            ConversionFileFailure failure = Assert.Single(result.Failures);
+            Assert.Equal(missing, failure.InputPath);
+            Assert.True(result.HasFailures);
+            Assert.True(File.Exists(Path.Combine(root, "first.mp3")));
+            Assert.True(File.Exists(Path.Combine(root, "last.mp3")));
+        }
+        finally
+        {
+            Directory.Delete(root, recursive: true);
+        }
+    }
+
+    [Fact]
+    public async Task RunAsyncWorkerFailureReturnsPartialOutcomeInsteadOfDiscardingSuccesses()
+    {
+        string root = CreateTempDirectory();
+        try
+        {
+            string first = Path.Combine(root, "first.wav");
+            string second = Path.Combine(root, "second.wav");
+            File.WriteAllBytes(first, [1]);
+            File.WriteAllBytes(second, [2]);
+
+            var worker = new SequenceWorkerClient([1, 0]);
+            var runner = CreateRunner(worker);
+
+            ConversionBatchResult result = await runner.RunAsync(
+                PresetId.Parse("audio.mp3"),
+                [first, second],
+                TestContext.Current.CancellationToken);
+
+            Assert.Single(result.Files);
+            Assert.Single(result.Failures);
+            Assert.Equal(first, result.Failures[0].InputPath);
+            Assert.Equal(second, result.Files[0].InputPath);
+            Assert.True(result.HasFailures);
+        }
+        finally
+        {
+            Directory.Delete(root, recursive: true);
+        }
+    }
+
+    [Fact]
+    public async Task RunAsyncCreatesOwnedMarkerInsidePrivateStaging()
+    {
+        string root = CreateTempDirectory();
+        try
+        {
+            string input = Path.Combine(root, "voice.wav");
+            File.WriteAllBytes(input, [1]);
+            var worker = new RecordingWorkerClient(
+                exitCode: 0,
+                writeOutput: true,
+                afterWrite: (stagedInput, _) =>
+                {
+                    string staging = Path.GetDirectoryName(stagedInput)!;
+                    Assert.True(File.Exists(Path.Combine(staging, ".converty-owned")));
+                });
+            var runner = CreateRunner(worker);
+
+            ConversionBatchResult result = await runner.RunAsync(
+                PresetId.Parse("audio.mp3"),
+                [input],
+                TestContext.Current.CancellationToken);
+
+            Assert.Single(result.Files);
+            Assert.Empty(result.Failures);
+        }
+        finally
+        {
+            Directory.Delete(root, recursive: true);
+        }
+    }
+
     private static ConversionBatchRunner CreateRunner(IConversionWorkerClient worker) =>
         new(ProductPresetRegistry.Default, new OutputPathResolver(), worker, TimeSpan.FromMinutes(5));
 
@@ -201,4 +298,28 @@ public sealed class ConversionBatchRunnerTests
             return Task.FromResult(new ConversionWorkerResult(exitCode, exitCode == 0 ? string.Empty : "test failure"));
         }
     }
+    private sealed class SequenceWorkerClient(IEnumerable<int> exitCodes) : IConversionWorkerClient
+    {
+        private readonly Queue<int> _exitCodes = new(exitCodes);
+
+        public Task<ConversionWorkerResult> ExecuteAsync(
+            PresetId presetId,
+            string stagedInputPath,
+            string stagedOutputPath,
+            TimeSpan timeout,
+            CancellationToken cancellationToken = default)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            int exitCode = _exitCodes.Dequeue();
+            if (exitCode == 0)
+            {
+                File.WriteAllBytes(stagedOutputPath, [7]);
+            }
+
+            return Task.FromResult(new ConversionWorkerResult(
+                exitCode,
+                exitCode == 0 ? string.Empty : "member failure"));
+        }
+    }
+
 }
