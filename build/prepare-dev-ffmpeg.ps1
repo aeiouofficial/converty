@@ -106,23 +106,21 @@ $ffmpegExitCode = $LASTEXITCODE
 if ($ffmpegExitCode -ne 0) {
     throw "Pinned development ffmpeg.exe did not execute successfully (exit code $ffmpegExitCode)."
 }
+$ffmpegVersionOutput | Select-Object -First 1 | Write-Host
 $ffmpegVersionLine = [string]($ffmpegVersionOutput | Select-Object -First 1)
 if ($ffmpegVersionLine -notlike "*$($pin.expectedVersionToken)*") {
     throw "Pinned development ffmpeg.exe version mismatch: $ffmpegVersionLine"
 }
-$ffmpegVersionLine | Write-Host
-
 $ffprobeVersionOutput = @(& $ffprobeOutputPath -hide_banner -version 2>&1)
 $ffprobeExitCode = $LASTEXITCODE
 if ($ffprobeExitCode -ne 0) {
     throw "Pinned development ffprobe.exe did not execute successfully (exit code $ffprobeExitCode)."
 }
+$ffprobeVersionOutput | Select-Object -First 1 | Write-Host
 $ffprobeVersionLine = [string]($ffprobeVersionOutput | Select-Object -First 1)
 if ($ffprobeVersionLine -notlike "*$($pin.expectedVersionToken)*") {
     throw "Pinned development ffprobe.exe version mismatch: $ffprobeVersionLine"
 }
-$ffprobeVersionLine | Write-Host
-
 Write-Host "Development FFmpeg release tag: $($pin.releaseTag)"
 Write-Host "Development FFmpeg asset ID: $($pin.releaseAssetId)"
 Write-Host "Development FFmpeg source commit: $($pin.sourceCommit)"
