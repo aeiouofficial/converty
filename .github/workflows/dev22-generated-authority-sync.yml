@@ -1,0 +1,104 @@
+name: dev22-generated-authority-sync
+
+on:
+  push:
+    branches:
+      - dev/0.1.0-dev.22-shipping-readiness
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  sync:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Checkout exact staging commit
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 2
+          persist-credentials: false
+
+      - name: Guard exact branch and exact curated parent
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$GITHUB_REF_NAME" = "dev/0.1.0-dev.22-shipping-readiness"
+          test "$(git rev-parse HEAD^)" = "198bae1b7c3f0a2f395175f225a35cdde1f431c2"
+
+      - name: Download and verify pinned generated authority
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          curl -fL --retry 3 \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer ${GH_TOKEN}" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            "https://api.github.com/repos/${GITHUB_REPOSITORY}/actions/artifacts/10668562565/zip" \
+            -o /tmp/generated-authority.zip
+          echo "80c19af7b91f08c44018e2d7c0c6834c594b948cb12c9329f4260ee0cecb081c  /tmp/generated-authority.zip" | sha256sum -c -
+          python - <<'PY'
+          import hashlib, json, pathlib, zipfile
+          archive = pathlib.Path('/tmp/generated-authority.zip')
+          expected = {
+              'SHA256SUMS.txt': '4bd77a8b7837cf95b926438fb7177a72aa3b221b04955e957b8d8cbf06d3cd6b',
+              'machine-readable/package_manifest.json': '8ba5575cad9ba5a9217b0b16150e0b1371a19a663ef2b821b775e4523fa5d663',
+              'machine-readable/release_sbom.spdx.json': '8efbe8f1b2aed839702e72c953ac6927d5cdd59ea16f4b39b40f19179c4213de',
+              'machine-readable/source_sbom.spdx.json': 'b36275b1457b8501b7b6a3af5e66b84e676976fcfa22d4ca839de2ce7581cf0b',
+          }
+          with zipfile.ZipFile(archive) as z:
+              assert z.testzip() is None
+              assert set(z.namelist()) == set(expected)
+              for name, digest in expected.items():
+                  data = z.read(name)
+                  assert hashlib.sha256(data).hexdigest() == digest, name
+              package = json.loads(z.read('machine-readable/package_manifest.json'))
+              source = json.loads(z.read('machine-readable/source_sbom.spdx.json'))
+              release = json.loads(z.read('machine-readable/release_sbom.spdx.json'))
+              assert package['workspaceVersion'] == '0.1.0-dev.22'
+              assert source['name'] == 'Converty-source-0.1.0-dev.22'
+              assert release['name'] == 'Converty-release-0.1.0-dev.22'
+              z.extractall('.')
+          PY
+
+      - name: Self-delete and commit only generated authority
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          rm .github/workflows/dev22-generated-authority-sync.yml
+          python - <<'PY'
+          import subprocess
+          expected = {
+              '.github/workflows/dev22-generated-authority-sync.yml',
+              'SHA256SUMS.txt',
+              'machine-readable/package_manifest.json',
+              'machine-readable/release_sbom.spdx.json',
+              'machine-readable/source_sbom.spdx.json',
+          }
+          lines = subprocess.check_output(['git','status','--porcelain=v1'], text=True).splitlines()
+          actual = {line[3:] for line in lines if line.strip()}
+          assert actual == expected, (actual, expected)
+          PY
+          git add -- .github/workflows/dev22-generated-authority-sync.yml SHA256SUMS.txt machine-readable/package_manifest.json machine-readable/release_sbom.spdx.json machine-readable/source_sbom.spdx.json
+          python - <<'PY'
+          import subprocess
+          expected = [
+              '.github/workflows/dev22-generated-authority-sync.yml',
+              'SHA256SUMS.txt',
+              'machine-readable/package_manifest.json',
+              'machine-readable/release_sbom.spdx.json',
+              'machine-readable/source_sbom.spdx.json',
+          ]
+          actual = subprocess.check_output(['git','diff','--cached','--name-only'], text=True).splitlines()
+          assert sorted(actual) == sorted(expected), actual
+          PY
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "chore: synchronize dev22 generated authority"
+          git push "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" HEAD:dev/0.1.0-dev.22-shipping-readiness
