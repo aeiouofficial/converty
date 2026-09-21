@@ -43,6 +43,8 @@ jobs:
         with:
           python-version: '3.13'
       - name: Enforce candidate release readiness
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
         run: python scripts/verify_release_readiness.py --require-ready --live-github
 
   main-authority-continuity:
