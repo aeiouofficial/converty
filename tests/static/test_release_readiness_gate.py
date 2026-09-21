@@ -35,6 +35,7 @@ def test_candidate_readiness_ci_is_read_only_and_hash_locked() -> None:
     assert "actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1" in text
     assert "actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97" in text
     assert "python scripts/verify_release_readiness.py --require-ready --live-github" in text
+    assert "GITHUB_TOKEN: ${{ github.token }}" in text
     assert "contents: write" not in text
 
 

@@ -112,7 +112,10 @@ def test_handover_and_release_authority_are_current() -> None:
 
 def test_ci_checkout_does_not_persist_credentials_and_jobs_have_timeouts() -> None:
     workflow = (ROOT / ".github/workflows/ci.yml").read_text(encoding="utf-8")
-    assert workflow.count("persist-credentials: false") == 3
+    checkout_count = workflow.count("uses: actions/checkout@")
+    credential_disable_count = workflow.count("persist-credentials: false")
+    assert checkout_count > 0
+    assert credential_disable_count == checkout_count
     assert "timeout-minutes: 5" in workflow
     assert "timeout-minutes: 15" in workflow
     assert "timeout-minutes: 30" in workflow
