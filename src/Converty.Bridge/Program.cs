@@ -31,7 +31,19 @@ internal static class Program
                 ProbeWorkerClient.CreateForApplicationBaseDirectory(),
                 VideoProductCapabilityCatalog.CreatePlanner(),
                 ConversionBatchRunner.MaximumExecutionTimeout);
-            _ = await runner.RunAsync(request.PresetId, request.InputPaths).ConfigureAwait(false);
+            ConversionBatchResult result = await runner
+                .RunAsync(request.PresetId, request.InputPaths)
+                .ConfigureAwait(false);
+            if (result.HasFailures)
+            {
+                ConversionFileFailure firstFailure = result.Failures[0];
+                string inputName = Path.GetFileName(firstFailure.InputPath);
+                BridgeErrorDialog.Show(
+                    $"Converty converted {result.Files.Count} file(s), but {result.Failures.Count} file(s) failed. "
+                    + $"First failure: '{inputName}'. {firstFailure.Message}");
+                return ConversionFailure;
+            }
+
             return Success;
         }
         catch (Exception error) when (error is ArgumentException or KeyNotFoundException)

@@ -1,3 +1,4 @@
+using System.Runtime.ExceptionServices;
 using System.Security.Cryptography;
 using Converty.Contracts.Conversion;
 using Converty.Contracts.Identifiers;
@@ -61,64 +62,127 @@ public sealed class ConversionBatchRunner
 
         ProductPresetDefinition preset = _presets.GetRequired(presetId);
         var results = new List<ConversionFileResult>(inputPaths.Count);
-        ConversionFailedException? firstConversionFailure = null;
+        var failures = new List<ConversionFileFailure>();
+        Exception? firstMemberFailure = null;
+
+        ConversionStagingDirectory.CleanupStaleOwnedJobs();
 
         foreach (string inputPath in inputPaths)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            ValidateInputPath(inputPath, preset);
 
-            string plannedOutputPath = _outputPaths.Resolve(inputPath, preset.OutputExtension);
-            ConversionStagingPaths staging = ConversionStagingDirectory.Create(inputPath, preset.OutputExtension);
+            string? plannedOutputPath = null;
+            ConversionStagingPaths? staging = null;
+            Exception? memberFailure = null;
+
             try
             {
                 try
                 {
-                    ConversionWorkerResult execution;
-                    if (preset.InputKind == ProductMediaKind.Video)
+                    ValidateInputPath(inputPath, preset);
+                }
+                catch (Exception error) when (
+                    error is ArgumentException
+                    or FileNotFoundException
+                    or InvalidOperationException)
+                {
+                    memberFailure = error;
+                }
+
+                if (memberFailure is null)
+                {
+                    try
                     {
-                        execution = await ExecuteVideoAsync(
-                            inputPath,
-                            plannedOutputPath,
-                            preset,
-                            staging,
-                            cancellationToken).ConfigureAwait(false);
+                        plannedOutputPath = _outputPaths.Resolve(inputPath, preset.OutputExtension);
+                        staging = ConversionStagingDirectory.Create(inputPath, preset.OutputExtension);
                     }
-                    else
+                    catch (Exception error) when (
+                        error is IOException
+                        or UnauthorizedAccessException
+                        or NotSupportedException)
                     {
-                        execution = await _workerClient.ExecuteAsync(
-                            preset.Id,
-                            staging.InputPath,
-                            staging.OutputPath,
-                            _executionTimeout,
-                            cancellationToken).ConfigureAwait(false);
-                        EnsureSuccessfulWorkerOutput(inputPath, plannedOutputPath, staging.OutputPath, execution);
+                        memberFailure = error;
+                    }
+                }
+
+                if (memberFailure is null && staging is not null && plannedOutputPath is not null)
+                {
+                    ConversionWorkerResult? execution = null;
+                    try
+                    {
+                        if (preset.InputKind == ProductMediaKind.Video)
+                        {
+                            execution = await ExecuteVideoAsync(
+                                inputPath,
+                                plannedOutputPath,
+                                preset,
+                                staging,
+                                cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
+                            execution = await _workerClient.ExecuteAsync(
+                                preset.Id,
+                                staging.InputPath,
+                                staging.OutputPath,
+                                _executionTimeout,
+                                cancellationToken).ConfigureAwait(false);
+                            EnsureSuccessfulWorkerOutput(
+                                inputPath,
+                                plannedOutputPath,
+                                staging.OutputPath,
+                                execution);
+                        }
+                    }
+                    catch (ConversionFailedException error)
+                    {
+                        memberFailure = error;
                     }
 
-                    string publishedOutputPath = PublishTemporaryOutput(
-                        inputPath,
-                        preset.OutputExtension,
-                        staging.OutputPath);
-                    results.Add(new ConversionFileResult(inputPath, publishedOutputPath, execution.ExitCode));
-                }
-                catch (ConversionFailedException error)
-                {
-                    // One bad selection must not suppress later independent files in the same Explorer batch.
-                    firstConversionFailure ??= error;
+                    if (memberFailure is null && execution is not null)
+                    {
+                        try
+                        {
+                            string publishedOutputPath = PublishTemporaryOutput(
+                                inputPath,
+                                preset.OutputExtension,
+                                staging.OutputPath);
+                            results.Add(new ConversionFileResult(
+                                inputPath,
+                                publishedOutputPath,
+                                execution.ExitCode));
+                        }
+                        catch (Exception error) when (
+                            error is IOException
+                            or UnauthorizedAccessException
+                            or NotSupportedException)
+                        {
+                            memberFailure = error;
+                        }
+                    }
                 }
             }
             finally
             {
-                ConversionStagingDirectory.DeleteOwned(staging.DirectoryPath);
+                if (staging is not null)
+                {
+                    ConversionStagingDirectory.DeleteOwned(staging.DirectoryPath);
+                }
+            }
+
+            if (memberFailure is not null)
+            {
+                firstMemberFailure ??= memberFailure;
+                failures.Add(ToFileFailure(inputPath, plannedOutputPath, memberFailure));
             }
         }
 
-        if (firstConversionFailure is not null)
+        if (results.Count == 0 && firstMemberFailure is not null)
         {
-            throw firstConversionFailure;
+            ExceptionDispatchInfo.Capture(firstMemberFailure).Throw();
         }
 
-        return new ConversionBatchResult(results.AsReadOnly());
+        return new ConversionBatchResult(results.AsReadOnly(), failures.AsReadOnly());
     }
 
     private async Task<ConversionWorkerResult> ExecuteVideoAsync(
@@ -303,19 +367,35 @@ public sealed class ConversionBatchRunner
         for (int attempt = 0; attempt < MaximumPublishRaceRetries; ++attempt)
         {
             string outputPath = _outputPaths.Resolve(inputPath, outputExtension);
-            try
+            if (DestinationOutputPublisher.TryPublish(temporaryOutputPath, outputPath))
             {
-                File.Move(temporaryOutputPath, outputPath, overwrite: false);
                 return outputPath;
-            }
-            catch (IOException) when (File.Exists(outputPath) || Directory.Exists(outputPath))
-            {
-                // Another writer won the destination race. Resolve the next numbered path; never overwrite it.
             }
         }
 
         throw new IOException(
             $"Unable to publish converted output after {MaximumPublishRaceRetries} destination races.");
+    }
+
+    private static ConversionFileFailure ToFileFailure(
+        string inputPath,
+        string? plannedOutputPath,
+        Exception error)
+    {
+        if (error is ConversionFailedException conversionFailure)
+        {
+            return new ConversionFileFailure(
+                inputPath,
+                conversionFailure.OutputPath,
+                conversionFailure.ExitCode,
+                conversionFailure.Message);
+        }
+
+        return new ConversionFileFailure(
+            inputPath,
+            plannedOutputPath,
+            exitCode: null,
+            error.Message);
     }
 
     private static void ValidateInputPath(string inputPath, ProductPresetDefinition preset)
