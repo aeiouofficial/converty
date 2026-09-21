@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "workspaceVersion": "0.1.0-dev.21",
+  "workspaceVersion": "0.1.0-dev.22",
   "targetOs": "Windows 11",
   "dotnetSdk": "10.0.400",
   "targetFramework": "net10.0",
@@ -9,11 +9,12 @@
   "nativeBuild": "CMake + MSVC",
   "architecture": "x64-first",
   "notes": [
-    "Dev.21 adds bounded probe facts, deterministic Copy/Remux/Transcode planning, explicit mode execution and strict post-probe target validation without widening executable or raw-argument trust surfaces.",
-    "Copy is managed byte-exact copy with SHA-256 equality and launches no FFmpeg; Remux/Transcode use provider-owned fixed token tuples only.",
-    "Actual packaged ffprobe/ffmpeg descendants are qualified inside strict worker Job/AppContainer containment with filesystem/network/orphan canaries.",
-    "Audio 36-case, Image 24-case and Video 27-case acceptance/negative/mixed-batch regression gates remain mandatory.",
-    "Headed Win11 acceptance, live repository governance, production signing/B2, production FFmpeg redistribution, signed MSIX lifecycle and final release audit remain open."
+    "Dev.22 hardens release evidence and live governance checks without converting development evidence into production approval.",
+    "Batch execution records member-local failures while preserving successful publications; all-failure and global infrastructure faults remain fail-closed.",
+    "Publication copies validated staged output to a durable destination-volume temporary file, flushes it, then performs same-volume no-overwrite rename.",
+    "Owned worker staging carries an explicit marker and age-bounded cleanup never follows reparse points or touches unowned jobs.",
+    "Development FFmpeg qualification uses exact BtbN tag autobuild-2026-09-21-13-55, asset 579145936, source a5923073bf and SHA-256 fe372180f20e7f9bfa3d9a481b2b1b98c8296178d8265552608736637ea6b3c8; this is not production redistribution approval.",
+    "Headed Windows 11 acceptance, live repository governance, production signing/B2, production FFmpeg redistribution, signed MSIX lifecycle and final security/fuzz/chaos/end-user acceptance remain open."
   ],
   "testRunner": "Microsoft.Testing.Platform",
   "xunitMtpV2": "4.0.0"

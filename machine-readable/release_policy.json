@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "workspaceVersion": "0.1.0-dev.21",
+  "workspaceVersion": "0.1.0-dev.22",
   "hashAlgorithm": "SHA-256",
   "forbiddenHashAlgorithms": [
     "MD5",
@@ -15,17 +15,38 @@
       "contents": "read"
     },
     "jobTimeoutMinutes": {
+      "candidate-base-continuity": 5,
+      "candidate-release-readiness": 10,
       "main-authority-continuity": 5,
       "managed": 30,
       "supply-chain-static": 15
     },
-    "pythonDependencies": "hash-locked --require-hashes --only-binary=:all:"
+    "pythonDependencies": "hash-locked --require-hashes --only-binary=:all:",
+    "scopedJobPermissions": {
+      "candidate-release-readiness": {
+        "contents": "read",
+        "actions": "read"
+      }
+    },
+    "candidateReadiness": {
+      "check": "candidate-release-readiness",
+      "liveGithubRequired": true,
+      "offlineModeAuthoritative": false,
+      "verifier": "scripts/verify_release_readiness.py"
+    }
   },
   "repositoryGovernance": {
     "desiredFutureMain": "block force-push/deletion; restrict updates; exact required checks and linear history where exact-candidate compatible; prospective verified signatures",
     "liveRulesetsConfigured": false,
     "liveMainBranchProtection": false,
-    "historicalUnsignedDev20MustNotBeRewritten": true
+    "historicalUnsignedDev20MustNotBeRewritten": true,
+    "lastVerified": "2026-09-21",
+    "requiredCandidateChecks": [
+      "candidate-base-continuity",
+      "supply-chain-static",
+      "managed",
+      "candidate-release-readiness"
+    ]
   },
   "dependencyAudit": {
     "enabled": true,
@@ -55,7 +76,8 @@
     "forbiddenNames": [
       ".env"
     ],
-    "note": "Public certificates may use .cer/.crt; private-key-bearing formats are excluded. Disposable build/test/media output is excluded by workspace file policy."
+    "note": "Public certificates may use .cer/.crt; private-key-bearing formats are excluded. Release preflight also scans ordinary text content for recognized private-key/token material. Disposable build/test/media output is excluded by workspace file policy.",
+    "contentSecretScan": "scripts/verify_workspace_secrets.py"
   },
   "releasePrerequisites": [
     "all packages.lock.json present and reviewed",
@@ -64,11 +86,13 @@
     "machine-readable dependency vulnerability report passes",
     "managed Release build passes",
     "managed and static tests pass",
+    "candidate descends from exact unchanged frozen main authority",
+    "live main-applicable repository governance requires exact release checks and blocks destructive updates",
     "headed Windows 11 Explorer acceptance passes",
     "restricted ProbeWorker/EngineWorker and actual ffprobe/ffmpeg descendant containment passes",
-    "production engine redistribution/license/signature/hash policy is approved",
-    "signed package and clean Windows 11 VM lifecycle acceptance pass",
-    "release SBOM generated and reviewed",
-    "required live repository governance is configured and verified"
+    "production engine redistribution/license/signature/hash policy is approved and bound to exact qualified subject/artifact",
+    "signed production package/B2 and clean Windows 11 VM lifecycle acceptance pass for one exact artifact",
+    "final fuzz/chaos/security/end-user acceptance is approved for the exact production artifact",
+    "release SBOM generated and reviewed"
   ]
 }

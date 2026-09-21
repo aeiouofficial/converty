@@ -127,7 +127,12 @@ def test_release_policy_encodes_ci_credential_and_timeout_bounds() -> None:
     assert ci["checkoutPersistCredentials"] is False
     assert ci["workflowPermissions"] == {"contents": "read"}
     assert ci["jobTimeoutMinutes"] == {
+        "candidate-base-continuity": 5,
+        "candidate-release-readiness": 10,
         "main-authority-continuity": 5,
         "managed": 30,
         "supply-chain-static": 15,
+    }
+    assert ci["scopedJobPermissions"] == {
+        "candidate-release-readiness": {"contents": "read", "actions": "read"}
     }

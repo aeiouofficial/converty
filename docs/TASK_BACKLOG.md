@@ -19,11 +19,11 @@
 - [x] Independently verify Task-11 generated artifact `10529710374`: digest/CRC/exact four members PASS.
 - [x] Detect and reject the artifact for final dev.21 sync because its workspace/SBOM version is still `0.1.0-dev.20`.
 - [x] Curate non-generated dev.21 version/toolchain/release/evidence/handover documentation before final generation.
-- [ ] Run ordinary CI on the exact curated dev.21 head and independently verify fresh dev.21 generated authority.
-- [ ] Guarded exact-parent/self-deleting synchronization of the exact four generated files only.
-- [ ] Require synchronized-candidate generated-authority zero-diff and complete Windows deterministic workspace/delivery qualification.
-- [ ] Independently verify final generated-authority and delivery artifacts.
-- [ ] Promote/freeze only if all required live governance/release prerequisites are genuinely green and exact-candidate compatible.
+- [x] Dev.21 ordinary generation/guarded synchronization/exact-candidate qualification completed; immutable qualified candidate is `c3bc042aea3154e30ce2720db4722cbda27bcb34`.
+- [x] Dev.21 guarded generated-authority synchronization completed.
+- [x] Dev.21 synchronized candidate qualified with exact generated-authority/delivery evidence.
+- [x] Dev.21 final generated-authority and delivery artifacts independently verified.
+- [ ] Dev.21 promotion intentionally stopped because live governance and external production release prerequisites remain OPEN.
 
 ## Frozen release authority
 - [x] `0.1.0-dev.20` remains exact-main frozen at `8a1f46603aa842728247bc11b34fcccf121858fd` / tree `4bd6f8d7acbadd60a3488870c773d2eafd67ba26` / CI `33671671714` SUCCESS.
@@ -45,15 +45,15 @@ Check a box only when matching evidence exists. Preserve historical evidence. Ne
 Plan: `docs/superpowers/plans/2026-09-21-dev22-audit-remediation-shipping-hardening.md`
 
 - [x] Critical read-only audit completed against current GitHub authority; confirmed defect set documented.
-- [ ] Task 1: release-gate state machine, live-authority requirement and exact-candidate evidence binding.
-- [ ] Task 2: governance/readiness CI integration and non-circular promotion/continuity checks.
-- [ ] Task 3: production FFmpeg evidence validation and development-evidence rejection.
-- [ ] Task 4: production MSIX/B2 exact-artifact evidence and verification path.
-- [ ] Task 5: content-level secret/private-key scanning in release preflight/CI.
-- [ ] Task 6: complete per-member batch failure isolation and structured partial-success results.
-- [ ] Task 7: destination-volume atomic publication and stale staging recovery.
-- [ ] Task 8: coherent dev.22 metadata, generated-authority sync, exact-candidate qualification and blocked release handoff.
-- [ ] Final whole-branch review with all Critical/Important findings resolved or explicitly ruled with evidence.
+- [x] Task 1: release-gate state machine, live-authority requirement and exact qualified-subject/artifact evidence binding.
+- [x] Task 2: governance/readiness CI integration and non-circular candidate-base/promotion continuity checks.
+- [x] Task 3: production FFmpeg evidence validation and development-evidence rejection.
+- [x] Task 4: production MSIX/B2 exact-artifact evidence contract and cryptographic verification path.
+- [x] Task 5: content-level secret/private-key scanning in release preflight/CI.
+- [x] Task 6: complete per-member batch failure isolation and structured partial-success results.
+- [x] Task 7: destination-volume durable atomic publication and owned stale staging recovery.
+- [ ] Task 8: non-generated dev.22 metadata curation IN PROGRESS; generated-authority sync/exact-candidate qualification follows.
+- [ ] Final whole-branch review after exact synchronized dev.22 candidate qualification.
 
 ### Dev.22 completion rule
 Code remediation may be complete while customer shipping remains blocked. Do not mark production FFmpeg, signed MSIX/B2, headed Windows 11 acceptance, final fuzz/chaos/security/end-user acceptance, or repository governance PASS without fresh real evidence.

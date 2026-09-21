@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
   "project": "Converty",
-  "workspaceVersion": "0.1.0-dev.21",
-  "baselineDate": "2026-09-18",
-  "implementationStatus": "DEV21_TASK12_PRE_AUTHORITY_CURATION",
+  "workspaceVersion": "0.1.0-dev.22",
+  "baselineDate": "2026-09-21",
+  "implementationStatus": "DEV22_TASK8_PRE_AUTHORITY_CURATION",
   "defaultBranch": "main",
-  "currentDevelopmentBranch": "dev/0.1.0-dev.21",
-  "nextWorkspaceVersion": "0.1.0-dev.22",
-  "nextBatch": "DEV21_TASK12_GENERATED_AUTHORITY_STABILIZATION",
+  "currentDevelopmentBranch": "dev/0.1.0-dev.22-shipping-readiness",
+  "nextWorkspaceVersion": "0.1.0-dev.23",
+  "nextBatch": "DEV22_TASK8_GENERATED_AUTHORITY_EXACT_CANDIDATE_QUALIFICATION",
   "targetOs": "Windows 11 x64",
   "frozenReleaseAuthority": {
     "version": "0.1.0-dev.20",
@@ -21,24 +21,18 @@
   },
   "dev21": {
     "branch": "dev/0.1.0-dev.21",
-    "branchBaseSha": "8a1f46603aa842728247bc11b34fcccf121858fd",
-    "designSpecSha": "d80cc33a2e7c38738f113856e95f1451fd2df1b0",
-    "implementationPlanSha": "e54061368b476184a89dcadb1d6b8a8f6fb6cf68",
-    "preAuthorityHeadSha": "277f6c30f5fd22b3107604304717e56839e76641",
-    "preAuthorityTreeSha": "b8c1f9ea203e532e235a94174740bb23821c7d86",
-    "task11RunId": 35299376030,
-    "cumulativeManagedTests": "392/392 PASS",
-    "cumulativeStaticTests": "132/132 PASS",
-    "contractVectors": "5/5 PASS",
-    "productRegressions": "Audio 36 + Image 24 + Video 27 + negatives/mixed PASS",
-    "task9Containment": "PASS",
-    "task10ModeQualification": "PASS",
-    "task11SupplyChainHardening": "PASS before expected stale-authority closure",
-    "task12": "OPEN — curate non-generated dev21 authority, generate fresh authority in ordinary CI, verify, guarded sync, exact-candidate zero-diff qualification"
+    "qualifiedCandidateSha": "c3bc042aea3154e30ce2720db4722cbda27bcb34",
+    "qualifiedCandidateTreeSha": "47ecb6f1f952fcdf286e60dd81935a0d81af56ee",
+    "qualificationRunId": 35343228179,
+    "generatedAuthorityArtifactId": 10546670736,
+    "verifiedDeliveryArtifactId": 10546087995,
+    "status": "QUALIFIED_IMMUTABLE_DEVELOPMENT_CANDIDATE_NOT_PROMOTED"
   },
   "currentOpenCloudHandover": {
     "number": 12,
-    "slackTs": "1789698886.030639"
+    "slackTs": "1789698886.030639",
+    "status": "HISTORICAL_STALE_RELATIVE_TO_GITHUB",
+    "note": "Current user instruction is GitHub-only; no Slack/Drive mutation was performed during dev.22 remediation."
   },
   "shippingOpen": [
     "Live GitHub ruleset/main branch-protection enforcement",
@@ -50,12 +44,27 @@
     "UX/settings and Plugin SDK release gates"
   ],
   "nextActions": [
-    "Run ordinary CI on the exact dev21 metadata-curated head and independently verify the fresh generated-authority artifact.",
-    "Synchronize only the exact four generated authority files through a guarded exact-parent self-deleting workflow; never hand-edit them.",
-    "Require exact synchronized candidate generated-authority zero-diff and complete managed deterministic workspace/delivery qualification.",
-    "Independently verify final generated-authority and verified-delivery artifacts.",
-    "Do not promote main while required governance, signing/provenance or headed-release prerequisites remain open; document the exact blocker instead."
+    "Run ordinary CI on the exact dev.22 metadata-curated head and independently verify the generated-authority artifact is exactly four members and versioned 0.1.0-dev.22.",
+    "Synchronize only those four generated authority files through a guarded exact-parent/exact-branch workflow; never hand-edit them.",
+    "Create a no-tree-change qualification trigger if the guarded bot sync does not trigger CI.",
+    "Require exact synchronized candidate generated-authority zero-diff, 395/395 managed regression or later exact count, full packaged product gates and deterministic verified delivery.",
+    "Independently verify final generated-authority and delivery artifacts.",
+    "Do not promote main while governance, production signing/provenance, headed Windows 11, final fuzz/chaos/security/end-user or UX/Plugin SDK prerequisites remain open."
   ],
   "recursiveHandoverRequired": true,
-  "recursiveHandoverRule": "After every materially completed block: fresh-read GitHub authority; reconcile canonical Drive/Slack docs in place; mark the current OPEN handover PROCESSED first; publish exactly one context-free successor OPEN with exact repo/branch/SHA/tree/version/CI/evidence, completed work, blockers/unverified items, invariants, one executable next task and acceptance criteria; verify exactly one OPEN remains."
+  "recursiveHandoverRule": "After every materially completed GitHub-only block: fresh-read GitHub authority; update canonical repository plan/backlog/changelog/evidence/handover in place; preserve historical evidence; publish exactly one context-free current repository continuation point. Reconcile Slack/Drive only when the user restores cloud-documentation scope.",
+  "dev22": {
+    "branch": "dev/0.1.0-dev.22-shipping-readiness",
+    "auditBaselineSha": "1bfb6a409976abdbf781ba027f556818fb791fa7",
+    "preAuthorityBehaviorHeadSha": "7e50fa9a1df4d0a8336d16596af488335424b792",
+    "preAuthorityBehaviorTreeSha": "a3a6deec5d753c6176fb40368a56d263b3beaa62",
+    "behaviorRunId": 35664296931,
+    "managed": "395/395 PASS",
+    "static": "162/162 PASS",
+    "contractVectors": "5/5 PASS",
+    "build": "0 warnings / 0 errors",
+    "productRegressions": "Audio 36 + Image 24 + Video 27 + negatives/mixed + Copy/Remux/Transcode PASS",
+    "deterministicPreAuthorityWorkspace": "526588af945a4eeb04984dc17792af8dd10fc1d7f2a9e9006ab3976d448b2b0a / 642060 bytes / 462 files / double-build PASS; semantic verification blocked only by stale tracked generated authority",
+    "task8": "IN PROGRESS — curate non-generated dev.22 authority, ordinary CI generate exact dev.22 authority, independently verify, guarded sync, exact-candidate qualification"
+  }
 }

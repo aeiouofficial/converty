@@ -1,12 +1,13 @@
 # Changelog
 
 ## 0.1.0-dev.22 — 2026-09-21 — audit remediation / shipping hardening in progress
-- Opened the dev.22 remediation program from exact head `1bfb6a409976abdbf781ba027f556818fb791fa7` after a fresh critical GitHub audit.
-- Confirmed concrete defects in release-readiness bootstrap/enforcement, governance validation depth, candidate/evidence binding, production FFmpeg/MSIX evidence validation, content-level secret scanning, batch member isolation/partial-result reporting, cross-volume transactional publication, and stale worker-staging recovery.
-- Added the canonical execution plan and synchronized repository backlog/status/roadmap before production-code changes.
-- Frozen `main` remains `8a1f46603aa842728247bc11b34fcccf121858fd`; qualified dev.21 candidate `c3bc042aea3154e30ce2720db4722cbda27bcb34` remains immutable.
-- Converty remains **NOT CUSTOMER SHIP-READY**. External production evidence must not be fabricated or inferred.
-
+- Tasks 1-7 of the dev.22 remediation plan are implementation/evidence complete: exact-subject/artifact release evidence, live governance/readiness checks, production engine/package/acceptance fail-closed boundaries, content secret scanning, structured partial-batch results, destination-volume durable publication and owned stale-staging recovery.
+- Pre-authority behavior head `7e50fa9a1df4d0a8336d16596af488335424b792` / tree `a3a6deec5d753c6176fb40368a56d263b3beaa62`; CI `35664296931` proves 395/395 managed, 162/162 static, 5/5 vectors, dependency audit 0 vulnerable-result packages, Release build 0 warnings/errors and all Native/package/ProbeWorker/COM/Audio/Image/Video/Copy/Remux/Transcode gates PASS.
+- Development FFmpeg qualification was repinned after the historical Gyan URL returned HTTP 404. The replacement is BtbN tag `autobuild-2026-09-21-13-55`, asset `579145936`, source `a5923073bf`, SHA-256 `fe372180f20e7f9bfa3d9a481b2b1b98c8296178d8265552608736637ea6b3c8`; it is explicitly development-only.
+- Deterministic pre-authority workspace built twice byte-identically at SHA-256 `526588af945a4eeb04984dc17792af8dd10fc1d7f2a9e9006ab3976d448b2b0a`, 642060 bytes / 462 files, then correctly stopped on stale tracked generated authority.
+- Task 8 now curates non-generated `0.1.0-dev.22` authority. The four generated SBOM/package/hash files remain CI-derived and untouched.
+- Frozen `main` remains `8a1f46603aa842728247bc11b34fcccf121858fd`; qualified dev.21 candidate `c3bc042aea3154e30ce2720db4722cbda27bcb34` remains immutable and unpromoted.
+- Converty remains **NOT CUSTOMER SHIP-READY** because live governance and external production signing/provenance/headed/final-acceptance gates remain OPEN.
 
 ## 0.1.0-dev.21 — 2026-09-18 — development / pre-authority
 - Completed the dev.21 Tasks 1–11 implementation line under the approved security design and committed plan: bounded probe contracts/serialization, streaming stdout limits and read-only probe scope, strict ProbeWorker/ffprobe boundary, provider-only FFmpeg token ownership, deterministic Video planning, explicit mode-aware EngineWorker execution, managed byte-exact Copy with SHA-256 proof, post-probe TargetMediaContract publication gating, actual ffprobe/ffmpeg descendant containment, packaged Copy/Remux/Transcode qualification, and CI governance/supply-chain hardening.
@@ -15,7 +16,7 @@
 - Task-11 generated-authority artifact `10529710374` / `sha256:0029b1def03e329572ef221edc8779c89158a695b0be26ce02a05487e01e99ec` independently passes ZIP digest, CRC and exact four-member verification, but is still versioned `0.1.0-dev.20`. It is retained as Task-12 input only and is not eligible as final dev.21 authority.
 - Task 12 starts with non-generated dev.21 authority/evidence curation. The four generated authority files remain untouched until ordinary CI regenerates them from the exact curated head.
 - Frozen release authority remains `0.1.0-dev.20` on exact main `8a1f46603aa842728247bc11b34fcccf121858fd`; no dev.21 freeze/release claim is made.
-- Promotion is explicitly blocked unless required live repository governance plus production signing/provenance/headed-release prerequisites are genuinely satisfied.
+- Dev.21 was subsequently stabilized and qualified as immutable candidate `c3bc042aea3154e30ce2720db4722cbda27bcb34` / tree `47ecb6f1f952fcdf286e60dd81935a0d81af56ee`; promotion remained intentionally blocked by live governance and external production release prerequisites.
 
 ## 0.1.0-dev.19 — 2026-09-02
 - Added focused Image multi-file failure-isolation coverage to prove later valid selections survive ordinary malformed/truncated members.

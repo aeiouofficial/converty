@@ -56,3 +56,22 @@ A fresh critical audit confirmed concrete release-authority, batch-failure, cros
 The dev.21 product candidate remains immutable development evidence; dev.22 is the repair line. No audited defect is closed until a targeted RED reproducer fails for the expected reason and the corresponding GREEN plus required regression gates pass.
 
 External release evidence remains explicitly OPEN. Completing repository logic does not authorize a customer release.
+
+
+## Dev.22 pre-authority behavior qualification — 2026-09-21
+
+Exact behavior head before metadata curation: `7e50fa9a1df4d0a8336d16596af488335424b792`, tree `a3a6deec5d753c6176fb40368a56d263b3beaa62`. CI `35664296931` established:
+- 395/395 managed tests PASS; 162/162 static tests PASS; 5/5 contract vectors PASS;
+- dependency audit: 19 projects / 19 frameworks / 0 vulnerable-result packages;
+- Release build: 0 warnings / 0 errors;
+- Native Explorer, development package, ProbeWorker, COM activation and Bridge product smoke PASS;
+- Audio 36-case + mixed isolation PASS; Image 24-case + mixed isolation PASS; Video 27-case + mixed isolation PASS;
+- packaged Copy/Remux/Transcode witnesses PASS;
+- development FFmpeg exact tagged/hash-locked BtbN payload executes as `n9.0.2-3-ga5923073bf-20260921`;
+- deterministic workspace ZIP built twice byte-identically at SHA-256 `526588af945a4eeb04984dc17792af8dd10fc1d7f2a9e9006ab3976d448b2b0a`, 642060 bytes / 462 files.
+
+Archive semantic verification then failed exactly on stale tracked generated authority (`.github/workflows/ci.yml` hash mismatch). This is the expected pre-authority boundary. No generated authority file has been hand-edited.
+
+Tasks 1-7 of the dev.22 remediation plan are implementation/evidence complete. Task 8 is now non-generated metadata curation followed by ordinary-CI authority generation, independent artifact verification, guarded synchronization and exact-candidate qualification.
+
+Converty remains **NOT CUSTOMER SHIP-READY** because live GitHub governance and external production signing/provenance/headed/final-acceptance gates remain OPEN.
