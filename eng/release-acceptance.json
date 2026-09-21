@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "purpose": "production-release-acceptance",
+  "approvalStatus": "OPEN",
+  "approved": false,
+  "windows11ExactBuild": null,
+  "explorerVersion": null,
+  "headedExplorerEvidence": null,
+  "contextMenuScreenshotEvidence": null,
+  "crashHangFailureMatrixEvidence": null,
+  "fuzzEvidence": null,
+  "chaosEvidence": null,
+  "finalSecurityReviewEvidence": null,
+  "endUserAcceptanceEvidence": null,
+  "approvalRecord": null,
+  "notes": [
+    "CI/server smoke is not headed Windows 11 Explorer acceptance.",
+    "Evidence must never be invented or inferred from development CI.",
+    "Approval requires exact production-artifact acceptance and final real security/fuzz/chaos/end-user evidence."
+  ]
+}

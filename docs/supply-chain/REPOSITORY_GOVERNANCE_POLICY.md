@@ -10,7 +10,7 @@ The future freeze ruleset must:
 - **block deletions** of `main`;
 - **restrict updates** to the approved release path and authorized maintainers or release automation;
 - require **linear history** so an already-qualified exact candidate is not replaced by a merge-generated post-qualification SHA;
-- require the exact named checks `main-authority-continuity`, `supply-chain-static`, and `managed` before an update is accepted;
+- require the exact pre-promotion checks `candidate-base-continuity`, `supply-chain-static`, `managed`, and `candidate-release-readiness` before an update is accepted; `main-authority-continuity` remains a post-promotion/default-branch authority monitor and must not be used as a circular pre-promotion requirement;
 - require **verified signatures** for future freeze commits once the release-signing path is qualified.
 
 The signature rule is prospective. It does not retroactively invalidate the **historical unsigned dev.20** authority, and it must not rewrite historical commits to manufacture signatures.
@@ -24,3 +24,7 @@ If verified-signature enforcement would require changing the already-qualified c
 ## Live-state evidence
 
 Source files describe policy, not repository reality. A release/freeze record must include a fresh GitHub read of rulesets, branch state, required checks, and signature enforcement. If GitHub reports no applicable ruleset, the release gate remains open.
+
+
+## Release-evidence binding
+Tracked approval manifests cannot embed the SHA of the commit that contains them without creating a self-reference loop. Production approvals therefore bind to an exact qualified subject commit/tree and exact production artifact hash. The final candidate may descend from that subject only through the explicit evidence/generated-authority allowlist; any product, build, test, workflow or runtime change invalidates the approval. The final descendant still requires its own exact-candidate CI checks before promotion.

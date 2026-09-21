@@ -57,6 +57,33 @@ def main() -> int:
             + (production_package_result.stderr or production_package_result.stdout).strip()
         )
 
+
+    release_acceptance_result = subprocess.run(
+        [sys.executable, "scripts/verify_release_acceptance.py", "--json"],
+        cwd=ROOT,
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+    if release_acceptance_result.returncode != 0:
+        failures.append(
+            "release acceptance evidence contract invalid: "
+            + (release_acceptance_result.stderr or release_acceptance_result.stdout).strip()
+        )
+
+    secret_scan_result = subprocess.run(
+        [sys.executable, "scripts/verify_workspace_secrets.py", "--root", str(ROOT)],
+        cwd=ROOT,
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+    if secret_scan_result.returncode != 0:
+        failures.append(
+            "workspace secret-content scan failed: "
+            + (secret_scan_result.stderr or secret_scan_result.stdout).strip()
+        )
+
     policy_path = ROOT / "machine-readable" / "release_policy.json"
     try:
         policy = json.loads(policy_path.read_text(encoding="utf-8"))
