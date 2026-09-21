@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.0-dev.22 — 2026-09-21 — audit remediation / shipping hardening in progress
+- Opened the dev.22 remediation program from exact head `1bfb6a409976abdbf781ba027f556818fb791fa7` after a fresh critical GitHub audit.
+- Confirmed concrete defects in release-readiness bootstrap/enforcement, governance validation depth, candidate/evidence binding, production FFmpeg/MSIX evidence validation, content-level secret scanning, batch member isolation/partial-result reporting, cross-volume transactional publication, and stale worker-staging recovery.
+- Added the canonical execution plan and synchronized repository backlog/status/roadmap before production-code changes.
+- Frozen `main` remains `8a1f46603aa842728247bc11b34fcccf121858fd`; qualified dev.21 candidate `c3bc042aea3154e30ce2720db4722cbda27bcb34` remains immutable.
+- Converty remains **NOT CUSTOMER SHIP-READY**. External production evidence must not be fabricated or inferred.
+
+
 ## 0.1.0-dev.21 — 2026-09-18 — development / pre-authority
 - Completed the dev.21 Tasks 1–11 implementation line under the approved security design and committed plan: bounded probe contracts/serialization, streaming stdout limits and read-only probe scope, strict ProbeWorker/ffprobe boundary, provider-only FFmpeg token ownership, deterministic Video planning, explicit mode-aware EngineWorker execution, managed byte-exact Copy with SHA-256 proof, post-probe TargetMediaContract publication gating, actual ffprobe/ffmpeg descendant containment, packaged Copy/Remux/Transcode qualification, and CI governance/supply-chain hardening.
 - Current pre-authority engineering head `277f6c30f5fd22b3107604304717e56839e76641` / tree `b8c1f9ea203e532e235a94174740bb23821c7d86`; Task-11 run `35299376030` proves 392/392 managed, 132/132 static, 5/5 vectors, 19/19 dependency audit with zero vulnerable-result packages, Release 0 warnings/errors, Audio36/Image24/Video27 + negatives/mixed, Task9 containment and Task10 mode qualification.

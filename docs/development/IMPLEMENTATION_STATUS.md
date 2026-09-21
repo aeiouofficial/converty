@@ -1,4 +1,4 @@
-# Implementation status — 0.1.0-dev.21
+# Implementation status — dev.22 audit remediation over qualified 0.1.0-dev.21
 
 ## Frozen release baseline
 The sole frozen release remains `0.1.0-dev.20` at exact main `8a1f46603aa842728247bc11b34fcccf121858fd`, tree `4bd6f8d7acbadd60a3488870c773d2eafd67ba26`, exact-main CI `33671671714` SUCCESS.
@@ -45,3 +45,14 @@ After guarded generated-authority sync, require exact-candidate zero-diff + comp
 Live rulesets/main protection, headed Windows 11 Explorer acceptance, production FFmpeg/ffprobe approval, production signed-package B2, signed MSIX clean-VM lifecycle, UX/settings, Plugin SDK and final fuzz/chaos/security/release/end-user acceptance remain open.
 
 Converty is **NOT CUSTOMER SHIP-READY**.
+
+
+## Dev.22 audit remediation state — 2026-09-21
+Active branch: `dev/0.1.0-dev.22-shipping-readiness`.  
+Audit baseline: `1bfb6a409976abdbf781ba027f556818fb791fa7`.
+
+A fresh critical audit confirmed concrete release-authority, batch-failure, cross-volume publication and staging-recovery defects. Canonical plan: `docs/superpowers/plans/2026-09-21-dev22-audit-remediation-shipping-hardening.md`.
+
+The dev.21 product candidate remains immutable development evidence; dev.22 is the repair line. No audited defect is closed until a targeted RED reproducer fails for the expected reason and the corresponding GREEN plus required regression gates pass.
+
+External release evidence remains explicitly OPEN. Completing repository logic does not authorize a customer release.

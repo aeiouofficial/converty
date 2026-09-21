@@ -3,7 +3,7 @@
 
 **Planning baseline:** 2026-08-24
 **Target:** Windows 11 first
-**Implementation status:** **NOT STARTED — this package is a design/build authority, not proof that code exists.**
+**Implementation status:** **ACTIVE — dev.20 is frozen on main, dev.21 is a qualified development candidate, and dev.22 audit remediation/shipping hardening is in progress. Converty is NOT CUSTOMER SHIP-READY.**
 **Primary stack:** Native C++ shell integration + .NET 10 LTS coordinator/core + isolated worker processes + signed/pinned conversion engines + MSIX/sparse-package identity.
 
 > **Reliability statement:** no non-trivial software can be truthfully guaranteed to “never bug, glitch, leak, or fail.” This plan converts that requirement into enforceable engineering invariants: fail closed, isolate untrusted parsing, bound resources, never overwrite transactionally, minimize ambient authority, validate every boundary, make failures recoverable, and require adversarial/chaos/fuzz testing before release.
@@ -706,3 +706,9 @@ Release candidate is blocked unless all are evidenced:
 ## 22. What “done” means
 
 Done is not “FFmpeg command works.” Done means a signed Windows 11 product whose Explorer integration remains cheap and safe, whose coordinator remains outside the parser trust boundary, whose worker blast radius is demonstrably bounded, whose outputs are transactionally published, and whose extension model does not turn future file families into arbitrary code execution inside Explorer/Host.
+
+
+## 21. Current roadmap overlay — dev.22 audit remediation (2026-09-21)
+The historical B0-B12 plan remains the architectural baseline. Current execution authority is `docs/superpowers/plans/2026-09-21-dev22-audit-remediation-shipping-hardening.md`.
+
+Execution order: harden release state/evidence and exact-candidate binding; make readiness/governance enforceable without circular promotion; harden production engine/package evidence; add content-level secret scanning; repair batch isolation/partial-result reporting; make publication atomically safe across volumes and recover stale owned staging; then reconcile dev.22 metadata and qualify the exact candidate. Release stays blocked until genuine external governance/signing/headed/fuzz/chaos/security/end-user gates are green.

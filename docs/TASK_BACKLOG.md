@@ -39,3 +39,21 @@
 
 ## Execution rule
 Check a box only when matching evidence exists. Preserve historical evidence. Never hand-edit generated SBOM/package/hash authority, never force-push main, and never convert a development-branch CI result into release authority.
+
+
+## Dev.22 audit remediation / shipping hardening — 2026-09-21
+Plan: `docs/superpowers/plans/2026-09-21-dev22-audit-remediation-shipping-hardening.md`
+
+- [x] Critical read-only audit completed against current GitHub authority; confirmed defect set documented.
+- [ ] Task 1: release-gate state machine, live-authority requirement and exact-candidate evidence binding.
+- [ ] Task 2: governance/readiness CI integration and non-circular promotion/continuity checks.
+- [ ] Task 3: production FFmpeg evidence validation and development-evidence rejection.
+- [ ] Task 4: production MSIX/B2 exact-artifact evidence and verification path.
+- [ ] Task 5: content-level secret/private-key scanning in release preflight/CI.
+- [ ] Task 6: complete per-member batch failure isolation and structured partial-success results.
+- [ ] Task 7: destination-volume atomic publication and stale staging recovery.
+- [ ] Task 8: coherent dev.22 metadata, generated-authority sync, exact-candidate qualification and blocked release handoff.
+- [ ] Final whole-branch review with all Critical/Important findings resolved or explicitly ruled with evidence.
+
+### Dev.22 completion rule
+Code remediation may be complete while customer shipping remains blocked. Do not mark production FFmpeg, signed MSIX/B2, headed Windows 11 acceptance, final fuzz/chaos/security/end-user acceptance, or repository governance PASS without fresh real evidence.
