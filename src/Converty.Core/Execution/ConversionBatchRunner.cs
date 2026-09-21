@@ -394,7 +394,7 @@ public sealed class ConversionBatchRunner
         return new ConversionFileFailure(
             inputPath,
             plannedOutputPath,
-            exitCode: null,
+            ExitCode: null,
             error.Message);
     }
 
