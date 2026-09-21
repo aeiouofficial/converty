@@ -1,64 +1,62 @@
 CONVERTY — FRESH-ACCOUNT AGENT HANDOVER
 
-RE-FETCH LIVE GITHUB REFS AND THE SINGLE OPEN SLACK HANDOVER BEFORE EVERY WRITE OR COMPLETION CLAIM.
+RE-FETCH LIVE GITHUB REFS BEFORE EVERY WRITE OR COMPLETION CLAIM.
 
 Repository: https://github.com/aeiouofficial/converty
 Product: Windows 11 Explorer modern-context-menu converter.
 Default branch: main.
-Current development branch: dev/0.1.0-dev.21.
-Workspace version being stabilized: 0.1.0-dev.21.
-Next workspace version after a fully frozen dev.21: 0.1.0-dev.22.
-Current lifecycle task: DEV.21 TASK 12 — generated authority stabilization / exact-candidate qualification.
+Current development branch: dev/0.1.0-dev.22-shipping-readiness.
+Workspace version being stabilized: 0.1.0-dev.22.
+Next workspace version after dev.22 closure: 0.1.0-dev.23.
+Current lifecycle task: DEV.22 TASK 8 — generated authority synchronization / exact-candidate qualification.
 
 MISSION
-Finish Converty with evidence, not release labels. GitHub is authority for code/branches/commits/CI/release evidence; Slack/Drive are documentation mirrors. Never call dev.21 frozen or customer ship-ready without exact-main and release-prerequisite evidence.
+Finish Converty with evidence, not release labels. GitHub is authority for code, branches, commits, CI and release evidence. Current user scope is GitHub-only. Never call dev.22 frozen or customer ship-ready without exact-main and every production release prerequisite.
 
 FROZEN RELEASE AUTHORITY
 0.1.0-dev.20 remains the sole frozen release at main 8a1f46603aa842728247bc11b34fcccf121858fd, tree 4bd6f8d7acbadd60a3488870c773d2eafd67ba26, exact-main CI 33671671714 SUCCESS.
 
-DEV.21 DESIGN / PLAN
-Design: d80cc33a2e7c38738f113856e95f1451fd2df1b0
-Plan: e54061368b476184a89dcadb1d6b8a8f6fb6cf68
-Plan file: docs/superpowers/plans/2026-09-03-dev21-video-copy-remux-transcode-security.md
+IMMUTABLE DEV.21 CANDIDATE
+Qualified development candidate c3bc042aea3154e30ce2720db4722cbda27bcb34, tree 47ecb6f1f952fcdf286e60dd81935a0d81af56ee. Do not modify or reinterpret it as release authority.
 
-IMPLEMENTATION STATE
-Tasks 1–11 are evidence-backed on the dev.21 line. Pre-authority engineering head 277f6c30f5fd22b3107604304717e56839e76641, tree b8c1f9ea203e532e235a94174740bb23821c7d86. Task-11 CI 35299376030 proves 392/392 managed, 132/132 static, 5/5 vectors, 19 projects / 19 frameworks / 0 vulnerable-result packages, Build 0 warnings/errors, Audio36/Image24/Video27 + negatives/mixed, actual engine descendant containment, packaged Copy/Remux/Transcode and hash-locked CI dependency gates.
+DEV.22 PLAN
+docs/superpowers/plans/2026-09-21-dev22-audit-remediation-shipping-hardening.md
 
-TASK-12 INPUT ARTIFACT
-Generated-authority artifact 10529710374, digest sha256:0029b1def03e329572ef221edc8779c89158a695b0be26ce02a05487e01e99ec, independently verified CRC PASS and exact four-member set PASS. It is still semantically versioned 0.1.0-dev.20 and is NOT eligible for final dev.21 synchronization. It exists only as proof that the pre-curation generated diff is deterministic.
+PRE-AUTHORITY BEHAVIOR EVIDENCE
+Head 7e50fa9a1df4d0a8336d16596af488335424b792, tree a3a6deec5d753c6176fb40368a56d263b3beaa62, CI 35664296931:
+- 395/395 managed PASS.
+- 162/162 static PASS.
+- 5/5 contract vectors PASS.
+- dependency audit PASS; 0 vulnerable-result packages.
+- Release build 0 warnings / 0 errors.
+- Native Explorer/package/ProbeWorker/COM/product gates PASS.
+- Audio36/Image24/Video27 plus negative/mixed gates PASS.
+- packaged Copy/Remux/Transcode PASS.
+- deterministic workspace double-build PASS at SHA-256 526588af945a4eeb04984dc17792af8dd10fc1d7f2a9e9006ab3976d448b2b0a, 642060 bytes / 462 files.
+- semantic archive verification stopped only on stale tracked generated authority.
+
+DEV.22 HARDENING COMPLETED
+Tasks 1-7 are evidence-backed: release-state/evidence binding, live governance/readiness integration, production FFmpeg evidence boundary, production MSIX/B2 evidence boundary, content secret scanning, structured partial-batch outcomes, destination-volume durable no-overwrite publication and owned stale-staging recovery.
 
 CURRENT REQUIRED ACTION
-1. Fresh-read main and dev/0.1.0-dev.21.
-2. Run/inspect ordinary CI on the exact metadata-curated dev.21 head.
-3. Independently verify the fresh generated artifact: exact digest, CRC, exact four members, package workspaceVersion 0.1.0-dev.21, source/release SBOM names 0.1.0-dev.21.
-4. Synchronize only SHA256SUMS.txt, machine-readable/package_manifest.json, machine-readable/release_sbom.spdx.json and machine-readable/source_sbom.spdx.json through the historical guarded exact-parent/exact-branch/self-deleting workflow. Never hand-edit them.
-5. Require ordinary CI on the exact synchronized candidate to show generated-authority zero-diff and complete managed deterministic workspace/delivery qualification.
-6. Independently verify final generated-authority and verified-delivery artifacts.
-7. Re-read main and release prerequisites. Promote non-force exact-SHA only if every required governance/release gate is genuinely green and compatible with exact-candidate promotion.
-8. If live governance, signing/provenance, production-engine approval, headed Windows 11 or other required release prerequisites remain open, STOP BEFORE PROMOTION and document the exact blocker. Do not weaken gates.
+1. Fresh-read dev/0.1.0-dev.22-shipping-readiness.
+2. Inspect ordinary CI on the exact metadata-curated dev.22 head.
+3. Independently verify the generated-authority artifact: digest, CRC, exactly four members, and 0.1.0-dev.22 package/SBOM alignment.
+4. Synchronize only SHA256SUMS.txt, machine-readable/package_manifest.json, machine-readable/release_sbom.spdx.json and machine-readable/source_sbom.spdx.json through a guarded exact-parent/exact-branch workflow. Never hand-edit them.
+5. If the guarded bot commit does not trigger CI, create a no-tree-change qualification-trigger commit.
+6. Require exact synchronized-candidate generated-authority zero-diff, full 395/395 managed or later exact count, all packaged product gates, deterministic workspace/delivery qualification and independent final artifact verification.
+7. STOP BEFORE MAIN PROMOTION while any genuine release prerequisite remains OPEN.
 
 TRUST ARCHITECTURE
-IExplorerCommand → fixed Bridge → private staging → strict read-only ProbeWorker / fixed ffprobe → typed bounded facts → Core planner → strict EngineWorker → managed byte-exact Copy OR provider-fixed Remux/Transcode → fixed app-local FFmpeg → post-probe TargetMediaContract → transactional numbered no-overwrite publication.
+IExplorerCommand → fixed Bridge → private staging → strict read-only ProbeWorker/fixed ffprobe → typed bounded facts → Core planner → strict EngineWorker → managed Copy OR provider-fixed Remux/Transcode → fixed app-local FFmpeg → post-probe TargetMediaContract → durable destination-volume temp → transactional numbered no-overwrite publication.
 
 FORBIDDEN
 Shell command construction; raw FFmpeg argument pass-through; PATH/CWD executable lookup; arbitrary converter/plugin execution; ordinary conversion network dependency; silent Strict→Compatibility fallback; hardware acceleration; repository signing private keys.
 
 OPEN RELEASE PREREQUISITES
-Live GitHub ruleset/main branch-protection enforcement; headed Windows 11 modern Explorer exact-build acceptance/screenshots/crash-hang-failure matrix; production signed-package B2; production FFmpeg/ffprobe provenance/signatures/hashes/license/notices/redistribution approval; signed MSIX clean Windows 11 lifecycle; UX/settings; Plugin SDK; final fuzz/chaos/security/release/end-user acceptance.
+Live GitHub ruleset/main protection; headed Windows 11 exact-build Explorer acceptance/screenshots/crash-hang matrix; production signed-package B2; production FFmpeg/ffprobe provenance/signatures/hashes/license/notices/redistribution approval; signed MSIX clean Windows 11 lifecycle; UX/settings and Plugin SDK release gates; final fuzz/chaos/security/release/end-user acceptance.
 
-CLOUD LIFECYCLE
-Canonical Drive IDs:
-Authority 1ZdDGUpSVxeEfvICLKD_VctT49MlJMyhNICyj4ebeYRw
-Roadmap 1p3xKxj2akSqZTzVp442QNetoZ8Eg9u6pvckjwUnBLsI
-Plan 1eGVajQAxw3Vjc7F_7NJgt9do6tRzZpV_Vbfcl24g9-s
-Tasks 1BH44EUYcNBexIZasxq24mlYBZk0VxF5XaG6RnUkQPrc
-Changelog 1JsJfEECcWaB2UJtW0oiW45RD86RZT4i5spANV38Zzoc
-Evidence 1LizDehSMDnBfihXnntX9z13QNai87zzMwlkzPptkcB0
-Recursive Handover 1HVfL2KV6LZbpl0fc4Je1dzqLs3ya9q9Onjb3YbFF9L8
-
-Current Slack handover at curation start: #12, TS 1789698886.030639, OPEN.
-
-RECURSIVE HANDOVER RULE
-After every materially completed block: fresh-read GitHub authority; update canonical Drive/Slack documents in place; mark current OPEN handover PROCESSED first; publish exactly one context-free successor OPEN containing current repo/branch/SHA/tree/version/CI/evidence, completed work, blockers/unverified claims, architecture/security/release invariants, exactly one executable next task and acceptance criteria; backfill exact successor reference; verify exactly one OPEN remains.
+SCOPE NOTE
+The historical Slack/Drive handover #12 is stale relative to GitHub. Current user instruction is GitHub-only; do not mutate Slack/Drive unless scope changes.
 
 DO NOT RESET OR FORCE-PUSH MAIN. DO NOT DELETE HISTORICAL COMMITS. DO NOT PUT SECRETS OR PRIVATE SIGNING MATERIAL IN THE REPOSITORY.
