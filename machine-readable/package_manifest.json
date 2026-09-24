@@ -50,8 +50,8 @@
     },
     {
       "path": "AGENTS.md",
-      "bytes": 2275,
-      "sha256": "482f348459735eff9e2ef54c3ddbaab3bcf6149e4826e686bfcd2ccc219d3006"
+      "bytes": 4193,
+      "sha256": "c8330bbb3f4df9abfa821a197eb8af068e37c5517be9f2bce3ea6b6580e9afc6"
     },
     {
       "path": "build/audio-batch-isolation-smoke.ps1",
@@ -134,6 +134,11 @@
       "sha256": "f531aa5c9a31fd8c5f1db4a3b0e6b82eee46d02216ad327ac9ad28bc43f5850c"
     },
     {
+      "path": "build/use-workspace-temp.ps1",
+      "bytes": 953,
+      "sha256": "7dacfc184fddcd13dcb968d8132d10ba1b6cbcedea096ed383305480eb0484f1"
+    },
+    {
       "path": "build/validate-dev-package.ps1",
       "bytes": 1543,
       "sha256": "2754286ba58b863ad82dbb361d8f1c474737a667f2bb2fbd0e43c73b42b828e8"
@@ -165,8 +170,8 @@
     },
     {
       "path": "CHANGELOG.md",
-      "bytes": 13728,
-      "sha256": "1b4b167a923ddcf4bd76bd9713fb466e8fad11c24772ce7c0be4452a3fffc344"
+      "bytes": 15342,
+      "sha256": "1a95e73ac1a56c225be0db710b06fb184d79de64719b369219401332111bf742"
     },
     {
       "path": "CMakeLists.txt",
@@ -230,8 +235,8 @@
     },
     {
       "path": "docs/Converty_Master_Build_Plan.md",
-      "bytes": 27654,
-      "sha256": "8512975a86acd9a0c7fb6f48a1994bbf582eae3a83a9ba4429636d24eb9b5766"
+      "bytes": 28955,
+      "sha256": "02f232782c73da22f6505defc50d64fc9df88d17607b8b5d108f5decfd6ed8d5"
     },
     {
       "path": "docs/development/BUILD.md",
@@ -285,8 +290,8 @@
     },
     {
       "path": "docs/development/IMPLEMENTATION_STATUS.md",
-      "bytes": 5405,
-      "sha256": "4dd432ab53e73b081b72a584cb37752f865a6acb4f9064b6191963852511f69c"
+      "bytes": 7051,
+      "sha256": "5fc29c3b5ae289ce8d11da21a1042656a40f4a190c37bf5c2e81663ecfed5833"
     },
     {
       "path": "docs/development/MODULE_BOUNDARIES.md",
@@ -305,13 +310,13 @@
     },
     {
       "path": "docs/HANDOVER_NEXT_AGENT.md",
-      "bytes": 3436,
-      "sha256": "8372d423112e0d40eab491a8fe72d54d827bfbdd7b22a7b7c87db90f22a37b16"
+      "bytes": 5299,
+      "sha256": "7531586248fda6ce5e475a69f35314ae390f817543b16e1aa9607fe92174b0b7"
     },
     {
       "path": "docs/HANDOVER_PROMPT.txt",
-      "bytes": 4669,
-      "sha256": "c8cd10a6559853fd10156c228db5896dfd30314649a7aa1ecc314cbbdb556d3a"
+      "bytes": 2833,
+      "sha256": "600738d04cb50691f4d14d692a29e62af282762bf4456551a9d7de2578088a71"
     },
     {
       "path": "docs/REFERENCE_SOURCES.md",
@@ -440,8 +445,8 @@
     },
     {
       "path": "docs/superpowers/plans/2026-09-21-dev22-audit-remediation-shipping-hardening.md",
-      "bytes": 5138,
-      "sha256": "0e6c7ac2eb16882692f48b15585f67e96ad32ca98bddfffd3e3d7aa04079d437"
+      "bytes": 6437,
+      "sha256": "41e65da59314aa0c0e787477c6d03aefe75a62ea75cebfbfeb9fb3f7cebfe595"
     },
     {
       "path": "docs/superpowers/specs/2026-08-24-foundation-design.md",
@@ -520,8 +525,8 @@
     },
     {
       "path": "docs/TASK_BACKLOG.md",
-      "bytes": 4635,
-      "sha256": "0a6af7d247f52b825485a92eece456d94d92a672aa1dd52d4329554b17d5983b"
+      "bytes": 5777,
+      "sha256": "7eba96e768c36bc66cafee8e7cb43df0ca4e66c8eacc59076789c6c84fdd4f68"
     },
     {
       "path": "docs/TEST_AND_RELEASE_GATES.md",
@@ -570,8 +575,8 @@
     },
     {
       "path": "machine-readable/build_evidence.json",
-      "bytes": 5938,
-      "sha256": "1ab2a30ec77e35d08817266a07de8e77ec3ca9ac5ea0aa98ab9b0dcc3e22dd0b"
+      "bytes": 7890,
+      "sha256": "3afab493f46f5af657346d1eb8dc66f294eef9b34ff58f7b4b37a497cf2058f9"
     },
     {
       "path": "machine-readable/ci_action_pins.json",
@@ -580,8 +585,8 @@
     },
     {
       "path": "machine-readable/handover_state.json",
-      "bytes": 4244,
-      "sha256": "95ec58c6699ce8c177e5639e6a8445710e8b6d01bcd9aaf3c6980b130c6e3293"
+      "bytes": 5295,
+      "sha256": "be53fdd3022b4ca3456ea1ef622ea597c898cc7e116b1f65de77166afd74162f"
     },
     {
       "path": "machine-readable/release_policy.json",
@@ -710,8 +715,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 5349,
-      "sha256": "3eb6927328ac832787fb4632344813436e3ab5ce970e67a2719a7964005f7033"
+      "bytes": 6386,
+      "sha256": "51f331facbe2f666d612762220d24cf00f0d7ad679dedcb693ccbfc5763646a7"
     },
     {
       "path": "reference-images/01_system_architecture.dot",
@@ -2292,6 +2297,11 @@
       "path": "tests/static/test_repository_verifier_version.py",
       "bytes": 577,
       "sha256": "13ef31f05fa4ff441448dc1ac9cdb0f147cecdc822457040d29d720643732996"
+    },
+    {
+      "path": "tests/static/test_workspace_storage_contract.py",
+      "bytes": 1053,
+      "sha256": "6a21b0ce8bea2807934f78ec1dac6bc783ac1d33dc808defa24a071584b37399"
     },
     {
       "path": "tests/vectors/v1/manifest.json",
