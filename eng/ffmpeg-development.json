@@ -1,11 +1,17 @@
 {
   "purpose": "development-qualification-only",
-  "version": "9.0.1",
-  "vendor": "Gyan Doshi FFmpeg Builds",
-  "archiveUrl": "https://www.gyan.dev/ffmpeg/builds/packages/ffmpeg-9.0.1-essentials_build.zip",
-  "archiveSha256": "fec81ae03971d9dd4be3ebe02e263bd2ec1d789483f931bdba5f5715e65da2e9",
+  "version": "n9.0.2-3-ga5923073bf",
+  "vendor": "BtbN FFmpeg-Builds",
+  "releaseTag": "autobuild-2026-09-21-13-55",
+  "releaseAssetId": 579145936,
+  "archiveAssetName": "ffmpeg-n9.0.2-3-ga5923073bf-win64-gpl-9.0.zip",
+  "assetApiUrl": "https://api.github.com/repos/BtbN/FFmpeg-Builds/releases/assets/579145936",
+  "archiveUrl": "https://github.com/BtbN/FFmpeg-Builds/releases/download/autobuild-2026-09-21-13-55/ffmpeg-n9.0.2-3-ga5923073bf-win64-gpl-9.0.zip",
+  "archiveSha256": "fe372180f20e7f9bfa3d9a481b2b1b98c8296178d8265552608736637ea6b3c8",
+  "archiveBytes": 192925997,
   "expectedExecutableName": "ffmpeg.exe",
   "expectedProbeExecutableName": "ffprobe.exe",
-  "licenseNotice": "The vendor states these Windows builds are licensed as GPLv3. This pin is for development qualification and is not production redistribution approval.",
-  "sourceCommit": "bf1b838f2a"
+  "expectedVersionToken": "n9.0.2-3-ga5923073bf",
+  "licenseNotice": "BtbN labels this Windows x64 static variant GPL. This exact tagged, hash-locked payload is development qualification input only and is not production redistribution approval.",
+  "sourceCommit": "a5923073bf"
 }

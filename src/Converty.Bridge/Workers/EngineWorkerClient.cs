@@ -1,3 +1,4 @@
+using Converty.Contracts.Conversion;
 using Converty.Contracts.Identifiers;
 using Converty.Core.Execution;
 using Converty.Security.Workers;
@@ -20,14 +21,30 @@ internal sealed class EngineWorkerClient(
             ResolveWorkerExecutable(AppContext.BaseDirectory),
             new WindowsWorkerProcessLauncher());
 
+    public Task<ConversionWorkerResult> ExecuteAsync(
+        PresetId presetId,
+        string stagedInputPath,
+        string stagedOutputPath,
+        TimeSpan timeout,
+        CancellationToken cancellationToken = default) =>
+        ExecuteAsync(
+            presetId,
+            ProductExecutionModeDefaults.Resolve(presetId),
+            stagedInputPath,
+            stagedOutputPath,
+            timeout,
+            cancellationToken);
+
     public async Task<ConversionWorkerResult> ExecuteAsync(
         PresetId presetId,
+        ConversionMode mode,
         string stagedInputPath,
         string stagedOutputPath,
         TimeSpan timeout,
         CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(presetId);
+        string modeArgument = ConversionModeArgument.Format(mode);
         ValidateTimeout(timeout);
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -58,6 +75,8 @@ internal sealed class EngineWorkerClient(
         [
             "--preset",
             presetId.Value,
+            "--mode",
+            modeArgument,
             "--input",
             stagedInputPath,
             "--output",

@@ -39,13 +39,16 @@ public sealed class ImageBatchIsolationTests
                 worker,
                 TimeSpan.FromMinutes(5));
 
-            ConversionFailedException error = await Assert.ThrowsAsync<ConversionFailedException>(() =>
-                runner.RunAsync(
-                    PresetId.Parse("image.png"),
-                    [first, failing, middle, truncated, last],
-                    TestContext.Current.CancellationToken));
+            ConversionBatchResult result = await runner.RunAsync(
+                PresetId.Parse("image.png"),
+                [first, failing, middle, truncated, last],
+                TestContext.Current.CancellationToken);
 
-            Assert.Equal(failing, error.InputPath);
+            Assert.Equal(3, result.Files.Count);
+            Assert.Equal(2, result.Failures.Count);
+            Assert.Equal(failing, result.Failures[0].InputPath);
+            Assert.Equal(truncated, result.Failures[1].InputPath);
+            Assert.True(result.HasFailures);
             Assert.Equal(5, worker.Inputs.Count);
             Assert.Equal(Path.Combine(root, "first (1).png"), Assert.Single(Directory.GetFiles(root, "first (1).png")));
             Assert.Equal(Path.Combine(root, "middle (1).png"), Assert.Single(Directory.GetFiles(root, "middle (1).png")));

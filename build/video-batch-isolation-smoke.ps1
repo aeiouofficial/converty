@@ -122,6 +122,7 @@ function New-VideoFixture {
         '-f', 'lavfi', '-i', 'testsrc2=size=64x48:rate=10',
         '-f', 'lavfi', '-i', 'sine=frequency=440:sample_rate=44100',
         '-map', '0:v:0', '-map', '1:a:0',
+        '-vf', 'setparams=colorspace=bt709:color_primaries=bt709:color_trc=bt709',
         '-t', '0.5', '-shortest'
     ) + $EncoderArgs + @('-y', $Path)
 

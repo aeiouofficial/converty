@@ -1,0 +1,31 @@
+namespace Converty.Core.Planning;
+
+public enum VideoPlanningReasonCode
+{
+    AlreadyTargetCompatible = 0,
+    ContainerChangeOnly = 1,
+    TranscodeRequired = 2,
+    AudioExtractionStreamCopy = 3,
+    AudioExtractionTranscode = 4,
+    MissingProbeFacts = 10,
+    IncompleteProbeFacts = 11,
+    UnknownContainer = 12,
+    UnsupportedContainer = 13,
+    MissingVideoStream = 14,
+    MultipleVideoStreams = 15,
+    MultipleAudioStreams = 16,
+    SubtitleStreamUnsupported = 17,
+    DataStreamUnsupported = 18,
+    AttachmentStreamUnsupported = 19,
+    UnknownStreamKind = 20,
+    UnknownCodec = 21,
+    CodecNotQualifiedForDecode = 22,
+    MissingRequiredVideoFact = 23,
+    MissingRequiredAudioFact = 24,
+    HdrUnsupported = 25,
+    HighBitDepthUnsupported = 26,
+    UnsupportedPixelFormat = 27,
+    UnsupportedColorTransfer = 28,
+    MissingAudioStream = 29,
+    UnsupportedPreset = 30,
+}

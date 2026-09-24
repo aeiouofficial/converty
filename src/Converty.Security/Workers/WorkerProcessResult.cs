@@ -1,3 +1,6 @@
 namespace Converty.Security.Workers;
 
-public sealed record WorkerProcessResult(int ExitCode, string StandardError);
+public sealed record WorkerProcessResult(
+    int ExitCode,
+    string StandardError,
+    string StandardOutput = "");

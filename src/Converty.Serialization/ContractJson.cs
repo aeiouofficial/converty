@@ -12,7 +12,7 @@ namespace Converty.Serialization;
 /// Strict, engine-independent JSON adapter for persisted/wire-facing contracts.
 /// It performs no transport, filesystem, media parsing, process launch, or provider execution.
 /// </summary>
-public static class ContractJson
+public static partial class ContractJson
 {
     private const int MaximumDepth = 32;
 

@@ -1,122 +1,243 @@
 {
   "schemaVersion": 1,
-  "workspaceVersion": "0.1.0-dev.20",
-  "evidenceDate": "2026-09-02",
+  "workspaceVersion": "0.1.0-dev.22",
+  "evidenceDate": "2026-09-24",
+  "releaseAuthority": {
+    "version": "0.1.0-dev.20",
+    "mainSha": "8a1f46603aa842728247bc11b34fcccf121858fd",
+    "treeSha": "4bd6f8d7acbadd60a3488870c773d2eafd67ba26",
+    "workflowRunId": 33671671714,
+    "continuityJobId": 100386513722,
+    "staticJobId": 100386513825,
+    "managedJobId": 100386513350,
+    "status": "FROZEN_EXACT_MAIN_SUCCESS"
+  },
   "behaviorQualification": {
-    "baselineFrozenDev19": {
-      "headSha": "eb0ce66dab646427d5bef1548c12e5cc4765b2f1",
-      "treeSha": "337a4e11fb41bab6b6eeb462c3755381580f06c1",
-      "workflowRunId": 33597504612,
-      "managedJobId": 100143814261,
-      "staticJobId": 100143814189,
-      "continuityJobId": 100143814059,
-      "allJobs": "SUCCESS"
-    },
     "managed": {
       "lockedRestore": "PASS",
-      "managedProjects": 18,
+      "managedProjects": 19,
       "dependencyAudit": "PASS",
-      "auditProjects": 18,
-      "auditFrameworks": 18,
+      "auditProjects": 19,
+      "auditFrameworks": 19,
       "vulnerablePackages": 0,
       "releaseBuild": "PASS",
       "warnings": 0,
       "errors": 0,
-      "tests": {"total": 260, "succeeded": 260, "failed": 0, "skipped": 0},
+      "tests": {
+        "total": 395,
+        "succeeded": 395,
+        "failed": 0,
+        "skipped": 0
+      },
       "nativeTopologySmoke": "PASS",
       "nativeExplorerReleaseBuild": "PASS",
       "developmentFfmpegPinHashAndExecution": "PASS",
+      "developmentFfmpegAuthority": {
+        "vendor": "BtbN FFmpeg-Builds",
+        "releaseTag": "autobuild-2026-09-21-13-55",
+        "releaseAssetId": 579145936,
+        "sourceCommit": "a5923073bf",
+        "archiveSha256": "fe372180f20e7f9bfa3d9a481b2b1b98c8296178d8265552608736637ea6b3c8",
+        "productionAuthority": false
+      },
       "makeAppxUnsignedDevelopmentPackage": "PASS",
       "directShellDllClassFactoryInvoke": "PASS",
       "loosePackageRegistrationComActivationInvoke": "PASS",
       "productBridgeToStrictWorkerFfmpegSmoke": "PASS",
-      "audioSourceActionMatrix": {"sources": 6, "actions": 6, "successfulConversions": 36, "status": "PASS"},
-      "audioMalformedAndTruncated": "PASS; deterministic exit 4",
-      "audioMixedBatchIsolation": {"attempts": 2, "selectionItems": 5, "validItems": 3, "invalidItems": 2, "bridgeExitCode": 4, "singleBridgeProcessPerAttempt": true, "laterValidItemsPublished": true, "status": "PASS"},
-      "imageSourceActionMatrix": {"sources": 8, "actions": 3, "successfulConversions": 24, "status": "PASS"},
-      "imageMalformedAndTruncated": "PASS; deterministic exit 4",
-      "imageMixedBatchIsolation": {"attempts": 2, "selectionItems": 5, "validItems": 3, "invalidItems": 2, "bridgeExitCode": 4, "singleBridgeProcessPerAttempt": true, "laterValidItemsPublished": true, "status": "PASS"},
-      "videoSourceActionMatrix": {"sources": 9, "actions": 3, "successfulConversions": 27, "status": "PASS"},
-      "videoSources": ["mp4", "mov", "mkv", "avi", "webm", "m4v", "mpeg", "mpg", "wmv"],
-      "videoActions": ["video.mp4.h264", "video.webm.vp9", "extract.audio.mp3"],
-      "videoExpectedCodecs": {"video.mp4.h264": "h264+aac", "video.webm.vp9": "vp9+opus", "extract.audio.mp3": "mp3 audio only"},
-      "videoMalformed": {"repeated": true, "bridgeExitCode": 4, "deterministic": true, "status": "PASS"},
-      "videoTruncated": {"repeated": true, "bridgeExitCode": 4, "deterministic": true, "status": "PASS"},
-      "videoMixedBatchIsolation": {"attempts": 2, "selectionItems": 5, "validItems": 3, "invalidItems": 2, "bridgeExitCode": 4, "singleBridgeProcessPerAttempt": true, "laterValidItemsPublished": true, "sourceTargetAliasGuard": true, "status": "PASS"},
-      "sourceAndExistingDestinationPreserved": "PASS for Audio, Image and Video acceptance/batch qualification",
-      "numberedNoOverwritePublication": "PASS",
-      "partialOutputCleanup": "PASS",
-      "orphanConverterProcessCleanup": "PASS"
+      "probeWorkerFfprobeAcceptance": "PASS",
+      "audioSourceActionMatrix": {
+        "sources": 6,
+        "actions": 6,
+        "successfulConversions": 36,
+        "status": "PASS"
+      },
+      "audioMixedBatchIsolation": "PASS",
+      "imageSourceActionMatrix": {
+        "sources": 8,
+        "actions": 3,
+        "successfulConversions": 24,
+        "status": "PASS"
+      },
+      "imageMixedBatchIsolation": "PASS",
+      "videoSourceActionMatrix": {
+        "sources": 9,
+        "actions": 3,
+        "successfulConversions": 27,
+        "status": "PASS"
+      },
+      "videoMixedBatchIsolation": "PASS",
+      "strictActualEngineContainment": "PASS",
+      "copyRemuxTranscodeQualification": "PASS"
     },
     "static": {
-      "tests": {"total": 103, "succeeded": 103, "failed": 0},
-      "contractVectors": {"total": 5, "succeeded": 5, "failed": 0},
-      "ciPins": "PASS after dev20 pin-manifest version alignment",
-      "releaseInputPreflight": "PASS"
+      "tests": {
+        "total": 162,
+        "succeeded": 162,
+        "failed": 0
+      },
+      "contractVectors": {
+        "total": 5,
+        "succeeded": 5,
+        "failed": 0
+      },
+      "immutableActionPins": "PASS",
+      "hashLockedPythonDependencies": "PASS",
+      "releaseInputPreflight": "PASS",
+      "contentSecretScan": "PASS",
+      "candidateBaseContinuity": "PASS",
+      "candidateReleaseReadiness": "BLOCKED_BY_GENUINE_EXTERNAL_RELEASE_PREREQUISITES"
     }
   },
-  "dev20": {
-    "branch": "dev/0.1.0-dev.20-video-foundation",
-    "branchBaseSha": "eb0ce66dab646427d5bef1548c12e5cc4765b2f1",
-    "behaviorHeadSha": "b8019ecf926fce9813fdcd2cbd74e5f59e439d08",
-    "behaviorWorkflowRunId": 33669379940,
-    "behaviorManagedJobId": 100378904264,
-    "behaviorStaticJobId": 100378904132,
-    "behaviorContinuityJobId": 100378903696,
-    "currentPreCurationHeadSha": "4121f91da887dee5f873e42f6699904c7c0aa429",
-    "headSemantics": "behavior-qualified development line; curation and generated-authority commits advance the branch and must always be re-read live",
-    "qualificationStatus": "VIDEO_BEHAVIOR_GREEN_FINAL_AUTHORITY_OPEN",
-    "scope": "Existing fixed Video product-surface qualification; no new Video architecture",
-    "successfulPackagedConversions": 27,
-    "repeatedNegativeCases": ["malformed advertised Video", "physically truncated Video"],
-    "mixedBatchSelection": ["valid mp4", "malformed avi", "valid mov", "truncated mkv", "valid webm"],
-    "mixedBatchAttempts": 2,
-    "expectedAggregateExitCode": 4,
-    "laterValidItemsMustPublish": true,
-    "invalidItemsMustNotPublish": true,
-    "sourceAndExistingDestinationPreserved": true,
-    "partialCleanupRequired": true,
-    "orphanConverterProcessCleanupRequired": true,
-    "productionBehaviorChanged": false,
-    "preAuthorityWorkspace": {
-      "behaviorRunDeterministicDoubleBuild": "PASS",
-      "sha256": "5db1e06c084e58354aa2445f3645d1b53c760fc63f565fe7960224c2eec2467f",
-      "bytes": 505672,
-      "zipEntries": 383,
-      "semanticArchiveVerification": "BLOCKED_AS_EXPECTED_BY_STALE_TRACKED_GENERATED_AUTHORITY",
-      "verifiedDelivery": "NOT_PRODUCED",
-      "finalAuthority": false
-    },
-    "preCurationGeneratedAuthority": {
-      "runId": 33669979101,
-      "artifactId": 9862090305,
-      "artifactSha256": "7cb43be8a0a67cf5e0deb19c79827c9df786a26777ddd7f11bdc9cf95d5edba2",
-      "generatedPackageManifestEntries": 381,
-      "generatedShaManifestEntries": 382,
-      "usableForFinalSync": false,
-      "reason": "This curation commit changes the workspace; final authority must be regenerated from the exact curated canonical dev20 head."
-    }
-  },
-  "tddHistory": {
-    "dev20Design": "9da11ee8a1c8063fb21493cbdde3ce5197c7d968",
-    "dev20Plan": "5295ae7b7304f82e567b58095b4600ea664b4b48",
-    "dev20StaticRed": {"headSha": "ea6987ddea57de71661b73e9f073cddb1c3f0bd3", "runId": 33668918551, "staticJobId": 100377398869, "result": "RED: new dev20 Video static contract failed because Video harnesses/CI wiring were absent"},
-    "dev20ManagedCharacterization": "680ed9ff3b3012b4848667124257924b2f95d7b6",
-    "dev20VideoAcceptanceHarness": "57a18c7f3c237dffb8fab056acf635f848e0a097",
-    "dev20VideoMixedBatchHarness": "f0be9311cf84dfc9ed63266db8464cab779c933e",
-    "dev20CiWiring": "b8019ecf926fce9813fdcd2cbd74e5f59e439d08",
-    "dev20BehaviorGreen": {"headSha": "b8019ecf926fce9813fdcd2cbd74e5f59e439d08", "runId": 33669379940, "result": "Video 27/27 + repeated malformed/truncated + mixed batch twice PASS; Audio/Image regressions PASS; 260/260 managed; 103/103 static within managed qualification"},
-    "dev20VersionBump": "ddaac6adeabfb30266ec4d210c9ff1313be40d32",
-    "dev20PinManifestAlignment": "4121f91da887dee5f873e42f6699904c7c0aa429"
+  "dev21": {
+    "branch": "dev/0.1.0-dev.21",
+    "qualifiedCandidateSha": "c3bc042aea3154e30ce2720db4722cbda27bcb34",
+    "qualifiedCandidateTreeSha": "47ecb6f1f952fcdf286e60dd81935a0d81af56ee",
+    "qualificationWorkflowRunId": 35343228179,
+    "candidatePushWorkflowRunId": 35343690620,
+    "generatedAuthorityArtifactId": 10546670736,
+    "verifiedDeliveryArtifactId": 10546087995,
+    "status": "QUALIFIED_IMMUTABLE_DEVELOPMENT_CANDIDATE_NOT_PROMOTED",
+    "frozen": false,
+    "customerShipReady": false
   },
   "metadataCuration": {
-    "scope": "non-generated repository authority, evidence and handover curation before final CI-generated authority",
+    "scope": "Post-qualification dev.22 technical evidence, GitHub-only shipping backlog, durable local D:-only workspace policy; latest documentation amendment requires fresh exact-head CI authority synchronization.",
     "productBehaviorChanged": false,
-    "rule": "final generated authority must come from ordinary CI on the exact curated canonical dev20 head before promotion"
+    "generatedAuthorityHandEdited": false,
+    "rule": "The four generated authority files must be regenerated by ordinary CI and synchronized only from an independently verified exact artifact through a guarded exact-parent/exact-branch workflow."
   },
-  "headedWindows11Acceptance": "OPEN",
-  "productionSignedPackageB2Requalification": "OPEN",
-  "productionFfmpegRedistributionApproval": "OPEN",
-  "signedProductionMsixLifecycle": "OPEN",
-  "finalSecurityFuzzChaosReleaseEndUserAcceptance": "OPEN"
+  "releaseBlockers": {
+    "liveRepositoryRuleset": "OPEN",
+    "mainBranchProtection": "OPEN",
+    "headedWindows11ExplorerAcceptance": "OPEN",
+    "productionSignedPackageB2Requalification": "OPEN",
+    "productionFfmpegRedistributionApproval": "OPEN",
+    "signedProductionMsixLifecycle": "OPEN",
+    "finalSecurityFuzzChaosReleaseEndUserAcceptance": "OPEN",
+    "uxSettingsAndPluginSdkReleaseGates": "OPEN"
+  },
+  "dev22": {
+    "branch": "dev/0.1.0-dev.22-shipping-readiness",
+    "auditBaselineSha": "1bfb6a409976abdbf781ba027f556818fb791fa7",
+    "preAuthorityBehaviorHeadSha": "7e50fa9a1df4d0a8336d16596af488335424b792",
+    "preAuthorityBehaviorTreeSha": "a3a6deec5d753c6176fb40368a56d263b3beaa62",
+    "behaviorWorkflowRunId": 35664296931,
+    "managedJobId": 106546455848,
+    "staticJobId": 106546456029,
+    "candidateBaseContinuityJobId": 106546455970,
+    "candidateReleaseReadinessJobId": 106546455871,
+    "remediationPlan": "docs/superpowers/plans/2026-09-21-dev22-audit-remediation-shipping-hardening.md",
+    "completedScope": [
+      "release evidence state validation and exact qualified-subject/artifact binding",
+      "live GitHub governance/readiness checks with non-authoritative offline mode",
+      "production FFmpeg and production MSIX/B2 structured fail-closed evidence boundaries",
+      "content-level secret/private-key preflight scan",
+      "member-local batch failure aggregation with visible partial success",
+      "destination-volume durable transactional no-overwrite publication",
+      "owned age-bounded worker-staging recovery without reparse traversal",
+      "immutable hash-locked development FFmpeg qualification repin"
+    ],
+    "deterministicPreAuthorityWorkspace": {
+      "sha256": "526588af945a4eeb04984dc17792af8dd10fc1d7f2a9e9006ab3976d448b2b0a",
+      "bytes": 642060,
+      "files": 462,
+      "doubleBuild": "PASS",
+      "semanticVerification": "BLOCKED_AS_EXPECTED_BY_STALE_TRACKED_GENERATED_AUTHORITY",
+      "firstMismatchedTrackedAuthorityMember": ".github/workflows/ci.yml"
+    },
+    "task8Status": "NON_GENERATED_METADATA_CURATION",
+    "generatedAuthorityHandEdited": false,
+    "customerShipReady": false,
+    "exactQualifiedSubject": {
+      "commitSha": "1aea099a2878f72f8c95a5cd3bd1dee98a1f98b3",
+      "treeSha": "8369b929f3e8b48f76f720ae3a954818acf2a25a",
+      "workflowRunId": 35937520600,
+      "managedJobId": 107437801949,
+      "staticJobId": 107437802172,
+      "candidateBaseContinuityJobId": 107437802136,
+      "candidateReleaseReadinessJobId": 107437802229,
+      "managed": "395/395 PASS",
+      "static": "162/162 PASS",
+      "contractVectors": "5/5 PASS",
+      "build": "0 warnings / 0 errors",
+      "productRegressions": "Native, Package, ProbeWorker, COM, Audio36, Image24, Video27, negative/mixed, Copy/Remux/Transcode PASS",
+      "generatedAuthority": {
+        "artifactId": 10783376753,
+        "digest": "sha256:c3b79e9db86c52585c9c3db00d05504d43a0b6991f6c323c9f6cdf302eb1df59",
+        "exactFourMembers": true
+      },
+      "delivery": {
+        "artifactId": 10783368416,
+        "digest": "sha256:2697a85aa3b2a5f51f1446afb37e348bb242177dc29b11dbf3b8416b422ba207",
+        "workspaceSha256": "337bdb018274866803e8b6e15f7b9ea0fad4436ac3d2b912d61f340cfc76cf47",
+        "workspaceBytes": 646844,
+        "workspaceEntries": 462,
+        "packageManifestVerified": "460/460 PASS",
+        "shaManifestVerified": "461/461 PASS",
+        "crc": "PASS",
+        "deterministicDoubleBuild": "PASS"
+      },
+      "status": "EXACT_SYNCHRONIZED_DEVELOPMENT_CANDIDATE_QUALIFIED_NOT_RELEASE"
+    },
+    "postQualificationDocumentation": {
+      "status": "STORAGE_POLICY_AND_DOCUMENTATION_AMENDMENT_REQUIRES_NEW_AUTHORITY_SYNC_AND_EXACT_HEAD_CI",
+      "cDriveConvertyMigration": {
+        "verifiedFiles": 13,
+        "verifiedBytes": 2642345,
+        "destination": "D:\\converty\\_temp\\migrated-from-C",
+        "sha256PerFile": "PASS",
+        "localSourcesDeleted": true
+      },
+      "draftPullRequest": 14,
+      "shippingIssue": 13
+    }
+  },
+  "localQualification20260924": {
+    "baselineCommitSha": "ca018a2cdafcfef9e4198a0aa721b6fa66464a74",
+    "baselineTreeSha": "f589ce536e95f470789ab4a146af904fe54b62de",
+    "scope": "Non-elevated Windows 11 local development qualification of amended dev.22, not GitHub-hosted CI or production release",
+    "workspace": "D:\\converty",
+    "sdk": "10.0.400 installed within D:\\converty\\_toolchain",
+    "managed": "395/395 PASS; 0 skipped",
+    "pythonStatic": "168/168 PASS",
+    "contractVectors": "5/5 PASS",
+    "nugetAudit": "19 projects / 19 frameworks / 0 vulnerable-result packages",
+    "releaseBuild": "0 warnings / 0 errors",
+    "nativeMsvc": "Explorer DLL and registration-smoke executable build PASS",
+    "regressions": "Unprivileged junction-based reparse tests PASS; generated-authority LF regression RED then GREEN",
+    "hostedCiInvoked": false,
+    "unsignedDevelopmentMsixLayout": "PASS: MakeAppx schema/layout, without converter",
+    "packagedQualification": "NOT VERIFIED: exact pinned development FFmpeg download failed size and SHA-256",
+    "ffmpegRejectedDownload": {
+      "expectedBytes": 192925997,
+      "receivedBytes": 150933805,
+      "expectedSha256": "fe372180f20e7f9bfa3d9a481b2b1b98c8296178d8265552608736637ea6b3c8",
+      "actualSha256": "adb874e999e4bad50f6078d0bf774095f5fe019197786a50fff24c85e0b448af"
+    },
+    "deterministicArchive": "PENDING: packaging reads committed HEAD; must validate after local commit",
+    "customerShipReady": false,
+    "evidenceDocument": "docs/development/DEV22_LOCAL_CI_EVIDENCE_2026-09-24.md",
+    "resumedPackagedQualification": {
+      "qualifiedSourceCommit": "6292ccb0a2a1eb5bfcb3dbe23bc99fddc50d5ce3",
+      "developmentFfmpegVerified": {
+        "bytes": 192925997,
+        "sha256": "fe372180f20e7f9bfa3d9a481b2b1b98c8296178d8265552608736637ea6b3c8",
+        "status": "PASS"
+      },
+      "unsignedDevelopmentMsix": "PASS",
+      "packagedProbeWorker": "PASS",
+      "directStagedExplorerComInvoke": "PASS",
+      "registeredUnsignedMsixCom": "BLOCKED: Windows sideload/developer policy 0x80073CFF",
+      "productSmoke": "PASS",
+      "audio36": "PASS",
+      "image24": "PASS",
+      "video27": "PASS",
+      "modeCopyRemuxTranscode": "PASS",
+      "negativeAndMixedBatch": "PASS",
+      "noGithubActions": true,
+      "productionReleaseApproved": false,
+      "log": "D:\\converty\\_temp\\packaged-independent-20260924.log",
+      "status": "SOURCE_CODE_LOCALLY_QUALIFIED_REGISTERED_COM_AND_PRODUCTION_GATES_OPEN"
+    }
+  }
 }
