@@ -191,5 +191,31 @@
       "draftPullRequest": 14,
       "shippingIssue": 13
     }
+  },
+  "localQualification20260924": {
+    "baselineCommitSha": "ca018a2cdafcfef9e4198a0aa721b6fa66464a74",
+    "baselineTreeSha": "f589ce536e95f470789ab4a146af904fe54b62de",
+    "scope": "Non-elevated Windows 11 local development qualification of amended dev.22, not GitHub-hosted CI or production release",
+    "workspace": "D:\\converty",
+    "sdk": "10.0.400 installed within D:\\converty\\_toolchain",
+    "managed": "395/395 PASS; 0 skipped",
+    "pythonStatic": "168/168 PASS",
+    "contractVectors": "5/5 PASS",
+    "nugetAudit": "19 projects / 19 frameworks / 0 vulnerable-result packages",
+    "releaseBuild": "0 warnings / 0 errors",
+    "nativeMsvc": "Explorer DLL and registration-smoke executable build PASS",
+    "regressions": "Unprivileged junction-based reparse tests PASS; generated-authority LF regression RED then GREEN",
+    "hostedCiInvoked": false,
+    "unsignedDevelopmentMsixLayout": "PASS: MakeAppx schema/layout, without converter",
+    "packagedQualification": "NOT VERIFIED: exact pinned development FFmpeg download failed size and SHA-256",
+    "ffmpegRejectedDownload": {
+      "expectedBytes": 192925997,
+      "receivedBytes": 150933805,
+      "expectedSha256": "fe372180f20e7f9bfa3d9a481b2b1b98c8296178d8265552608736637ea6b3c8",
+      "actualSha256": "adb874e999e4bad50f6078d0bf774095f5fe019197786a50fff24c85e0b448af"
+    },
+    "deterministicArchive": "PENDING: packaging reads committed HEAD; must validate after local commit",
+    "customerShipReady": false,
+    "evidenceDocument": "docs/development/DEV22_LOCAL_CI_EVIDENCE_2026-09-24.md"
   }
 }

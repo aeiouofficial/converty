@@ -170,8 +170,8 @@
     },
     {
       "path": "CHANGELOG.md",
-      "bytes": 15342,
-      "sha256": "1a95e73ac1a56c225be0db710b06fb184d79de64719b369219401332111bf742"
+      "bytes": 17194,
+      "sha256": "83bb026cc687061cf40884d4968d813c7476af5f23e4bd76fbdb9ae0ad54a87d"
     },
     {
       "path": "CMakeLists.txt",
@@ -289,9 +289,14 @@
       "sha256": "ae2c4f55ef7a19d2a9e08c26373dc77adb73d4fec267fcd8ce0eaa5bf526ada8"
     },
     {
+      "path": "docs/development/DEV22_LOCAL_CI_EVIDENCE_2026-09-24.md",
+      "bytes": 3163,
+      "sha256": "32f047c7ea782db96ba803008b5ff8a78aa8edcfe3ccb1c95c11324b09efc1ca"
+    },
+    {
       "path": "docs/development/IMPLEMENTATION_STATUS.md",
-      "bytes": 7051,
-      "sha256": "5fc29c3b5ae289ce8d11da21a1042656a40f4a190c37bf5c2e81663ecfed5833"
+      "bytes": 7767,
+      "sha256": "4b8c528ce22b77199b6b867ad7834147a716fd964f633e0f1c94dcf8505546c3"
     },
     {
       "path": "docs/development/MODULE_BOUNDARIES.md",
@@ -300,8 +305,8 @@
     },
     {
       "path": "docs/development/TESTING.md",
-      "bytes": 1013,
-      "sha256": "df57560c86131d23fa4d89ec3678a97319ca26e35b5321034016ca2ae504f32a"
+      "bytes": 1474,
+      "sha256": "64ba260ca496e75e3c504dca7b3916f9b607a85d9072ecba463611d85a336849"
     },
     {
       "path": "docs/development/VERSIONING.md",
@@ -310,13 +315,13 @@
     },
     {
       "path": "docs/HANDOVER_NEXT_AGENT.md",
-      "bytes": 5299,
-      "sha256": "7531586248fda6ce5e475a69f35314ae390f817543b16e1aa9607fe92174b0b7"
+      "bytes": 5929,
+      "sha256": "6b72600ca149748c374d50e5b915d07bb9fa554eece0c403989ff33736ae3d0a"
     },
     {
       "path": "docs/HANDOVER_PROMPT.txt",
-      "bytes": 2833,
-      "sha256": "600738d04cb50691f4d14d692a29e62af282762bf4456551a9d7de2578088a71"
+      "bytes": 3253,
+      "sha256": "744bccc050c7e4ec765309019789347d2a031ef06ca656a4d1174c28f20bf53f"
     },
     {
       "path": "docs/REFERENCE_SOURCES.md",
@@ -445,8 +450,8 @@
     },
     {
       "path": "docs/superpowers/plans/2026-09-21-dev22-audit-remediation-shipping-hardening.md",
-      "bytes": 6437,
-      "sha256": "41e65da59314aa0c0e787477c6d03aefe75a62ea75cebfbfeb9fb3f7cebfe595"
+      "bytes": 7202,
+      "sha256": "7f5912e22d74ed7ba85d8f9f40c1f8d8f5ce1dd4e357a81ed4893b716adacfe4"
     },
     {
       "path": "docs/superpowers/specs/2026-08-24-foundation-design.md",
@@ -525,8 +530,8 @@
     },
     {
       "path": "docs/TASK_BACKLOG.md",
-      "bytes": 5777,
-      "sha256": "7eba96e768c36bc66cafee8e7cb43df0ca4e66c8eacc59076789c6c84fdd4f68"
+      "bytes": 6276,
+      "sha256": "bd772d5748391097c19cc34bf4629d46dee590530fc4dad3597dabc70843c32b"
     },
     {
       "path": "docs/TEST_AND_RELEASE_GATES.md",
@@ -575,8 +580,8 @@
     },
     {
       "path": "machine-readable/build_evidence.json",
-      "bytes": 7890,
-      "sha256": "3afab493f46f5af657346d1eb8dc66f294eef9b34ff58f7b4b37a497cf2058f9"
+      "bytes": 9468,
+      "sha256": "5fb33ba4cfff23fe45f53c3aa3ca84a2eae87449b85ae82f5d15c66096017c41"
     },
     {
       "path": "machine-readable/ci_action_pins.json",
@@ -585,8 +590,8 @@
     },
     {
       "path": "machine-readable/handover_state.json",
-      "bytes": 5295,
-      "sha256": "be53fdd3022b4ca3456ea1ef622ea597c898cc7e116b1f65de77166afd74162f"
+      "bytes": 5443,
+      "sha256": "5aea7949b9e506bb0ac85a31e67c53996981b303130b754f32d0a4ef39729b2d"
     },
     {
       "path": "machine-readable/release_policy.json",
@@ -830,18 +835,18 @@
     },
     {
       "path": "scripts/generate_hash_manifest.py",
-      "bytes": 943,
-      "sha256": "3cd70ec8dd0cfe5286c430e2edb121c40178661fd377bc3637d3a16e96e1070a"
+      "bytes": 957,
+      "sha256": "2f9060e09b16c84b3bb4063653c378d3ef08f0a99b61084f88eddf3c4318e523"
     },
     {
       "path": "scripts/generate_package_manifest.py",
-      "bytes": 1655,
-      "sha256": "083d1cd748ab0332c67766eea51f25c04a533f0bedb10e13f37b7aa2c711c368"
+      "bytes": 1669,
+      "sha256": "7b2273714753dfac873d7c8cf02cb53a0209eb7d87aeb8c998a09551d5c25e4e"
     },
     {
       "path": "scripts/generate_sbom.py",
-      "bytes": 5623,
-      "sha256": "ff1ddaa8fadf216c39a0cab9e990a75e927021f6125e5056b2d1f21d943dd936"
+      "bytes": 5637,
+      "sha256": "897ba2f89ef69aaca4d8d64e0fa824c1e3c18bfe3707db0a2e1d33aaf9cbac1a"
     },
     {
       "path": "scripts/package_workspace.py",
@@ -1805,8 +1810,8 @@
     },
     {
       "path": "tests/Converty.Core.Tests/Execution/FfmpegProcessLauncherTests.cs",
-      "bytes": 5516,
-      "sha256": "19d973ffc17a7ba4b6bd3e21891805579b7970054e89e6b708f4050f50f74e1c"
+      "bytes": 6357,
+      "sha256": "6b011ed5df5b84f1c6513a3abb03622097cd8ec89f15382c1184e1d2ca1d305a"
     },
     {
       "path": "tests/Converty.Core.Tests/Execution/ImageBatchIsolationTests.cs",
@@ -2010,8 +2015,8 @@
     },
     {
       "path": "tests/Converty.Security.Tests/Workers/WorkerFileSystemScopeTests.cs",
-      "bytes": 1088,
-      "sha256": "f23af3b1982edf2b08f853320832a7bfbc4d77445919318e46dfca392cd8ca1f"
+      "bytes": 1929,
+      "sha256": "2ecf114c8b7e1a64f657b95f510b70dbf478e2ff01d0dbe4a4f1d1a7e6f70ffa"
     },
     {
       "path": "tests/Converty.Security.Tests/Workers/WorkerOutputLimitTests.cs",
@@ -2257,6 +2262,11 @@
       "path": "tests/static/test_development_ffmpeg_pin.py",
       "bytes": 1515,
       "sha256": "f13c9367ef65b798541d26c014543e03141ac795af5f461a032cfd456c8d4b75"
+    },
+    {
+      "path": "tests/static/test_generated_authority_newlines.py",
+      "bytes": 673,
+      "sha256": "4df8658d17ca97924f4ca58d70754e6cf2a2b3108b14df46dd409355d84b0ff5"
     },
     {
       "path": "tests/static/test_main_authority_continuity.py",

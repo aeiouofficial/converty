@@ -3,11 +3,11 @@
   "project": "Converty",
   "workspaceVersion": "0.1.0-dev.22",
   "baselineDate": "2026-09-24",
-  "implementationStatus": "DEV22_EXACT_SUBJECT_QUALIFIED_POST_DOC_STORAGE_POLICY_REQUAL_PENDING",
+  "implementationStatus": "DEV22_LOCAL_MANAGED_STATIC_NATIVE_QUALIFIED_PACKAGED_AND_FINAL_ARCHIVE_PENDING",
   "defaultBranch": "main",
   "currentDevelopmentBranch": "dev/0.1.0-dev.22-shipping-readiness",
   "nextWorkspaceVersion": "0.1.0-dev.23",
-  "nextBatch": "DEV22_POST_DOCUMENTATION_GENERATED_AUTHORITY_AND_EXACT_HEAD_REQUALIFICATION",
+  "nextBatch": "DEV22_LOCAL_PACKAGE_ARCHIVE_VERIFICATION_AND_EXTERNAL_SHIPPING_GATES",
   "targetOs": "Windows 11 x64",
   "frozenReleaseAuthority": {
     "version": "0.1.0-dev.20",
@@ -44,11 +44,11 @@
     "UX/settings and Plugin SDK release gates"
   ],
   "nextActions": [
-    "Fresh-read newest dev.22 HEAD after post-qualification documentation/storage-policy amendment; do not treat the prior 1aea099a exact subject as current head.",
-    "Run ordinary CI on amended source and independently verify the newly generated exact-four-member dev.22 authority artifact.",
-    "Guarded exact-parent sync of only SHA256SUMS.txt, package_manifest.json, release_sbom.spdx.json, source_sbom.spdx.json; never hand-edit generated authority.",
-    "Trigger no-tree-change CI if the bot synchronization does not trigger workflows; qualify the newest exact SHA with Static/Managed/Native/Product/5 vectors/generated-authority zero-diff and independent deterministic delivery.",
-    "Update draft PR #14 and external shipping gates issue #13 with final exact evidence; keep main and dev.21 immutable and release blocked while production governance/signing/provenance/headed/final acceptance remain OPEN."
+    "Fresh-read latest GitHub dev.22 branch and draft PR #14; local baseline ca018a2 is not the final amended tree.",
+    "Use only D:\\converty local CI. Verify pinned development FFmpeg archive by exact bytes/SHA-256, then run all packaged native/ProbeWorker/COM/Audio36/Image24/Video27 and mixed/mode regressions; record any unavailable gate explicitly.",
+    "Run local locked Release build, dependency audit, all 395 managed/168 static/5 contract tests; regenerate deterministic authority with the committed generators, verify repeat generation, build and inspect identical workspaces twice.",
+    "Commit and push complete verified work with [skip ci], update draft PR #14 and shipping issue #13 with actual local-only evidence; do not dispatch GitHub Actions or claim hosted checks.",
+    "External production provenance, signing, governance, clean headed Windows 11, security/fuzz/chaos/end-user, UX and Plugin SDK approvals remain OPEN; do not merge frozen main."
   ],
   "recursiveHandoverRequired": true,
   "recursiveHandoverRule": "After every materially completed GitHub-only block: fresh-read GitHub authority; update canonical repository plan/backlog/changelog/evidence/handover in place; preserve historical evidence; publish exactly one context-free current repository continuation point. Reconcile Slack/Drive only when the user restores cloud-documentation scope.",
@@ -74,9 +74,10 @@
     "exactQualificationAuthorityArtifactId": 10783376753,
     "exactQualificationDeliveryArtifactId": 10783368416,
     "exactQualificationWorkspaceSha256": "337bdb018274866803e8b6e15f7b9ea0fad4436ac3d2b912d61f340cfc76cf47",
-    "task8Status": "EXACT_SUBJECT_QUALIFIED_POST_DOC_AMENDMENT_REQUAL_PENDING",
+    "task8Status": "LOCAL_REGRESSION_PASS_FINAL_PACKAGE_AND_ARCHIVE_PENDING",
     "postQualificationPolicy": "Local Converty project files/temp/cache/logs prohibited on laptop C:, workspace D:\\converty, project temp D:\\converty\\_temp; two old directories/13 files relocated and per-file SHA-256 checked",
     "reviewPullRequest": 14,
-    "externalGatesIssue": 13
+    "externalGatesIssue": 13,
+    "localQualificationEvidence": "docs/development/DEV22_LOCAL_CI_EVIDENCE_2026-09-24.md"
   }
 }

@@ -1,26 +1,25 @@
-CONVERTY — CURRENT GITHUB-ONLY AGENT CONTINUATION
+CONVERTY — SINGLE OPEN REPOSITORY HANDOVER (GITHUB-ONLY)
+Read docs/HANDOVER_NEXT_AGENT.md, AGENTS.md, docs/TASK_BACKLOG.md, CHANGELOG.md, machine-readable/handover_state.json, machine-readable/build_evidence.json, docs/development/DEV22_LOCAL_CI_EVIDENCE_2026-09-24.md, dev.22 remediation plan, draft PR #14 and shipping issue #13. Fresh-read the actual remote HEAD, PR reviews and status before any write.
 
-Before any write, fresh-read https://github.com/aeiouofficial/converty branch dev/0.1.0-dev.22-shipping-readiness and frozen main. Read docs/HANDOVER_NEXT_AGENT.md, docs/TASK_BACKLOG.md, machine-readable/handover_state.json, machine-readable/build_evidence.json, the dev.22 remediation plan, draft PR #14 and external shipping gates issue #13.
+AUTHORITIES
+Frozen main 0.1.0-dev.20: 8a1f46603aa842728247bc11b34fcccf121858fd, tree 4bd6f8d7acbadd60a3488870c773d2eafd67ba26.
+Immutable dev.21: c3bc042aea3154e30ce2720db4722cbda27bcb34.
+Active dev.22 branch: dev/0.1.0-dev.22-shipping-readiness. Next workspace version after dev.22 closure: 0.1.0-dev.23. Baseline before local portability fixes: ca018a2cdafcfef9e4198a0aa721b6fa66464a74 / tree f589ce536e95f470789ab4a146af904fe54b62de. Do not assume this remains the latest SHA.
+Previous GitHub-qualified dev.22 subject: 1aea099a2878f72f8c95a5cd3bd1dee98a1f98b3 / tree 8369b929f3e8b48f76f720ae3a954818acf2a25a / CI 35937520600. Those old artifacts cannot qualify modified commits.
 
-FROZEN main 0.1.0-dev.20:
-8a1f46603aa842728247bc11b34fcccf121858fd
-tree 4bd6f8d7acbadd60a3488870c773d2eafd67ba26.
-Qualified immutable dev.21: c3bc042aea3154e30ce2720db4722cbda27bcb34.
+CURRENT LOCAL RESULTS (2026-09-24)
+Managed 395/395 PASS; static 168/168 PASS; vectors 5/5 PASS; native MSVC PASS; Release 0 warnings/errors; 19-project dependency audit 0 vulnerable-result packages.
+Two unprivileged-Windows junction security fixtures corrected. LF-only generated authority regression RED then GREEN. Exact local evidence document linked above.
+Unsigned development MSIX layout/schema validation PASS without converter. Exact pinned FFmpeg download failed expected bytes/SHA-256 and was rejected without extraction; all FFmpeg-dependent packaged product checks NOT VERIFIED on current amended tree. Final deterministic ZIP must be verified after commit because packaging reads committed HEAD.
+All local project temp, cache, SDK, logs and downloads belong under D:\converty. SDK 10.0.400 at D:\converty\_toolchain\dotnet. PowerShell 7 and build/use-workspace-temp.ps1 required.
 
-LAST FULLY QUALIFIED dev.22 SUBJECT:
-1aea099a2878f72f8c95a5cd3bd1dee98a1f98b3
-tree 8369b929f3e8b48f76f720ae3a954818acf2a25a
-exact CI 35937520600: managed 395/395 PASS, static 162/162 PASS, vectors 5/5 PASS, all native/packaged Audio/Image/Video/Copy/Remux/Transcode regressions PASS, tracked authority zero-diff PASS.
-Authority artifact 10783376753 sha256:c3b79e9db86c52585c9c3db00d05504d43a0b6991f6c323c9f6cdf302eb1df59.
-Delivery artifact 10783368416 sha256:2697a85aa3b2a5f51f1446afb37e348bb242177dc29b11dbf3b8416b422ba207.
-Independently verified nested workspace SHA256 337bdb018274866803e8b6e15f7b9ea0fad4436ac3d2b912d61f340cfc76cf47 / 646844 bytes / 462 entries, CRC/manifest 460/SHA list 461 all PASS.
+IMMEDIATE NEXT STEP
+Verify exact hash-pinned FFmpeg/ffprobe archive; run every packaged Audio36/Image24/Video27, Copy/Remux/Transcode, malformed/mixed and containment gate locally. Regenerate four authority files only through generators, double-build and independently verify deterministic workspace archive. Commit+push with [skip ci], update draft PR #14 and issue #13 with exact local evidence. DO NOT start GitHub Actions (minutes exhausted), merge main or claim production approval. Reconcile the single OPEN repository handover in place.
 
-Next workspace version after dev.22 closure: 0.1.0-dev.23.
+EXTERNAL RELEASE BLOCKERS (ISSUE #13)
+Production FFmpeg provenance/license/redistribution; live main ruleset/protection; real signed MSIX/B2 identity and lifecycle; clean headed Windows 11 Explorer screenshots; final fuzz/chaos/security/end-user and UX/settings/Plugin SDK approvals; independent review. Draft PR #14 stays blocked until real evidence exists.
 
-CURRENT WORK: post-qualification documentation + C:-prohibited project storage policy added after the qualified subject. Fresh-read GitHub to find newer branch HEAD. Run ordinary CI on the exact updated tree, independently verify freshly generated four-member authority, synchronize only those four members by guarded exact-parent/branch update, run exact final CI and independently inspect delivery; update PR #14 and issue #13 with final evidence.
+CONTINUATION RULE
+Every short continuation command means fresh GitHub authority and current single OPEN repository handover → execute next verifiable task → local evidence → in-place plan/backlog/changelog/evidence docs → push durable code/docs → reconcile one updated OPEN handover. Historic Slack/Drive is stale for the current GitHub-only scope.
 
-USER LAPTOP STORAGE: D:\converty; temp D:\converty\_temp; startup script D:\converty\setup-workspace-env.ps1. No local Converty temp/cache/logs/source/archives on C:. Repo policy AGENTS.md + build/use-workspace-temp.ps1. Migration of 13 files from two old C: Converty temp directories was completed only after per-file SHA-256 verification.
-
-Never hand-edit SHA256SUMS or generated package/source/release authority. Never move main or dev.21. Open production blockers: live main governance, production FFmpeg provenance/redistribution, real signed MSIX/B2, headed Windows 11 lifecycle, final security/fuzz/chaos/end-user acceptance, UX/settings and Plugin SDK. Converty remains NOT CUSTOMER SHIP-READY. The Slack/Drive historic Handover #12 is stale; this user requested GitHub-only.
-
-If exact final qualification succeeds, keep the PR DRAFT/BLOCKED until every real production gate passes. Record exact SHA, tree, CI, artifact IDs/digests; re-read GitHub immediately before next handover. No duplicate current handover documents.
+\n

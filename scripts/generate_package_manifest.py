@@ -43,7 +43,7 @@ def main() -> None:
         ],
     }
     OUTPUT.parent.mkdir(parents=True, exist_ok=True)
-    OUTPUT.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
+    OUTPUT.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8", newline="\n")
     print(f"Wrote {len(files)} entries to {OUTPUT.relative_to(ROOT)}")
 
 

@@ -53,7 +53,8 @@ Plan: `docs/superpowers/plans/2026-09-21-dev22-audit-remediation-shipping-harden
 - [x] Task 6: complete per-member batch failure isolation and structured partial-success results.
 - [x] Task 7: destination-volume durable atomic publication and owned stale staging recovery.
 - [x] Task 8: dev.22 version/evidence curation, guarded generated-authority sync, exact subject `1aea099a2878f72f8c95a5cd3bd1dee98a1f98b3` / CI `35937520600` qualification and independent artifacts PASS.
-- [ ] This post-qualified documentation/storage-policy amendment must regenerate/synchronize the four CI-generated authority files and pass fresh exact-PR-head CI; final evidence belongs in draft PR #14.
+- [ ] Requalify the newest dev.22 code/docs tree with the user's local CI only (GitHub Actions minutes exhausted): regenerate the four deterministic authority files using the committed generators, prove repeat generation byte-identical and archive CRC/per-member hashes, and capture full managed/native/packaged/static results. Record exact local evidence in draft PR #14. Do not mislabel local evidence as GitHub-hosted CI.
+- [ ] Local unsigned MSIX layout/schema PASS. Exact pinned FFmpeg download failed size/digest check (150933805 bytes vs 192925997 expected), so actual packaged product/COM and multimedia regression runs on amended tree remain NOT VERIFIED; never promote historic CI as current.
 - [ ] Final whole-branch review after exact synchronized dev.22 candidate qualification.
 
 ### Dev.22 completion rule
