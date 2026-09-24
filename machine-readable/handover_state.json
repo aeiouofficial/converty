@@ -2,12 +2,12 @@
   "schemaVersion": 1,
   "project": "Converty",
   "workspaceVersion": "0.1.0-dev.22",
-  "baselineDate": "2026-09-21",
-  "implementationStatus": "DEV22_TASK8_PRE_AUTHORITY_CURATION",
+  "baselineDate": "2026-09-24",
+  "implementationStatus": "DEV22_EXACT_SUBJECT_QUALIFIED_POST_DOC_STORAGE_POLICY_REQUAL_PENDING",
   "defaultBranch": "main",
   "currentDevelopmentBranch": "dev/0.1.0-dev.22-shipping-readiness",
   "nextWorkspaceVersion": "0.1.0-dev.23",
-  "nextBatch": "DEV22_TASK8_GENERATED_AUTHORITY_EXACT_CANDIDATE_QUALIFICATION",
+  "nextBatch": "DEV22_POST_DOCUMENTATION_GENERATED_AUTHORITY_AND_EXACT_HEAD_REQUALIFICATION",
   "targetOs": "Windows 11 x64",
   "frozenReleaseAuthority": {
     "version": "0.1.0-dev.20",
@@ -44,12 +44,11 @@
     "UX/settings and Plugin SDK release gates"
   ],
   "nextActions": [
-    "Run ordinary CI on the exact dev.22 metadata-curated head and independently verify the generated-authority artifact is exactly four members and versioned 0.1.0-dev.22.",
-    "Synchronize only those four generated authority files through a guarded exact-parent/exact-branch workflow; never hand-edit them.",
-    "Create a no-tree-change qualification trigger if the guarded bot sync does not trigger CI.",
-    "Require exact synchronized candidate generated-authority zero-diff, 395/395 managed regression or later exact count, full packaged product gates and deterministic verified delivery.",
-    "Independently verify final generated-authority and delivery artifacts.",
-    "Do not promote main while governance, production signing/provenance, headed Windows 11, final fuzz/chaos/security/end-user or UX/Plugin SDK prerequisites remain open."
+    "Fresh-read newest dev.22 HEAD after post-qualification documentation/storage-policy amendment; do not treat the prior 1aea099a exact subject as current head.",
+    "Run ordinary CI on amended source and independently verify the newly generated exact-four-member dev.22 authority artifact.",
+    "Guarded exact-parent sync of only SHA256SUMS.txt, package_manifest.json, release_sbom.spdx.json, source_sbom.spdx.json; never hand-edit generated authority.",
+    "Trigger no-tree-change CI if the bot synchronization does not trigger workflows; qualify the newest exact SHA with Static/Managed/Native/Product/5 vectors/generated-authority zero-diff and independent deterministic delivery.",
+    "Update draft PR #14 and external shipping gates issue #13 with final exact evidence; keep main and dev.21 immutable and release blocked while production governance/signing/provenance/headed/final acceptance remain OPEN."
   ],
   "recursiveHandoverRequired": true,
   "recursiveHandoverRule": "After every materially completed GitHub-only block: fresh-read GitHub authority; update canonical repository plan/backlog/changelog/evidence/handover in place; preserve historical evidence; publish exactly one context-free current repository continuation point. Reconcile Slack/Drive only when the user restores cloud-documentation scope.",
@@ -65,6 +64,19 @@
     "build": "0 warnings / 0 errors",
     "productRegressions": "Audio 36 + Image 24 + Video 27 + negatives/mixed + Copy/Remux/Transcode PASS",
     "deterministicPreAuthorityWorkspace": "526588af945a4eeb04984dc17792af8dd10fc1d7f2a9e9006ab3976d448b2b0a / 642060 bytes / 462 files / double-build PASS; semantic verification blocked only by stale tracked generated authority",
-    "task8": "IN PROGRESS — curate non-generated dev.22 authority, ordinary CI generate exact dev.22 authority, independently verify, guarded sync, exact-candidate qualification"
+    "task8": "IN PROGRESS — curate non-generated dev.22 authority, ordinary CI generate exact dev.22 authority, independently verify, guarded sync, exact-candidate qualification",
+    "exactQualifiedSubjectSha": "1aea099a2878f72f8c95a5cd3bd1dee98a1f98b3",
+    "exactQualifiedSubjectTreeSha": "8369b929f3e8b48f76f720ae3a954818acf2a25a",
+    "exactQualificationRunId": 35937520600,
+    "exactQualificationManaged": "395/395 PASS",
+    "exactQualificationStatic": "162/162 PASS",
+    "exactQualificationVectors": "5/5 PASS",
+    "exactQualificationAuthorityArtifactId": 10783376753,
+    "exactQualificationDeliveryArtifactId": 10783368416,
+    "exactQualificationWorkspaceSha256": "337bdb018274866803e8b6e15f7b9ea0fad4436ac3d2b912d61f340cfc76cf47",
+    "task8Status": "EXACT_SUBJECT_QUALIFIED_POST_DOC_AMENDMENT_REQUAL_PENDING",
+    "postQualificationPolicy": "Local Converty project files/temp/cache/logs prohibited on laptop C:, workspace D:\\converty, project temp D:\\converty\\_temp; two old directories/13 files relocated and per-file SHA-256 checked",
+    "reviewPullRequest": 14,
+    "externalGatesIssue": 13
   }
 }

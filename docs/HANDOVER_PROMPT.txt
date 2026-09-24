@@ -1,62 +1,24 @@
-CONVERTY — FRESH-ACCOUNT AGENT HANDOVER
+CONVERTY — CURRENT GITHUB-ONLY AGENT CONTINUATION
 
-RE-FETCH LIVE GITHUB REFS BEFORE EVERY WRITE OR COMPLETION CLAIM.
+Before any write, fresh-read https://github.com/aeiouofficial/converty branch dev/0.1.0-dev.22-shipping-readiness and frozen main. Read docs/HANDOVER_NEXT_AGENT.md, docs/TASK_BACKLOG.md, machine-readable/handover_state.json, machine-readable/build_evidence.json, the dev.22 remediation plan, draft PR #14 and external shipping gates issue #13.
 
-Repository: https://github.com/aeiouofficial/converty
-Product: Windows 11 Explorer modern-context-menu converter.
-Default branch: main.
-Current development branch: dev/0.1.0-dev.22-shipping-readiness.
-Workspace version being stabilized: 0.1.0-dev.22.
-Next workspace version after dev.22 closure: 0.1.0-dev.23.
-Current lifecycle task: DEV.22 TASK 8 — generated authority synchronization / exact-candidate qualification.
+FROZEN main 0.1.0-dev.20:
+8a1f46603aa842728247bc11b34fcccf121858fd
+tree 4bd6f8d7acbadd60a3488870c773d2eafd67ba26.
+Qualified immutable dev.21: c3bc042aea3154e30ce2720db4722cbda27bcb34.
 
-MISSION
-Finish Converty with evidence, not release labels. GitHub is authority for code, branches, commits, CI and release evidence. Current user scope is GitHub-only. Never call dev.22 frozen or customer ship-ready without exact-main and every production release prerequisite.
+LAST FULLY QUALIFIED dev.22 SUBJECT:
+1aea099a2878f72f8c95a5cd3bd1dee98a1f98b3
+tree 8369b929f3e8b48f76f720ae3a954818acf2a25a
+exact CI 35937520600: managed 395/395 PASS, static 162/162 PASS, vectors 5/5 PASS, all native/packaged Audio/Image/Video/Copy/Remux/Transcode regressions PASS, tracked authority zero-diff PASS.
+Authority artifact 10783376753 sha256:c3b79e9db86c52585c9c3db00d05504d43a0b6991f6c323c9f6cdf302eb1df59.
+Delivery artifact 10783368416 sha256:2697a85aa3b2a5f51f1446afb37e348bb242177dc29b11dbf3b8416b422ba207.
+Independently verified nested workspace SHA256 337bdb018274866803e8b6e15f7b9ea0fad4436ac3d2b912d61f340cfc76cf47 / 646844 bytes / 462 entries, CRC/manifest 460/SHA list 461 all PASS.
 
-FROZEN RELEASE AUTHORITY
-0.1.0-dev.20 remains the sole frozen release at main 8a1f46603aa842728247bc11b34fcccf121858fd, tree 4bd6f8d7acbadd60a3488870c773d2eafd67ba26, exact-main CI 33671671714 SUCCESS.
+CURRENT WORK: post-qualification documentation + C:-prohibited project storage policy added after the qualified subject. Fresh-read GitHub to find newer branch HEAD. Run ordinary CI on the exact updated tree, independently verify freshly generated four-member authority, synchronize only those four members by guarded exact-parent/branch update, run exact final CI and independently inspect delivery; update PR #14 and issue #13 with final evidence.
 
-IMMUTABLE DEV.21 CANDIDATE
-Qualified development candidate c3bc042aea3154e30ce2720db4722cbda27bcb34, tree 47ecb6f1f952fcdf286e60dd81935a0d81af56ee. Do not modify or reinterpret it as release authority.
+USER LAPTOP STORAGE: D:\converty; temp D:\converty\_temp; startup script D:\converty\setup-workspace-env.ps1. No local Converty temp/cache/logs/source/archives on C:. Repo policy AGENTS.md + build/use-workspace-temp.ps1. Migration of 13 files from two old C: Converty temp directories was completed only after per-file SHA-256 verification.
 
-DEV.22 PLAN
-docs/superpowers/plans/2026-09-21-dev22-audit-remediation-shipping-hardening.md
+Never hand-edit SHA256SUMS or generated package/source/release authority. Never move main or dev.21. Open production blockers: live main governance, production FFmpeg provenance/redistribution, real signed MSIX/B2, headed Windows 11 lifecycle, final security/fuzz/chaos/end-user acceptance, UX/settings and Plugin SDK. Converty remains NOT CUSTOMER SHIP-READY. The Slack/Drive historic Handover #12 is stale; this user requested GitHub-only.
 
-PRE-AUTHORITY BEHAVIOR EVIDENCE
-Head 7e50fa9a1df4d0a8336d16596af488335424b792, tree a3a6deec5d753c6176fb40368a56d263b3beaa62, CI 35664296931:
-- 395/395 managed PASS.
-- 162/162 static PASS.
-- 5/5 contract vectors PASS.
-- dependency audit PASS; 0 vulnerable-result packages.
-- Release build 0 warnings / 0 errors.
-- Native Explorer/package/ProbeWorker/COM/product gates PASS.
-- Audio36/Image24/Video27 plus negative/mixed gates PASS.
-- packaged Copy/Remux/Transcode PASS.
-- deterministic workspace double-build PASS at SHA-256 526588af945a4eeb04984dc17792af8dd10fc1d7f2a9e9006ab3976d448b2b0a, 642060 bytes / 462 files.
-- semantic archive verification stopped only on stale tracked generated authority.
-
-DEV.22 HARDENING COMPLETED
-Tasks 1-7 are evidence-backed: release-state/evidence binding, live governance/readiness integration, production FFmpeg evidence boundary, production MSIX/B2 evidence boundary, content secret scanning, structured partial-batch outcomes, destination-volume durable no-overwrite publication and owned stale-staging recovery.
-
-CURRENT REQUIRED ACTION
-1. Fresh-read dev/0.1.0-dev.22-shipping-readiness.
-2. Inspect ordinary CI on the exact metadata-curated dev.22 head.
-3. Independently verify the generated-authority artifact: digest, CRC, exactly four members, and 0.1.0-dev.22 package/SBOM alignment.
-4. Synchronize only SHA256SUMS.txt, machine-readable/package_manifest.json, machine-readable/release_sbom.spdx.json and machine-readable/source_sbom.spdx.json through a guarded exact-parent/exact-branch workflow. Never hand-edit them.
-5. If the guarded bot commit does not trigger CI, create a no-tree-change qualification-trigger commit.
-6. Require exact synchronized-candidate generated-authority zero-diff, full 395/395 managed or later exact count, all packaged product gates, deterministic workspace/delivery qualification and independent final artifact verification.
-7. STOP BEFORE MAIN PROMOTION while any genuine release prerequisite remains OPEN.
-
-TRUST ARCHITECTURE
-IExplorerCommand → fixed Bridge → private staging → strict read-only ProbeWorker/fixed ffprobe → typed bounded facts → Core planner → strict EngineWorker → managed Copy OR provider-fixed Remux/Transcode → fixed app-local FFmpeg → post-probe TargetMediaContract → durable destination-volume temp → transactional numbered no-overwrite publication.
-
-FORBIDDEN
-Shell command construction; raw FFmpeg argument pass-through; PATH/CWD executable lookup; arbitrary converter/plugin execution; ordinary conversion network dependency; silent Strict→Compatibility fallback; hardware acceleration; repository signing private keys.
-
-OPEN RELEASE PREREQUISITES
-Live GitHub ruleset/main protection; headed Windows 11 exact-build Explorer acceptance/screenshots/crash-hang matrix; production signed-package B2; production FFmpeg/ffprobe provenance/signatures/hashes/license/notices/redistribution approval; signed MSIX clean Windows 11 lifecycle; UX/settings and Plugin SDK release gates; final fuzz/chaos/security/release/end-user acceptance.
-
-SCOPE NOTE
-The historical Slack/Drive handover #12 is stale relative to GitHub. Current user instruction is GitHub-only; do not mutate Slack/Drive unless scope changes.
-
-DO NOT RESET OR FORCE-PUSH MAIN. DO NOT DELETE HISTORICAL COMMITS. DO NOT PUT SECRETS OR PRIVATE SIGNING MATERIAL IN THE REPOSITORY.
+If exact final qualification succeeds, keep the PR DRAFT/BLOCKED until every real production gate passes. Record exact SHA, tree, CI, artifact IDs/digests; re-read GitHub immediately before next handover. No duplicate current handover documents.

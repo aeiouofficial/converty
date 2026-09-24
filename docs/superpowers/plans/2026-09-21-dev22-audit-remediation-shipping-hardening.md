@@ -4,7 +4,7 @@
 **Repository:** `aeiouofficial/converty`  
 **Branch:** `dev/0.1.0-dev.22-shipping-readiness`  
 **Base:** `1bfb6a409976abdbf781ba027f556818fb791fa7`  
-**Status:** TASKS 1-7 QUALIFIED; TASK 8 AUTHORITY CLOSURE IN PROGRESS  
+**Status:** TASKS 1-8 QUALIFIED ON SUBJECT 1aea099a; POST-QUALIFICATION DOCUMENTATION RESYNC REQUIRED  
 **Release status:** NOT CUSTOMER SHIP-READY
 
 ## Purpose
@@ -55,3 +55,9 @@ A tracked approval manifest cannot embed the SHA/tree of the commit that contain
 
 ## Pre-authority qualification evidence — 2026-09-21
 Exact behavior head `7e50fa9a1df4d0a8336d16596af488335424b792` / tree `a3a6deec5d753c6176fb40368a56d263b3beaa62`; CI `35664296931`: 395/395 managed, 162/162 static, 5/5 vectors, dependency audit PASS, Release 0 warnings/errors, all packaged product matrices/mixed batches/mode witnesses PASS. Deterministic workspace SHA-256 `526588af945a4eeb04984dc17792af8dd10fc1d7f2a9e9006ab3976d448b2b0a`, 642060 bytes / 462 files, double-build PASS. Semantic packaging stops only on stale tracked generated authority. Tasks 1-7 are complete; Task 8 is metadata → CI authority generation → independent verification → guarded sync → exact-candidate qualification.
+
+## Exact subject qualification — 2026-09-24
+
+`1aea099a2878f72f8c95a5cd3bd1dee98a1f98b3` / tree `8369b929f3e8b48f76f720ae3a954818acf2a25a` / CI `35937520600`: managed 395/395, static 162/162, vectors 5/5, full packaged product regressions PASS, tracked generated authority zero-diff PASS. Independent delivery artifact 10783368416 has GitHub SHA-256 `2697a85aa3b2a5f51f1446afb37e348bb242177dc29b11dbf3b8416b422ba207`; nested 462-entry workspace ZIP SHA-256 `337bdb018274866803e8b6e15f7b9ea0fad4436ac3d2b912d61f340cfc76cf47`, CRC and all 460 package-manifest/461 SHA256SUMS rows match. Generated artifact 10783376753 has SHA-256 `c3b79e9db86c52585c9c3db00d05504d43a0b6991f6c323c9f6cdf302eb1df59`.
+
+Ruling: the user's local Converty project must not allocate scratch/cache/logs on C:. The local verified migration and D: bootstrap are documented in AGENTS.md; the repository bootstrap and regression guard are added in the post-qualification documentation amendment. The amendment changes the tracked tree, so repeat ordinary CI generation, independently verify the new artifact, synchronize only the four CI-generated authority files and qualify the resulting exact PR head again. Keep the external shipping gates in GitHub issue #13 OPEN and draft PR #14 unmerged.

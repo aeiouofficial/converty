@@ -3,25 +3,24 @@
 Windows 11 modern-context-menu file conversion platform. Converty keeps Explorer, Bridge, disposable ProbeWorker/EngineWorker, provider/media-engine, private staging and transactional publication trust boundaries explicit.
 
 ## Workspace version
-**0.1.0-dev.22** — audit remediation and shipping-readiness hardening are behavior-qualified on `dev/0.1.0-dev.22-shipping-readiness`; generated-authority stabilization and exact-candidate qualification are in progress. This branch is **not release authority** and Converty is **not customer ship-ready**.
+**0.1.0-dev.22** — audit remediation and shipping-readiness hardening are behavior-qualified on `dev/0.1.0-dev.22-shipping-readiness`; exact-candidate development qualification succeeded; this documentation amendment requires fresh authority synchronization and qualification. This branch is **not release authority** and Converty is **not customer ship-ready**.
 
 ## Frozen release authority
 The sole frozen release remains **0.1.0-dev.20** at exact `main` `8a1f46603aa842728247bc11b34fcccf121858fd`, tree `4bd6f8d7acbadd60a3488870c773d2eafd67ba26`, exact-main CI `33671671714` SUCCESS.
 
 The immutable qualified dev.21 development candidate is `c3bc042aea3154e30ce2720db4722cbda27bcb34`, tree `47ecb6f1f952fcdf286e60dd81935a0d81af56ee`. It was not promoted because required live governance and external production release prerequisites remain open.
 
-## Current dev.22 engineering evidence
-Pre-authority behavior head: `7e50fa9a1df4d0a8336d16596af488335424b792`, tree `a3a6deec5d753c6176fb40368a56d263b3beaa62`. CI `35664296931` established:
-- 395/395 managed tests, 162/162 static tests and 5/5 contract vectors;
-- dependency audit 19 projects / 19 frameworks / 0 vulnerable-result packages;
-- Release build 0 warnings / 0 errors;
-- Native Explorer/package/ProbeWorker/COM/product gates PASS;
-- Audio 36-case, Image 24-case and Video 27-case matrices plus negative/mixed regressions PASS;
-- Copy/Remux/Transcode packaged mode qualification PASS;
-- exact tagged/hash-locked development FFmpeg qualification PASS;
-- deterministic double workspace build PASS at SHA-256 `526588af945a4eeb04984dc17792af8dd10fc1d7f2a9e9006ab3976d448b2b0a`, 642060 bytes / 462 files.
+## Exact dev.22 development qualification — 2026-09-24
+Subject commit `1aea099a2878f72f8c95a5cd3bd1dee98a1f98b3`, tree `8369b929f3e8b48f76f720ae3a954818acf2a25a`; ordinary CI [35937520600](https://github.com/aeiouofficial/converty/actions/runs/35937520600):
+- `managed` SUCCESS: 395/395 tests, full Native Explorer/package/ProbeWorker/COM/product smoke, Audio36/Image24/Video27 plus negative/mixed and Copy/Remux/Transcode PASS;
+- `supply-chain-static` SUCCESS: 162/162 tests, vectors 5/5, verified tracked generated-authority zero-diff;
+- `candidate-base-continuity` SUCCESS; development-branch `main-authority-continuity` remains expected RED, and `candidate-release-readiness` is correctly BLOCKED by genuinely OPEN external approvals.
+- Generated-authority artifact 10783376753, SHA-256 `c3b79e9db86c52585c9c3db00d05504d43a0b6991f6c323c9f6cdf302eb1df59`.
+- Verified-delivery artifact 10783368416, SHA-256 `2697a85aa3b2a5f51f1446afb37e348bb242177dc29b11dbf3b8416b422ba207`. Independently checked embedded workspace ZIP SHA-256 `337bdb018274866803e8b6e15f7b9ea0fad4436ac3d2b912d61f340cfc76cf47`, 646844 bytes, 462 entries, CRC clean, 460/460 manifest hashes and 461/461 SHA256SUMS entries.
+- This documentation/storage-policy amendment must itself be regenerated and requalified at its final exact GitHub SHA. See draft PR #14 for the latest exact-head CI and external-gate issue #13.
 
-Semantic archive verification stops exactly on stale tracked generated authority. Those four files are CI-derived and are not hand-edited.
+## Local workspace storage
+Local Converty temp/caches are prohibited on the laptop's C: drive. Two previously identified C: temp folders (13 files, approximately 2.6 MB) were copied with exact per-file SHA-256 verification to `D:\converty\_temp\migrated-from-C` and originals removed. `D:\converty\setup-workspace-env.ps1` configures the laptop's per-process caches/temp. Repository agents must source `build/use-workspace-temp.ps1` before local project commands; hosted GitHub runner OS tools are separate from the laptop. See `AGENTS.md`.
 
 ## Dev.22 hardening
 - production release evidence is structured, hash-validated and bound to an exact qualified subject/artifact;

@@ -52,8 +52,16 @@ Plan: `docs/superpowers/plans/2026-09-21-dev22-audit-remediation-shipping-harden
 - [x] Task 5: content-level secret/private-key scanning in release preflight/CI.
 - [x] Task 6: complete per-member batch failure isolation and structured partial-success results.
 - [x] Task 7: destination-volume durable atomic publication and owned stale staging recovery.
-- [ ] Task 8: non-generated dev.22 metadata curation IN PROGRESS; generated-authority sync/exact-candidate qualification follows.
+- [x] Task 8: dev.22 version/evidence curation, guarded generated-authority sync, exact subject `1aea099a2878f72f8c95a5cd3bd1dee98a1f98b3` / CI `35937520600` qualification and independent artifacts PASS.
+- [ ] This post-qualified documentation/storage-policy amendment must regenerate/synchronize the four CI-generated authority files and pass fresh exact-PR-head CI; final evidence belongs in draft PR #14.
 - [ ] Final whole-branch review after exact synchronized dev.22 candidate qualification.
 
 ### Dev.22 completion rule
 Code remediation may be complete while customer shipping remains blocked. Do not mark production FFmpeg, signed MSIX/B2, headed Windows 11 acceptance, final fuzz/chaos/security/end-user acceptance, or repository governance PASS without fresh real evidence.
+
+## Current shipping / local storage — 2026-09-24
+- [x] Create draft development review PR [#14](https://github.com/aeiouofficial/converty/pull/14), without merging into frozen main.
+- [x] Create explicit external shipping gates issue [#13](https://github.com/aeiouofficial/converty/issues/13); all production/legal/governance/headed/final-acceptance evidence remains OPEN.
+- [x] Move two verified old local Converty temp directories (13 files, ~2.6 MB) from C: into `D:\converty\_temp\migrated-from-C`; per-file SHA-256 and counts matched before original deletion.
+- [x] Add `AGENTS.md` non-C storage rule, project-root PowerShell temp/cache bootstrap and static regression guards.
+- [ ] Obtain genuine independent production approvals and actual signed/clean-headed Windows 11 evidence in issue #13. Do not mark a customer release while any item remains OPEN.

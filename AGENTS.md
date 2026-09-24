@@ -1,35 +1,29 @@
-# Converty Repository Operating Contract
+# Converty repository operating contract
 
-## Main-first authority
+## Frozen main and development authority
 
-main is the repository authority.
+`main` is the frozen release authority: `0.1.0-dev.20` at `8a1f46603aa842728247bc11b34fcccf121858fd`. Do not move, reset or merge into frozen main while real production release prerequisites remain OPEN.
 
-Durable product, source, test, documentation, build, packaging, or security work must not exist only in a local workspace, chat handover, or unmerged development branch. Push durable commits immediately to GitHub.
+The qualified dev.21 candidate `c3bc042aea3154e30ce2720db4722cbda27bcb34` is immutable development evidence. The current dev.22 development branch is `dev/0.1.0-dev.22-shipping-readiness`; GitHub code/CI on that branch is authoritative for ongoing development, **not customer ship-ready** and not release approval.
 
-A side branch is a temporary surface for RED reproduction, diagnostics, or explicitly isolated experiments. A side-branch-only CI run is never final repository authority.
+Push durable work to GitHub promptly. Never treat an unpushed local workspace, chat summary, stale Slack/Drive handover or a development CI run as final release authority. Keep `main` frozen unless the exact production candidate passes all real release, governance and independent-evidence gates. Do not force-push, auto-merge, bypass red shipping checks or hand-edit generated SBOM/package/hash files.
 
-## Required working behavior
+## Before and after an engineering block
 
-1. Before any write, fetch the live repository state and resolve the current `main` HEAD.
-2. Put durable work on GitHub as soon as it becomes a durable commit. Do not accumulate completed work only in a local workspace.
-3. Use side branches only when temporary isolation is technically necessary. Keep their purpose explicit.
-4. Do not call a tranche complete because a side branch is green.
-5. Do not auto-merge or auto-promote arbitrary experimental branches just to satisfy this rule.
-6. Preserve failed/RED evidence; do not rewrite history to hide failed qualification attempts.
-7. After generated authority changes, synchronize only the deterministic runner-generated authority bytes. Do not hand-edit generated SBOM/package/hash authority.
+1. Fresh-read the current GitHub branch, frozen main, CI, evidence, backlog, plan and current repository handover before any write.
+2. Use TDD for code changes and preserve exact RED/GREEN evidence. Update canonical plan, backlog, changelog and handover in place.
+3. On the exact candidate commit require all relevant managed/native/product/static checks, generated-authority zero-diff and independent delivery validation. A technically qualified development branch is not a production release.
+4. Treat external signing, FFmpeg redistribution, live main governance, headed Windows 11, fuzz/chaos/security, UX/Plugin SDK and end-user acceptance as OPEN until independently verified.
+5. GitHub is the code/release authority. Reconcile Slack and Drive only when the current user instruction includes cloud-documentation scope.
 
-## Final qualification gate
+## Local storage — no Converty project files on C:
 
-Before any completion, freeze, promotion, or handover claim:
+All local Converty source clones, archives, FFmpeg downloads, temp files, package caches, build outputs, diagnostic logs and test artifacts belong **inside a non-C project workspace**. On the connected laptop the workspace is `D:\converty`, with temporary data under `D:\converty\_temp`. Before local build/test/package commands, run `build/use-workspace-temp.ps1 -Workspace D:\converty` in the current PowerShell session; the script refuses C: and redirects `TEMP`, `TMP`, `TMPDIR`, pip, NuGet, npm and .NET CLI caches into that workspace.
 
-- fetch the live default branch again;
-- prove the qualified SHA is the current `main` HEAD;
-- prove ordinary CI ran on that exact SHA and completed successfully;
-- prove tracked generated authority is current/zero-diff when that gate applies;
-- record the exact commit SHA, tree, workflow run/job IDs, artifact IDs/digests, and workspace evidence available from that run.
-
-If the qualified SHA is not the current `main` HEAD, the work is development-only and must not be represented as completed repository authority.
+Never create new Converty temp/cache directories under `C:\Users\...\Temp`. If existing Converty-owned files must be migrated from C:, copy to the non-C workspace, verify file counts and SHA-256 for every file, and only then delete the verified originals. Do not delete unknown user data or move the Windows OS, installed applications or unrelated caches. GitHub-hosted Windows runner system installations are separate ephemeral machines, not the user's local C: drive; project-owned output on those runners must stay inside their GitHub workspace.
 
 ## Product invariants
 
-This repository workflow rule does not change Converty runtime architecture or shipping policy. Preserve the existing Explorer → Bridge → strict disposable worker/provider → FFmpeg → transactional publication path, security boundaries, no-shell/no-PATH converter rules, source/destination preservation rules, and production-signing/FFmpeg-redistribution limitations.
+Preserve Explorer → fixed Bridge → private staging → read-only ProbeWorker/fixed ffprobe → typed facts/planner → strict EngineWorker → managed Copy or provider-owned fixed FFmpeg tokens → post-probe contract → destination-volume durable temp → transactional numbered no-overwrite publication. No shell construction, PATH/CWD executable lookup, raw FFmpeg arguments, silent Strict→Compatibility fallback, ordinary conversion network dependence, hardware acceleration or private signing keys in the repository.
+
+Current external release blockers: GitHub issue #13. Development review PR: draft #14. Exact current commit and latest checks must always be re-read rather than copied from this file.

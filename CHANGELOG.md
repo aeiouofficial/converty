@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.0-dev.22 — 2026-09-24 — exact candidate qualified; local storage contract
+- Exact development subject `1aea099a2878f72f8c95a5cd3bd1dee98a1f98b3`, tree `8369b929f3e8b48f76f720ae3a954818acf2a25a`, CI `35937520600`: Managed 395/395 PASS, Static 162/162 PASS, vectors 5/5 PASS, tracked generated authority zero-diff PASS; all real packaged Audio/Image/Video and negative/mixed regressions PASS.
+- Generated authority artifact `10783376753` (SHA-256 `c3b79e9db86c52585c9c3db00d05504d43a0b6991f6c323c9f6cdf302eb1df59`); verified delivery `10783368416` (SHA-256 `2697a85aa3b2a5f51f1446afb37e348bb242177dc29b11dbf3b8416b422ba207`). Independent nested archive verification: SHA-256 `337bdb018274866803e8b6e15f7b9ea0fad4436ac3d2b912d61f340cfc76cf47`, 646844 bytes, 462 files, CRC/460 manifest/461 SHA256SUMS PASS.
+- Local laptop storage policy: relocated two old Converty C: temp directories (13 files; hashes compared before original deletion) to `D:\converty\_temp\migrated-from-C`; created D:-local cache/temp bootstrap and repository agent contract/test. No Converty project scratch is authorized on the user's local C:.
+- Opened [draft PR #14](https://github.com/aeiouofficial/converty/pull/14) for independent review and [shipping issue #13](https://github.com/aeiouofficial/converty/issues/13) for genuine production approvals, live main governance and headed Windows 11 acceptance.
+- External approvals remain OPEN; `main` and dev.21 stay frozen. This follow-up documentation/storage-policy change itself requires fresh generated authority and exact-head CI before claiming final PR-head qualification.
+
+
 ## 0.1.0-dev.22 — 2026-09-21 — audit remediation / shipping hardening in progress
 - Tasks 1-7 of the dev.22 remediation plan are implementation/evidence complete: exact-subject/artifact release evidence, live governance/readiness checks, production engine/package/acceptance fail-closed boundaries, content secret scanning, structured partial-batch results, destination-volume durable publication and owned stale-staging recovery.
 - Pre-authority behavior head `7e50fa9a1df4d0a8336d16596af488335424b792` / tree `a3a6deec5d753c6176fb40368a56d263b3beaa62`; CI `35664296931` proves 395/395 managed, 162/162 static, 5/5 vectors, dependency audit 0 vulnerable-result packages, Release build 0 warnings/errors and all Native/package/ProbeWorker/COM/Audio/Image/Video/Copy/Remux/Transcode gates PASS.

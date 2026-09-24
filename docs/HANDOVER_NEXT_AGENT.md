@@ -1,52 +1,43 @@
-# Converty continuation handover — dev.22 Task 8 authority stabilization
+# Converty — GitHub-only continuation: dev.22 exact candidate / storage-policy closure
 
-Repository: `aeiouofficial/converty`  
-Default branch: `main`  
-Development branch: `dev/0.1.0-dev.22-shipping-readiness`  
-Workspace version after this curation: `0.1.0-dev.22`
+Date: 2026-09-24 (Europe/Amsterdam). Repository: `aeiouofficial/converty`. Current development branch: `dev/0.1.0-dev.22-shipping-readiness`. Current workspace version: `0.1.0-dev.22`. **NOT CUSTOMER SHIP-READY.**
 
-## Frozen authorities
-Frozen release authority remains `0.1.0-dev.20` at exact main `8a1f46603aa842728247bc11b34fcccf121858fd`, tree `4bd6f8d7acbadd60a3488870c773d2eafd67ba26`, exact-main CI `33671671714` SUCCESS.
+## Immutable authorities
 
-Qualified immutable dev.21 candidate: `c3bc042aea3154e30ce2720db4722cbda27bcb34`, tree `47ecb6f1f952fcdf286e60dd81935a0d81af56ee`. Do not mutate it.
+- Frozen `main`: `8a1f46603aa842728247bc11b34fcccf121858fd`, tree `4bd6f8d7acbadd60a3488870c773d2eafd67ba26`, exact-main CI 33671671714 SUCCESS. Never move it while production gates are open.
+- Immutable dev.21 development candidate: `c3bc042aea3154e30ce2720db4722cbda27bcb34`, tree `47ecb6f1f952fcdf286e60dd81935a0d81af56ee`.
+- Last fully qualified synchronized dev.22 *subject*: `1aea099a2878f72f8c95a5cd3bd1dee98a1f98b3`, tree `8369b929f3e8b48f76f720ae3a954818acf2a25a`, CI `35937520600`. This documentation/storage-policy amendment creates a newer tree and **must be independently requalified**; fresh-read the actual branch HEAD before any action.
 
-## Dev.22 pre-authority evidence
-Behavior head before this metadata curation: `7e50fa9a1df4d0a8336d16596af488335424b792` / tree `a3a6deec5d753c6176fb40368a56d263b3beaa62`. CI `35664296931`:
-- 395/395 managed PASS;
-- 162/162 static PASS;
-- 5/5 contract vectors PASS;
-- dependency audit PASS, 0 vulnerable-result packages;
-- Release build 0 warnings / 0 errors;
-- Native Explorer/package/ProbeWorker/COM/product gates PASS;
-- Audio36/Image24/Video27 plus negative/mixed regression PASS;
-- packaged Copy/Remux/Transcode PASS;
-- development FFmpeg tagged/hash-locked BtbN qualification PASS;
-- deterministic double workspace ZIP PASS at SHA-256 `526588af945a4eeb04984dc17792af8dd10fc1d7f2a9e9006ab3976d448b2b0a`, 642060 bytes / 462 files;
-- semantic archive check stops only on stale tracked generated authority.
+## What passed on the qualified subject
 
-Tasks 1-7 in the dev.22 audit-remediation plan are complete. Task 8 remains authority synchronization and exact-candidate qualification.
+- Managed 395/395, Static 162/162, contract vectors 5/5; exact source version `0.1.0-dev.22`; Release build 0 warnings/errors and dependency audit PASS.
+- Native Explorer/package/ProbeWorker/COM/Bridge; Audio36, Image24, Video27, negative/mixed batches, Copy/Remux/Transcode PASS.
+- Candidate-base continuity and generated-authority zero-diff PASS.
+- Authority artifact ID `10783376753`, digest `sha256:c3b79e9db86c52585c9c3db00d05504d43a0b6991f6c323c9f6cdf302eb1df59`.
+- Delivery artifact ID `10783368416`, digest `sha256:2697a85aa3b2a5f51f1446afb37e348bb242177dc29b11dbf3b8416b422ba207`.
+- Independent nested workspace verification: ZIP SHA-256 `337bdb018274866803e8b6e15f7b9ea0fad4436ac3d2b912d61f340cfc76cf47`; 646844 bytes / 462 entries; CRC PASS, 460 manifest hashes and 461 SHA256SUMS rows PASS; four authority members byte-match generated artifact.
 
-## Exact next action
-1. Fresh-read the branch after this metadata commit.
-2. Let ordinary CI generate dev.22 authority.
-3. Download and independently verify the generated-authority artifact: digest, CRC, exact four members, package/SBOM version `0.1.0-dev.22`.
-4. Guarded exact-parent/exact-branch synchronization of only:
-   - `SHA256SUMS.txt`
-   - `machine-readable/package_manifest.json`
-   - `machine-readable/release_sbom.spdx.json`
-   - `machine-readable/source_sbom.spdx.json`
-5. Never hand-edit those files.
-6. Trigger exact synchronized candidate qualification if bot sync does not trigger ordinary CI.
-7. Require zero-diff generated authority, 395/395 managed or later exact count, all packaged gates, deterministic delivery and independent final artifact inspection.
-8. Stop before `main` promotion while genuine external release gates remain OPEN.
+## What changed after the qualification subject
 
-## Open external release blockers
-Live main governance/protection; production FFmpeg redistribution/provenance; production signed MSIX/B2; clean signed Windows 11 lifecycle; headed exact-build Explorer acceptance; UX/settings and Plugin SDK release gates; final fuzz/chaos/security/end-user acceptance.
+- A verified local-laptop cleanup copied two old Converty temporary folders (13 files, about 2.6 MB) off C: into `D:\converty\_temp\migrated-from-C`; counts and SHA-256s matched before originals were deleted.
+- The local bootstrap `D:\converty\setup-workspace-env.ps1` configures per-process TEMP/TMP/Python/NuGet/npm/.NET caches under D:.
+- Repository `AGENTS.md` now distinguishes frozen main from development qualification and prohibits local Converty scratch/cache/logs on C:. `build/use-workspace-temp.ps1` and static policy regression tests provide a reproducible local workflow.
 
-## Invariants
-`Explorer → fixed Bridge → private staging → strict RO ProbeWorker/fixed ffprobe → typed bounded facts → Core planner → strict EngineWorker → managed Copy OR provider-fixed Remux/Transcode → fixed app-local FFmpeg → post-probe TargetMediaContract → destination-volume durable temp → transactional numbered no-overwrite publication`.
+## Exact next executable action
 
-No shell/raw FFmpeg/PATH-CWD lookup/arbitrary executable or plugin/ordinary conversion network/silent Strict→Compatibility/hardware acceleration/private signing keys.
+1. Fresh-read current branch HEAD, frozen main, open PR #14, issue #13, and all CI for the **newest** SHA; do not mistake `1aea099a` for the newest HEAD after this amendment.
+2. Run ordinary CI on the exact post-amendment source commit. Read Static/Managed/continuity/readiness; only generated-authority drift is expected before sync.
+3. Independently download/verify newly generated artifact: GitHub digest, CRC, exact four members, every member hash and version `0.1.0-dev.22`.
+4. Synchronize **only** `SHA256SUMS.txt`, `machine-readable/package_manifest.json`, `machine-readable/release_sbom.spdx.json`, `machine-readable/source_sbom.spdx.json` via guarded exact-parent/branch update; never hand-edit.
+5. If bot sync does not trigger ordinary CI, create a no-tree-change qualification trigger and require exact current SHA: all managed/native/product/static/contract gates green, generated-authority zero-diff and deterministic verified delivery; independently inspect both final artifacts.
+6. Update draft PR #14 and issue #13 with exact final SHA/tree/CI/jobs/artifact IDs/digests and reviewer outcome. Do not move `main` while production evidence and live governance are OPEN.
 
-## Scope note
-Current user instruction is GitHub-only. The historical Slack/Drive handover #12 is stale relative to GitHub and was not mutated during dev.22 work.
+## Remaining production blockers
+
+See [shipping issue #13](https://github.com/aeiouofficial/converty/issues/13) and [draft PR #14](https://github.com/aeiouofficial/converty/pull/14): active main ruleset/protection, production FFmpeg redistribution/provenance, real signed production MSIX/B2/certificate/timestamp, clean headed exact Windows 11 Explorer lifecycle, UX/settings and Plugin SDK release gates, final security/fuzz/chaos/end-user approvals. Dev-only BtbN FFmpeg and unsigned Converty.Dev package are not production evidence.
+
+## Architecture and lifecycle
+
+`Explorer → fixed Bridge → private staging → strict RO ProbeWorker/fixed ffprobe → typed bounded facts → Core planner → strict EngineWorker → managed Copy or provider-fixed Remux/Transcode → fixed app-local FFmpeg → post-probe TargetMediaContract → durable destination-volume temp → transactional numbered no-overwrite publication`.
+
+No shell/raw FFmpeg arguments, PATH/CWD discovery, ordinary conversion network, silent Strict→Compatibility, hardware acceleration, private signing keys or invented release evidence. Preserve every historical RED and Changelog entry. GitHub is the authority for code/CI/release evidence; current user scope is GitHub-only. Update canonical repository docs in place after meaningful blocks; historical Slack/Drive Handover #12 is stale and is not the current GitHub continuation authority. On handoff fresh-read GitHub, reconcile roadmap/plan/tasks/changelog/evidence, and publish exactly one context-free successor repository handover.

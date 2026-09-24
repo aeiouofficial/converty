@@ -75,3 +75,16 @@ Archive semantic verification then failed exactly on stale tracked generated aut
 Tasks 1-7 of the dev.22 remediation plan are implementation/evidence complete. Task 8 is now non-generated metadata curation followed by ordinary-CI authority generation, independent artifact verification, guarded synchronization and exact-candidate qualification.
 
 Converty remains **NOT CUSTOMER SHIP-READY** because live GitHub governance and external production signing/provenance/headed/final-acceptance gates remain OPEN.
+
+## Dev.22 exact synchronized candidate — 2026-09-24
+
+Qualified subject: `1aea099a2878f72f8c95a5cd3bd1dee98a1f98b3` / tree `8369b929f3e8b48f76f720ae3a954818acf2a25a`. Ordinary CI `35937520600` proved:
+- Managed 395/395 PASS; Static 162/162 PASS; vectors 5/5 PASS; dependency audit PASS, zero vulnerable-result packages; Release 0 warnings/errors.
+- Native Explorer, development package, ProbeWorker, COM, Bridge, Audio36/Image24/Video27, negative/mixed, Copy/Remux/Transcode PASS.
+- Candidate-base continuity and tracked generated-authority zero-diff PASS.
+- Generated artifact 10783376753, SHA-256 `c3b79e9db86c52585c9c3db00d05504d43a0b6991f6c323c9f6cdf302eb1df59`; verified delivery 10783368416, SHA-256 `2697a85aa3b2a5f51f1446afb37e348bb242177dc29b11dbf3b8416b422ba207`.
+- Independently inspected nested deterministic 462-file workspace ZIP `337bdb018274866803e8b6e15f7b9ea0fad4436ac3d2b912d61f340cfc76cf47` (646844 bytes): CRC, 460 manifest entries, 461 SHA256SUMS entries and equality of four authority members PASS.
+
+Development qualification is evidence-backed; the branch is not a signed/released production candidate. Draft PR #14 and shipping issue #13 track the distinct review and genuinely OPEN external approvals.
+
+Local user storage mandate: all local Converty project scratch/cache/logs stay under the non-C workspace `D:\converty`; previously identified C: Converty temp was relocated after per-file hash verification. The post-qualification repository storage-policy documentation amendment must itself go through CI-derived authority regeneration and fresh exact-head qualification before it can supersede the subject above.
