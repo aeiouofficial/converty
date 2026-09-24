@@ -216,6 +216,28 @@
     },
     "deterministicArchive": "PENDING: packaging reads committed HEAD; must validate after local commit",
     "customerShipReady": false,
-    "evidenceDocument": "docs/development/DEV22_LOCAL_CI_EVIDENCE_2026-09-24.md"
+    "evidenceDocument": "docs/development/DEV22_LOCAL_CI_EVIDENCE_2026-09-24.md",
+    "resumedPackagedQualification": {
+      "qualifiedSourceCommit": "6292ccb0a2a1eb5bfcb3dbe23bc99fddc50d5ce3",
+      "developmentFfmpegVerified": {
+        "bytes": 192925997,
+        "sha256": "fe372180f20e7f9bfa3d9a481b2b1b98c8296178d8265552608736637ea6b3c8",
+        "status": "PASS"
+      },
+      "unsignedDevelopmentMsix": "PASS",
+      "packagedProbeWorker": "PASS",
+      "directStagedExplorerComInvoke": "PASS",
+      "registeredUnsignedMsixCom": "BLOCKED: Windows sideload/developer policy 0x80073CFF",
+      "productSmoke": "PASS",
+      "audio36": "PASS",
+      "image24": "PASS",
+      "video27": "PASS",
+      "modeCopyRemuxTranscode": "PASS",
+      "negativeAndMixedBatch": "PASS",
+      "noGithubActions": true,
+      "productionReleaseApproved": false,
+      "log": "D:\\converty\\_temp\\packaged-independent-20260924.log",
+      "status": "SOURCE_CODE_LOCALLY_QUALIFIED_REGISTERED_COM_AND_PRODUCTION_GATES_OPEN"
+    }
   }
 }

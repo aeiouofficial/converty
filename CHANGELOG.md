@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.0-dev.22 — 2026-09-24 — pinned local packaged regression closure
+- Recovered and SHA-256/size-verified the exact development-only FFmpeg/ffprobe archive, then rebuilt the unsigned development MSIX layout with both pinned tools. Packaged ProbeWorker, direct staged Explorer COM invocation, product smoke, Audio36, Image24, Video27, negative and repeated mixed-batch regressions, Copy/Remux/Transcode all PASS locally on the amended source subject `6292ccb`.
+- Registered unsigned package COM is BLOCKED on this laptop by Windows `Add-AppxPackage` error `0x80073CFF` (missing permitted sideload/developer policy); this is not a production signed install or headed Explorer acceptance. Local test logs and exact evidence in `docs/development/DEV22_LOCAL_CI_EVIDENCE_2026-09-24.md`.
+- No GitHub Actions were dispatched. Frozen main and historical qualified development evidence remain immutable; external shipping issue #13 and independent PR #14 review remain OPEN.
+
+
 ## 0.1.0-dev.22 — 2026-09-24 — local qualification and portability fixes (development only)
 - On the non-elevated Windows 11 laptop, two reparse-point regression fixtures initially failed because directory symlink creation required a privilege the test process did not have. The test fixtures now use directory junctions, verify the reparse attribute, and assert the original security rejection; no production containment behavior was changed. Local Release build 0 warnings/errors; 395/395 managed tests PASS; native MSVC Explorer DLL PASS.
 - Reproduced a platform-dependent deterministic-release defect: Python release-SBOM generation on Windows emitted CRLF and changed otherwise identical committed artifact bytes. A four-member newline regression first failed 1/4, then passed 4/4 after explicit LF writes in the source/release SBOM, package-manifest and SHA256SUMS generators. Full static suite 168/168, 5/5 contract vectors and 19-project dependency audit (0 vulnerable-result packages) PASS.

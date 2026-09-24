@@ -170,8 +170,8 @@
     },
     {
       "path": "CHANGELOG.md",
-      "bytes": 17194,
-      "sha256": "83bb026cc687061cf40884d4968d813c7476af5f23e4bd76fbdb9ae0ad54a87d"
+      "bytes": 18171,
+      "sha256": "14e19de5d574a4e8f7b736d406a21bdef5418ee9255e7aadc1600fd8b12447ce"
     },
     {
       "path": "CMakeLists.txt",
@@ -290,13 +290,13 @@
     },
     {
       "path": "docs/development/DEV22_LOCAL_CI_EVIDENCE_2026-09-24.md",
-      "bytes": 3163,
-      "sha256": "32f047c7ea782db96ba803008b5ff8a78aa8edcfe3ccb1c95c11324b09efc1ca"
+      "bytes": 5406,
+      "sha256": "99d4326976cbac016effeaac0e682c988c649e744f211add9556c05c5a36114f"
     },
     {
       "path": "docs/development/IMPLEMENTATION_STATUS.md",
-      "bytes": 7767,
-      "sha256": "4b8c528ce22b77199b6b867ad7834147a716fd964f633e0f1c94dcf8505546c3"
+      "bytes": 8380,
+      "sha256": "05a71d24461c6a7da722574f4837759f16dfce61930d63be21780d7ce9a86836"
     },
     {
       "path": "docs/development/MODULE_BOUNDARIES.md",
@@ -315,8 +315,8 @@
     },
     {
       "path": "docs/HANDOVER_NEXT_AGENT.md",
-      "bytes": 5929,
-      "sha256": "6b72600ca149748c374d50e5b915d07bb9fa554eece0c403989ff33736ae3d0a"
+      "bytes": 7187,
+      "sha256": "557473d826eee3455f5614335cf8ed9e12f7ccd2c399dc358714c842440be315"
     },
     {
       "path": "docs/HANDOVER_PROMPT.txt",
@@ -530,8 +530,8 @@
     },
     {
       "path": "docs/TASK_BACKLOG.md",
-      "bytes": 6276,
-      "sha256": "bd772d5748391097c19cc34bf4629d46dee590530fc4dad3597dabc70843c32b"
+      "bytes": 6589,
+      "sha256": "e24826d2f246c45e1f5275efbb5221f51e8f001267663dd39cce71ff005e6ab8"
     },
     {
       "path": "docs/TEST_AND_RELEASE_GATES.md",
@@ -580,8 +580,8 @@
     },
     {
       "path": "machine-readable/build_evidence.json",
-      "bytes": 9468,
-      "sha256": "5fb33ba4cfff23fe45f53c3aa3ca84a2eae87449b85ae82f5d15c66096017c41"
+      "bytes": 10407,
+      "sha256": "db5b4b0553ec0b6c4b9187d261707a8c28e5ac8925a4ea16d01f481fadf495c0"
     },
     {
       "path": "machine-readable/ci_action_pins.json",
