@@ -6,6 +6,8 @@
 
 The qualified dev.21 candidate `c3bc042aea3154e30ce2720db4722cbda27bcb34` is immutable development evidence. The current dev.22 development branch is `dev/0.1.0-dev.22-shipping-readiness`; GitHub code/CI on that branch is authoritative for ongoing development, **not customer ship-ready** and not release approval.
 
+Main is the repository authority for frozen releases. Push durable commits immediately to GitHub, including development work on the active branch while main is frozen. A side branch is a temporary engineering surface; side-branch-only CI is development evidence, never production release authority. Before any production-completion claim, the qualified SHA must be the current `main` HEAD after genuine promotion and exact-main CI.
+
 Push durable work to GitHub promptly. Never treat an unpushed local workspace, chat summary, stale Slack/Drive handover or a development CI run as final release authority. Keep `main` frozen unless the exact production candidate passes all real release, governance and independent-evidence gates. Do not force-push, auto-merge, bypass red shipping checks or hand-edit generated SBOM/package/hash files.
 
 ## Before and after an engineering block

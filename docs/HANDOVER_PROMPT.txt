@@ -15,6 +15,8 @@ Authority artifact 10783376753 sha256:c3b79e9db86c52585c9c3db00d05504d43a0b6991f
 Delivery artifact 10783368416 sha256:2697a85aa3b2a5f51f1446afb37e348bb242177dc29b11dbf3b8416b422ba207.
 Independently verified nested workspace SHA256 337bdb018274866803e8b6e15f7b9ea0fad4436ac3d2b912d61f340cfc76cf47 / 646844 bytes / 462 entries, CRC/manifest 460/SHA list 461 all PASS.
 
+Next workspace version after dev.22 closure: 0.1.0-dev.23.
+
 CURRENT WORK: post-qualification documentation + C:-prohibited project storage policy added after the qualified subject. Fresh-read GitHub to find newer branch HEAD. Run ordinary CI on the exact updated tree, independently verify freshly generated four-member authority, synchronize only those four members by guarded exact-parent/branch update, run exact final CI and independently inspect delivery; update PR #14 and issue #13 with final evidence.
 
 USER LAPTOP STORAGE: D:\converty; temp D:\converty\_temp; startup script D:\converty\setup-workspace-env.ps1. No local Converty temp/cache/logs/source/archives on C:. Repo policy AGENTS.md + build/use-workspace-temp.ps1. Migration of 13 files from two old C: Converty temp directories was completed only after per-file SHA-256 verification.
