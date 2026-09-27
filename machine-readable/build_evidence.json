@@ -207,14 +207,14 @@
     "regressions": "Unprivileged junction-based reparse tests PASS; generated-authority LF regression RED then GREEN",
     "hostedCiInvoked": false,
     "unsignedDevelopmentMsixLayout": "PASS: MakeAppx schema/layout, without converter",
-    "packagedQualification": "NOT VERIFIED: exact pinned development FFmpeg download failed size and SHA-256",
+    "packagedQualification": "PASS exact pinned FFmpeg and packaged product matrices on source 6292ccb; registered unsigned MSIX COM BLOCKED 0x80073CFF",
     "ffmpegRejectedDownload": {
       "expectedBytes": 192925997,
       "receivedBytes": 150933805,
       "expectedSha256": "fe372180f20e7f9bfa3d9a481b2b1b98c8296178d8265552608736637ea6b3c8",
       "actualSha256": "adb874e999e4bad50f6078d0bf774095f5fe019197786a50fff24c85e0b448af"
     },
-    "deterministicArchive": "PENDING: packaging reads committed HEAD; must validate after local commit",
+    "deterministicArchive": "Historical 6292ccb committed-source double ZIP/CRC/464 package manifest/465 SHA/4 exact authority members PASS; new amended HEAD recheck must be repeated postcommit",
     "customerShipReady": false,
     "evidenceDocument": "docs/development/DEV22_LOCAL_CI_EVIDENCE_2026-09-24.md",
     "resumedPackagedQualification": {
@@ -238,6 +238,17 @@
       "productionReleaseApproved": false,
       "log": "D:\\converty\\_temp\\packaged-independent-20260924.log",
       "status": "SOURCE_CODE_LOCALLY_QUALIFIED_REGISTERED_COM_AND_PRODUCTION_GATES_OPEN"
+    },
+    "newTestOnlyRegression20260925": {
+      "baselineHead": "99144b73bd19879c1f6ae75da6776e58c0fc1c76",
+      "redManaged": "394/395 due Windows actual-engine Job cancellation test staging DLL cleanup lock; targeted repeat additionally exposed intermittent too-short PID startup deadline",
+      "greenTargeted": "3/3 actual-FFmpeg cancellation test PASS",
+      "greenFullManaged": "395/395 PASS",
+      "releaseBuild": "0 warnings / 0 errors",
+      "scope": "test-only correction; no production engine or release approval",
+      "packagedRequalification": "Previous exact pinned source 6292ccb package/product suite PASS; registered unsigned COM remains BLOCKED",
+      "postcommitStaticAndDelivery": "CHECK_LATEST_PR_EVIDENCE",
+      "githubActionsInvoked": false
     }
   }
 }

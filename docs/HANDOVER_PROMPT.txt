@@ -1,25 +1,6 @@
 CONVERTY — SINGLE OPEN REPOSITORY HANDOVER (GITHUB-ONLY)
-Read docs/HANDOVER_NEXT_AGENT.md, AGENTS.md, docs/TASK_BACKLOG.md, CHANGELOG.md, machine-readable/handover_state.json, machine-readable/build_evidence.json, docs/development/DEV22_LOCAL_CI_EVIDENCE_2026-09-24.md, dev.22 remediation plan, draft PR #14 and shipping issue #13. Fresh-read the actual remote HEAD, PR reviews and status before any write.
-
-AUTHORITIES
-Frozen main 0.1.0-dev.20: 8a1f46603aa842728247bc11b34fcccf121858fd, tree 4bd6f8d7acbadd60a3488870c773d2eafd67ba26.
-Immutable dev.21: c3bc042aea3154e30ce2720db4722cbda27bcb34.
-Active dev.22 branch: dev/0.1.0-dev.22-shipping-readiness. Next workspace version after dev.22 closure: 0.1.0-dev.23. Baseline before local portability fixes: ca018a2cdafcfef9e4198a0aa721b6fa66464a74 / tree f589ce536e95f470789ab4a146af904fe54b62de. Do not assume this remains the latest SHA.
-Previous GitHub-qualified dev.22 subject: 1aea099a2878f72f8c95a5cd3bd1dee98a1f98b3 / tree 8369b929f3e8b48f76f720ae3a954818acf2a25a / CI 35937520600. Those old artifacts cannot qualify modified commits.
-
-CURRENT LOCAL RESULTS (2026-09-24)
-Managed 395/395 PASS; static 168/168 PASS; vectors 5/5 PASS; native MSVC PASS; Release 0 warnings/errors; 19-project dependency audit 0 vulnerable-result packages.
-Two unprivileged-Windows junction security fixtures corrected. LF-only generated authority regression RED then GREEN. Exact local evidence document linked above.
-Unsigned development MSIX layout/schema validation PASS without converter. Exact pinned FFmpeg download failed expected bytes/SHA-256 and was rejected without extraction; all FFmpeg-dependent packaged product checks NOT VERIFIED on current amended tree. Final deterministic ZIP must be verified after commit because packaging reads committed HEAD.
-All local project temp, cache, SDK, logs and downloads belong under D:\converty. SDK 10.0.400 at D:\converty\_toolchain\dotnet. PowerShell 7 and build/use-workspace-temp.ps1 required.
-
-IMMEDIATE NEXT STEP
-Verify exact hash-pinned FFmpeg/ffprobe archive; run every packaged Audio36/Image24/Video27, Copy/Remux/Transcode, malformed/mixed and containment gate locally. Regenerate four authority files only through generators, double-build and independently verify deterministic workspace archive. Commit+push with [skip ci], update draft PR #14 and issue #13 with exact local evidence. DO NOT start GitHub Actions (minutes exhausted), merge main or claim production approval. Reconcile the single OPEN repository handover in place.
-
-EXTERNAL RELEASE BLOCKERS (ISSUE #13)
-Production FFmpeg provenance/license/redistribution; live main ruleset/protection; real signed MSIX/B2 identity and lifecycle; clean headed Windows 11 Explorer screenshots; final fuzz/chaos/security/end-user and UX/settings/Plugin SDK approvals; independent review. Draft PR #14 stays blocked until real evidence exists.
-
-CONTINUATION RULE
-Every short continuation command means fresh GitHub authority and current single OPEN repository handover → execute next verifiable task → local evidence → in-place plan/backlog/changelog/evidence docs → push durable code/docs → reconcile one updated OPEN handover. Historic Slack/Drive is stale for the current GitHub-only scope.
-
-\n
+Read docs/HANDOVER_NEXT_AGENT.md first; also AGENTS.md, docs/TASK_BACKLOG.md, CHANGELOG.md, docs/development/DEV22_LOCAL_CI_EVIDENCE_2026-09-24.md, machine-readable/handover_state.json, machine-readable/build_evidence.json, draft PR #14 and shipping issue #13. Fresh-read remote branch SHA, PR reviews and CI; tracked docs cannot embed their own final SHA.
+Frozen main 0.1.0-dev.20: 8a1f46603aa842728247bc11b34fcccf121858fd — do not move. Immutable dev.21 c3bc042aea3154e30ce2720db4722cbda27bcb34. Active branch dev/0.1.0-dev.22-shipping-readiness. Next planned workspace version: 0.1.0-dev.23, only after dev.22 closure and genuine remaining gates.
+Verified development source 6292ccb passed 395/395 managed, 168/168 static, 5 vectors, native, exact pinned FFmpeg/probe, unsigned MSIX layout, packaged ProbeWorker, direct staged Explorer COM, product, Audio36/Image24/Video27, negatives/repeated mixed, Copy/Remux/Transcode. Later evidence metadata 99144b exposed a real packaged actual-FFmpeg cancellation test flake (394/395); bounded test-only worker teardown/PID diagnostics now 3/3 targeted and full managed 395/395. Re-read latest GitHub commit and attached PR evidence for current exact-head static and reproducible archive verification.
+Registered unsigned MSIX COM remains BLOCKED 0x80073CFF by laptop sideload policy. Do not change Windows security settings silently. Test on expressly approved Windows 11 signing/sideload host. Production FFmpeg redistribution, actual signed MSIX/B2, live main governance (current main unprotected; no rulesets), clean headed Explorer lifecycle, final security/fuzz/chaos/end-user, UX/settings/Plugin SDK and independent PR review are all OPEN. PR #14 DRAFT; issue #13 is external gate tracker. No GitHub Actions minutes: local CI only, [skip ci] commits.
+All local source/cache/temp/build/SDK/logs exclusively under D:\converty. Rotate: fresh-read GitHub + single current OPEN handover, do next independently executable task and verify, update canonical docs in place, regenerate four authority files, commit/push, inspect exact committed-HEAD deterministic ZIP twice, link digest to PR/issue, refresh GitHub; never promote main early.

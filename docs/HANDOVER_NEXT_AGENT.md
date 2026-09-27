@@ -1,6 +1,6 @@
 # Converty — current repository OPEN handover (GitHub-only)
 
-Date: 2026-09-24 (Europe/Amsterdam). Project: `aeiouofficial/converty`. Workspace: `D:\converty\repo` (all temporary files, caches, downloads and logs strictly within `D:\converty`). Status: **OPEN / NOT CUSTOMER SHIP-READY**. This file is the single current repository continuation point; historic Slack/Drive handovers are not current authority for this GitHub-only scope.
+Date: 2026-09-27 (Europe/Berlin). Project: `aeiouofficial/converty`. Workspace: `D:\converty\repo` (all temporary files, caches, downloads and logs strictly within `D:\converty`). Status: **OPEN / NOT CUSTOMER SHIP-READY**. This file is the single current repository continuation point; historic Slack/Drive handovers are not current authority for this GitHub-only scope.
 
 ## Authority and immutable baselines
 
@@ -38,3 +38,13 @@ Never add shell/raw FFmpeg argument execution, PATH/CWD discovery, silent Strict
 On `weiter` / `continue`, first fresh-read this single OPEN repository handover, current GitHub branch/PR/issue, plan, backlog, changelog and evidence; execute the immediate task, verify actual gates, update the existing canonical files **in place**, fresh-read GitHub again, and replace this same repository handover with its one OPEN successor. Prior states live in Git history. Slack/Drive reconciliation is out of scope until explicitly requested.
 
 \n
+
+## 2026-09-25 verified local test-only regression fix / GitHub reconciliation
+- Frozen main freshly verified unchanged at 8a1f466; main branch `protected=false` and repository rulesets `[]`. PR #14 remains draft with no submitted independent reviews. Issue #13 and PR #14 have been corrected in place with the recovered exact pinned FFmpeg and real packaged local qualification.
+- The previous 99144b metadata HEAD became RED once real bundled ffmpeg exercised all managed tests: 394/395 with Windows staged canary-DLL cleanup lock; a repeated targeted run exposed intermittent five-second worker child-PID startup deadline. Both are test-only, not release gate waivers.
+- This current code amendment keeps actual ffmpeg descendant/job/AppContainer security assertions intact, adds bounded cleanup retries and awaits worker cancellation during test teardown. Targeted **3/3 PASS**, full managed **395/395 PASS**, Release 0 warnings/errors on the amended working tree.
+- Source/product qualification remains pinned to 6292ccb and the exact BtbN dev-only hash in the above evidence ledger. Registered unsigned MSIX COM remains blocked by laptop 0x80073CFF. No Windows security setting was modified.
+- Next executable task: regenerate all four authority files; full static/vectors/repo preflight on the amended tree; commit/push [skip ci] with no GitHub Actions; independently build two byte-identical committed-HEAD workspaces and verify CRC, every manifest/hash row and four authority members; record exact SHA and ZIP digest in PR #14/issue #13. After fresh GitHub authority read, continue approved Windows 11 registered COM host and external release gates only with genuine external evidence. Exactly one OPEN handover: this file.
+
+## 2026-09-27 re-verification before GitHub sync
+Fresh .NET 10.0.400 Release build 0 warnings/errors, managed 395/395 with 0 skips, Python 3.13.13 static 168/168, vectors 5/5, repo/release preflight and twice-deterministic four authority files PASS. Preserve 6292ccb exact-pinned packaged evidence as historical for unchanged product code; this documentation/test-only amendment must receive a new committed-HEAD double ZIP/CRC/all-manifest verification, recorded in PR #14/issue #13. No Actions, main promotion or external approval.

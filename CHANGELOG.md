@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.0-dev.22 — 2026-09-25 — local worker-cancellation regression and GitHub reconciliation
+- Re-ran the locally packaged development source under Windows 11 with exact pinned FFmpeg installed: initial metadata HEAD 99144b managed suite RED 394/395. Actual FFmpeg cancellation test passed the child-orphan assertion but intermittently failed Windows DLL cleanup; a repeated isolated test also revealed a too-short startup PID deadline. Test-only fix now awaits worker cancellation during failure cleanup, retries transient Windows staging file locks within bounds, diagnoses prematurely exited workers and allows a bounded 12-second PID startup. Production security/engine code unchanged.
+- GREEN on amended test-only tree: targeted FFmpeg cancellation witness 3/3, followed by the full 395/395 managed suite and Release 0 warnings/errors; exact new-commit static/generated authority and deterministic archive results are recorded on GitHub PR #14 after postcommit validation.
+- Corrected draft PR #14 and issue #13 in place for exact pinned development FFmpeg/package PASS; registered unsigned COM remains blocked by 0x80073CFF. Live main branch protection=false, rulesets=[], and no independent PR review as checked 2026-09-25. No hosted GitHub Actions, customer release or main movement.
+
 ## 0.1.0-dev.22 — 2026-09-24 — pinned local packaged regression closure
 - Recovered and SHA-256/size-verified the exact development-only FFmpeg/ffprobe archive, then rebuilt the unsigned development MSIX layout with both pinned tools. Packaged ProbeWorker, direct staged Explorer COM invocation, product smoke, Audio36, Image24, Video27, negative and repeated mixed-batch regressions, Copy/Remux/Transcode all PASS locally on the amended source subject `6292ccb`.
 - Registered unsigned package COM is BLOCKED on this laptop by Windows `Add-AppxPackage` error `0x80073CFF` (missing permitted sideload/developer policy); this is not a production signed install or headed Explorer acceptance. Local test logs and exact evidence in `docs/development/DEV22_LOCAL_CI_EVIDENCE_2026-09-24.md`.
@@ -99,3 +104,7 @@
 - Delivered the first automated functional Windows product path: packaged native Explorer command → fixed Bridge → typed preset → fixed app-local FFmpeg → same-folder numbered output.
 
 Earlier foundation history remains available in repository history and prior handovers.
+
+### 2026-09-27 fresh local re-verification
+- Reproduced clean local qualification of the amended test-only branch: Release build 0 warnings/errors, 395/395 managed without skips, 168/168 static, 5/5 contract vectors, release/repository preflight and twice-deterministic generated authority PASS. No GitHub Actions or main movement.
+- The registered unsigned package COM, external signing/provenance, live governance, headed Windows 11 lifecycle and independent review gates remain OPEN; postcommit workspace ZIP evidence is linked in PR #14 and issue #13.

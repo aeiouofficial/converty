@@ -4,7 +4,7 @@
 **Repository:** `aeiouofficial/converty`  
 **Branch:** `dev/0.1.0-dev.22-shipping-readiness`  
 **Base:** `1bfb6a409976abdbf781ba027f556818fb791fa7`  
-**Status:** TASKS 1-8 QUALIFIED ON SUBJECT 1aea099a; POST-QUALIFICATION DOCUMENTATION RESYNC REQUIRED  
+**Status:** TASKS 1–8 SOURCE-QUALIFIED; EXACT PINNED PACKAGED LOCAL PASS; REGISTERED COM, INDEPENDENT REVIEW AND PRODUCTION GATES OPEN
 **Release status:** NOT CUSTOMER SHIP-READY
 
 ## Purpose
@@ -64,3 +64,9 @@ Ruling: the user's local Converty project must not allocate scratch/cache/logs o
 
 ## Local qualification addendum — 2026-09-24
 GitHub Actions minutes are exhausted; current user scope is local CI on `D:\converty` plus durable GitHub commits and in-place repository docs. The test-only reparse fixture correction and deterministic LF generator fix have RED/GREEN regression evidence. Local managed 395/395, static 168/168, vectors 5/5, native MSVC and dependency audit PASS; the pinned development FFmpeg/package matrix and deterministic final archive must be rechecked on the exact amended tree before qualifying it. Regenerate the four deterministic authority files with their generators, never manually edit their values, and verify repeatable output and complete archive-member hashes. No earlier GitHub Actions run covers the amended tree.
+
+## 2026-09-25 actual-FFmpeg cancellation test-only correction
+- Fresh 99144b metadata HEAD test with bundled pinned development FFmpeg reproduced **RED 394/395**: real descendant job-cancellation witness passed through worker/process validation but Windows still briefly held staged Converty.WorkerCanary.dll during cleanup. A second isolated repeat failed on its five-second child-PID startup deadline. Both are concrete test reliability defects, not grounds to relax strict security assertions.
+- Test-only GREEN: linked cancellation is awaited even on failure; staging cleanup retries transient Windows IO/ACL file-lock exceptions within a finite bound; PID startup gets a bounded twelve-second deadline plus early failure diagnostics if worker exits. Real ffmpeg descendant AppContainer and job-orphan assertions are unchanged. Three repeated targeted actual-engine tests **3/3 PASS** and the full managed suite **395/395 PASS**, Release build 0 warnings/errors. No production code was changed.
+- The prior 2026-09-24 pinned development archive and packaged ProbeWorker/direct COM/product/Audio36/Image24/Video27/Copy+Remux+Transcode matrix PASS is historical exact production-source evidence for 6292ccb. The new test-only/documentation commit requires its own four regenerated authority members, fresh static gates and independently verified double committed-source ZIP; the exact result is to be recorded in GitHub PR #14.
+- Registered unsigned MSIX COM **BLOCKED** by local 0x80073CFF policy. Production signing/provenance, independent review, main governance and clean headed Windows 11 release evidence remain OPEN. Local logs: D:\converty\_temp\managed-full-20260925.log and security-cleanup-green-20260925.log. No GitHub Actions ran.

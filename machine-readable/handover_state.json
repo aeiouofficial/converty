@@ -2,12 +2,12 @@
   "schemaVersion": 1,
   "project": "Converty",
   "workspaceVersion": "0.1.0-dev.22",
-  "baselineDate": "2026-09-24",
-  "implementationStatus": "DEV22_LOCAL_MANAGED_STATIC_NATIVE_QUALIFIED_PACKAGED_AND_FINAL_ARCHIVE_PENDING",
+  "baselineDate": "2026-09-25",
+  "implementationStatus": "DEV22_LOCAL_PACKAGE_AND_MANAGED_TEST_ONLY_FIX_PASS_PRODUCTION_GATES_OPEN",
   "defaultBranch": "main",
   "currentDevelopmentBranch": "dev/0.1.0-dev.22-shipping-readiness",
   "nextWorkspaceVersion": "0.1.0-dev.23",
-  "nextBatch": "DEV22_LOCAL_PACKAGE_ARCHIVE_VERIFICATION_AND_EXTERNAL_SHIPPING_GATES",
+  "nextBatch": "CONTROLLED_WINDOWS11_REGISTERED_COM_AND_INDEPENDENT_RELEASE_GATES",
   "targetOs": "Windows 11 x64",
   "frozenReleaseAuthority": {
     "version": "0.1.0-dev.20",
@@ -44,11 +44,11 @@
     "UX/settings and Plugin SDK release gates"
   ],
   "nextActions": [
-    "Fresh-read latest GitHub dev.22 branch and draft PR #14; local baseline ca018a2 is not the final amended tree.",
-    "Use only D:\\converty local CI. Verify pinned development FFmpeg archive by exact bytes/SHA-256, then run all packaged native/ProbeWorker/COM/Audio36/Image24/Video27 and mixed/mode regressions; record any unavailable gate explicitly.",
-    "Run local locked Release build, dependency audit, all 395 managed/168 static/5 contract tests; regenerate deterministic authority with the committed generators, verify repeat generation, build and inspect identical workspaces twice.",
-    "Commit and push complete verified work with [skip ci], update draft PR #14 and shipping issue #13 with actual local-only evidence; do not dispatch GitHub Actions or claim hosted checks.",
-    "External production provenance, signing, governance, clean headed Windows 11, security/fuzz/chaos/end-user, UX and Plugin SDK approvals remain OPEN; do not merge frozen main."
+    "Fresh-read GitHub dev.22 branch HEAD, frozen main, draft PR #14 reviews, shipping issue #13 and the single OPEN repository handover.",
+    "Preserve exact pinned dev-only ffmpeg/probe, packaged ProbeWorker, direct staged Explorer COM, Audio36/Image24/Video27 and Copy/Remux/Transcode PASS tied to source 6292ccb; test-only actual FFmpeg cancellation amendment GREEN 2026-09-25; repeat exact HEAD static/committed ZIP qualification for every new commit.",
+    "Registered unsigned MSIX COM on laptop failed Windows 0x80073CFF; use only an explicitly approved provisioned Windows 11 test host for registered COM and clean headed lifecycle; never silently modify laptop security/developer policy.",
+    "Production FFmpeg provenance/redistribution, signed MSIX+B2, live main governance, headed screenshots, final security/fuzz/chaos, UX/Plugin SDK, end-user acceptance and independent whole-branch review remain OPEN.",
+    "All Converty source/build/cache/temp/logs only within D:\\converty. Regenerate four authority files, independently verify double committed-source archive and push GitHub [skip ci] with no hosted Actions dispatch; main stays frozen."
   ],
   "recursiveHandoverRequired": true,
   "recursiveHandoverRule": "After every materially completed GitHub-only block: fresh-read GitHub authority; update canonical repository plan/backlog/changelog/evidence/handover in place; preserve historical evidence; publish exactly one context-free current repository continuation point. Reconcile Slack/Drive only when the user restores cloud-documentation scope.",
@@ -74,10 +74,17 @@
     "exactQualificationAuthorityArtifactId": 10783376753,
     "exactQualificationDeliveryArtifactId": 10783368416,
     "exactQualificationWorkspaceSha256": "337bdb018274866803e8b6e15f7b9ea0fad4436ac3d2b912d61f340cfc76cf47",
-    "task8Status": "LOCAL_REGRESSION_PASS_FINAL_PACKAGE_AND_ARCHIVE_PENDING",
+    "task8Status": "LOCALLY_REQUALIFIED_PINNED_PRODUCT_AND_TEST_ONLY_FIX; SIGNING_AND_EXTERNAL_GATES_OPEN",
     "postQualificationPolicy": "Local Converty project files/temp/cache/logs prohibited on laptop C:, workspace D:\\converty, project temp D:\\converty\\_temp; two old directories/13 files relocated and per-file SHA-256 checked",
     "reviewPullRequest": 14,
     "externalGatesIssue": 13,
-    "localQualificationEvidence": "docs/development/DEV22_LOCAL_CI_EVIDENCE_2026-09-24.md"
+    "localQualificationEvidence": "docs/development/DEV22_LOCAL_CI_EVIDENCE_2026-09-24.md",
+    "testOnlyWorkerCancellationFix20260925": {
+      "redBaseline": "99144b73bd19879c1f6ae75da6776e58c0fc1c76",
+      "red": "394/395 managed with intermittent Windows canary DLL cleanup lock; separate targeted repetition failed PID startup 5-second deadline",
+      "green": "Actual FFmpeg descendant cancellation 3/3 targeted runs; full managed 395/395; release build 0 warnings/errors",
+      "change": "Test-only bounded stage cleanup; await cancellation completion in failure paths; inspect worker exit before PID timeout; preserve actual AppContainer and child-orphan assertions",
+      "productionCodeChanged": false
+    }
   }
 }

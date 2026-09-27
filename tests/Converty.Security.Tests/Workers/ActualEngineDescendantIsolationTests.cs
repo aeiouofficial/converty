@@ -201,6 +201,8 @@ public sealed class ActualEngineDescendantIsolationTests
 
         CancellationToken testCancellation = TestContext.Current.CancellationToken;
         string root = CreateTempDirectory("ConvertyActualEngineJob");
+        using var cancellation = CancellationTokenSource.CreateLinkedTokenSource(testCancellation);
+        Task<WorkerProcessResult>? execution = null;
         try
         {
             StagedApplication app = StageCanaryApplication(root, packaged);
@@ -208,9 +210,8 @@ public sealed class ActualEngineDescendantIsolationTests
             Directory.CreateDirectory(stagingDirectory);
             string pidPath = Path.Combine(stagingDirectory, "ffmpeg.pid");
             var launcher = new WindowsWorkerProcessLauncher();
-            using var cancellation = CancellationTokenSource.CreateLinkedTokenSource(testCancellation);
 
-            Task<WorkerProcessResult> execution = launcher.ExecuteAsync(
+            execution = launcher.ExecuteAsync(
                 CreateStrictRequest(
                     app.Canary,
                     app.Root,
@@ -219,7 +220,7 @@ public sealed class ActualEngineDescendantIsolationTests
                     timeout: TimeSpan.FromSeconds(20)),
                 cancellation.Token);
 
-            int childPid = await WaitForPidAsync(pidPath, TimeSpan.FromSeconds(5), testCancellation);
+            int childPid = await WaitForPidAsync(pidPath, execution, TimeSpan.FromSeconds(12), testCancellation);
             using (Process child = Process.GetProcessById(childPid))
             {
                 Assert.False(child.HasExited);
@@ -232,7 +233,25 @@ public sealed class ActualEngineDescendantIsolationTests
         }
         finally
         {
-            Directory.Delete(root, recursive: true);
+            try
+            {
+                cancellation.Cancel();
+                if (execution is not null)
+                {
+                    try
+                    {
+                        await execution.WaitAsync(TimeSpan.FromSeconds(5), testCancellation);
+                    }
+                    catch (OperationCanceledException)
+                    {
+                        // Cancellation is the expected result when the worker Job is closed.
+                    }
+                }
+            }
+            finally
+            {
+                await DeleteStagedApplicationAsync(root);
+            }
         }
     }
 
@@ -345,7 +364,7 @@ public sealed class ActualEngineDescendantIsolationTests
             async () => await listener.AcceptTcpClientAsync(timeout.Token));
     }
 
-    private static async Task<int> WaitForPidAsync(string pidPath, TimeSpan timeout, CancellationToken cancellationToken)
+    private static async Task<int> WaitForPidAsync(string pidPath, Task<WorkerProcessResult> execution, TimeSpan timeout, CancellationToken cancellationToken)
     {
         DateTime deadline = DateTime.UtcNow + timeout;
         while (DateTime.UtcNow < deadline)
@@ -359,9 +378,14 @@ public sealed class ActualEngineDescendantIsolationTests
                     return pid;
                 }
             }
+            if (execution.IsCompleted)
+            {
+                WorkerProcessResult result = await execution;
+                throw new InvalidOperationException($"Actual FFmpeg worker exited before publishing its child PID (exit {result.ExitCode}): {result.StandardError}");
+            }
             await Task.Delay(25, cancellationToken);
         }
-        throw new TimeoutException("Actual ffmpeg descendant did not publish its PID before the test deadline.");
+        throw new TimeoutException($"Actual ffmpeg descendant did not publish its PID within {timeout.TotalSeconds} seconds (worker status: {execution.Status}).");
     }
 
     private static async Task AssertProcessExitedAsync(int pid, TimeSpan timeout, CancellationToken cancellationToken)
@@ -438,6 +462,29 @@ public sealed class ActualEngineDescendantIsolationTests
             current = current.Parent;
         }
         throw new InvalidOperationException("Repository root could not be resolved from the test output directory.");
+    }
+
+    private static async Task DeleteStagedApplicationAsync(string root)
+    {
+        // A cancelled worker can briefly retain its mapped canary DLL while its job shuts down.
+        // Keep the orphan check strict; only retry cleanup for a bounded Windows handle-release delay.
+        const int maxAttempts = 50;
+        for (int attempt = 0; attempt < maxAttempts; attempt++)
+        {
+            try
+            {
+                Directory.Delete(root, recursive: true);
+                return;
+            }
+            catch (IOException) when (attempt < maxAttempts - 1)
+            {
+            }
+            catch (UnauthorizedAccessException) when (attempt < maxAttempts - 1)
+            {
+            }
+
+            await Task.Delay(100);
+        }
     }
 
     private static string CreateTempDirectory(string prefix)
