@@ -29,7 +29,7 @@
 - [x] `0.1.0-dev.20` remains exact-main frozen at `8a1f46603aa842728247bc11b34fcccf121858fd` / tree `4bd6f8d7acbadd60a3488870c773d2eafd67ba26` / CI `33671671714` SUCCESS.
 
 ## Release blockers that remain open
-- [ ] Live GitHub ruleset/main branch-protection enforcement.
+- [x] Live GitHub main ruleset #24086373 ACTIVE and main protected=true as verified 2026-09-27. Deletion/non-fast-forward prohibited, linear history and signatures required, one independent PR approval with stale-review dismissal, four exact named CI checks strictly required, no bypass. Frozen main untouched.
 - [ ] Headed Windows 11 modern Explorer exact-build UI/screenshots and crash/hang/failure matrix.
 - [ ] Production signed-package B2 identity/authentication requalification.
 - [ ] Production FFmpeg/ffprobe redistribution/license/notices/signature/hash approval.
@@ -70,3 +70,8 @@ Code remediation may be complete while customer shipping remains blocked. Do not
 - [x] Move two verified old local Converty temp directories (13 files, ~2.6 MB) from C: into `D:\converty\_temp\migrated-from-C`; per-file SHA-256 and counts matched before original deletion.
 - [x] Add `AGENTS.md` non-C storage rule, project-root PowerShell temp/cache bootstrap and static regression guards.
 - [ ] Obtain genuine independent production approvals and actual signed/clean-headed Windows 11 evidence in issue #13. Do not mark a customer release while any item remains OPEN.
+
+## 2026-09-27 authenticated main governance
+- [x] Repository admin permissions confirmed; created ruleset [#24086373](https://github.com/aeiouofficial/converty/rules/24086373), enforced exclusively for refs/heads/main with no bypass; GitHub API returned main protected=true and six effective main rules. The repository's own readiness verifier accepted the live ruleset.
+- [ ] Registered package COM and headed clean Windows 11 acceptance on an authorized host; local laptop blocks unsigned registration by 0x80073CFF. Production FFmpeg licensing, signed MSIX/B2, final security/fuzz/chaos/end-user and UX/Plugin SDK approvals and independent PR review still OPEN.
+- [ ] Once external gates and GitHub Actions capacity genuinely available, require all four real check contexts on the exact release candidate; DO NOT remove rules or force-promote frozen main.

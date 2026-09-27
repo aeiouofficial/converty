@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.0-dev.22 — 2026-09-27 — authenticated main protection
+- Created and read back ACTIVE repository ruleset #24086373 targeting only main: no bypass, force-push/deletion blocked, signed linear history and reviewed PRs required (one approval; stale and last-push review enforced), four exact strict required development/release readiness checks. GitHub main protected=true, frozen SHA unchanged.
+- No GitHub Actions dispatched or main merge. Registered unsigned MSIX COM remains blocked by Windows policy 0x80073CFF and all other genuine external release/approval prerequisites remain open.
+
 ## 0.1.0-dev.22 — 2026-09-27 — exact local test and delivery qualification
 - Pushed test-only FFmpeg descendant cancellation regression `29ce1b260adbb4d84e8e0e720c19186d0db4e84d`; 395/395 managed (no skips), 168/168 static, 5/5 vectors and Release 0 warnings/errors. Generated authority postcommit zero-diff.
 - Independently generated two byte-identical committed-source ZIPs: SHA-256 `1aec74d58dc8586deec6b4b9e96e0ee2ff35266a91f2166afa99036450c89a1a`, 667625 bytes / 466 entries, full ZIP CRC, 464 package entries, 465 checksum entries and four exact authority members PASS.

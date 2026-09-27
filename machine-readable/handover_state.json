@@ -3,11 +3,11 @@
   "project": "Converty",
   "workspaceVersion": "0.1.0-dev.22",
   "baselineDate": "2026-09-27",
-  "implementationStatus": "DEV22_TEST_ONLY_SOURCE_AND_COMMITTED_PACKAGE_LOCALLY_QUALIFIED_EXTERNAL_GATES_OPEN",
+  "implementationStatus": "DEV22_LOCAL_QUALIFIED_LIVE_MAIN_GOVERNANCE_PASS_EXTERNAL_RELEASE_AND_REGISTERED_COM_OPEN",
   "defaultBranch": "main",
   "currentDevelopmentBranch": "dev/0.1.0-dev.22-shipping-readiness",
   "nextWorkspaceVersion": "0.1.0-dev.23",
-  "nextBatch": "LIVE_MAIN_GOVERNANCE_THEN_CONTROLLED_WIN11_REGISTERED_COM",
+  "nextBatch": "APPROVED_WIN11_REGISTERED_MSIX_COM_AND_HEADed_EXPLORER_OR_INDEPENDENT_REVIEW",
   "targetOs": "Windows 11 x64",
   "frozenReleaseAuthority": {
     "version": "0.1.0-dev.20",
@@ -35,7 +35,6 @@
     "note": "Current user instruction is GitHub-only; no Slack/Drive mutation was performed during dev.22 remediation."
   },
   "shippingOpen": [
-    "Live GitHub ruleset/main branch-protection enforcement",
     "Headed Windows 11 modern Explorer exact-build UI/screenshots and crash/hang/failure matrix",
     "Production signed-package B2 identity/authentication requalification",
     "Production FFmpeg/ffprobe redistribution/license/notices/signature/hash approval",
@@ -44,11 +43,11 @@
     "UX/settings and Plugin SDK release gates"
   ],
   "nextActions": [
-    "Fresh-read GitHub dev.22 exact HEAD, frozen main, PR #14 review state, issue #13 and this repository OPEN handover. Historical product code 6292ccb and test-only subject 29ce1b2 must not be mistaken for production approval.",
-    "Check authenticated admin-level GitHub main governance. If authorized, configure and freshly verify a safe main-applicable ruleset with reviewed PRs, no force push/deletion, required checks matched to actual workflows, and audited bypass; do not promote frozen main.",
-    "For registered COM on an explicitly approved Windows 11 host with legitimate package policy, execute actual MSIX registration, headed Explorer screenshots, failure matrix and install/update/uninstall against the exact package. Do not modify this laptop's security/developer settings.",
-    "Obtain independent exact-candidate production FFmpeg provenance/redistribution, signed MSIX/B2, security/fuzz/chaos, UX/Plugin SDK and end-user acceptance; keep PR #14 DRAFT and all unsatisfied issue #13 gates OPEN.",
-    "Keep every Converty project file/cache/log strictly under D:\\converty on the laptop; local CI only, no GitHub Actions dispatch, commit/push [skip ci]. Regenerate four authority members and independently double-verify committed HEAD ZIP after any further tracked change."
+    "Fresh-read GitHub current branch HEAD (docs-only current successor to 4a72222), frozen main, active live ruleset 24086373 and effective main protection, PR #14, issue #13 and the single OPEN repository handover.",
+    "Keep actual approved repo ruleset active: deletion, force-push and unsigned/nonlinear/unreviewed merges blocked; four required contexts managed, supply-chain-static, candidate-base-continuity, candidate-release-readiness. Actions minutes unavailable: do not dispatch or bypass checks and do not move frozen main.",
+    "On expressly provisioned and approved Windows 11 test host, run exact unsigned/signed MSIX registration, registered Explorer COM invoke, headed screenshot/failure matrix and complete install/upgrade/uninstall lifecycle; local laptop 0x80073CFF sideload policy must not be modified.",
+    "While controlled host or production signing are unavailable, request an independent whole-branch PR #14 code/security reviewer and gather actual production FFmpeg provenance/legal redistribution, signed MSIX/B2, final fuzz/chaos/security, UX/Plugin SDK and end-user evidence in issue #13. Never treat development results as release evidence.",
+    "All local Converty project source/build/temp/cache/toolchain/logs D:\\converty only; local CI, four generated authority files by generators, commit/push [skip ci], independent current committed-HEAD double ZIP with full CRC/manifest/hash, issue/PR reconciliation and exactly one OPEN handover."
   ],
   "recursiveHandoverRequired": true,
   "recursiveHandoverRule": "After every materially completed GitHub-only block: fresh-read GitHub authority; update canonical repository plan/backlog/changelog/evidence/handover in place; preserve historical evidence; publish exactly one context-free current repository continuation point. Reconcile Slack/Drive only when the user restores cloud-documentation scope.",
@@ -103,6 +102,21 @@
       "doubleBuild": "PASS",
       "hostedActionsInvoked": false,
       "note": "Evidence binds to the test-only subject; any later documentation-only descendant needs its own final deterministic archive check."
+    },
+    "liveMainGovernance20260927": {
+      "rulesetId": 24086373,
+      "active": true,
+      "mainProtected": true,
+      "requiredChecks": [
+        "candidate-base-continuity",
+        "supply-chain-static",
+        "managed",
+        "candidate-release-readiness"
+      ],
+      "noBypass": true,
+      "historicalMainSha": "8a1f46603aa842728247bc11b34fcccf121858fd",
+      "verifiedReadback": true,
+      "hostedActionsInvoked": false
     }
   }
 }

@@ -73,3 +73,7 @@ GitHub Actions minutes are exhausted; current user scope is local CI on `D:\conv
 
 ## 2026-09-27 exact local test-only qualification
 Subject `29ce1b260adbb4d84e8e0e720c19186d0db4e84d` locally reverified: 395/395 managed, 168/168 static, 5 vectors, Release 0 warnings/errors. Generated four-authority zero-diff and two identical committed-source ZIPs `1aec74d58dc8586deec6b4b9e96e0ee2ff35266a91f2166afa99036450c89a1a` (CRC, all manifest and checksum rows) PASS. Historical exact-pinned packaged product evidence remains bound to unchanged product source 6292ccb. This qualification is development-only. Next: live main governance and controlled registered COM/clean headed Windows 11 with real approvals, followed by independent production release review; never auto-promote main.
+
+## 2026-09-27 live main governance
+- Main-only ACTIVE ruleset 24086373 configured with no bypass, signed linear history, deletion/non-fast-forward protection, one independent PR approval with stale/last-push rules, four actual required check contexts, strict latest-main status policy. Live GitHub main protected=true and exact frozen main SHA unchanged. The built-in release-readiness governance evaluator PASS.
+- Next task: controlled permitted Windows 11 registered COM and clean headed MSIX lifecycle, independent PR review and genuine production provenance/signing/UX/final end-user acceptance. Required candidate-release-readiness remains intentionally red until external gates close; never launch Actions with exhausted minutes or bypass branch controls.

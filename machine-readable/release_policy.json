@@ -37,16 +37,18 @@
   },
   "repositoryGovernance": {
     "desiredFutureMain": "block force-push/deletion; restrict updates; exact required checks and linear history where exact-candidate compatible; prospective verified signatures",
-    "liveRulesetsConfigured": false,
-    "liveMainBranchProtection": false,
+    "liveRulesetsConfigured": true,
+    "liveMainBranchProtection": true,
     "historicalUnsignedDev20MustNotBeRewritten": true,
-    "lastVerified": "2026-09-21",
+    "lastVerified": "2026-09-27",
     "requiredCandidateChecks": [
       "candidate-base-continuity",
       "supply-chain-static",
       "managed",
       "candidate-release-readiness"
-    ]
+    ],
+    "activeMainRulesetId": 24086373,
+    "mainGovernanceVerification": "Active exact main ruleset, no bypass, deletion/force push blocked, signed linear PR-only commits, one approving review with stale and last-push checks, four exact CI contexts; verified via GitHub API."
   },
   "dependencyAudit": {
     "enabled": true,

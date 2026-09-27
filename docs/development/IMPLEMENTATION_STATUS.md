@@ -103,3 +103,6 @@ Exact pinned BtbN development FFmpeg/ffprobe restored and verified by SHA-256 an
 
 ## 2026-09-27 test-only branch synchronization
 Test-only source `29ce1b260adbb4d84e8e0e720c19186d0db4e84d` pushed with [skip ci]. New local Release build 0 warnings/errors, managed 395/395, static 168/168 and vectors 5/5 PASS. Its exact committed-HEAD double ZIP SHA-256 is `1aec74d58dc8586deec6b4b9e96e0ee2ff35266a91f2166afa99036450c89a1a` (667625 bytes, 466 entries; CRC, manifests and four authority files verified). No code or production package acceptance changed; unsigned registered COM, production signing/provenance, live governance and final independent acceptance remain OPEN.
+
+## 2026-09-27 main governance verified
+Authenticated GitHub administrator created main-only ACTIVE ruleset 24086373; independent repository API readback returned six effective rules, no bypass, four exact required CI contexts, reviewed signed linear commits, no deletion/force-push; main protected=true and exact frozen SHA unchanged. The local Converty governance evaluator PASS. No Actions or main promotion. Registered MSIX COM and external production gates remain OPEN; see shipping issue #13.

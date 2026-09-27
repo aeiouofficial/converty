@@ -170,8 +170,8 @@
     },
     {
       "path": "CHANGELOG.md",
-      "bytes": 20247,
-      "sha256": "59ddd339583e8e5ee45d83a5155aa0eea2ded29c388dabe26c73bea796c501bc"
+      "bytes": 20845,
+      "sha256": "87bb3ca31af5de6a21ab474ee88472c89c7caaaa088fae5818d90673f282c983"
     },
     {
       "path": "CMakeLists.txt",
@@ -290,13 +290,13 @@
     },
     {
       "path": "docs/development/DEV22_LOCAL_CI_EVIDENCE_2026-09-24.md",
-      "bytes": 9039,
-      "sha256": "f29acc0fce017ccaa0a865a1648107d24bae9663332e403d575ced492bb1ac58"
+      "bytes": 10064,
+      "sha256": "d1855d4398fc4de317672b8c44b260c6ebe496ccd8248cb2cd8c57cb0542995e"
     },
     {
       "path": "docs/development/IMPLEMENTATION_STATUS.md",
-      "bytes": 10716,
-      "sha256": "f8135d60beead5f409eae70985ca6ae29b8648ab7960c39299d1ee51d0cb2878"
+      "bytes": 11215,
+      "sha256": "10abf64cf3f07bdb11746a03dea752b43965531e777ed35bd20a31388b0d9000"
     },
     {
       "path": "docs/development/MODULE_BOUNDARIES.md",
@@ -315,13 +315,13 @@
     },
     {
       "path": "docs/HANDOVER_NEXT_AGENT.md",
-      "bytes": 6129,
-      "sha256": "8b09f77a8ed972990847130e0fffcbbba82e434a2c097a936539fe4ae12a6a68"
+      "bytes": 7316,
+      "sha256": "0610b7c8a46a9d263a8f810561292d61d1f5d61e977ad730133ed2a2d87d1da5"
     },
     {
       "path": "docs/HANDOVER_PROMPT.txt",
-      "bytes": 2170,
-      "sha256": "a9f4762d990754013d55dca7df60b1a7b5a7ba12376be860a7562e563449bdb2"
+      "bytes": 2349,
+      "sha256": "856cd3267071ed6ce9110a9d3110380155de767089d4f89d5d1056a449a58e04"
     },
     {
       "path": "docs/REFERENCE_SOURCES.md",
@@ -450,8 +450,8 @@
     },
     {
       "path": "docs/superpowers/plans/2026-09-21-dev22-audit-remediation-shipping-hardening.md",
-      "bytes": 9680,
-      "sha256": "ed8e0facc71d824f2a50112c38e367fcb0911dd776fada09b5c019812e258999"
+      "bytes": 10443,
+      "sha256": "c5a091d49a4cf529ccff98a76890f53c7d15284813d3bb66ee75b93e496e948c"
     },
     {
       "path": "docs/superpowers/specs/2026-08-24-foundation-design.md",
@@ -530,8 +530,8 @@
     },
     {
       "path": "docs/TASK_BACKLOG.md",
-      "bytes": 7297,
-      "sha256": "82e5ad76c5ecde42f62b40b861168b30fa4ab397913911a6bc26b5798805c754"
+      "bytes": 8406,
+      "sha256": "8cd3cacc2e68da62622fb160a8c5caa51dc12cf0ccb084192be8973219da8ebc"
     },
     {
       "path": "docs/TEST_AND_RELEASE_GATES.md",
@@ -580,8 +580,8 @@
     },
     {
       "path": "machine-readable/build_evidence.json",
-      "bytes": 11741,
-      "sha256": "25c20f8acb84b7b2c1248c99320fd8303cf5167d020415df41f53b6aedddd314"
+      "bytes": 13256,
+      "sha256": "6c5a94446dd2073eea575cf990284ae34842f171c47ba5f65ead9f9b247af21a"
     },
     {
       "path": "machine-readable/ci_action_pins.json",
@@ -590,13 +590,13 @@
     },
     {
       "path": "machine-readable/handover_state.json",
-      "bytes": 7245,
-      "sha256": "2b66808b6c687e0067db433df054b74693932f346267b2d0c1108a8a53fc4d58"
+      "bytes": 7835,
+      "sha256": "c6d2b1194acc101e681176c971b6f6ca02bd9b0ce15c8ef7f5d6e07825327d50"
     },
     {
       "path": "machine-readable/release_policy.json",
-      "bytes": 3707,
-      "sha256": "40aca47e429875e3c8f24997a8d437b0f3acd08010d1b46ca7e6ce9fc08380fe"
+      "bytes": 3980,
+      "sha256": "199c1df863196b0fbb3e8f5bb4c843cc6b020bb8fc12d19b4eb1e0200bf86737"
     },
     {
       "path": "machine-readable/release_sbom.spdx.json",
