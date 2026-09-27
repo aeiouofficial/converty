@@ -247,8 +247,10 @@
       "releaseBuild": "0 warnings / 0 errors",
       "scope": "test-only correction; no production engine or release approval",
       "packagedRequalification": "Previous exact pinned source 6292ccb package/product suite PASS; registered unsigned COM remains BLOCKED",
-      "postcommitStaticAndDelivery": "CHECK_LATEST_PR_EVIDENCE",
-      "githubActionsInvoked": false
+      "postcommitStaticAndDelivery": "COMMITTED_TEST_SUBJECT_29ce1b260adbb4d84e8e0e720c19186d0db4e84d: 168/168 static, 5/5 vectors, repo/release preflight; two identical SHA256 1aec74d58dc8586deec6b4b9e96e0ee2ff35266a91f2166afa99036450c89a1a, 667625 bytes, 466 entries, ZIP CRC, 464 manifest, 465 sums, 4 exact tracked authority PASS",
+      "githubActionsInvoked": false,
+      "postcommitGitHubBranchSynchronized": true,
+      "freshFullManagedReverified": "2026-09-27: 395/395 PASS, 0 skipped; Release 0 warnings/errors"
     }
   }
 }

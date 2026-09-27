@@ -2,12 +2,12 @@
   "schemaVersion": 1,
   "project": "Converty",
   "workspaceVersion": "0.1.0-dev.22",
-  "baselineDate": "2026-09-25",
-  "implementationStatus": "DEV22_LOCAL_PACKAGE_AND_MANAGED_TEST_ONLY_FIX_PASS_PRODUCTION_GATES_OPEN",
+  "baselineDate": "2026-09-27",
+  "implementationStatus": "DEV22_TEST_ONLY_SOURCE_AND_COMMITTED_PACKAGE_LOCALLY_QUALIFIED_EXTERNAL_GATES_OPEN",
   "defaultBranch": "main",
   "currentDevelopmentBranch": "dev/0.1.0-dev.22-shipping-readiness",
   "nextWorkspaceVersion": "0.1.0-dev.23",
-  "nextBatch": "CONTROLLED_WINDOWS11_REGISTERED_COM_AND_INDEPENDENT_RELEASE_GATES",
+  "nextBatch": "LIVE_MAIN_GOVERNANCE_THEN_CONTROLLED_WIN11_REGISTERED_COM",
   "targetOs": "Windows 11 x64",
   "frozenReleaseAuthority": {
     "version": "0.1.0-dev.20",
@@ -44,11 +44,11 @@
     "UX/settings and Plugin SDK release gates"
   ],
   "nextActions": [
-    "Fresh-read GitHub dev.22 branch HEAD, frozen main, draft PR #14 reviews, shipping issue #13 and the single OPEN repository handover.",
-    "Preserve exact pinned dev-only ffmpeg/probe, packaged ProbeWorker, direct staged Explorer COM, Audio36/Image24/Video27 and Copy/Remux/Transcode PASS tied to source 6292ccb; test-only actual FFmpeg cancellation amendment GREEN 2026-09-25; repeat exact HEAD static/committed ZIP qualification for every new commit.",
-    "Registered unsigned MSIX COM on laptop failed Windows 0x80073CFF; use only an explicitly approved provisioned Windows 11 test host for registered COM and clean headed lifecycle; never silently modify laptop security/developer policy.",
-    "Production FFmpeg provenance/redistribution, signed MSIX+B2, live main governance, headed screenshots, final security/fuzz/chaos, UX/Plugin SDK, end-user acceptance and independent whole-branch review remain OPEN.",
-    "All Converty source/build/cache/temp/logs only within D:\\converty. Regenerate four authority files, independently verify double committed-source archive and push GitHub [skip ci] with no hosted Actions dispatch; main stays frozen."
+    "Fresh-read GitHub dev.22 exact HEAD, frozen main, PR #14 review state, issue #13 and this repository OPEN handover. Historical product code 6292ccb and test-only subject 29ce1b2 must not be mistaken for production approval.",
+    "Check authenticated admin-level GitHub main governance. If authorized, configure and freshly verify a safe main-applicable ruleset with reviewed PRs, no force push/deletion, required checks matched to actual workflows, and audited bypass; do not promote frozen main.",
+    "For registered COM on an explicitly approved Windows 11 host with legitimate package policy, execute actual MSIX registration, headed Explorer screenshots, failure matrix and install/update/uninstall against the exact package. Do not modify this laptop's security/developer settings.",
+    "Obtain independent exact-candidate production FFmpeg provenance/redistribution, signed MSIX/B2, security/fuzz/chaos, UX/Plugin SDK and end-user acceptance; keep PR #14 DRAFT and all unsatisfied issue #13 gates OPEN.",
+    "Keep every Converty project file/cache/log strictly under D:\\converty on the laptop; local CI only, no GitHub Actions dispatch, commit/push [skip ci]. Regenerate four authority members and independently double-verify committed HEAD ZIP after any further tracked change."
   ],
   "recursiveHandoverRequired": true,
   "recursiveHandoverRule": "After every materially completed GitHub-only block: fresh-read GitHub authority; update canonical repository plan/backlog/changelog/evidence/handover in place; preserve historical evidence; publish exactly one context-free current repository continuation point. Reconcile Slack/Drive only when the user restores cloud-documentation scope.",
@@ -74,7 +74,7 @@
     "exactQualificationAuthorityArtifactId": 10783376753,
     "exactQualificationDeliveryArtifactId": 10783368416,
     "exactQualificationWorkspaceSha256": "337bdb018274866803e8b6e15f7b9ea0fad4436ac3d2b912d61f340cfc76cf47",
-    "task8Status": "LOCALLY_REQUALIFIED_PINNED_PRODUCT_AND_TEST_ONLY_FIX; SIGNING_AND_EXTERNAL_GATES_OPEN",
+    "task8Status": "TEST_ONLY_SUBJECT_29ce1b2_LOCALLY_GREEN; EXTERNAL_RELEASE_AND_REGISTERED_COM_OPEN",
     "postQualificationPolicy": "Local Converty project files/temp/cache/logs prohibited on laptop C:, workspace D:\\converty, project temp D:\\converty\\_temp; two old directories/13 files relocated and per-file SHA-256 checked",
     "reviewPullRequest": 14,
     "externalGatesIssue": 13,
@@ -85,6 +85,24 @@
       "green": "Actual FFmpeg descendant cancellation 3/3 targeted runs; full managed 395/395; release build 0 warnings/errors",
       "change": "Test-only bounded stage cleanup; await cancellation completion in failure paths; inspect worker exit before PID timeout; preserve actual AppContainer and child-orphan assertions",
       "productionCodeChanged": false
+    },
+    "localPostcommit20260927": {
+      "subjectSha": "29ce1b260adbb4d84e8e0e720c19186d0db4e84d",
+      "subjectTreeSha": "86f814dc461660d3f76919883c8e7e31c2683763",
+      "managed": "395/395 PASS, 0 skipped",
+      "pythonStatic": "168/168 PASS",
+      "vectors": "5/5 PASS",
+      "releaseBuild": "0 warnings, 0 errors",
+      "generatedAuthority": "4/4 zero-diff PASS",
+      "archiveSha256": "1aec74d58dc8586deec6b4b9e96e0ee2ff35266a91f2166afa99036450c89a1a",
+      "archiveBytes": 667625,
+      "archiveEntries": 466,
+      "manifest": "464/464 PASS",
+      "shaRows": "465/465 PASS",
+      "crc": "PASS",
+      "doubleBuild": "PASS",
+      "hostedActionsInvoked": false,
+      "note": "Evidence binds to the test-only subject; any later documentation-only descendant needs its own final deterministic archive check."
     }
   }
 }
