@@ -3,11 +3,11 @@
   "project": "Converty",
   "workspaceVersion": "0.1.0-dev.22",
   "baselineDate": "2026-09-29",
-  "implementationStatus": "DEV22_WORKSPACE_STAGING_FIX_LOCALLY_GREEN_POSTCOMMIT_EVIDENCE_PENDING_EXTERNAL_RELEASE_OPEN",
+  "implementationStatus": "DEV22_WORKSPACE_STAGING_HARDENED_AND_EXACTLY_VERIFIED_EXTERNAL_RELEASE_GATES_OPEN",
   "defaultBranch": "main",
   "currentDevelopmentBranch": "dev/0.1.0-dev.22-shipping-readiness",
   "nextWorkspaceVersion": "0.1.0-dev.23",
-  "nextBatch": "POSTCOMMIT_AUTHORITY_ARCHIVE_CLOUD_RECONCILIATION_THEN_CONTINUE_BRANCH_REVIEW_OR_APPROVED_WIN11_HOST",
+  "nextBatch": "CONTINUE_WHOLE_BRANCH_CORRECTNESS_SECURITY_REVIEW_OR_APPROVED_WIN11_REGISTERED_LIFECYCLE",
   "targetOs": "Windows 11 x64",
   "frozenReleaseAuthority": {
     "version": "0.1.0-dev.20",
@@ -29,10 +29,10 @@
     "status": "QUALIFIED_IMMUTABLE_DEVELOPMENT_CANDIDATE_NOT_PROMOTED"
   },
   "currentOpenCloudHandover": {
-    "number": 12,
-    "slackTs": "1789698886.030639",
-    "status": "HISTORICAL_STALE_RELATIVE_TO_GITHUB_PENDING_ROTATION",
-    "note": "Slack Handover #12 and canonical Drive mirrors are stale and must be reconciled after the new GitHub commit is verified."
+    "number": 13,
+    "slackTs": "1790641889.866779",
+    "status": "OPEN",
+    "note": "Single current Slack continuation; #12 is PROCESSED. Canonical Drive mirrors reconciled to exact code/evidence subject 3ddac2be5a16ab93dcd383786fc648aeca69271a."
   },
   "shippingOpen": [
     "Headed Windows 11 modern Explorer exact-build UI/screenshots and crash/hang/failure matrix",
@@ -43,14 +43,14 @@
     "UX/settings and Plugin SDK release gates"
   ],
   "nextActions": [
-    "Commit and push the verified workspace-root runtime staging fix with [skip ci], regenerate the four authority members through existing generators, and independently double-verify the exact committed HEAD archive before recording closure evidence.",
-    "Reconcile PR #14 and issue #13 against the exact pushed SHA; no GitHub Actions dispatch, no main movement, and keep candidate-release-readiness genuinely blocked by external gates.",
-    "Update the canonical Drive Authority/Roadmap/Plan/Tasks/Changelog/Evidence/Recursive Handover in place and rotate Slack Handover #12 from OPEN to PROCESSED before publishing exactly one successor OPEN handover.",
-    "Then continue full-branch correctness/security review while controlled Windows 11 registered MSIX COM/headed lifecycle remains externally blocked, or execute that lifecycle only on an expressly approved/provisioned host.",
-    "All Converty project source/build/temp/cache/toolchain/logs on the laptop remain strictly under D:\\converty; do not alter local Windows sideload/developer security policy."
+    "Fresh-read GitHub branch HEAD, frozen main, ruleset 24086373, PR #14, issue #13, Slack Handover #13 and canonical Drive mirrors. Treat 3ddac2be5a16ab93dcd383786fc648aeca69271a as the exact verified workspace-staging code/evidence subject; any later docs-only successor does not change that code evidence.",
+    "Continue full dev.22 correctness/security review and fix only concrete plausible defects with RED-to-GREEN evidence. Do not make speculative cleanup changes.",
+    "If an expressly approved and correctly provisioned Windows 11 test host becomes available, execute registered MSIX COM, headed Explorer screenshots/failure matrix and install/upgrade/uninstall on exact artifact bytes; do not weaken current laptop sideload/developer policy.",
+    "Production FFmpeg legal/provenance/redistribution, signed MSIX/B2, final security/fuzz/chaos/end-user, UX/settings/Plugin SDK and independent release review remain OPEN. Keep PR #14 DRAFT and main frozen.",
+    "After every meaningful block: local CI under D:\\converty, update repo plus seven Drive docs, rotate Slack predecessor PROCESSED then exactly one OPEN successor, push [skip ci], verify exact committed HEAD archive, no hosted Actions."
   ],
   "recursiveHandoverRequired": true,
-  "recursiveHandoverRule": "After every materially completed GitHub-only block: fresh-read GitHub authority; update canonical repository plan/backlog/changelog/evidence/handover in place; preserve historical evidence; publish exactly one context-free current repository continuation point. Reconcile Slack/Drive only when the user restores cloud-documentation scope.",
+  "recursiveHandoverRule": "On continue/weiter: fresh-read the single Slack OPEN handover, seven canonical Drive docs and GitHub authority; GitHub wins conflicts. Execute the next verified task, reconcile repo/Drive/Slack in place, mark predecessor PROCESSED first, create exactly one successor OPEN and backfill its exact TS.",
   "dev22": {
     "branch": "dev/0.1.0-dev.22-shipping-readiness",
     "auditBaselineSha": "1bfb6a409976abdbf781ba027f556818fb791fa7",
@@ -122,9 +122,10 @@
       "preFixHead": "b1485ce8c3d62e3b9b4096bf4f27c3b32e7f0651",
       "red": "Committed resolver ignored CONVERTY_WORKSPACE_ROOT",
       "green": "395/395 managed, 169/169 static, Core 152/152, focused storage 3/3",
-      "postcommit": "PENDING",
+      "postcommit": "PASS exact subject 3ddac2be5a16ab93dcd383786fc648aeca69271a / tree 115a7424521f13182778b2a28418d30b8ed3a38e / double ZIP 67ba2ffc12bb8ebea22fb252482cd42024493b1c440e16938e13634188443b7d",
       "productionFallbackPreserved": true,
-      "hostedActionsInvoked": false
+      "hostedActionsInvoked": false,
+      "cloudMirror": "Slack #13 TS 1790641889.866779 OPEN; #12 PROCESSED; seven canonical Drive docs current"
     }
   }
 }

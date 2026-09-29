@@ -170,8 +170,8 @@
     },
     {
       "path": "CHANGELOG.md",
-      "bytes": 21895,
-      "sha256": "1edf6e17c72084022f12071a47d79515b4e8bab253bd9cca77d498b41cf715e1"
+      "bytes": 22378,
+      "sha256": "e95828ebe31a0ba7a78e94908c4172728f30680d7d16f8c6c747a8aa976e1985"
     },
     {
       "path": "CMakeLists.txt",
@@ -290,13 +290,13 @@
     },
     {
       "path": "docs/development/DEV22_LOCAL_CI_EVIDENCE_2026-09-24.md",
-      "bytes": 10959,
-      "sha256": "f28bce0d7f9c3cd7b615c35c1faabc8d1c789a501bf702956c294e43a8450119"
+      "bytes": 11364,
+      "sha256": "aa94d119d16cb10e5a3d6006d1e2faa9c0ab017b41d04f86be7694eaeb04248e"
     },
     {
       "path": "docs/development/IMPLEMENTATION_STATUS.md",
-      "bytes": 12280,
-      "sha256": "d2c775550097bfe3e208495749ee320424e810ada4a1cc074930ae3e21de3a96"
+      "bytes": 12651,
+      "sha256": "5a9fa2727a63e324d698c1e5569b53bab0845bf5f79871d3c8a12a8fe094e9ae"
     },
     {
       "path": "docs/development/MODULE_BOUNDARIES.md",
@@ -315,13 +315,13 @@
     },
     {
       "path": "docs/HANDOVER_NEXT_AGENT.md",
-      "bytes": 4359,
-      "sha256": "ba9abca0e891dcdcacba211a6a6786e0f92b2c2946888691e62fd79742dd8aae"
+      "bytes": 5183,
+      "sha256": "3a6669878c9e14b802c9e0bdcb97711c3aba31bea7381ce6c10b23118f107e6b"
     },
     {
       "path": "docs/HANDOVER_PROMPT.txt",
-      "bytes": 4391,
-      "sha256": "4b2d45e2a087d3a071dcd5f21270de2f7c77479436b215d18a6c3b4a9cff0952"
+      "bytes": 5215,
+      "sha256": "ddb8a184ea6e4034aba2c7e31f37ef8cb4710616ab39c3d81a379e215378ec88"
     },
     {
       "path": "docs/REFERENCE_SOURCES.md",
@@ -450,8 +450,8 @@
     },
     {
       "path": "docs/superpowers/plans/2026-09-21-dev22-audit-remediation-shipping-hardening.md",
-      "bytes": 11302,
-      "sha256": "83c4f52b23d214a32d2546d7341e2edda8e719520a21e26b3d7297b3095f30b9"
+      "bytes": 11627,
+      "sha256": "f80cb14cc3b50f761f2c664ff82a1086bb3a2563ebe9067b8651c77423d76e00"
     },
     {
       "path": "docs/superpowers/specs/2026-08-24-foundation-design.md",
@@ -530,8 +530,8 @@
     },
     {
       "path": "docs/TASK_BACKLOG.md",
-      "bytes": 8770,
-      "sha256": "73662d814b9044216ea226fc48caff328ea5b2cc84925371c51e7aedecf25df6"
+      "bytes": 8920,
+      "sha256": "56b67ae4bf7a3b9aca2d943cede5c84c11b79eabfa52d1819cd3f0b5fe0b60cd"
     },
     {
       "path": "docs/TEST_AND_RELEASE_GATES.md",
@@ -580,8 +580,8 @@
     },
     {
       "path": "machine-readable/build_evidence.json",
-      "bytes": 13953,
-      "sha256": "ba3af3661c7ab0888248e1101f19bda71e18ab39dbc25295f773a13d2edf17c3"
+      "bytes": 14720,
+      "sha256": "3bcdd06322f1e491437a48c8cd4da64af7878470d627a2af092e61cea9511cd6"
     },
     {
       "path": "machine-readable/ci_action_pins.json",
@@ -590,8 +590,8 @@
     },
     {
       "path": "machine-readable/handover_state.json",
-      "bytes": 7860,
-      "sha256": "8ff1d5a8a859a54d8655eca30bbfdc77bf3d3162d7d47bcb604d3857241b5f8e"
+      "bytes": 8222,
+      "sha256": "b6e2dba1ba5cc94a6ed125337fc8282958e816398d075e3703c03250b34b3ce9"
     },
     {
       "path": "machine-readable/release_policy.json",
