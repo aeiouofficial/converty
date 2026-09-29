@@ -27,3 +27,11 @@ class WorkspaceStorageContractTests(unittest.TestCase):
         local_app_data_index = staging.index('Environment.SpecialFolder.LocalApplicationData')
         self.assertLess(workspace_index, local_app_data_index)
         self.assertIn('Path.Combine(workspaceRoot, "_temp", "runtime", ProductDirectoryName, StagingDirectoryName)', staging)
+
+    def test_host_state_honors_workspace_root_before_local_app_data(self):
+        program = (ROOT / 'src' / 'Converty.Host' / 'Program.cs').read_text(encoding='utf-8')
+        self.assertIn('CONVERTY_WORKSPACE_ROOT', program)
+        workspace_index = program.index('CONVERTY_WORKSPACE_ROOT')
+        local_app_data_index = program.index('Environment.SpecialFolder.LocalApplicationData')
+        self.assertLess(workspace_index, local_app_data_index)
+        self.assertIn('Path.Combine(workspaceRoot, "_temp", "runtime", "Converty", "Host", "state")', program)
