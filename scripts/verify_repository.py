@@ -196,11 +196,17 @@ def main() -> int:
     if ci_policy.get("workflowPermissions") != {"contents": "read"}:
         fail("release policy must keep permanent CI workflow permissions at contents: read")
     if ci_policy.get("jobTimeoutMinutes") != {
+        "candidate-base-continuity": 5,
+        "candidate-release-readiness": 10,
         "main-authority-continuity": 5,
         "managed": 30,
         "supply-chain-static": 15,
     }:
         fail("release policy must encode reviewed CI job timeout ceilings")
+    if ci_policy.get("scopedJobPermissions") != {
+        "candidate-release-readiness": {"contents": "read", "actions": "read"},
+    }:
+        fail("release policy must restrict actions:read to candidate release readiness")
 
     audit = release_policy.get("dependencyAudit", {})
     if audit.get("enabled") is not True or audit.get("mode") != "all" or audit.get("level") != "low":

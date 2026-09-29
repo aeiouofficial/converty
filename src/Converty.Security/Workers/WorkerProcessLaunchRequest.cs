@@ -8,4 +8,5 @@ public sealed record WorkerProcessLaunchRequest(
     WorkerResourceLimits ResourceLimits,
     WorkerFileSystemScope FileSystemScope,
     TimeSpan Timeout,
-    int MaximumCapturedStandardErrorCharacters);
+    int MaximumCapturedStandardErrorCharacters,
+    int MaximumCapturedStandardOutputBytes = 0);

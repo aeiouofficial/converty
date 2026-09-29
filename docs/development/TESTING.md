@@ -11,7 +11,7 @@ First qualified run:
 ./build/test.ps1 -Configuration Release
 ```
 
-Subsequent runs use `./build/bootstrap.ps1` in locked mode.
+Subsequent runs use `./build/bootstrap.ps1` in locked mode. On the connected laptop, invoke `./build/use-workspace-temp.ps1 -Workspace D:\converty` in the same PowerShell 7 session, prepend the pinned local `D:\converty\_toolchain\dotnet` to PATH and set `DOTNET_ROOT` accordingly. Run `./build/verify.ps1 -Configuration Release` with no GitHub Actions; retain logs under `D:\converty\_temp`. Non-elevated Windows test fixtures use junctions to exercise the same reparse-point rejection as privileged directory symlinks.
 
 ## Static/schema gates
 The Python suite is intentionally independent of `dotnet` so architecture/security/package invariants remain executable when a managed SDK is absent:

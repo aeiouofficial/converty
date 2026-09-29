@@ -10,6 +10,7 @@
     <Project Path="src/Converty.FakeProviders/Converty.FakeProviders.csproj" />
     <Project Path="src/Converty.Host/Converty.Host.csproj" />
     <Project Path="src/Converty.Ipc/Converty.Ipc.csproj" />
+    <Project Path="src/Converty.ProbeWorker/Converty.ProbeWorker.csproj" />
     <Project Path="src/Converty.Security/Converty.Security.csproj" />
     <Project Path="src/Converty.Serialization/Converty.Serialization.csproj" />
   </Folder>

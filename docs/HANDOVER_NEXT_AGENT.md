@@ -1,41 +1,65 @@
-# Converty continuation handover — dev.20 Video qualification pre-authority closure
+# Converty — single current repository OPEN handover
+Status: OPEN / NOT CUSTOMER SHIP-READY
 
-Repository: `aeiouofficial/converty`  
-Default branch: `main`  
-Development branch: `dev/0.1.0-dev.20-video-foundation`
+Repository: aeiouofficial/converty
+Branch: dev/0.1.0-dev.22-shipping-readiness
+Workspace version: 0.1.0-dev.22. Planned next workspace version: 0.1.0-dev.23 only after dev.22 closure.
+Exact verified workspace-staging code/evidence subject: 3ddac2be5a16ab93dcd383786fc648aeca69271a
+Tree: 115a7424521f13182778b2a28418d30b8ed3a38e
+Frozen main: 8a1f46603aa842728247bc11b34fcccf121858fd — DO NOT MOVE.
+Main ruleset 24086373 ACTIVE, main protected, no bypass.
+Draft PR #14. External shipping gates issue #13.
+Slack continuation: Handover #13 TS 1790641889.866779 OPEN; predecessor #12 TS 1789698886.030639 PROCESSED.
+GitHub is authoritative; Slack and Drive are synchronized mirrors.
 
-Read `docs/HANDOVER_PROMPT.txt` first. Re-fetch live refs before writes or completion claims.
+## Completed and verified in the latest engineering block
+A continuation audit found a concrete storage-contract defect: ConversionStagingDirectory ignored CONVERTY_WORKSPACE_ROOT and could place private conversion staging under LocalApplicationData on C: during workspace-qualified local work.
 
-## Frozen baseline
-Dev.19 exact-main authority remains `eb0ce66dab646427d5bef1548c12e5cc4765b2f1`, tree `337a4e11fb41bab6b6eeb462c3755381580f06c1`, run `33597504612`; continuity `100143814059`, static `100143814189`, managed `100143814261` SUCCESS.
+Fix behavior:
+- with explicit workspace authority, require a fully-qualified non-C root;
+- stage under <workspace>\_temp\runtime\Converty\WorkerStaging;
+- reject relative/C:-root workspace authority fail-closed;
+- preserve normal installed-product LocalApplicationData fallback when no workspace authority is present;
+- regression coverage includes a source guard plus real ConversionBatchRunner staging assertion.
 
-## Dev.20 behavior
-Approved Design A qualifies the existing nine Video source extensions against the three existing fixed actions; it does not add a new Video subsystem.
+Evidence bound to exact code subject 3ddac2be5a16ab93dcd383786fc648aeca69271a:
+- predecessor b1485ce committed source RED: no workspace-root staging support;
+- focused workspace storage static 3/3 PASS;
+- Converty.Core.Tests 152/152 PASS;
+- full managed 395/395 PASS, zero skipped;
+- full static 169/169 PASS;
+- contract vectors 5/5 PASS;
+- release-input, repository and immutable Action-pin preflight PASS;
+- four generated authority files deterministic and exact HEAD zero-diff PASS;
+- two independent exact Git-HEAD workspace ZIPs byte-identical: SHA-256 67ba2ffc12bb8ebea22fb252482cd42024493b1c440e16938e13634188443b7d, 673449 bytes / 466 entries, CRC PASS, 464/464 manifest, 465/465 SHA rows, 4/4 exact authority PASS;
+- GitHub branch readback matched; no hosted Actions; frozen main unchanged.
 
-RED: `ea6987ddea57de71661b73e9f073cddb1c3f0bd3`, run `33668918551`, static job `100377398869`.
+## Cloud state
+Slack #12 is PROCESSED; #13 TS 1790641889.866779 is the single OPEN continuation. Canonical Drive Authority, Roadmap, Plan, Tasks, Changelog, Release/Test Evidence and Recursive Handover were reconciled in place to the exact code/evidence subject above.
+Drive IDs:
+Authority 1ZdDGUpSVxeEfvICLKD_VctT49MlJMyhNICyj4ebeYRw
+Roadmap 1p3xKxj2akSqZTzVp442QNetoZ8Eg9u6pvckjwUnBLsI
+Plan 1eGVajQAxw3Vjc7F_7NJgt9do6tRzZpV_Vbfcl24g9-s
+Tasks 1BH44EUYcNBexIZasxq24mlYBZk0VxF5XaG6RnUkQPrc
+Changelog 1JsJfEECcWaB2UJtW0oiW45RD86RZT4i5spANV38Zzoc
+Evidence 1LizDehSMDnBfihXnntX9z13QNai87zzMwlkzPptkcB0
+Recursive 1HVfL2KV6LZbpl0fc4Je1dzqLs3ya9q9Onjb3YbFF9L8
 
-GREEN behavior head: `b8019ecf926fce9813fdcd2cbd74e5f59e439d08`, run `33669379940`.
-- Video 27/27 real packaged conversions PASS.
-- MP4 ffprobe h264+aac; WebM vp9+opus; MP3 audio-only PASS.
-- malformed/truncated Video repeated deterministic exit 4 PASS.
-- mixed batch valid MP4 → malformed AVI → valid MOV → truncated MKV → valid WebM repeated twice, aggregate exit 4 after all members, later valids publish PASS.
-- sources/pre-existing destinations preserved; numbered publication; no partials/orphan worker/FFmpeg PASS.
-- Audio/Image regressions PASS.
-- 260/260 managed, 103/103 static within managed qualification, 5/5 vectors PASS.
-- no production source-code change required.
+## Existing product evidence and OPEN release gates
+Packaged-development product evidence remains bound to unchanged source 6292ccb0a2a1eb5bfcb3dbe23bc99fddc50d5ce3: exact pinned dev-only FFmpeg/ffprobe, unsigned MSIX layout, packaged ProbeWorker, direct staged Explorer COM, Audio36/Image24/Video27, Copy/Remux/Transcode and negative/mixed PASS. It is not production approval.
 
-Version is now `0.1.0-dev.20`; CI action pin authority has been version-aligned. Pre-curation generated artifact `9862090305` / `sha256:7cb43be8a0a67cf5e0deb19c79827c9df786a26777ddd7f11bdc9cf95d5edba2` is deliberately not final because this curation changes the workspace.
+Registered unsigned MSIX COM on the current laptop remains blocked by Windows 0x80073CFF. Do not alter sideload/developer security policy. Production FFmpeg provenance/license/redistribution, signed MSIX/B2, clean headed Windows 11 Explorer and install/update/uninstall lifecycle, final security/fuzz/chaos/end-user acceptance, UX/settings and Plugin SDK, and independent release review remain OPEN. PR #14 stays DRAFT.
 
-## Required next action
-Run ordinary CI on the exact curated dev.20 head, independently verify the newly generated four-file authority artifact, synchronize it only via a guarded exact-parent/self-deleting workflow, then require branch zero-diff + full managed workspace/delivery qualification. Re-read unchanged frozen dev.19 `main` before non-force promotion; after promotion require fresh exact-main three-job SUCCESS and independently verified exact-main artifacts.
+## Exact next executable task
+Fresh-read the current GitHub documentation successor, Slack #13 and Drive mirrors, then continue full dev.22 correctness/security review. Flag/fix only confirmed defects with plausible downstream failure and RED-to-GREEN evidence. If an expressly approved/provisioned Windows 11 lifecycle host becomes available, prioritize real registered MSIX COM + headed Explorer + install/upgrade/uninstall evidence against exact artifact bytes.
 
-## Next tranche after freeze
-`0.1.0-dev.21` — current roadmap target: B8 Video Copy/Remux/Transcode planning/qualification. Reconcile live Roadmap/Plan/Tasks before starting it.
+Acceptance for the next block:
+- concrete defect evidence or genuine external lifecycle evidence, not speculation;
+- required local tests/gates PASS;
+- all Converty-owned source/build/temp/cache/toolchain/logs remain within D:\converty;
+- no Actions dispatch, no governance bypass and no main movement;
+- repo, Drive and Slack reconciled; predecessor processed before one new OPEN successor.
 
-## Invariants / still open
-`IExplorerCommand DLL → fixed app-local Bridge → strict disposable EngineWorker/provider → fixed app-local FFmpeg → private staging → validated transactional numbered no-overwrite publication`.
-
-No shell construction, raw FFmpeg passthrough, PATH lookup, arbitrary converter/plugin discovery, ordinary conversion network dependency, silent Strict→Compatibility fallback, or repository signing keys. Headed Windows 11 Explorer acceptance, production FFmpeg redistribution approval, production signed-package B2, signed MSIX lifecycle, UX/settings, plugin SDK, final fuzz/chaos/security/release/end-user gates remain OPEN.
-
-## Recursive handover rule
-At every completed work block, reconcile GitHub authority with Slack/Drive, update canonical docs in place, mark the current OPEN handover PROCESSED with successor reference, then publish exactly one context-free successor OPEN containing current authority/evidence, completed work, blockers/unverified items, invariants, exact next task and acceptance criteria.
+## Security invariants
+Explorer -> fixed app-local Bridge -> private staging -> strict RO ProbeWorker/fixed ffprobe -> typed facts -> bounded planner -> strict EngineWorker -> managed byte-exact Copy or provider-owned fixed FFmpeg Remux/Transcode -> post-probe TargetMediaContract -> durable same-folder no-overwrite publication.
+No raw shell FFmpeg tokens, PATH/CWD executable discovery, silent Strict-to-Compatibility fallback, ordinary conversion network, arbitrary plugins, GPU acceleration, private signing keys, hand-edited generated authority, force push or ruleset bypass.

@@ -41,17 +41,22 @@ def test_dev15_product_smoke_qualifies_every_new_audio_target() -> None:
     assert "Source preserved" in smoke
 
 
-def test_dev15_keeps_ffmpeg_arguments_fixed_inside_the_product_registry() -> None:
+def test_dev15_keeps_audio_product_semantics_in_core_and_engine_tokens_in_provider() -> None:
     registry = text("src/Converty.Core/Presets/ProductPresetRegistry.cs")
+    compiler = text("providers/Converty.Provider.FFmpeg/FfmpegPresetCompiler.cs")
     bridge_program = text("src/Converty.Bridge/Program.cs")
     bridge_parser = text("src/Converty.Bridge/Shell/ShellConversionRequestParser.cs")
 
     for preset_id in ("audio.m4a.aac", "audio.opus", "audio.ogg.vorbis"):
         assert f'PresetId.Parse("{preset_id}")' in registry
+        assert f'"{preset_id}"' in compiler
 
     for token in ("libopus", "libvorbis", '"aac"', '"256k"', '"192k"'):
-        assert token in registry
+        assert token in compiler
+        assert token not in registry
 
+    assert "FfmpegArgumentsAfterInput" not in registry
+    assert "BuildFfmpegArguments" not in registry
     assert "ffmpeg" not in bridge_program.lower()
     assert 'PresetSwitch = "--preset"' in bridge_parser
     assert "ProductPresetRegistry.Default.GetRequired(presetId)" in bridge_parser

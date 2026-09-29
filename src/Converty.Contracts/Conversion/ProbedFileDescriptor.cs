@@ -10,6 +10,16 @@ public sealed class ProbedFileDescriptor
     public const int MaximumPathLength = 32767;
 
     public ProbedFileDescriptor(string path, FileFamilyId familyId, FormatId formatId, long length)
+        : this(path, familyId, formatId, length, null)
+    {
+    }
+
+    public ProbedFileDescriptor(
+        string path,
+        FileFamilyId familyId,
+        FormatId formatId,
+        long length,
+        MediaProbeFactsV1? mediaFacts)
     {
         if (string.IsNullOrWhiteSpace(path) || path.Length > MaximumPathLength || path.Contains('\0'))
         {
@@ -24,10 +34,12 @@ public sealed class ProbedFileDescriptor
         FamilyId = familyId;
         FormatId = formatId;
         Length = length;
+        MediaFacts = mediaFacts;
     }
 
     public string Path { get; }
     public FileFamilyId FamilyId { get; }
     public FormatId FormatId { get; }
     public long Length { get; }
+    public MediaProbeFactsV1? MediaFacts { get; }
 }

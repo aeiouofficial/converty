@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "purpose": "production-release",
+  "approvalStatus": "OPEN",
+  "approvedForRedistribution": false,
+  "version": null,
+  "vendor": null,
+  "archiveUrl": null,
+  "archiveSha256": null,
+  "ffmpegSha256": null,
+  "ffprobeSha256": null,
+  "signatureEvidence": null,
+  "licenseEvidence": null,
+  "noticeEvidence": null,
+  "sourceProvenance": null,
+  "approvalRecord": null,
+  "notes": [
+    "This manifest is the production-release authority boundary and is intentionally fail-closed.",
+    "The development FFmpeg pin in eng/ffmpeg-development.json is qualification input only and must never satisfy this contract.",
+    "Populate evidence only from an independently reviewed production distribution decision; do not copy development evidence into this file."
+  ]
+}
