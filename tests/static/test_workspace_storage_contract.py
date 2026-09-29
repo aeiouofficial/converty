@@ -19,3 +19,11 @@ class WorkspaceStorageContractTests(unittest.TestCase):
         policy = (ROOT / 'AGENTS.md').read_text(encoding='utf-8')
         self.assertIn('D:\\converty\\_temp', policy)
         self.assertIn('build/use-workspace-temp.ps1', policy)
+
+    def test_runtime_staging_honors_workspace_root_before_local_app_data(self):
+        staging = (ROOT / 'src' / 'Converty.Core' / 'Execution' / 'ConversionStagingDirectory.cs').read_text(encoding='utf-8')
+        self.assertIn('CONVERTY_WORKSPACE_ROOT', staging)
+        workspace_index = staging.index('CONVERTY_WORKSPACE_ROOT')
+        local_app_data_index = staging.index('Environment.SpecialFolder.LocalApplicationData')
+        self.assertLess(workspace_index, local_app_data_index)
+        self.assertIn('Path.Combine(workspaceRoot, "_temp", "runtime", ProductDirectoryName, StagingDirectoryName)', staging)

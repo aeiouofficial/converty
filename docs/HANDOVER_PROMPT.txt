@@ -1,7 +1,46 @@
-CONVERTY — SINGLE OPEN REPOSITORY HANDOVER (GITHUB-ONLY)
-Read docs/HANDOVER_NEXT_AGENT.md first and fresh-read GitHub authority, issue #13 and draft PR #14. Follow AGENTS.md, docs/TASK_BACKLOG.md, CHANGELOG.md, machine-readable/build_evidence.json, machine-readable/handover_state.json and the current dev.22 plan. Never infer the latest SHA from a self-referential tracked handover.
-Frozen main 0.1.0-dev.20: 8a1f46603aa842728247bc11b34fcccf121858fd, untouched. Immutable dev.21: c3bc042aea3154e30ce2720db4722cbda27bcb34. Active branch dev/0.1.0-dev.22-shipping-readiness, current version 0.1.0-dev.22, planned next version 0.1.0-dev.23 only after closure.
-LIVE MAIN GOVERNANCE PASS 2026-09-27: active main-only ruleset #24086373, no bypass, main protected=true, no deletion/force push, signed linear history, one independent PR review, strict required candidate-base-continuity, supply-chain-static, managed, candidate-release-readiness. Main SHA frozen; no Actions or bypass.
-Local latest source 29ce1b2 full 395 managed / 168 static / 5 vectors, exact double ZIP 1aec74d58dc8586deec6b4b9e96e0ee2ff35266a91f2166afa99036450c89a1a. Pre-governance docs HEAD 4a72222 double ZIP 642fc0bca79a73e962063b1644d7f96569adc745a21050c35efca2ca07d62956. Fresh-read the newer final governance-documentation SHA and its committed-HEAD artifact; never transfer previous qualification automatically. Dev-only exact-pinned packaged product source 6292ccb ProbeWorker/direct COM/Audio36/Image24/Video27/mode/mixed PASS, not production approval.
-NEXT: registered MSIX COM on expressly approved/legitimately provisioned clean headed Windows 11 test host; local laptop unsigned registration BLOCKED 0x80073CFF and security settings must not be changed silently. Production FFmpeg redistribution, signed MSIX/B2, full headed lifecycle, fuzz/chaos/security/UX/Plugin SDK/end-user and independent PR review remain OPEN. PR #14 stays DRAFT; issue #13 live gate tracker.
-Everything Converty-owned locally strictly D:\converty (repo/temp/cache/toolchains/logs). Local CI only; no GitHub Actions minutes. Update canonical docs in place, four authority members via generators, [skip ci] push, independent double committed-HEAD ZIP CRC/all manifest/sha verification, refresh PR/issue and rotate exactly one OPEN handover. Slack/Drive historic while GitHub-only scope remains.
+CONVERTY — OPEN CONTINUATION
+
+# Converty — single current repository OPEN handover
+Date: 2026-09-29 · Europe/Berlin
+Status: OPEN / NOT CUSTOMER SHIP-READY
+
+Repository: aeiouofficial/converty
+Branch: dev/0.1.0-dev.22-shipping-readiness
+Current workspace version: 0.1.0-dev.22. Next workspace version: 0.1.0-dev.23 only after dev.22 closure.
+Predecessor GitHub handover authority: b1485ce8c3d62e3b9b4096bf4f27c3b32e7f0651 — PROCESSED by this successor once committed.
+Frozen main: 8a1f46603aa842728247bc11b34fcccf121858fd — DO NOT MOVE.
+Live main governance: ACTIVE ruleset 24086373, no bypass, main protected.
+Draft review PR: #14. External shipping gates: issue #13.
+
+## Just completed locally — workspace staging hardening
+Continuation review found one concrete repository-contract defect: ConversionStagingDirectory ignored the explicit CONVERTY_WORKSPACE_ROOT exported by build/use-workspace-temp.ps1, so local private worker staging could still resolve to LocalApplicationData on C:.
+
+The bounded fix:
+- prefers a fully-qualified explicit workspace root;
+- rejects C:-root workspace authority fail-closed;
+- uses <workspace>\_temp\runtime\Converty\WorkerStaging;
+- retains normal installed-product LocalApplicationData fallback when no workspace authority is set;
+- adds static and real batch regression coverage.
+
+Precommit evidence: committed predecessor source RED (no workspace-root staging support); focused storage static 3/3 PASS; Core 152/152 PASS; full managed 395/395 PASS, zero skips; full static 169/169 PASS. The exact pushed-HEAD generated-authority and double-archive evidence is still pending and MUST be completed before this work block is closed.
+
+## Existing qualified evidence
+Test-only source 29ce1b260adbb4d84e8e0e720c19186d0db4e84d: Release 0 warnings/errors, managed 395/395, static 168/168, vectors 5/5; prior exact archive 1aec74d58dc8586deec6b4b9e96e0ee2ff35266a91f2166afa99036450c89a1a.
+Unchanged packaged-development product source 6292ccb0a2a1eb5bfcb3dbe23bc99fddc50d5ce3: exact pinned dev-only FFmpeg/ffprobe, unsigned MSIX layout, packaged ProbeWorker, direct staged Explorer COM, Audio36/Image24/Video27, Copy/Remux/Transcode and negative/mixed regressions PASS.
+Current predecessor docs/governance HEAD b1485ce: exact double archive 7776502f7f2f6dda2abe5fd3e4534415628dd83d3afe33f745106d8dd2514ca7, 671193 bytes / 466 entries, CRC/manifest/sums/four authority PASS.
+
+## Genuine release gates still OPEN
+Registered unsigned MSIX COM on this laptop remains blocked by Windows 0x80073CFF; do not alter sideload/developer policy. Production FFmpeg provenance/license/redistribution approval, signed MSIX/B2, clean headed Windows 11 Explorer and install/update/uninstall evidence, final security/fuzz/chaos/end-user acceptance, UX/settings and Plugin SDK, and independent whole-branch review remain OPEN. PR #14 stays DRAFT.
+
+## Exact next executable work
+1. Regenerate only the four generated authority files through checked-in generators; run release-input/repository/vector/action/static gates.
+2. Commit/push [skip ci]; verify local and remote SHA match; start no GitHub Actions.
+3. Independently build the exact committed-HEAD workspace ZIP twice and prove byte identity, CRC, all package-manifest/SHA rows and exact authority members.
+4. Record exact SHA/tree/archive evidence in repository docs, PR #14 and issue #13.
+5. Reconcile stale canonical Drive docs and Slack #handover-open-converty: mark historical Handover #12 PROCESSED first, then publish exactly one new OPEN successor.
+6. Continue whole-branch code/security review if no approved Windows 11 lifecycle host is available.
+
+## Invariants
+Explorer -> fixed app-local Bridge -> private staging -> strict read-only ProbeWorker/fixed ffprobe -> typed facts -> bounded planner -> strict EngineWorker -> managed exact Copy or provider-owned fixed FFmpeg Remux/Transcode -> post-probe TargetMediaContract -> durable same-folder no-overwrite publish.
+Never introduce raw shell FFmpeg arguments, PATH/CWD discovery, silent Strict-to-Compatibility fallback, ordinary conversion network, arbitrary plugins/GPU acceleration/private signing keys, hand-edited generated authority, Actions dispatch while minutes are unavailable, force-push, governance bypass, or main promotion before real gates pass.
+All Converty-owned local source/build/temp/cache/toolchain/logs remain under D:\converty.

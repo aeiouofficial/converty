@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.0-dev.22 — 2026-09-29 — workspace-root runtime staging hardening
+- Audit found a concrete local-storage contract defect: ConversionStagingDirectory still resolved private conversion staging from LocalApplicationData even after build/use-workspace-temp.ps1 established CONVERTY_WORKSPACE_ROOT=D:\converty, allowing project-owned worker staging to escape onto C:.
+- Runtime staging now prefers the explicit workspace authority and uses <workspace>\_temp\runtime\Converty\WorkerStaging; a relative or C:-root workspace is rejected fail-closed. Normal installed-product behavior still falls back to LocalApplicationData only when no workspace authority is present.
+- Regression evidence before commit: committed HEAD b1485ce does not contain CONVERTY_WORKSPACE_ROOT in the staging resolver (RED witness); focused workspace static 3/3 PASS; Converty.Core.Tests 152/152 PASS; full managed 395/395 PASS; full static 169/169 PASS. Exact postcommit authority/archive evidence remains to be recorded after push. No GitHub Actions or main movement.
+
 ## 0.1.0-dev.22 — 2026-09-27 — authenticated main protection
 - Created and read back ACTIVE repository ruleset #24086373 targeting only main: no bypass, force-push/deletion blocked, signed linear history and reviewed PRs required (one approval; stale and last-push review enforced), four exact strict required development/release readiness checks. GitHub main protected=true, frozen SHA unchanged.
 - No GitHub Actions dispatched or main merge. Registered unsigned MSIX COM remains blocked by Windows policy 0x80073CFF and all other genuine external release/approval prerequisites remain open.

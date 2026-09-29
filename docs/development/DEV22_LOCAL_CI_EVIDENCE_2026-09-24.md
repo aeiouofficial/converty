@@ -52,3 +52,9 @@ Production release evidence is **OPEN**: actual signed package/B2, production FF
 - Authenticated repository admin POSTed ruleset 24086373 for exact refs/heads/main only. Fresh GET details: ACTIVE, empty bypass, deletion, non_fast_forward, required_linear_history, required_signatures, pull_request (at least one approval, stale reviews dismissed, last push approval, resolved review threads), required_status_checks strictly requiring candidate-base-continuity, supply-chain-static, managed and candidate-release-readiness.
 - Independent GET effective main rules returned all six for ruleset 24086373; GET branches/main shows protected=true, original frozen SHA 8a1f466 unchanged. Local scripts/verify_release_readiness.py evaluate_main_governance PASS. No GitHub Actions run.
 - This closes only main governance. The current draft PR cannot merge while candidate-release-readiness is genuinely RED, independent reviewer absent, hosted minutes unavailable and production FFmpeg/signed package/headed lifecycle/final approvals OPEN. Never remove checks to expedite merge.
+
+## 2026-09-29 workspace-root runtime staging regression
+- Concrete audit defect: the workspace bootstrap exported CONVERTY_WORKSPACE_ROOT, but private conversion staging ignored it and defaulted to Environment.SpecialFolder.LocalApplicationData, contradicting the repository no-project-temp-on-C contract during local qualification.
+- RED evidence: committed b1485ce staging source contains no CONVERTY_WORKSPACE_ROOT.
+- Fix: workspace-first resolver to <workspace>\_temp\runtime\Converty\WorkerStaging; reject non-fully-qualified and C:-root workspace values; preserve LocalApplicationData fallback when no explicit workspace authority exists.
+- GREEN before commit: storage static 3/3; Core 152/152; full managed 395/395, zero skips; full static 169/169. Postcommit generated-authority zero-diff and deterministic committed-HEAD package verification still required before closing this block.

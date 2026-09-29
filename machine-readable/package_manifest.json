@@ -170,8 +170,8 @@
     },
     {
       "path": "CHANGELOG.md",
-      "bytes": 20845,
-      "sha256": "87bb3ca31af5de6a21ab474ee88472c89c7caaaa088fae5818d90673f282c983"
+      "bytes": 21895,
+      "sha256": "1edf6e17c72084022f12071a47d79515b4e8bab253bd9cca77d498b41cf715e1"
     },
     {
       "path": "CMakeLists.txt",
@@ -290,13 +290,13 @@
     },
     {
       "path": "docs/development/DEV22_LOCAL_CI_EVIDENCE_2026-09-24.md",
-      "bytes": 10064,
-      "sha256": "d1855d4398fc4de317672b8c44b260c6ebe496ccd8248cb2cd8c57cb0542995e"
+      "bytes": 10959,
+      "sha256": "f28bce0d7f9c3cd7b615c35c1faabc8d1c789a501bf702956c294e43a8450119"
     },
     {
       "path": "docs/development/IMPLEMENTATION_STATUS.md",
-      "bytes": 11215,
-      "sha256": "10abf64cf3f07bdb11746a03dea752b43965531e777ed35bd20a31388b0d9000"
+      "bytes": 12280,
+      "sha256": "d2c775550097bfe3e208495749ee320424e810ada4a1cc074930ae3e21de3a96"
     },
     {
       "path": "docs/development/MODULE_BOUNDARIES.md",
@@ -315,13 +315,13 @@
     },
     {
       "path": "docs/HANDOVER_NEXT_AGENT.md",
-      "bytes": 7316,
-      "sha256": "0610b7c8a46a9d263a8f810561292d61d1f5d61e977ad730133ed2a2d87d1da5"
+      "bytes": 4359,
+      "sha256": "ba9abca0e891dcdcacba211a6a6786e0f92b2c2946888691e62fd79742dd8aae"
     },
     {
       "path": "docs/HANDOVER_PROMPT.txt",
-      "bytes": 2349,
-      "sha256": "856cd3267071ed6ce9110a9d3110380155de767089d4f89d5d1056a449a58e04"
+      "bytes": 4391,
+      "sha256": "4b2d45e2a087d3a071dcd5f21270de2f7c77479436b215d18a6c3b4a9cff0952"
     },
     {
       "path": "docs/REFERENCE_SOURCES.md",
@@ -450,8 +450,8 @@
     },
     {
       "path": "docs/superpowers/plans/2026-09-21-dev22-audit-remediation-shipping-hardening.md",
-      "bytes": 10443,
-      "sha256": "c5a091d49a4cf529ccff98a76890f53c7d15284813d3bb66ee75b93e496e948c"
+      "bytes": 11302,
+      "sha256": "83c4f52b23d214a32d2546d7341e2edda8e719520a21e26b3d7297b3095f30b9"
     },
     {
       "path": "docs/superpowers/specs/2026-08-24-foundation-design.md",
@@ -530,8 +530,8 @@
     },
     {
       "path": "docs/TASK_BACKLOG.md",
-      "bytes": 8406,
-      "sha256": "8cd3cacc2e68da62622fb160a8c5caa51dc12cf0ccb084192be8973219da8ebc"
+      "bytes": 8770,
+      "sha256": "73662d814b9044216ea226fc48caff328ea5b2cc84925371c51e7aedecf25df6"
     },
     {
       "path": "docs/TEST_AND_RELEASE_GATES.md",
@@ -580,8 +580,8 @@
     },
     {
       "path": "machine-readable/build_evidence.json",
-      "bytes": 13256,
-      "sha256": "6c5a94446dd2073eea575cf990284ae34842f171c47ba5f65ead9f9b247af21a"
+      "bytes": 13953,
+      "sha256": "ba3af3661c7ab0888248e1101f19bda71e18ab39dbc25295f773a13d2edf17c3"
     },
     {
       "path": "machine-readable/ci_action_pins.json",
@@ -590,8 +590,8 @@
     },
     {
       "path": "machine-readable/handover_state.json",
-      "bytes": 7835,
-      "sha256": "c6d2b1194acc101e681176c971b6f6ca02bd9b0ce15c8ef7f5d6e07825327d50"
+      "bytes": 7860,
+      "sha256": "8ff1d5a8a859a54d8655eca30bbfdc77bf3d3162d7d47bcb604d3857241b5f8e"
     },
     {
       "path": "machine-readable/release_policy.json",
@@ -1235,8 +1235,8 @@
     },
     {
       "path": "src/Converty.Core/Execution/ConversionStagingDirectory.cs",
-      "bytes": 7256,
-      "sha256": "e6949ab3085c5475b4c2d71c96c1dc9bd171cb6693a838c58450cc71ea54a758"
+      "bytes": 8037,
+      "sha256": "1318037146cbac6302694054aed5bda0f2ec742d488e6e1c83ad90d82d57e734"
     },
     {
       "path": "src/Converty.Core/Execution/ConversionWorkerResult.cs",
@@ -1795,8 +1795,8 @@
     },
     {
       "path": "tests/Converty.Core.Tests/Execution/ConversionBatchRunnerTests.cs",
-      "bytes": 12178,
-      "sha256": "4271385686a04aca7a2c026eccef4b72bcbec450ed08d3f9c8dc4f7ac9533c2c"
+      "bytes": 13099,
+      "sha256": "c090a99964714e91c8b266eeac3a123ebe63e93ea0f5f430202f1b35b7d947cb"
     },
     {
       "path": "tests/Converty.Core.Tests/Execution/ConversionModeArgumentTests.cs",
@@ -2310,8 +2310,8 @@
     },
     {
       "path": "tests/static/test_workspace_storage_contract.py",
-      "bytes": 1053,
-      "sha256": "6a21b0ce8bea2807934f78ec1dac6bc783ac1d33dc808defa24a071584b37399"
+      "bytes": 1670,
+      "sha256": "96956dc74624a04bf8663931965061e6a45103fe5371623e1365814d5e057467"
     },
     {
       "path": "tests/vectors/v1/manifest.json",

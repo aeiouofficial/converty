@@ -106,3 +106,8 @@ Test-only source `29ce1b260adbb4d84e8e0e720c19186d0db4e84d` pushed with [skip ci
 
 ## 2026-09-27 main governance verified
 Authenticated GitHub administrator created main-only ACTIVE ruleset 24086373; independent repository API readback returned six effective rules, no bypass, four exact required CI contexts, reviewed signed linear commits, no deletion/force-push; main protected=true and exact frozen SHA unchanged. The local Converty governance evaluator PASS. No Actions or main promotion. Registered MSIX COM and external production gates remain OPEN; see shipping issue #13.
+
+## 2026-09-29 workspace-root staging hardening
+The continuation audit found that development/runtime conversion staging did not consume the workspace authority established by build/use-workspace-temp.ps1. With CONVERTY_WORKSPACE_ROOT=D:\converty, ConversionStagingDirectory could still resolve LocalApplicationData\Converty\WorkerStaging on C:. The resolver now prefers the explicit fully-qualified non-C workspace and places staging under D:\converty\_temp\runtime\Converty\WorkerStaging; if the variable is absent, installed-product behavior remains unchanged and may use LocalApplicationData. Relative or C:-root workspace values fail closed.
+
+Verification before commit: RED witness against committed b1485ce confirmed no workspace-root staging support; focused storage static 3/3 PASS; Core 152/152 PASS; full managed 395/395 PASS; full static 169/169 PASS. No production release gate was reclassified and no hosted Actions were used. Exact committed-HEAD generated-authority and double-archive evidence is intentionally deferred until the new commit exists.

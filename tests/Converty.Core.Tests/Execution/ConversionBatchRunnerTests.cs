@@ -242,6 +242,23 @@ public sealed class ConversionBatchRunnerTests
                 {
                     string staging = Path.GetDirectoryName(stagedInput)!;
                     Assert.True(File.Exists(Path.Combine(staging, ".converty-owned")));
+
+                    string? workspaceRoot = Environment.GetEnvironmentVariable("CONVERTY_WORKSPACE_ROOT");
+                    if (!string.IsNullOrWhiteSpace(workspaceRoot))
+                    {
+                        string expectedStagingRoot = Path.Combine(
+                            Path.GetFullPath(workspaceRoot),
+                            "_temp",
+                            "runtime",
+                            "Converty",
+                            "WorkerStaging");
+                        string fullStagingPath = Path.GetFullPath(staging);
+                        Assert.True(
+                            fullStagingPath.StartsWith(
+                                expectedStagingRoot + Path.DirectorySeparatorChar,
+                                StringComparison.OrdinalIgnoreCase),
+                            $"Private staging escaped workspace root: {fullStagingPath}");
+                    }
                 });
             var runner = CreateRunner(worker);
 

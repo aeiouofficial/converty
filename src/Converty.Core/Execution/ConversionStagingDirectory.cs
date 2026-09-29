@@ -227,6 +227,23 @@ internal static class ConversionStagingDirectory
 
     private static string ResolveStagingRoot()
     {
+        string? workspaceRoot = Environment.GetEnvironmentVariable("CONVERTY_WORKSPACE_ROOT");
+        if (!string.IsNullOrWhiteSpace(workspaceRoot))
+        {
+            if (!Path.IsPathFullyQualified(workspaceRoot))
+            {
+                throw new InvalidOperationException("CONVERTY_WORKSPACE_ROOT must be a fully qualified path.");
+            }
+
+            workspaceRoot = Path.GetFullPath(workspaceRoot);
+            if (string.Equals(Path.GetPathRoot(workspaceRoot), @"C:\", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new InvalidOperationException("Converty workspace staging must not use C:.");
+            }
+
+            return Path.Combine(workspaceRoot, "_temp", "runtime", ProductDirectoryName, StagingDirectoryName);
+        }
+
         string localApplicationData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
         string authorityRoot = string.IsNullOrWhiteSpace(localApplicationData)
             ? Path.GetTempPath()
