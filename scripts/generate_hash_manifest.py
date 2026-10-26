@@ -25,7 +25,7 @@ def main() -> None:
         key=lambda path: path.as_posix().lower(),
     )
     lines = [f"{sha256(path)}  {path.relative_to(ROOT).as_posix()}" for path in files]
-    OUTPUT.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    OUTPUT.write_text("\n".join(lines) + "\n", encoding="utf-8", newline="\n")
     print(f"Wrote {len(lines)} hashes to {OUTPUT.name}")
 
 

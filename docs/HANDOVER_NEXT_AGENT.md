@@ -1,41 +1,78 @@
-# Converty continuation handover — dev.20 Video qualification pre-authority closure
+# Converty — single current repository OPEN handover
+Status: OPEN / NOT CUSTOMER SHIP-READY
 
-Repository: `aeiouofficial/converty`  
-Default branch: `main`  
-Development branch: `dev/0.1.0-dev.20-video-foundation`
+Repository: aeiouofficial/converty
+Branch: dev/0.1.0-dev.22-shipping-readiness
+Workspace version: 0.1.0-dev.22
+Planned next workspace version: 0.1.0-dev.23 only after dev.22 closure.
+Current code subject under this handover: d22a00c0430d781ff3fe3f1264bf9e67f9b0a879
+Tree: 845c711dd9d2f4235fc99eabcdd7175ebc57bb96
+Frozen main: 8a1f46603aa842728247bc11b34fcccf121858fd — DO NOT MOVE.
+Main ruleset 24086373 ACTIVE; no bypass.
+Draft PR #14; shipping issue #13.
+Slack continuation: Handover #14 TS 1793027934.740809 OPEN; predecessor #13 TS 1790641889.866779 PROCESSED.
+GitHub is authoritative; Drive and Slack are mirrors.
 
-Read `docs/HANDOVER_PROMPT.txt` first. Re-fetch live refs before writes or completion claims.
+## 2026-10-20 continuation audit and local compatibility qualification
+The current d22 code fixes a second local-storage contract defect: Host job-journal state now consumes CONVERTY_WORKSPACE_ROOT before LocalApplicationData, requires a fully-qualified non-C workspace root, writes workspace state below <workspace>\_temp\runtime\Converty\Host\state and preserves installed-product LocalApplicationData behavior only when no workspace authority is supplied.
 
-## Frozen baseline
-Dev.19 exact-main authority remains `eb0ce66dab646427d5bef1548c12e5cc4765b2f1`, tree `337a4e11fb41bab6b6eeb462c3755381580f06c1`, run `33597504612`; continuity `100143814059`, static `100143814189`, managed `100143814261` SUCCESS.
+Fresh local work was recreated entirely below D:\converty on the currently connected Windows laptop. The machine has system .NET SDK 10.0.112 while the repository release pin remains 10.0.400. Per user instruction, no SDK update was performed. A temporary D:-only compatibility global.json selected 10.0.112 without modifying the repository.
 
-## Dev.20 behavior
-Approved Design A qualifies the existing nine Video source extensions against the three existing fixed actions; it does not add a new Video subsystem.
+Compatibility evidence on exact source d22a00c:
+- Release build: PASS, 0 warnings / 0 errors after removing stale machine-only LIB=C:\ffmpeg-dev\lib from the process environment;
+- managed tests: 395/395 PASS, 0 skipped, by direct execution of all seven built Microsoft.Testing.Platform/xUnit runners;
+- static tests: 170/170 PASS;
+- contract vectors: 5/5 PASS;
+- repository and release-input preflight: PASS;
+- immutable Action pins: PASS, 11 external uses / 4 approved actions;
+- dependency audit: 19 projects / 19 frameworks / 0 vulnerable-result packages;
+- native Explorer targets compile with installed VS 2022/MSVC and Windows SDK using the Visual Studio CMake generator; the repository's exact Ninja preset remains unavailable because Ninja is not installed;
+- unsigned development MSIX layout/schema: PASS through MakeAppx with 37 staged files; ffmpeg/ffprobe intentionally absent from that package.
 
-RED: `ea6987ddea57de71661b73e9f073cddb1c3f0bd3`, run `33668918551`, static job `100377398869`.
+This is strong development evidence but NOT the final pin-exact 10.0.400 release qualification. The 10.0.112 feature band does not support the repository's newer dotnet test --solution wrapper, which is why the already-built MTP runners were invoked directly.
 
-GREEN behavior head: `b8019ecf926fce9813fdcd2cbd74e5f59e439d08`, run `33669379940`.
-- Video 27/27 real packaged conversions PASS.
-- MP4 ffprobe h264+aac; WebM vp9+opus; MP3 audio-only PASS.
-- malformed/truncated Video repeated deterministic exit 4 PASS.
-- mixed batch valid MP4 → malformed AVI → valid MOV → truncated MKV → valid WebM repeated twice, aggregate exit 4 after all members, later valids publish PASS.
-- sources/pre-existing destinations preserved; numbered publication; no partials/orphan worker/FFmpeg PASS.
-- Audio/Image regressions PASS.
-- 260/260 managed, 103/103 static within managed qualification, 5/5 vectors PASS.
-- no production source-code change required.
+## New reproducibility blocker — development FFmpeg
+The exact development-only BtbN pin historically qualified in September is no longer downloadable from upstream:
+- release tag autobuild-2026-09-21-13-55;
+- release asset ID 579145936;
+- source a5923073bf;
+- expected archive 192925997 bytes;
+- expected SHA-256 fe372180f20e7f9bfa3d9a481b2b1b98c8296178d8265552608736637ea6b3c8.
 
-Version is now `0.1.0-dev.20`; CI action pin authority has been version-aligned. Pre-curation generated artifact `9862090305` / `sha256:7cb43be8a0a67cf5e0deb19c79827c9df786a26777ddd7f11bdc9cf95d5edba2` is deliberately not final because this curation changes the workspace.
+On 2026-10-20 both the exact release URL and exact GitHub asset API ID return 404. No trusted copy was found on D:, S: or F:, and no ffmpeg/ffprobe is available on PATH. Historical packaged evidence bound to source 6292ccb remains historical evidence only. Current exact-HEAD product matrices must not be claimed fresh until the exact bytes are recovered or a new immutable development pin is deliberately reviewed, committed and fully requalified. Never fall back to latest/PATH.
 
-## Required next action
-Run ordinary CI on the exact curated dev.20 head, independently verify the newly generated four-file authority artifact, synchronize it only via a guarded exact-parent/self-deleting workflow, then require branch zero-diff + full managed workspace/delivery qualification. Re-read unchanged frozen dev.19 `main` before non-force promotion; after promotion require fresh exact-main three-job SUCCESS and independently verified exact-main artifacts.
+## Product work still required
+B9 is genuine missing functionality, not merely evidence. src/Converty.Settings contains only MODULE.md and no executable implementation. Required scope includes per-family defaults, custom/pinned presets, output/collision/metadata/concurrency/isolation controls, provider inventory/health, queue/progress/error/cancel UI, notifications, diagnostics and accessible responsive settings UX.
 
-## Next tranche after freeze
-`0.1.0-dev.21` — current roadmap target: B8 Video Copy/Remux/Transcode planning/qualification. Reconcile live Roadmap/Plan/Tasks before starting it.
+B10 remains the provider/plugin SDK proof: signed manifest/API contract, out-of-process plugin worker, sample provider, and unsigned/tampered/incompatible rejection.
 
-## Invariants / still open
-`IExplorerCommand DLL → fixed app-local Bridge → strict disposable EngineWorker/provider → fixed app-local FFmpeg → private staging → validated transactional numbered no-overwrite publication`.
+B11 remains final security/fuzz/chaos qualification including IPC fuzzing, path/reparse races, crash-at-every-transaction-stage, disk-full/access-denied/Unicode/long-path/concurrent-collision and recovery evidence.
 
-No shell construction, raw FFmpeg passthrough, PATH lookup, arbitrary converter/plugin discovery, ordinary conversion network dependency, silent Strict→Compatibility fallback, or repository signing keys. Headed Windows 11 Explorer acceptance, production FFmpeg redistribution approval, production signed-package B2, signed MSIX lifecycle, UX/settings, plugin SDK, final fuzz/chaos/security/release/end-user gates remain OPEN.
+B12 remains production release closure: production FFmpeg redistribution/provenance/license/notices, signed/timestamped MSIX and production B2 identity, clean headed Windows 11 Explorer acceptance, install/use/update/uninstall/no-orphan lifecycle, final SBOM/notices/hash review and independent release review.
 
-## Recursive handover rule
-At every completed work block, reconcile GitHub authority with Slack/Drive, update canonical docs in place, mark the current OPEN handover PROCESSED with successor reference, then publish exactly one context-free successor OPEN containing current authority/evidence, completed work, blockers/unverified items, invariants, exact next task and acceptance criteria.
+## Current next executable sequence
+1. Restore trustworthy, immutable development FFmpeg/ffprobe input without latest/PATH fallback: recover exact historical bytes by SHA-256 or independently review and pin an available immutable development build.
+2. Requalify packaged ProbeWorker, direct staged Explorer COM, Audio36/Image24/Video27, malformed/mixed batches, Copy/Remux/Transcode and all managed/static/authority/archive gates on the exact resulting code subject.
+3. Implement B9 Settings/notifications/queue UI test-first.
+4. Continue B10/B11, then real B12 production signing/provenance/headed lifecycle.
+5. Only after all genuine gates are GREEN: independent PR approval, required exact-candidate checks, protected non-bypass promotion and fresh exact-main verification.
+
+## Open release blockers
+- current exact-HEAD packaged conversion matrices blocked by unavailable historical development FFmpeg asset;
+- final 10.0.400 pin-exact qualification still required before release;
+- production FFmpeg provenance/license/notices/redistribution approval;
+- production signed MSIX/B2 identity;
+- clean headed Windows 11 Explorer and signed package lifecycle;
+- B9 Settings/product UX;
+- B10 Plugin SDK;
+- B11 final security/fuzz/chaos/end-user acceptance;
+- independent release review.
+
+Registered unsigned MSIX COM historically remains blocked by Windows 0x80073CFF on this laptop. Do not change sideload/developer security policy merely to force that development path.
+
+## Lifecycle
+Handover #14 TS 1793027934.740809 is the single OPEN continuation; predecessor #13 TS 1790641889.866779 is PROCESSED. Current verified documentation/authority commit d301068a678a334c63b3781413a88a1d5d153ed1 has exact-HEAD double archive SHA-256 a76e705cf2c5461f883a21ab1501fe17087df91efd8c15cce5c0d00ec918a800 (681964 bytes / 466 entries; CRC, 464 manifest, 465 checksums, 4 authority PASS). After every verified task, reconcile GitHub, Drive and Slack; process the current OPEN handover before creating one successor OPEN. No hosted Actions, force push, main movement or hand-edited generated authority.
+
+## Security invariants
+Explorer -> fixed app-local Bridge -> private staging -> strict RO ProbeWorker/fixed ffprobe -> typed facts -> bounded planner -> strict EngineWorker -> managed byte-exact Copy or provider-owned fixed FFmpeg Remux/Transcode -> post-probe TargetMediaContract -> durable same-folder no-overwrite publication.
+No raw shell FFmpeg tokens, PATH/CWD executable discovery, silent Strict-to-Compatibility fallback, ordinary conversion network, arbitrary in-process plugins, GPU acceleration, private signing keys, force push or ruleset bypass.

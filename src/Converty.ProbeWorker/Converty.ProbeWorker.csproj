@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <IsPackable>false</IsPackable>
+    <Description>Disposable strict media-probe worker for Converty.</Description>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../Converty.Contracts/Converty.Contracts.csproj" />
+    <ProjectReference Include="../Converty.Serialization/Converty.Serialization.csproj" />
+    <ProjectReference Include="../../providers/Converty.Provider.FFmpeg/Converty.Provider.FFmpeg.csproj" />
+  </ItemGroup>
+</Project>

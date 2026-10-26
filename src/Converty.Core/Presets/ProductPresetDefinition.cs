@@ -7,7 +7,6 @@ public sealed class ProductPresetDefinition
 {
     private readonly ReadOnlyCollection<string> _inputExtensions;
     private readonly HashSet<string> _inputExtensionSet;
-    private readonly ReadOnlyCollection<string> _ffmpegArgumentsAfterInput;
 
     public ProductPresetDefinition(
         PresetId id,
@@ -15,8 +14,7 @@ public sealed class ProductPresetDefinition
         string menuGroup,
         ProductMediaKind inputKind,
         IEnumerable<string> inputExtensions,
-        string outputExtension,
-        IEnumerable<string> ffmpegArgumentsAfterInput)
+        string outputExtension)
     {
         Id = id ?? throw new ArgumentNullException(nameof(id));
         DisplayName = RequireText(displayName, nameof(displayName));
@@ -39,16 +37,8 @@ public sealed class ProductPresetDefinition
             throw new ArgumentException("At least one input extension is required.", nameof(inputExtensions));
         }
 
-        ArgumentNullException.ThrowIfNull(ffmpegArgumentsAfterInput);
-        string[] fixedArguments = ffmpegArgumentsAfterInput.ToArray();
-        if (fixedArguments.Any(string.IsNullOrWhiteSpace))
-        {
-            throw new ArgumentException("FFmpeg preset arguments must be non-empty tokens.", nameof(ffmpegArgumentsAfterInput));
-        }
-
         _inputExtensions = Array.AsReadOnly(extensions);
         _inputExtensionSet = new HashSet<string>(extensions, StringComparer.OrdinalIgnoreCase);
-        _ffmpegArgumentsAfterInput = Array.AsReadOnly(fixedArguments);
     }
 
     public PresetId Id { get; }
@@ -57,7 +47,6 @@ public sealed class ProductPresetDefinition
     public ProductMediaKind InputKind { get; }
     public string OutputExtension { get; }
     public IReadOnlyList<string> InputExtensions => _inputExtensions;
-    public IReadOnlyList<string> FfmpegArgumentsAfterInput => _ffmpegArgumentsAfterInput;
 
     public bool SupportsPath(string path)
     {
@@ -68,35 +57,6 @@ public sealed class ProductPresetDefinition
 
         string extension = Path.GetExtension(path);
         return !string.IsNullOrEmpty(extension) && _inputExtensionSet.Contains(extension);
-    }
-
-    public IReadOnlyList<string> BuildFfmpegArguments(string inputPath, string outputPath)
-    {
-        if (string.IsNullOrWhiteSpace(inputPath))
-        {
-            throw new ArgumentException("Input path is required.", nameof(inputPath));
-        }
-
-        if (string.IsNullOrWhiteSpace(outputPath))
-        {
-            throw new ArgumentException("Output path is required.", nameof(outputPath));
-        }
-
-        var arguments = new List<string>(12 + _ffmpegArgumentsAfterInput.Count)
-        {
-            "-hide_banner",
-            "-loglevel",
-            "error",
-            "-nostdin",
-            "-n",
-            "-protocol_whitelist",
-            "file,pipe",
-            "-i",
-            inputPath,
-        };
-        arguments.AddRange(_ffmpegArgumentsAfterInput);
-        arguments.Add(outputPath);
-        return arguments.AsReadOnly();
     }
 
     private static string RequireText(string value, string parameterName)

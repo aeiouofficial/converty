@@ -13,6 +13,39 @@ env:
   TESTINGPLATFORM_TELEMETRY_OPTOUT: '1'
 
 jobs:
+  candidate-base-continuity:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - name: Verify exact frozen-main candidate ancestry
+        env:
+          CANDIDATE_HEAD_SHA: ${{ github.sha }}
+        run: |
+          git fetch --no-tags origin +refs/heads/main:refs/remotes/origin/main
+          python scripts/verify_candidate_continuity.py
+
+  candidate-release-readiness:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      actions: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.13'
+      - name: Enforce candidate release readiness
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python scripts/verify_release_readiness.py --require-ready --live-github
+
   main-authority-continuity:
     runs-on: ubuntu-24.04
     timeout-minutes: 5
@@ -41,7 +74,8 @@ jobs:
         with:
           python-version: '3.13'
       - name: Install static test dependency
-        run: python -m pip install --disable-pip-version-check --no-input "jsonschema==4.26.0" "pytest==9.0.2"
+        run: >-
+          python -m pip install --disable-pip-version-check --no-input --require-hashes --only-binary=:all: -r eng/ci-python-requirements.txt
       - name: Verify immutable CI action pins
         run: python scripts/verify_ci_actions.py
       - name: Generate deterministic source SBOM
@@ -93,7 +127,8 @@ jobs:
           python-version: '3.13'
       - name: Install static test dependency
         shell: pwsh
-        run: python -m pip install --disable-pip-version-check --no-input "jsonschema==4.26.0" "pytest==9.0.2"
+        run: >-
+          python -m pip install --disable-pip-version-check --no-input --require-hashes --only-binary=:all: -r eng/ci-python-requirements.txt
       - name: Verify lock files and restore
         shell: pwsh
         run: ./build/bootstrap.ps1
@@ -112,8 +147,11 @@ jobs:
       - name: Validate Explorer development package
         shell: pwsh
         run: |
-          ./build/stage-dev-package.ps1 -Configuration Release -FfmpegPath ./artifacts/dev-ffmpeg/ffmpeg.exe
+          ./build/stage-dev-package.ps1 -Configuration Release -FfmpegPath ./artifacts/dev-ffmpeg/ffmpeg.exe -FfprobePath ./artifacts/dev-ffmpeg/ffprobe.exe
           ./build/validate-dev-package.ps1
+      - name: Probe worker packaged ffprobe acceptance
+        shell: pwsh
+        run: ./build/probe-worker-smoke.ps1
       - name: Explorer package COM registration smoke
         shell: pwsh
         run: ./build/explorer-registration-smoke.ps1
@@ -132,6 +170,9 @@ jobs:
       - name: Image mixed-batch failure isolation
         shell: pwsh
         run: ./build/image-batch-isolation-smoke.ps1
+      - name: Video Copy Remux Transcode mode qualification
+        shell: pwsh
+        run: ./build/video-mode-qualification-smoke.ps1
       - name: Video source and malformed-input acceptance
         shell: pwsh
         run: ./build/video-input-acceptance-smoke.ps1

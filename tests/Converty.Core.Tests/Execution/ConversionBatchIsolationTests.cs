@@ -32,13 +32,15 @@ public sealed class ConversionBatchIsolationTests
                 worker,
                 TimeSpan.FromMinutes(5));
 
-            ConversionFailedException error = await Assert.ThrowsAsync<ConversionFailedException>(() =>
-                runner.RunAsync(
-                    PresetId.Parse("audio.mp3"),
-                    [first, failing, last],
-                    TestContext.Current.CancellationToken));
+            ConversionBatchResult result = await runner.RunAsync(
+                PresetId.Parse("audio.mp3"),
+                [first, failing, last],
+                TestContext.Current.CancellationToken);
 
-            Assert.Equal(failing, error.InputPath);
+            ConversionFileFailure failure = Assert.Single(result.Failures);
+            Assert.Equal(failing, failure.InputPath);
+            Assert.Equal(2, result.Files.Count);
+            Assert.True(result.HasFailures);
             Assert.Equal(3, worker.Inputs.Count);
             Assert.Equal(Path.Combine(root, "first (1).mp3"), Assert.Single(Directory.GetFiles(root, "first (1).mp3")));
             Assert.Equal(Path.Combine(root, "last (1).mp3"), Assert.Single(Directory.GetFiles(root, "last (1).mp3")));

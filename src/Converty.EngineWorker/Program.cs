@@ -1,4 +1,6 @@
+using Converty.Contracts.Conversion;
 using Converty.Contracts.Identifiers;
+using Converty.Core.Execution;
 using Converty.Core.Presets;
 using Converty.Provider.FFmpeg;
 
@@ -20,10 +22,21 @@ internal static class Program
             ProductPresetDefinition preset = ProductPresetRegistry.Default.GetRequired(request.PresetId);
             ValidateStagingPaths(request, preset);
 
+            if (request.Mode == ConversionMode.Copy)
+            {
+                ValidateManagedCopy(request, preset);
+                _ = await ManagedByteCopy.CopyAndVerifyAsync(
+                    request.InputPath,
+                    request.OutputPath).ConfigureAwait(false);
+                return 0;
+            }
+
+            _ = FfmpegPresetCompiler.Compile(preset.Id, request.Mode);
             string ffmpegPath = TrustedFfmpegPath.ResolveFromApplicationBaseDirectory();
             FfmpegExecutionResult result = await FfmpegProcessLauncher.ExecuteAsync(
                 ffmpegPath,
                 preset,
+                request.Mode,
                 request.InputPath,
                 request.OutputPath,
                 FfmpegProcessLauncher.MaximumExecutionTimeout).ConfigureAwait(false);
@@ -72,18 +85,22 @@ internal static class Program
     private static WorkerRequest Parse(string[] args)
     {
         ArgumentNullException.ThrowIfNull(args);
-        if (args.Length != 6 ||
+        if (args.Length != 8 ||
             !string.Equals(args[0], "--preset", StringComparison.Ordinal) ||
-            !string.Equals(args[2], "--input", StringComparison.Ordinal) ||
-            !string.Equals(args[4], "--output", StringComparison.Ordinal))
+            !string.Equals(args[2], "--mode", StringComparison.Ordinal) ||
+            !string.Equals(args[4], "--input", StringComparison.Ordinal) ||
+            !string.Equals(args[6], "--output", StringComparison.Ordinal))
         {
-            throw new ArgumentException("Worker accepts only the fixed preset/input/output argument surface.", nameof(args));
+            throw new ArgumentException(
+                "Worker accepts only the fixed preset/mode/input/output argument surface.",
+                nameof(args));
         }
 
         return new WorkerRequest(
             PresetId.Parse(args[1]),
-            Path.GetFullPath(args[3]),
-            Path.GetFullPath(args[5]));
+            ConversionModeArgument.Parse(args[3]),
+            Path.GetFullPath(args[5]),
+            Path.GetFullPath(args[7]));
     }
 
     private static void ValidateStagingPaths(WorkerRequest request, ProductPresetDefinition preset)
@@ -119,5 +136,26 @@ internal static class Program
         }
     }
 
-    private sealed record WorkerRequest(PresetId PresetId, string InputPath, string OutputPath);
+    private static void ValidateManagedCopy(WorkerRequest request, ProductPresetDefinition preset)
+    {
+        string inputExtension = Path.GetExtension(request.InputPath);
+        bool supportedCopyInput = preset.Id.Value switch
+        {
+            "video.mp4.h264" => inputExtension.Equals(".mp4", StringComparison.OrdinalIgnoreCase)
+                || inputExtension.Equals(".m4v", StringComparison.OrdinalIgnoreCase),
+            "video.webm.vp9" => inputExtension.Equals(".webm", StringComparison.OrdinalIgnoreCase),
+            _ => false,
+        };
+
+        if (!supportedCopyInput)
+        {
+            throw new InvalidOperationException("Managed Copy is not valid for the selected preset/input combination.");
+        }
+    }
+
+    private sealed record WorkerRequest(
+        PresetId PresetId,
+        ConversionMode Mode,
+        string InputPath,
+        string OutputPath);
 }

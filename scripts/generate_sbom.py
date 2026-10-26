@@ -138,7 +138,7 @@ def main() -> None:
     args = parser.parse_args()
     document = build_document(args.mode)
     output = ROOT / "machine-readable" / f"{args.mode}_sbom.spdx.json"
-    output.write_text(json.dumps(document, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    output.write_text(json.dumps(document, indent=2, sort_keys=True) + "\n", encoding="utf-8", newline="\n")
     print(f"Wrote {output.relative_to(ROOT)} with {len(document['packages'])} packages")
 
 

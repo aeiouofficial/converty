@@ -70,8 +70,7 @@ public sealed class ProductPresetRegistry
             "Video",
             ProductMediaKind.Video,
             VideoExtensions,
-            ".mp4",
-            ["-map", "0:v:0?", "-map", "0:a:0?", "-c:v", "libx264", "-preset", "medium", "-crf", "23", "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart"]);
+            ".mp4");
 
         yield return new ProductPresetDefinition(
             PresetId.Parse("video.webm.vp9"),
@@ -79,8 +78,7 @@ public sealed class ProductPresetRegistry
             "Video",
             ProductMediaKind.Video,
             VideoExtensions,
-            ".webm",
-            ["-map", "0:v:0?", "-map", "0:a:0?", "-c:v", "libvpx-vp9", "-crf", "32", "-b:v", "0", "-c:a", "libopus", "-b:a", "128k"]);
+            ".webm");
 
         yield return new ProductPresetDefinition(
             PresetId.Parse("extract.audio.mp3"),
@@ -88,8 +86,7 @@ public sealed class ProductPresetRegistry
             "Extract Audio",
             ProductMediaKind.Video,
             VideoExtensions,
-            ".mp3",
-            ["-vn", "-c:a", "libmp3lame", "-b:a", "192k"]);
+            ".mp3");
 
         yield return new ProductPresetDefinition(
             PresetId.Parse("audio.mp3"),
@@ -97,8 +94,7 @@ public sealed class ProductPresetRegistry
             "Audio",
             ProductMediaKind.Audio,
             AudioExtensions,
-            ".mp3",
-            ["-vn", "-c:a", "libmp3lame", "-b:a", "320k"]);
+            ".mp3");
 
         yield return new ProductPresetDefinition(
             PresetId.Parse("audio.flac"),
@@ -106,8 +102,7 @@ public sealed class ProductPresetRegistry
             "Audio",
             ProductMediaKind.Audio,
             AudioExtensions,
-            ".flac",
-            ["-vn", "-c:a", "flac"]);
+            ".flac");
 
         yield return new ProductPresetDefinition(
             PresetId.Parse("audio.m4a.aac"),
@@ -115,8 +110,7 @@ public sealed class ProductPresetRegistry
             "Audio",
             ProductMediaKind.Audio,
             AudioExtensions,
-            ".m4a",
-            ["-vn", "-c:a", "aac", "-b:a", "256k", "-movflags", "+faststart"]);
+            ".m4a");
 
         yield return new ProductPresetDefinition(
             PresetId.Parse("audio.opus"),
@@ -124,8 +118,7 @@ public sealed class ProductPresetRegistry
             "Audio",
             ProductMediaKind.Audio,
             AudioExtensions,
-            ".opus",
-            ["-vn", "-c:a", "libopus", "-b:a", "192k", "-vbr", "on", "-application", "audio"]);
+            ".opus");
 
         yield return new ProductPresetDefinition(
             PresetId.Parse("audio.ogg.vorbis"),
@@ -133,8 +126,7 @@ public sealed class ProductPresetRegistry
             "Audio",
             ProductMediaKind.Audio,
             AudioExtensions,
-            ".ogg",
-            ["-vn", "-c:a", "libvorbis", "-q:a", "6"]);
+            ".ogg");
 
         yield return new ProductPresetDefinition(
             PresetId.Parse("audio.wav"),
@@ -142,8 +134,7 @@ public sealed class ProductPresetRegistry
             "Audio",
             ProductMediaKind.Audio,
             AudioExtensions,
-            ".wav",
-            ["-vn", "-c:a", "pcm_s16le"]);
+            ".wav");
 
         yield return new ProductPresetDefinition(
             PresetId.Parse("image.png"),
@@ -151,8 +142,7 @@ public sealed class ProductPresetRegistry
             "Image",
             ProductMediaKind.Image,
             ImageExtensions,
-            ".png",
-            ["-frames:v", "1", "-c:v", "png"]);
+            ".png");
 
         yield return new ProductPresetDefinition(
             PresetId.Parse("image.jpeg"),
@@ -160,8 +150,7 @@ public sealed class ProductPresetRegistry
             "Image",
             ProductMediaKind.Image,
             ImageExtensions,
-            ".jpg",
-            ["-frames:v", "1", "-c:v", "mjpeg", "-q:v", "2"]);
+            ".jpg");
 
         yield return new ProductPresetDefinition(
             PresetId.Parse("image.webp"),
@@ -169,7 +158,6 @@ public sealed class ProductPresetRegistry
             "Image",
             ProductMediaKind.Image,
             ImageExtensions,
-            ".webp",
-            ["-frames:v", "1", "-c:v", "libwebp", "-quality", "85"]);
+            ".webp");
     }
 }

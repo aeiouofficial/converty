@@ -31,6 +31,59 @@ internal sealed class WindowsAclGrant : IDisposable
             sid,
             WindowsNativeMethods.FILE_GENERIC_READ | WindowsNativeMethods.FILE_GENERIC_WRITE);
 
+    internal static WindowsAclGrant GrantReadOnlyFile(string path, nint sid)
+    {
+        if (sid == nint.Zero)
+        {
+            throw new ArgumentException("AppContainer SID is required.", nameof(sid));
+        }
+
+        string fullPath = Path.GetFullPath(path);
+        if (!File.Exists(fullPath))
+        {
+            throw new FileNotFoundException("Strict worker read-only ACL file does not exist.", fullPath);
+        }
+        if ((File.GetAttributes(fullPath) & FileAttributes.ReparsePoint) != 0)
+        {
+            throw new IOException("Strict worker read-only ACL file must not be a reparse point.");
+        }
+
+        string parent = Path.GetDirectoryName(fullPath) ??
+            throw new IOException("Strict worker read-only ACL file requires a parent directory.");
+        if ((File.GetAttributes(parent) & FileAttributes.ReparsePoint) != 0)
+        {
+            throw new IOException("Strict worker read-only ACL parent must not be a reparse point.");
+        }
+
+        var granted = new List<string>(capacity: 2);
+        try
+        {
+            UpdatePathAcl(
+                parent,
+                sid,
+                WindowsNativeMethods.FILE_GENERIC_READ | WindowsNativeMethods.FILE_GENERIC_EXECUTE,
+                WindowsNativeMethods.GRANT_ACCESS,
+                inheritanceOverride: 0);
+            granted.Add(parent);
+
+            UpdatePathAcl(
+                fullPath,
+                sid,
+                WindowsNativeMethods.FILE_GENERIC_READ,
+                WindowsNativeMethods.GRANT_ACCESS,
+                inheritanceOverride: 0);
+            granted.Add(fullPath);
+
+            return new WindowsAclGrant(sid, granted);
+        }
+        catch
+        {
+            var partialGrant = new WindowsAclGrant(sid, granted);
+            partialGrant.Dispose();
+            throw;
+        }
+    }
+
     public void Dispose()
     {
         if (_disposed)
@@ -104,7 +157,12 @@ internal sealed class WindowsAclGrant : IDisposable
         }
     }
 
-    private static void UpdatePathAcl(string path, nint sid, uint accessPermissions, uint accessMode)
+    private static void UpdatePathAcl(
+        string path,
+        nint sid,
+        uint accessPermissions,
+        uint accessMode,
+        uint? inheritanceOverride = null)
     {
         bool ownsMutationMutex = false;
         try
@@ -115,8 +173,6 @@ internal sealed class WindowsAclGrant : IDisposable
             }
             catch (AbandonedMutexException)
             {
-                // Windows transfers ownership when a prior Converty process exits while
-                // mutating an ACL, so continue from the freshly re-read security state.
                 ownsMutationMutex = true;
             }
 
@@ -147,9 +203,10 @@ internal sealed class WindowsAclGrant : IDisposable
                 {
                     AccessPermissions = accessPermissions,
                     AccessMode = accessMode,
-                    Inheritance = directory
-                        ? WindowsNativeMethods.OBJECT_INHERIT_ACE | WindowsNativeMethods.CONTAINER_INHERIT_ACE
-                        : 0,
+                    Inheritance = inheritanceOverride ??
+                        (directory
+                            ? WindowsNativeMethods.OBJECT_INHERIT_ACE | WindowsNativeMethods.CONTAINER_INHERIT_ACE
+                            : 0),
                     Trustee = new WindowsNativeMethods.Trustee
                     {
                         MultipleTrustee = nint.Zero,
