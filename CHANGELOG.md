@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.1.0-dev.22 — 2026-10-26 — direct runner re-verification
+- Reverified exact source `d22a00c0430d781ff3fe3f1264bf9e67f9b0a879` using the existing .NET SDK 10.0.112 without a system update: seven direct xUnit/Microsoft.Testing.Platform runners, **395/395 managed PASS**, no failures or skipped cases (Bridge 54, Contracts 45, Core 152, Host 40, IPC 18, Security 38, Serialization 48).
+- Existing compatibility Release build remains **0 warnings / 0 errors**; full Python static **170/170 PASS**, contract vectors **5/5 PASS**, repository/release-input/Action-pin checks **PASS**.
+- The four authority generators reproduced their existing tracked working-tree outputs byte-for-byte (source/release SBOM, package manifest, SHA256SUMS). Exact committed-HEAD ZIP qualification and cloud reconciliation follow the documentation commit.
+- This is development compatibility evidence, not the pinned SDK 10.0.400 production release or fresh packaged FFmpeg evidence. The production and development engine availability gates remain OPEN.
+
+
+## 0.1.0-dev.22 — 2026-10-20 — current-head compatibility qualification and reproducibility audit
+- Current code subject `d22a00c0430d781ff3fe3f1264bf9e67f9b0a879` / tree `845c711dd9d2f4235fc99eabcdd7175ebc57bb96` keeps Host job-journal state below the explicit non-C workspace during local qualification while preserving installed-product LocalApplicationData fallback when no workspace authority is set.
+- Per user instruction, the system .NET SDK was not updated. A temporary D:-only compatibility context selected installed SDK 10.0.112 without changing repository `global.json`. Release build PASS with 0 warnings/0 errors after removing stale machine-only `LIB=C:\ffmpeg-dev\lib` from the process environment.
+- Managed regressions PASS 395/395 with zero skipped by executing all seven built Microsoft.Testing.Platform/xUnit runners directly. Static suite PASS 170/170; contract vectors 5/5; repository/release/action-pin preflights PASS; dependency audit PASS for 19 projects / 19 frameworks / 0 vulnerable-result packages.
+- The older SDK feature band cannot execute the repository's newer `dotnet test --solution` wrapper, so this is compatibility development evidence rather than final pin-exact 10.0.400 release qualification.
+- Native Explorer targets compile with installed Visual Studio 2022/MSVC via the Visual Studio CMake generator. The exact repository Ninja preset remains unavailable because Ninja is not installed. Unsigned MakeAppx package layout/schema PASS with 37 staged files and no converter binaries.
+- New reproducibility finding: the exact development-only BtbN FFmpeg release URL and asset ID 579145936 now return HTTP 404. No trusted copy was found locally. Historical packaged evidence bound to source `6292ccb` remains historical only; fresh exact-head ProbeWorker/product/Audio36/Image24/Video27/Copy/Remux/Transcode evidence is blocked until the exact historical bytes are recovered or a new immutable development pin is deliberately reviewed and fully requalified.
+- No hosted Actions, main movement, signing-policy weakening or sideload-policy change occurred. PR #14 remains DRAFT; Handover #13 remains OPEN until this block is committed and reconciled.
+
 ## 0.1.0-dev.22 — 2026-09-29 — workspace-root runtime staging hardening
 - Audit found a concrete local-storage contract defect: ConversionStagingDirectory still resolved private conversion staging from LocalApplicationData even after build/use-workspace-temp.ps1 established CONVERTY_WORKSPACE_ROOT=D:\converty, allowing project-owned worker staging to escape onto C:.
 - Runtime staging now prefers the explicit workspace authority and uses <workspace>\_temp\runtime\Converty\WorkerStaging; a relative or C:-root workspace is rejected fail-closed. Normal installed-product behavior still falls back to LocalApplicationData only when no workspace authority is present.

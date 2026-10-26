@@ -3,63 +3,76 @@ Status: OPEN / NOT CUSTOMER SHIP-READY
 
 Repository: aeiouofficial/converty
 Branch: dev/0.1.0-dev.22-shipping-readiness
-Workspace version: 0.1.0-dev.22. Planned next workspace version: 0.1.0-dev.23 only after dev.22 closure.
-Exact verified workspace-staging code/evidence subject: 3ddac2be5a16ab93dcd383786fc648aeca69271a
-Tree: 115a7424521f13182778b2a28418d30b8ed3a38e
+Workspace version: 0.1.0-dev.22
+Planned next workspace version: 0.1.0-dev.23 only after dev.22 closure.
+Current code subject under this handover: d22a00c0430d781ff3fe3f1264bf9e67f9b0a879
+Tree: 845c711dd9d2f4235fc99eabcdd7175ebc57bb96
 Frozen main: 8a1f46603aa842728247bc11b34fcccf121858fd — DO NOT MOVE.
-Main ruleset 24086373 ACTIVE, main protected, no bypass.
-Draft PR #14. External shipping gates issue #13.
-Slack continuation: Handover #13 TS 1790641889.866779 OPEN; predecessor #12 TS 1789698886.030639 PROCESSED.
-GitHub is authoritative; Slack and Drive are synchronized mirrors.
+Main ruleset 24086373 ACTIVE; no bypass.
+Draft PR #14; shipping issue #13.
+Slack continuation: Handover #13 TS 1790641889.866779 OPEN; predecessor #12 PROCESSED.
+GitHub is authoritative; Drive and Slack are mirrors.
 
-## Completed and verified in the latest engineering block
-A continuation audit found a concrete storage-contract defect: ConversionStagingDirectory ignored CONVERTY_WORKSPACE_ROOT and could place private conversion staging under LocalApplicationData on C: during workspace-qualified local work.
+## 2026-10-20 continuation audit and local compatibility qualification
+The current d22 code fixes a second local-storage contract defect: Host job-journal state now consumes CONVERTY_WORKSPACE_ROOT before LocalApplicationData, requires a fully-qualified non-C workspace root, writes workspace state below <workspace>\_temp\runtime\Converty\Host\state and preserves installed-product LocalApplicationData behavior only when no workspace authority is supplied.
 
-Fix behavior:
-- with explicit workspace authority, require a fully-qualified non-C root;
-- stage under <workspace>\_temp\runtime\Converty\WorkerStaging;
-- reject relative/C:-root workspace authority fail-closed;
-- preserve normal installed-product LocalApplicationData fallback when no workspace authority is present;
-- regression coverage includes a source guard plus real ConversionBatchRunner staging assertion.
+Fresh local work was recreated entirely below D:\converty on the currently connected Windows laptop. The machine has system .NET SDK 10.0.112 while the repository release pin remains 10.0.400. Per user instruction, no SDK update was performed. A temporary D:-only compatibility global.json selected 10.0.112 without modifying the repository.
 
-Evidence bound to exact code subject 3ddac2be5a16ab93dcd383786fc648aeca69271a:
-- predecessor b1485ce committed source RED: no workspace-root staging support;
-- focused workspace storage static 3/3 PASS;
-- Converty.Core.Tests 152/152 PASS;
-- full managed 395/395 PASS, zero skipped;
-- full static 169/169 PASS;
-- contract vectors 5/5 PASS;
-- release-input, repository and immutable Action-pin preflight PASS;
-- four generated authority files deterministic and exact HEAD zero-diff PASS;
-- two independent exact Git-HEAD workspace ZIPs byte-identical: SHA-256 67ba2ffc12bb8ebea22fb252482cd42024493b1c440e16938e13634188443b7d, 673449 bytes / 466 entries, CRC PASS, 464/464 manifest, 465/465 SHA rows, 4/4 exact authority PASS;
-- GitHub branch readback matched; no hosted Actions; frozen main unchanged.
+Compatibility evidence on exact source d22a00c:
+- Release build: PASS, 0 warnings / 0 errors after removing stale machine-only LIB=C:\ffmpeg-dev\lib from the process environment;
+- managed tests: 395/395 PASS, 0 skipped, by direct execution of all seven built Microsoft.Testing.Platform/xUnit runners;
+- static tests: 170/170 PASS;
+- contract vectors: 5/5 PASS;
+- repository and release-input preflight: PASS;
+- immutable Action pins: PASS, 11 external uses / 4 approved actions;
+- dependency audit: 19 projects / 19 frameworks / 0 vulnerable-result packages;
+- native Explorer targets compile with installed VS 2022/MSVC and Windows SDK using the Visual Studio CMake generator; the repository's exact Ninja preset remains unavailable because Ninja is not installed;
+- unsigned development MSIX layout/schema: PASS through MakeAppx with 37 staged files; ffmpeg/ffprobe intentionally absent from that package.
 
-## Cloud state
-Slack #12 is PROCESSED; #13 TS 1790641889.866779 is the single OPEN continuation. Canonical Drive Authority, Roadmap, Plan, Tasks, Changelog, Release/Test Evidence and Recursive Handover were reconciled in place to the exact code/evidence subject above.
-Drive IDs:
-Authority 1ZdDGUpSVxeEfvICLKD_VctT49MlJMyhNICyj4ebeYRw
-Roadmap 1p3xKxj2akSqZTzVp442QNetoZ8Eg9u6pvckjwUnBLsI
-Plan 1eGVajQAxw3Vjc7F_7NJgt9do6tRzZpV_Vbfcl24g9-s
-Tasks 1BH44EUYcNBexIZasxq24mlYBZk0VxF5XaG6RnUkQPrc
-Changelog 1JsJfEECcWaB2UJtW0oiW45RD86RZT4i5spANV38Zzoc
-Evidence 1LizDehSMDnBfihXnntX9z13QNai87zzMwlkzPptkcB0
-Recursive 1HVfL2KV6LZbpl0fc4Je1dzqLs3ya9q9Onjb3YbFF9L8
+This is strong development evidence but NOT the final pin-exact 10.0.400 release qualification. The 10.0.112 feature band does not support the repository's newer dotnet test --solution wrapper, which is why the already-built MTP runners were invoked directly.
 
-## Existing product evidence and OPEN release gates
-Packaged-development product evidence remains bound to unchanged source 6292ccb0a2a1eb5bfcb3dbe23bc99fddc50d5ce3: exact pinned dev-only FFmpeg/ffprobe, unsigned MSIX layout, packaged ProbeWorker, direct staged Explorer COM, Audio36/Image24/Video27, Copy/Remux/Transcode and negative/mixed PASS. It is not production approval.
+## New reproducibility blocker — development FFmpeg
+The exact development-only BtbN pin historically qualified in September is no longer downloadable from upstream:
+- release tag autobuild-2026-09-21-13-55;
+- release asset ID 579145936;
+- source a5923073bf;
+- expected archive 192925997 bytes;
+- expected SHA-256 fe372180f20e7f9bfa3d9a481b2b1b98c8296178d8265552608736637ea6b3c8.
 
-Registered unsigned MSIX COM on the current laptop remains blocked by Windows 0x80073CFF. Do not alter sideload/developer security policy. Production FFmpeg provenance/license/redistribution, signed MSIX/B2, clean headed Windows 11 Explorer and install/update/uninstall lifecycle, final security/fuzz/chaos/end-user acceptance, UX/settings and Plugin SDK, and independent release review remain OPEN. PR #14 stays DRAFT.
+On 2026-10-20 both the exact release URL and exact GitHub asset API ID return 404. No trusted copy was found on D:, S: or F:, and no ffmpeg/ffprobe is available on PATH. Historical packaged evidence bound to source 6292ccb remains historical evidence only. Current exact-HEAD product matrices must not be claimed fresh until the exact bytes are recovered or a new immutable development pin is deliberately reviewed, committed and fully requalified. Never fall back to latest/PATH.
 
-## Exact next executable task
-Fresh-read the current GitHub documentation successor, Slack #13 and Drive mirrors, then continue full dev.22 correctness/security review. Flag/fix only confirmed defects with plausible downstream failure and RED-to-GREEN evidence. If an expressly approved/provisioned Windows 11 lifecycle host becomes available, prioritize real registered MSIX COM + headed Explorer + install/upgrade/uninstall evidence against exact artifact bytes.
+## Product work still required
+B9 is genuine missing functionality, not merely evidence. src/Converty.Settings contains only MODULE.md and no executable implementation. Required scope includes per-family defaults, custom/pinned presets, output/collision/metadata/concurrency/isolation controls, provider inventory/health, queue/progress/error/cancel UI, notifications, diagnostics and accessible responsive settings UX.
 
-Acceptance for the next block:
-- concrete defect evidence or genuine external lifecycle evidence, not speculation;
-- required local tests/gates PASS;
-- all Converty-owned source/build/temp/cache/toolchain/logs remain within D:\converty;
-- no Actions dispatch, no governance bypass and no main movement;
-- repo, Drive and Slack reconciled; predecessor processed before one new OPEN successor.
+B10 remains the provider/plugin SDK proof: signed manifest/API contract, out-of-process plugin worker, sample provider, and unsigned/tampered/incompatible rejection.
+
+B11 remains final security/fuzz/chaos qualification including IPC fuzzing, path/reparse races, crash-at-every-transaction-stage, disk-full/access-denied/Unicode/long-path/concurrent-collision and recovery evidence.
+
+B12 remains production release closure: production FFmpeg redistribution/provenance/license/notices, signed/timestamped MSIX and production B2 identity, clean headed Windows 11 Explorer acceptance, install/use/update/uninstall/no-orphan lifecycle, final SBOM/notices/hash review and independent release review.
+
+## Current next executable sequence
+1. Reconcile and commit this d22 local qualification/documentation plus regenerated authority with [skip ci], then independently verify the exact committed-HEAD deterministic archive.
+2. Repair development FFmpeg reproducibility without weakening the pin: recover exact historical bytes if a trusted source exists; otherwise deliberately repin one immutable available development artifact with RED→GREEN evidence and rerun packaged matrices.
+3. Implement B9 Settings/notifications/queue UI test-first.
+4. Continue B10/B11, then real B12 production signing/provenance/headed lifecycle.
+5. Only after all genuine gates are GREEN: independent PR approval, required exact-candidate checks, protected non-bypass promotion and fresh exact-main verification.
+
+## Open release blockers
+- current exact-HEAD packaged conversion matrices blocked by unavailable historical development FFmpeg asset;
+- final 10.0.400 pin-exact qualification still required before release;
+- production FFmpeg provenance/license/notices/redistribution approval;
+- production signed MSIX/B2 identity;
+- clean headed Windows 11 Explorer and signed package lifecycle;
+- B9 Settings/product UX;
+- B10 Plugin SDK;
+- B11 final security/fuzz/chaos/end-user acceptance;
+- independent release review.
+
+Registered unsigned MSIX COM historically remains blocked by Windows 0x80073CFF on this laptop. Do not change sideload/developer security policy merely to force that development path.
+
+## Lifecycle
+Handover #13 remains OPEN until this material block is committed, exact-HEAD archive evidence is verified and GitHub/Drive/Slack are reconciled. Then mark #13 PROCESSED first, create exactly one successor OPEN and backfill its exact TS. No hosted Actions, no force push, no main movement, no hand-edited generated authority.
 
 ## Security invariants
 Explorer -> fixed app-local Bridge -> private staging -> strict RO ProbeWorker/fixed ffprobe -> typed facts -> bounded planner -> strict EngineWorker -> managed byte-exact Copy or provider-owned fixed FFmpeg Remux/Transcode -> post-probe TargetMediaContract -> durable same-folder no-overwrite publication.
-No raw shell FFmpeg tokens, PATH/CWD executable discovery, silent Strict-to-Compatibility fallback, ordinary conversion network, arbitrary plugins, GPU acceleration, private signing keys, hand-edited generated authority, force push or ruleset bypass.
+No raw shell FFmpeg tokens, PATH/CWD executable discovery, silent Strict-to-Compatibility fallback, ordinary conversion network, arbitrary in-process plugins, GPU acceleration, private signing keys, force push or ruleset bypass.

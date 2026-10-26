@@ -76,3 +76,21 @@ Code remediation may be complete while customer shipping remains blocked. Do not
 - [x] Repository admin permissions confirmed; created ruleset [#24086373](https://github.com/aeiouofficial/converty/rules/24086373), enforced exclusively for refs/heads/main with no bypass; GitHub API returned main protected=true and six effective main rules. The repository's own readiness verifier accepted the live ruleset.
 - [ ] Registered package COM and headed clean Windows 11 acceptance on an authorized host; local laptop blocks unsigned registration by 0x80073CFF. Production FFmpeg licensing, signed MSIX/B2, final security/fuzz/chaos/end-user and UX/Plugin SDK approvals and independent PR review still OPEN.
 - [ ] Once external gates and GitHub Actions capacity genuinely available, require all four real check contexts on the exact release candidate; DO NOT remove rules or force-promote frozen main.
+
+## 2026-10-26 verification follow-up
+- [x] Without an SDK update, run the seven built xUnit/MTP executables again: **395/395 PASS, zero skips** on exact `d22a00c`.
+- [x] Confirm source/release SBOM, package manifest and SHA256SUMS regenerate byte-identically (4/4).
+- [ ] After the documentation/authority commit, verify two independent byte-identical exact committed-HEAD ZIPs including CRC, manifest, SHA rows and four exact authority files.
+- [ ] Preserve draft PR #14, frozen main and OPEN release gates; rotate Slack Handover #13 only after exact committed-HEAD evidence and cloud reconciliation.
+
+## 2026-10-20 release-audit continuation
+- [x] Recreate the local workspace under `D:\converty` and verify exact source `d22a00c0430d781ff3fe3f1264bf9e67f9b0a879`.
+- [x] Without updating the SDK, prove compatibility build 0 warnings/errors, managed 395/395, static 170/170, vectors 5/5, dependency audit 19/19 with zero vulnerable-result packages, repo/release/action-pin preflight PASS.
+- [x] Compile native Explorer targets with the installed VS 2022/MSVC toolchain without installing Ninja.
+- [x] Validate unsigned MSIX layout/schema with MakeAppx without converter binaries.
+- [ ] Restore reproducible development FFmpeg input. The historical immutable BtbN URL and asset ID now return 404. Recover the exact trusted bytes or deliberately repin a new immutable development payload and fully requalify; never use latest/PATH fallback.
+- [ ] Run fresh exact-head packaged ProbeWorker/product Audio36/Image24/Video27/negative/mixed/Copy/Remux/Transcode matrices after development FFmpeg reproducibility is repaired.
+- [ ] Run final repository-pinned .NET 10.0.400 exact-path qualification before any release claim; current 10.0.112 evidence is compatibility-only.
+- [ ] Implement B9 Settings + notifications + queue/progress/error/cancel UI; `src/Converty.Settings` currently has no executable implementation.
+- [ ] Complete B10 Plugin SDK proof, B11 security/fuzz/chaos acceptance and B12 production signing/provenance/headed Windows lifecycle.
+- [ ] Obtain independent PR/release artifact review and only then perform protected exact-candidate promotion plus fresh exact-main verification.

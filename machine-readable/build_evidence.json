@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "workspaceVersion": "0.1.0-dev.22",
-  "evidenceDate": "2026-09-24",
+  "evidenceDate": "2026-10-20",
   "releaseAuthority": {
     "version": "0.1.0-dev.20",
     "mainSha": "8a1f46603aa842728247bc11b34fcccf121858fd",
@@ -114,7 +114,8 @@
     "productionFfmpegRedistributionApproval": "OPEN",
     "signedProductionMsixLifecycle": "OPEN",
     "finalSecurityFuzzChaosReleaseEndUserAcceptance": "OPEN",
-    "uxSettingsAndPluginSdkReleaseGates": "OPEN"
+    "uxSettingsAndPluginSdkReleaseGates": "OPEN",
+    "developmentFfmpegReproducibility": "OPEN: historical development-only pinned asset unavailable upstream"
   },
   "dev22": {
     "branch": "dev/0.1.0-dev.22-shipping-readiness",
@@ -246,6 +247,38 @@
       "exactAuthority": "4/4 PASS",
       "githubBranchSynchronized": true,
       "cloudMirror": "Slack #13 TS 1790641889.866779 OPEN; #12 PROCESSED; seven canonical Drive docs reconciled"
+    },
+    "currentLocalCompatibilityQualification20261020": {
+      "subjectSha": "d22a00c0430d781ff3fe3f1264bf9e67f9b0a879",
+      "subjectTreeSha": "845c711dd9d2f4235fc99eabcdd7175ebc57bb96",
+      "workspace": "D:\\converty",
+      "sdk": "10.0.112 compatibility-only; final repository pin remains 10.0.400",
+      "build": {
+        "status": "PASS",
+        "warnings": 0,
+        "errors": 0
+      },
+      "managed": {
+        "total": 395,
+        "succeeded": 395,
+        "failed": 0,
+        "skipped": 0,
+        "mode": "seven direct Microsoft.Testing.Platform/xUnit runners"
+      },
+      "static": {
+        "total": 170,
+        "succeeded": 170,
+        "failed": 0
+      },
+      "contractVectors": "5/5 PASS",
+      "dependencyAudit": "19 projects / 19 frameworks / 0 vulnerable-result packages",
+      "repositoryReleaseActionPreflight": "PASS",
+      "nativeExplorer": "PASS via Visual Studio 2022 CMake generator; repository Ninja preset unavailable because Ninja is not installed",
+      "unsignedDevelopmentMsixLayout": "PASS MakeAppx with 37 staged files; converter omitted",
+      "developmentFfmpegCurrentAvailability": "BLOCKED: exact BtbN release URL and asset API ID 579145936 return 404; no trusted local copy located",
+      "packagedCurrentHeadMatrices": "NOT FRESHLY VERIFIED because exact development FFmpeg input is unavailable",
+      "hostedActionsInvoked": false,
+      "customerShipReady": false
     }
   },
   "localQualification20260924": {

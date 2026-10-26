@@ -1,5 +1,26 @@
 # dev.22 local qualification — 2026-09-24
 
+## 2026-10-26 direct test-runner verification
+- Exact development source `d22a00c0430d781ff3fe3f1264bf9e67f9b0a879` was rechecked without any SDK installation. Seven xUnit/MTP Release executables returned success: Bridge 54, Contracts 45, Core 152, Host 40, IPC 18, Security 38, Serialization 48 — **395/395 PASS, zero skipped**.
+- The previously compiled Release solution used installed SDK 10.0.112 with 0 warnings/0 errors. Static regression suite 170/170 PASS; 5 contract vectors PASS; repository/release-input and immutable Action-pin preflights PASS.
+- Both SBOM generators plus package/hash generators ran again. All four outputs matched their prior working-tree bytes exactly: 19 source SBOM packages, 35 release SBOM packages, 464 manifest entries, 465 hash rows.
+- Test invocation bypassed only an unavailable SDK command-line feature; security policies, repository `global.json`, signing, `main`, and CI settings were not changed. This cannot replace the final exact-SDK qualification. Fresh current-head packaged media testing remains blocked by the unavailable historical development FFmpeg pin.
+
+
+## 2026-10-20 current-head compatibility qualification
+- Source under test: `d22a00c0430d781ff3fe3f1264bf9e67f9b0a879`, tree `845c711dd9d2f4235fc99eabcdd7175ebc57bb96`.
+- Workspace recreated under `D:\converty`; no Converty project temp/cache/toolchain/log output was intentionally placed on C:.
+- System SDK remained 10.0.112 by user instruction. A temporary `D:\converty\_temp\sdk-compat-10.0.112\global.json` selected it without changing the repository pin.
+- Release build: **PASS, 0 warnings / 0 errors** after clearing stale machine-only `LIB=C:\ffmpeg-dev\lib` for the process.
+- Managed suites: **395/395 PASS, 0 skipped** through the seven built MTP/xUnit runners: Bridge 54, Contracts 45, Core 152, Host 40, IPC 18, Security 38, Serialization 48.
+- Python static: **170/170 PASS**. Contract vectors: **5/5 PASS**.
+- Dependency audit: **19 projects / 19 frameworks / 0 vulnerable-result packages**.
+- Repository verifier, release-input preflight and immutable Action-pin verifier: **PASS**.
+- Native Explorer and registration-smoke targets compile with installed Visual Studio 2022 Build Tools/MSVC and Windows SDK through the Visual Studio CMake generator. Repository Ninja preset is not executable because Ninja is absent; no install was performed.
+- Unsigned development MSIX layout/schema: **PASS** via MakeAppx, 37 staged files, without ffmpeg/ffprobe.
+- Exact historical BtbN development FFmpeg pin is currently unavailable upstream: release URL and asset API ID 579145936 return 404. No trusted local copy was found on D:/S:/F: and no ffmpeg/ffprobe is on PATH. Therefore fresh current-head packaged media matrices are **BLOCKED**, not failed. Historical source `6292ccb` packaged evidence remains historical only.
+- Final release qualification still requires repository-pinned SDK 10.0.400 and the exact official test/build path, plus all external production gates. This compatibility block is development evidence only.
+
 Repository: `aeiouofficial/converty`. Development baseline: `ca018a2cdafcfef9e4198a0aa721b6fa66464a74` (tree `f589ce536e95f470789ab4a146af904fe54b62de`). Frozen `main` and qualified dev.21 were not modified.
 
 ## Reproduced defects and corrections

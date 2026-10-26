@@ -2,12 +2,12 @@
   "schemaVersion": 1,
   "project": "Converty",
   "workspaceVersion": "0.1.0-dev.22",
-  "baselineDate": "2026-09-29",
-  "implementationStatus": "DEV22_WORKSPACE_STAGING_HARDENED_AND_EXACTLY_VERIFIED_EXTERNAL_RELEASE_GATES_OPEN",
+  "baselineDate": "2026-10-20",
+  "implementationStatus": "DEV22_CURRENT_HEAD_COMPATIBILITY_GREEN_FFMPEG_REPRODUCIBILITY_AND_PRODUCT_RELEASE_GATES_OPEN",
   "defaultBranch": "main",
   "currentDevelopmentBranch": "dev/0.1.0-dev.22-shipping-readiness",
   "nextWorkspaceVersion": "0.1.0-dev.23",
-  "nextBatch": "CONTINUE_WHOLE_BRANCH_CORRECTNESS_SECURITY_REVIEW_OR_APPROVED_WIN11_REGISTERED_LIFECYCLE",
+  "nextBatch": "REPAIR_DEVELOPMENT_FFMPEG_REPRODUCIBILITY_THEN_B9_SETTINGS",
   "targetOs": "Windows 11 x64",
   "frozenReleaseAuthority": {
     "version": "0.1.0-dev.20",
@@ -32,7 +32,7 @@
     "number": 13,
     "slackTs": "1790641889.866779",
     "status": "OPEN",
-    "note": "Single current Slack continuation; #12 is PROCESSED. Canonical Drive mirrors reconciled to exact code/evidence subject 3ddac2be5a16ab93dcd383786fc648aeca69271a."
+    "note": "Single current Slack continuation. Source d22a00c has 2026-10-20 compatibility qualification; final committed docs/authority reconciliation pending."
   },
   "shippingOpen": [
     "Headed Windows 11 modern Explorer exact-build UI/screenshots and crash/hang/failure matrix",
@@ -43,11 +43,11 @@
     "UX/settings and Plugin SDK release gates"
   ],
   "nextActions": [
-    "Fresh-read GitHub branch HEAD, frozen main, ruleset 24086373, PR #14, issue #13, Slack Handover #13 and canonical Drive mirrors. Treat 3ddac2be5a16ab93dcd383786fc648aeca69271a as the exact verified workspace-staging code/evidence subject; any later docs-only successor does not change that code evidence.",
-    "Continue full dev.22 correctness/security review and fix only concrete plausible defects with RED-to-GREEN evidence. Do not make speculative cleanup changes.",
-    "If an expressly approved and correctly provisioned Windows 11 test host becomes available, execute registered MSIX COM, headed Explorer screenshots/failure matrix and install/upgrade/uninstall on exact artifact bytes; do not weaken current laptop sideload/developer policy.",
-    "Production FFmpeg legal/provenance/redistribution, signed MSIX/B2, final security/fuzz/chaos/end-user, UX/settings/Plugin SDK and independent release review remain OPEN. Keep PR #14 DRAFT and main frozen.",
-    "After every meaningful block: local CI under D:\\converty, update repo plus seven Drive docs, rotate Slack predecessor PROCESSED then exactly one OPEN successor, push [skip ci], verify exact committed HEAD archive, no hosted Actions."
+    "Commit and independently verify the current d22 documentation/generated-authority successor without hosted Actions or main movement.",
+    "Repair development FFmpeg reproducibility: recover exact historical trusted bytes or deliberately repin one immutable available development artifact; never use latest or PATH fallback.",
+    "Rerun exact-head packaged ProbeWorker/product Audio36/Image24/Video27/negative/mixed/Copy/Remux/Transcode matrices after FFmpeg reproducibility is restored.",
+    "Implement B9 Settings, notifications and queue/progress/error/cancel UI test-first, then B10/B11 and genuine B12 production gates.",
+    "Before any release claim, run the repository-pinned .NET 10.0.400 exact-path qualification and independent review."
   ],
   "recursiveHandoverRequired": true,
   "recursiveHandoverRule": "On continue/weiter: fresh-read the single Slack OPEN handover, seven canonical Drive docs and GitHub authority; GitHub wins conflicts. Execute the next verified task, reconcile repo/Drive/Slack in place, mark predecessor PROCESSED first, create exactly one successor OPEN and backfill its exact TS.",
@@ -126,6 +126,22 @@
       "productionFallbackPreserved": true,
       "hostedActionsInvoked": false,
       "cloudMirror": "Slack #13 TS 1790641889.866779 OPEN; #12 PROCESSED; seven canonical Drive docs current"
+    },
+    "currentCompatibilityQualification20261020": {
+      "subjectSha": "d22a00c0430d781ff3fe3f1264bf9e67f9b0a879",
+      "subjectTreeSha": "845c711dd9d2f4235fc99eabcdd7175ebc57bb96",
+      "sdk": "10.0.112 compatibility-only; repository pin 10.0.400 unchanged",
+      "releaseBuild": "PASS 0 warnings / 0 errors",
+      "managed": "395/395 PASS, 0 skipped via seven direct MTP runners",
+      "pythonStatic": "170/170 PASS",
+      "vectors": "5/5 PASS",
+      "dependencyAudit": "19 projects / 19 frameworks / 0 vulnerable-result packages",
+      "preflights": "repository/release-input/action-pins PASS",
+      "native": "PASS via installed Visual Studio 2022 generator; exact Ninja preset blocked by missing Ninja",
+      "unsignedMsixLayout": "PASS MakeAppx, 37 staged files, no converter",
+      "developmentFfmpeg": "BLOCKED: exact historical BtbN release URL and asset ID 579145936 return 404; no trusted local copy found",
+      "hostedActionsInvoked": false,
+      "releaseAuthority": false
     }
   }
 }

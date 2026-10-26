@@ -1,5 +1,15 @@
 # Implementation status — dev.22 audit remediation over qualified 0.1.0-dev.21
 
+
+## Current continuation audit — 2026-10-20
+Current code subject is `d22a00c0430d781ff3fe3f1264bf9e67f9b0a879` / tree `845c711dd9d2f4235fc99eabcdd7175ebc57bb96`. The Host journal now obeys the same explicit non-C workspace authority as worker staging during local qualification.
+
+Without updating the machine SDK, a D:-only compatibility context using installed .NET SDK 10.0.112 produced Release 0 warnings/errors, 395/395 managed tests with zero skips through the seven direct MTP runners, 170/170 static tests, 5/5 vectors, 19-project/19-framework dependency audit with zero vulnerable-result packages and repository/release/action-pin preflight PASS. Native Explorer targets compile with the installed VS 2022/MSVC toolchain via the Visual Studio generator; unsigned MSIX layout/schema also passes. The exact Ninja preset and the official `dotnet test --solution` wrapper remain toolchain-feature-band differences, so final 10.0.400 pin-exact release qualification remains open.
+
+A new development reproducibility blocker is confirmed: the exact BtbN development FFmpeg release/tag asset historically qualified in September now returns 404 both by release URL and asset API ID. Current exact-head packaged conversion matrices cannot be freshly rerun until those exact bytes are recovered or the development pin is deliberately replaced and fully requalified.
+
+Functional release work is still materially open: B9 Settings/notifications/queue UI has no executable Settings implementation; B10 Plugin SDK proof, B11 final fuzz/chaos/security qualification and B12 production signing/provenance/headed Windows lifecycle remain open. Main governance is already PASS.
+
 ## Frozen release baseline
 The sole frozen release remains `0.1.0-dev.20` at exact main `8a1f46603aa842728247bc11b34fcccf121858fd`, tree `4bd6f8d7acbadd60a3488870c773d2eafd67ba26`, exact-main CI `33671671714` SUCCESS.
 

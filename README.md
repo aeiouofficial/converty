@@ -5,6 +5,13 @@ Windows 11 modern-context-menu file conversion platform. Converty keeps Explorer
 ## Workspace version
 **0.1.0-dev.22** — audit remediation and shipping-readiness hardening are behavior-qualified on `dev/0.1.0-dev.22-shipping-readiness`; exact-candidate development qualification succeeded; this documentation amendment requires fresh authority synchronization and qualification. This branch is **not release authority** and Converty is **not customer ship-ready**.
 
+## Current continuation state — 2026-10-20
+Current code subject is `d22a00c0430d781ff3fe3f1264bf9e67f9b0a879`. Local compatibility qualification using the already-installed .NET SDK 10.0.112 passes Release build 0/0, managed 395/395, static 170/170, vectors 5/5 and dependency audit with zero vulnerable-result packages. This does **not** replace the repository's final 10.0.400 release pin.
+
+The historical development-only BtbN FFmpeg asset is no longer available at its exact upstream release URL or asset ID, so current-head packaged media matrices are temporarily blocked pending exact-byte recovery or a deliberate immutable development repin. Historical packaged evidence is retained but not promoted to current evidence.
+
+Main governance is already active and verified. Remaining product/release work includes the unimplemented B9 Settings/notifications/queue UI, B10 Plugin SDK proof, B11 final security/fuzz/chaos acceptance, production FFmpeg approval, signed MSIX/B2, clean headed Windows 11 lifecycle and independent release review.
+
 ## Frozen release authority
 The sole frozen release remains **0.1.0-dev.20** at exact `main` `8a1f46603aa842728247bc11b34fcccf121858fd`, tree `4bd6f8d7acbadd60a3488870c773d2eafd67ba26`, exact-main CI `33671671714` SUCCESS.
 
@@ -47,7 +54,6 @@ Never introduce shell command construction, raw FFmpeg argument pass-through, PA
 7. Do **not** promote `main` while any genuine external release prerequisite remains OPEN.
 
 ## Still open before customer launch
-- live GitHub ruleset/main branch-protection enforcement;
 - headed Windows 11 modern Explorer exact-build UI/screenshots and crash/hang/failure matrix;
 - production signed-package B2 identity/authentication requalification;
 - production FFmpeg/ffprobe provenance, signatures, hashes, license/notices and redistribution approval;
