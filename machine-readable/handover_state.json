@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "project": "Converty",
   "workspaceVersion": "0.1.0-dev.22",
-  "baselineDate": "2026-10-20",
+  "baselineDate": "2026-10-26",
   "implementationStatus": "DEV22_CURRENT_HEAD_COMPATIBILITY_GREEN_FFMPEG_REPRODUCIBILITY_AND_PRODUCT_RELEASE_GATES_OPEN",
   "defaultBranch": "main",
   "currentDevelopmentBranch": "dev/0.1.0-dev.22-shipping-readiness",
@@ -29,10 +29,13 @@
     "status": "QUALIFIED_IMMUTABLE_DEVELOPMENT_CANDIDATE_NOT_PROMOTED"
   },
   "currentOpenCloudHandover": {
-    "number": 13,
-    "slackTs": "1790641889.866779",
+    "number": 14,
+    "slackTs": "1793027934.740809",
     "status": "OPEN",
-    "note": "Single current Slack continuation. Source d22a00c has 2026-10-20 compatibility qualification; final committed docs/authority reconciliation pending."
+    "predecessorNumber": 13,
+    "predecessorSlackTs": "1790641889.866779",
+    "predecessorStatus": "PROCESSED",
+    "note": "Single valid continuation. Verified documentation/authority commit d301068a678a334c63b3781413a88a1d5d153ed1 double archive SHA-256 a76e705cf2c5461f883a21ab1501fe17087df91efd8c15cce5c0d00ec918a800 PASS. Development FFmpeg reproducibility is next."
   },
   "shippingOpen": [
     "Headed Windows 11 modern Explorer exact-build UI/screenshots and crash/hang/failure matrix",
@@ -43,7 +46,7 @@
     "UX/settings and Plugin SDK release gates"
   ],
   "nextActions": [
-    "Commit and independently verify the current d22 documentation/generated-authority successor without hosted Actions or main movement.",
+    "Restore trustworthy pinned development FFmpeg/ffprobe bytes or review and commit a new immutable development pin, then run exact-head packaged conversion matrices; no latest/PATH fallback.",
     "Repair development FFmpeg reproducibility: recover exact historical trusted bytes or deliberately repin one immutable available development artifact; never use latest or PATH fallback.",
     "Rerun exact-head packaged ProbeWorker/product Audio36/Image24/Video27/negative/mixed/Copy/Remux/Transcode matrices after FFmpeg reproducibility is restored.",
     "Implement B9 Settings, notifications and queue/progress/error/cancel UI test-first, then B10/B11 and genuine B12 production gates.",

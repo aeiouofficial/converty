@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.1.0-dev.22 — 2026-10-26 — exact archive and handover closure
+- Docs/authority commit d301068a678a334c63b3781413a88a1d5d153ed1 pushed; two independent Git-HEAD archives SHA-256 a76e705cf2c5461f883a21ab1501fe17087df91efd8c15cce5c0d00ec918a800, 681964 bytes/466 entries; CRC, 464/464 manifest, 465/465 SHA and 4/4 authority PASS. Slack Handover #13 PROCESSED before successor #14 TS 1793027934.740809 OPEN. FFmpeg and external production gates remain OPEN.
+
 ## 0.1.0-dev.22 — 2026-10-26 — direct runner re-verification
 - Reverified exact source `d22a00c0430d781ff3fe3f1264bf9e67f9b0a879` using the existing .NET SDK 10.0.112 without a system update: seven direct xUnit/Microsoft.Testing.Platform runners, **395/395 managed PASS**, no failures or skipped cases (Bridge 54, Contracts 45, Core 152, Host 40, IPC 18, Security 38, Serialization 48).
 - Existing compatibility Release build remains **0 warnings / 0 errors**; full Python static **170/170 PASS**, contract vectors **5/5 PASS**, repository/release-input/Action-pin checks **PASS**.

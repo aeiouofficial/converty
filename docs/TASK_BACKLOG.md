@@ -80,7 +80,7 @@ Code remediation may be complete while customer shipping remains blocked. Do not
 ## 2026-10-26 verification follow-up
 - [x] Without an SDK update, run the seven built xUnit/MTP executables again: **395/395 PASS, zero skips** on exact `d22a00c`.
 - [x] Confirm source/release SBOM, package manifest and SHA256SUMS regenerate byte-identically (4/4).
-- [ ] After the documentation/authority commit, verify two independent byte-identical exact committed-HEAD ZIPs including CRC, manifest, SHA rows and four exact authority files.
+- [x] GitHub d301068 exact committed-HEAD double ZIP verified: SHA-256 a76e705cf2c5461f883a21ab1501fe17087df91efd8c15cce5c0d00ec918a800; 681964 bytes/466 entries, CRC/464 manifest/465 hashes/4 authority PASS. Slack #13 PROCESSED, #14 TS 1793027934.740809 OPEN.
 - [ ] Preserve draft PR #14, frozen main and OPEN release gates; rotate Slack Handover #13 only after exact committed-HEAD evidence and cloud reconciliation.
 
 ## 2026-10-20 release-audit continuation

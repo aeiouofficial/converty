@@ -10,7 +10,7 @@ Tree: 845c711dd9d2f4235fc99eabcdd7175ebc57bb96
 Frozen main: 8a1f46603aa842728247bc11b34fcccf121858fd — DO NOT MOVE.
 Main ruleset 24086373 ACTIVE; no bypass.
 Draft PR #14; shipping issue #13.
-Slack continuation: Handover #13 TS 1790641889.866779 OPEN; predecessor #12 PROCESSED.
+Slack continuation: Handover #14 TS 1793027934.740809 OPEN; predecessor #13 TS 1790641889.866779 PROCESSED.
 GitHub is authoritative; Drive and Slack are mirrors.
 
 ## 2026-10-20 continuation audit and local compatibility qualification
@@ -51,8 +51,8 @@ B11 remains final security/fuzz/chaos qualification including IPC fuzzing, path/
 B12 remains production release closure: production FFmpeg redistribution/provenance/license/notices, signed/timestamped MSIX and production B2 identity, clean headed Windows 11 Explorer acceptance, install/use/update/uninstall/no-orphan lifecycle, final SBOM/notices/hash review and independent release review.
 
 ## Current next executable sequence
-1. Reconcile and commit this d22 local qualification/documentation plus regenerated authority with [skip ci], then independently verify the exact committed-HEAD deterministic archive.
-2. Repair development FFmpeg reproducibility without weakening the pin: recover exact historical bytes if a trusted source exists; otherwise deliberately repin one immutable available development artifact with RED→GREEN evidence and rerun packaged matrices.
+1. Restore trustworthy, immutable development FFmpeg/ffprobe input without latest/PATH fallback: recover exact historical bytes by SHA-256 or independently review and pin an available immutable development build.
+2. Requalify packaged ProbeWorker, direct staged Explorer COM, Audio36/Image24/Video27, malformed/mixed batches, Copy/Remux/Transcode and all managed/static/authority/archive gates on the exact resulting code subject.
 3. Implement B9 Settings/notifications/queue UI test-first.
 4. Continue B10/B11, then real B12 production signing/provenance/headed lifecycle.
 5. Only after all genuine gates are GREEN: independent PR approval, required exact-candidate checks, protected non-bypass promotion and fresh exact-main verification.
@@ -71,7 +71,7 @@ B12 remains production release closure: production FFmpeg redistribution/provena
 Registered unsigned MSIX COM historically remains blocked by Windows 0x80073CFF on this laptop. Do not change sideload/developer security policy merely to force that development path.
 
 ## Lifecycle
-Handover #13 remains OPEN until this material block is committed, exact-HEAD archive evidence is verified and GitHub/Drive/Slack are reconciled. Then mark #13 PROCESSED first, create exactly one successor OPEN and backfill its exact TS. No hosted Actions, no force push, no main movement, no hand-edited generated authority.
+Handover #14 TS 1793027934.740809 is the single OPEN continuation; predecessor #13 TS 1790641889.866779 is PROCESSED. Current verified documentation/authority commit d301068a678a334c63b3781413a88a1d5d153ed1 has exact-HEAD double archive SHA-256 a76e705cf2c5461f883a21ab1501fe17087df91efd8c15cce5c0d00ec918a800 (681964 bytes / 466 entries; CRC, 464 manifest, 465 checksums, 4 authority PASS). After every verified task, reconcile GitHub, Drive and Slack; process the current OPEN handover before creating one successor OPEN. No hosted Actions, force push, main movement or hand-edited generated authority.
 
 ## Security invariants
 Explorer -> fixed app-local Bridge -> private staging -> strict RO ProbeWorker/fixed ffprobe -> typed facts -> bounded planner -> strict EngineWorker -> managed byte-exact Copy or provider-owned fixed FFmpeg Remux/Transcode -> post-probe TargetMediaContract -> durable same-folder no-overwrite publication.

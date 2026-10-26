@@ -170,8 +170,8 @@
     },
     {
       "path": "CHANGELOG.md",
-      "bytes": 25613,
-      "sha256": "c33328d94b9d35d70085cfc5f20de10f21336765374177360a96974478d853ed"
+      "bytes": 26077,
+      "sha256": "7cdf8b990fa9a4c694d081e3f668049326653a891d84ed9504882058b9ab1cdf"
     },
     {
       "path": "CMakeLists.txt",
@@ -315,13 +315,13 @@
     },
     {
       "path": "docs/HANDOVER_NEXT_AGENT.md",
-      "bytes": 7034,
-      "sha256": "739873fb4618677c602d54a758e7902c947e0ff06cc7cf1b5408b9da4fc08102"
+      "bytes": 7322,
+      "sha256": "99a70baa55700be566d4c3be2dd39a2f833a92ae177269f53a7f1b551f9e37b6"
     },
     {
       "path": "docs/HANDOVER_PROMPT.txt",
-      "bytes": 7066,
-      "sha256": "83b2ac1cc437d570668e37516049fc8834d1fe24344eab8eaa1e7884ee922f96"
+      "bytes": 7354,
+      "sha256": "23d2af9a5113c1b3580fee9fd11e50f6a4c19ba3fe6cfe091a4f06176a5bf94e"
     },
     {
       "path": "docs/REFERENCE_SOURCES.md",
@@ -530,8 +530,8 @@
     },
     {
       "path": "docs/TASK_BACKLOG.md",
-      "bytes": 11117,
-      "sha256": "2c9e4cc14db5d925414ead96cd8657ed907d1fd47ebfdebc09a5c4433701b96f"
+      "bytes": 11200,
+      "sha256": "a258c3beac6042f64114b8070def4991a60c16173259d22055f08cd143618f34"
     },
     {
       "path": "docs/TEST_AND_RELEASE_GATES.md",
@@ -590,8 +590,8 @@
     },
     {
       "path": "machine-readable/handover_state.json",
-      "bytes": 8742,
-      "sha256": "50814b25b5b67e1fdb884478de8260297fa76296c1738e5f86ba642c4cff7a59"
+      "bytes": 9009,
+      "sha256": "1615d5fc1b357df3bbf546088242503fc131d98d5f29e6a69b69f5b388c9a686"
     },
     {
       "path": "machine-readable/release_policy.json",
