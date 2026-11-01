@@ -55,7 +55,7 @@ jobs:
       - name: Regenerate SHA-256 workspace manifest
         run: python scripts/generate_hash_manifest.py
       - name: Upload generated authority evidence
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: converty-generated-authority-${{ github.sha }}
           path: |
@@ -204,7 +204,7 @@ jobs:
           Copy-Item machine-readable/build_evidence.json "artifacts/Converty_${version}_build_evidence.json"
           Copy-Item "artifacts/pkg-a/Converty_${version}_full_workspace.zip" "artifacts/Converty_${version}_full_workspace.zip"
       - name: Upload verified delivery candidate
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: converty-verified-delivery-${{ github.sha }}
           path: |
